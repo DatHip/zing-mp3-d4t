@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 
-const PlayListSelector = ({ childrenOption, title, all = false, allLink, children, isHistory = false }) => {
+const PlayListSelector = ({ classAdd, childrenOption, title, all = false, allLink, children, isHistory = false }) => {
    let class1
    let class2
    if (isHistory) {
@@ -11,7 +11,7 @@ const PlayListSelector = ({ childrenOption, title, all = false, allLink, childre
       class2 = "want_list"
    }
    return (
-      <div className={class1}>
+      <div className={` ${class1} ${classAdd}`}>
          <div className="recently_title">
             <div>
                <p>{title}</p>

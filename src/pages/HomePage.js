@@ -10,6 +10,7 @@ import XoneCornerHomePage from "../components/SliderHome/XoneCornerHomePage"
 import FavoriteArtistHomePapge from "../components/SliderHome/FavoriteArtistHomePapge"
 import WeekChartHomePage from "../components/SliderHome/WeekChartHomePage"
 import ArtistSpotlight from "../components/SliderHome/ArtistSpotlight"
+import RadioHomePage from "../components/SliderHome/RadioHomePage"
 
 const HomePage = () => {
    return (
@@ -40,6 +41,8 @@ const HomePage = () => {
          <Top100HomePage></Top100HomePage>
          {/* XONE's CORNER */}
          <XoneCornerHomePage></XoneCornerHomePage>
+         {/* Radio Nổi Bật */}
+         <RadioHomePage></RadioHomePage>
       </motion.div>
    )
 }

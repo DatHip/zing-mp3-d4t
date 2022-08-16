@@ -158,13 +158,6 @@
     padding-right: 3rem;
   }
 
-  .main-page .container_choice .choice-btn-left {
-    left: -1rem;
-  }
-
-  .main-page .container_choice .choice-btn-right {
-    right: -1rem;
-  }
 
   .playing-bar .player_controls-main {
     padding-right: 3.2rem;
@@ -382,10 +375,41 @@
 
 // Mobile
 @media (max-width: 719px) {
-
   .swiper-pagination {
     visibility: visible;
+    bottom: 0 !important;
   }
+
+  .container_choice {
+    padding-bottom: 1rem !important;
+
+    .swiper {
+      padding-bottom: 2rem;
+    }
+  }
+
+  .choice-btn-left,
+  .choice-btn-right {
+    display: none !important;
+  }
+
+  // .container_choice {
+  //   .swiper-pagination {
+  //     visibility: visible;
+  //     bottom: 0;
+  //     top: 100%;
+  //     left: 50%;
+  //     transform: translateX(-50%);
+  //     white-space: nowrap;
+  //   }
+  // }
+
+  // // header
+  // .gallery-container {
+  //   .swiper-pagination {
+  //     bottom: 0 !important;
+  //   }
+  // }
 
   .slider_list-btn-left,
   .slider_list-btn-right {

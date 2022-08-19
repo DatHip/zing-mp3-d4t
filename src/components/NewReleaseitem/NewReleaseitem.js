@@ -91,7 +91,7 @@ const NewReleaseitem = ({ isDisk, classDisk, item }) => {
    return (
       <NewReleaseItemStyle className={`player_queue-item  ${isDisk ? "is-disk" : ""}`}>
          <div className="player_queue-item-left">
-            <div className="relative">
+            <div className="relative z-[1]">
                <div className="player_queue-left">
                   <LazyLoadImage visibleByDefault={thumbnailM === img} className="player_queue-img" src={thumbnailM} alt="" />
                   <div className="player_queue-img-hover">
@@ -99,8 +99,8 @@ const NewReleaseitem = ({ isDisk, classDisk, item }) => {
                   </div>
                </div>
                {isDisk && (
-                  <figure className={`image disk ${classDisk}`}>
-                     <img src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/album-disk.png" alt="" />
+                  <figure className={`image disk ${classDisk ? classDisk : ""}`}>
+                     <LazyLoadImage src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/album-disk.png" alt="" />
                   </figure>
                )}
             </div>

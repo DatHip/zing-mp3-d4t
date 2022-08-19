@@ -8,13 +8,13 @@ const NewMusicEveryDayHomePage = () => {
    const [datas, setData] = useState(null)
    const { data, status } = useGetHomePage()
 
-   const dataSelector = data?.data.items.find((e) => e.title === "Nhạc Mới Mỗi Ngày")
+   const dataSelector = data?.data.items.find((e) => e.sectionId === "hAutoTheme2")
 
    //  const dataSelector = data?.data.items[4]
 
    useEffect(() => {
       if (data) {
-         setData(dataSelector.items)
+         setData(dataSelector?.items)
       }
    }, [status])
 
@@ -27,7 +27,16 @@ const NewMusicEveryDayHomePage = () => {
                   classGird = "col l-2-4 m-0 c-5"
                }
 
-               return <CarouselItem key={e.encodeId} artis={true} desc={false} class1={classGird} item={e}></CarouselItem>
+               return (
+                  <CarouselItem
+                     isSwiper={true}
+                     key={e.encodeId}
+                     artis={true}
+                     desc={false}
+                     class1={classGird}
+                     item={e}
+                  ></CarouselItem>
+               )
             })}
          {!datas &&
             Array(5)

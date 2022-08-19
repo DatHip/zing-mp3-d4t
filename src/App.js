@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { memo, useMemo } from "react"
 import BottomPlay from "./layout/Bottom/BottomPlay"
 import Header from "./layout/Header"
 import Siderleft from "./layout/Siderleft"
@@ -42,5 +42,5 @@ function App() {
    )
 }
 
-export default App
+export default memo(App)
 

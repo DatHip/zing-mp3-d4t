@@ -3,14 +3,14 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 
 const FavoriteArtisItem = memo(({ item, clasName }) => {
    const { encodeId, thumbnailM, song, artistsNames, title } = item
-   const img = thumbnailM.slice(thumbnailM.lastIndexOf("/"))
+   // const img = thumbnailM.slice(thumbnailM.lastIndexOf("/"))
 
    return (
       <>
          <div className={`favorite_list-item ${clasName}`}>
             <a className="main-page_list-item main_page-hover" href="#">
                <div className="main-page_list-item_img">
-                  <LazyLoadImage visibleByDefault={thumbnailM === img} src={thumbnailM} alt={title} />
+                  <LazyLoadImage src={thumbnailM} alt={title} />
                </div>
                <div className="recently_list-item_hover">
                   <div className="recently_btn-hover recently_btn-hover-play">
@@ -25,10 +25,10 @@ const FavoriteArtisItem = memo(({ item, clasName }) => {
                      {song &&
                         song.items.map((e, index) => {
                            if (index > 2) return
-                           const img = e.thumbnail.slice(e.thumbnail.lastIndexOf("/"))
+
                            return (
                               <div key={index} className="favorite_content-img">
-                                 <LazyLoadImage visibleByDefault={e.thumbnail === img} src={e.thumbnail} alt={e.title} />
+                                 <img src={e.thumbnail} alt={e.title} />
                               </div>
                            )
                         })}

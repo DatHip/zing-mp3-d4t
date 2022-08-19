@@ -4,17 +4,14 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 const RaidoItem = memo(({ item, className1 }) => {
    const { activeUsers, host, encodeId, program, thumbnail } = item
 
-   const img = program.thumbnail.slice(program.thumbnail.lastIndexOf("/"))
-   const img1 = thumbnail.slice(thumbnail.lastIndexOf("/"))
-
    return (
       <div className={className1}>
          <a className="xones_list-item-link main-page_list-item main_page-hover" href="#">
             <div className="xones_list-item-link-img main-page_list-item_img">
-               <LazyLoadImage visibleByDefault={program.thumbnail === img} src={program.thumbnail} alt="" />
+               <img src={program.thumbnail} alt="" />
             </div>
             <div className="xones_list-item-link-logo">
-               <LazyLoadImage visibleByDefault={thumbnail === img1} src={thumbnail} alt="" />
+               <LazyLoadImage src={thumbnail} alt="" />
             </div>
             <div className="xones_list-item-link-logo-live">
                <LazyLoadImage src="https://zmp3-static.zadn.vn/skins/zmp3-v6.1/images/icons/live-tag.svg" alt="" />

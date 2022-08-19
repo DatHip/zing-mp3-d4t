@@ -9,8 +9,6 @@ const FavoriteArtistHomePapge = () => {
 
    const dataSelector = data?.data.items.find((e) => e.title === "Nghệ Sĩ Yêu Thích")
 
-   //  const dataSelector = data?.data.items[4]
-
    useEffect(() => {
       if (data) {
          setData(dataSelector.items)

@@ -1,4 +1,3 @@
-import { checkTargetForNewValues } from "framer-motion"
 import React, { memo, useEffect, useState } from "react"
 import { useGetHomePage } from "../../api/getHomePage"
 import PlayListSelector from "../Selection/PlayListSelector"
@@ -12,9 +11,9 @@ const RadioHomePage = memo(() => {
 
    useEffect(() => {
       if (data) {
-         console.log(dataSelector)
          setData(dataSelector.items)
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [status])
 
    return (
@@ -22,7 +21,10 @@ const RadioHomePage = memo(() => {
          {datas &&
             datas.length > 0 &&
             datas.map((e, index) => {
-               if (index > 6) return
+               if (index > 6) {
+                  // eslint-disable-next-line array-callback-return
+                  return
+               }
                let classGird = "col l-1-4 m-2 c-5 m2-6 m2-5"
                if (index === 5) {
                   classGird = "col l-1-4 m-2 c-5 m2-6 m2-none"

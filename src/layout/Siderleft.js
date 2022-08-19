@@ -27,7 +27,7 @@ const Siderleft = () => {
          <div className="sider_menu sider_menu-c">
             <ul className="sider_menu-list">
                <NavLink
-                  to="mymusic"
+                  to="/mymusic"
                   title="Cá nhân"
                   className={({ isActive }) =>
                      isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
@@ -52,7 +52,7 @@ const Siderleft = () => {
                   </div>
                </NavLink>
                <NavLink
-                  to="zing-chart"
+                  to="/zing-chart"
                   className={({ isActive }) =>
                      isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
                   }
@@ -64,7 +64,7 @@ const Siderleft = () => {
                   </div>
                </NavLink>
                <NavLink
-                  to="radio"
+                  to="/radio"
                   className={({ isActive }) =>
                      isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
                   }
@@ -76,7 +76,7 @@ const Siderleft = () => {
                   </div>
                </NavLink>
                <NavLink
-                  to="newfeed"
+                  to="/newfeed"
                   className={({ isActive }) =>
                      isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
                   }

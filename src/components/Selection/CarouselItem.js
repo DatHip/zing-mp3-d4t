@@ -33,15 +33,16 @@ const StyleDiv = styled.div`
    }
 `
 
-const CarouselItem = memo(({ class1 = "", class2 = "", artis = false, desc = false, item = {} }) => {
+const CarouselItem = memo(({ isSwiper = false, class1 = "", class2 = "", artis = false, desc = false, item = {} }) => {
    const { title, encodeId, artists, sortDescription, thumbnailM } = item
-   const img = thumbnailM.slice(thumbnailM.lastIndexOf("/"))
+   // const img = thumbnailM.slice(thumbnailM.lastIndexOf("/"))
 
    return (
       <StyleDiv className={` ${class1}`} title={sortDescription}>
          <div className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}>
             <div className="want_list-item-link main-page_list-item_img">
-               <LazyLoadImage visibleByDefault={thumbnailM === img} src={thumbnailM} alt={title} />
+               {/* {isSwiper ? <img src={thumbnailM} alt={title} /> : <LazyLoadImage src={thumbnailM} alt={title} />} */}
+               <img src={thumbnailM} alt={title} />
             </div>
             <div className="recently_list-item_hover text-white">
                <div className="recently_btn-hover player_btn like">
@@ -65,12 +66,21 @@ const CarouselItem = memo(({ class1 = "", class2 = "", artis = false, desc = fal
                {artis && (
                   <>
                      {artists &&
-                        artists.length > 3 &&
                         artists?.slice(0, 3)?.map((e, index) => {
                            let prara = ", "
 
                            if (index === 2) {
                               prara = "..."
+                           }
+
+                           if (artists.length === 1) {
+                              prara = ""
+                           }
+                           if (artists.length === 2 && index === 1) {
+                              prara = ""
+                           }
+                           if (artists.length === 3 && index === 2) {
+                              prara = ""
                            }
 
                            return (

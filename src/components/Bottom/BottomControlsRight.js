@@ -28,10 +28,10 @@ const BottomControlsRight = () => {
             <i className="icon ic-karaoke"></i>
             <div className="playing_title-hover">Xem Lời bài hát</div>
          </div>
-         <div className="player_btn playing_window">
+         {/* <div className="player_btn playing_window">
             <i className="icon ic-restore"></i>
             <div className="playing_title-hover">Chế độ cửa sổ</div>
-         </div>
+         </div> */}
          <div className="player_volume playing_volume">
             <div className="player_btn">
                <i className="icon ic-volume"></i>

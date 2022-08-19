@@ -10,8 +10,6 @@ const NewMusicEveryDayHomePage = () => {
 
    const dataSelector = data?.data.items.find((e) => e.title === "Top 100")
 
-   //  const dataSelector = data?.data.items[4]
-
    useEffect(() => {
       if (data) {
          setData(dataSelector.items)
@@ -28,7 +26,16 @@ const NewMusicEveryDayHomePage = () => {
                   classGird = "col l-2-4 m-0 c-5"
                }
 
-               return <CarouselItem key={e.encodeId} artis={true} desc={false} class1={classGird} item={e}></CarouselItem>
+               return (
+                  <CarouselItem
+                     isSwiper={true}
+                     key={e.encodeId}
+                     artis={true}
+                     desc={false}
+                     class1={classGird}
+                     item={e}
+                  ></CarouselItem>
+               )
             })}
          {!datas &&
             Array(5)

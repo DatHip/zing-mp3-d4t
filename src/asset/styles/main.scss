@@ -369,14 +369,7 @@
   overflow: hidden;
 }
 
-// Active Main 
-.main-page .main-page-item {
-  display: none;
 
-  &.active {
-    display: block;
-  }
-}
 
 .slider_list-main {
   min-height: 191px !important

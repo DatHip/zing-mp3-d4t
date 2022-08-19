@@ -1142,7 +1142,7 @@
       i {
         margin-right: 0;
         color: var(--white);
-        font-size: 18px;
+        font-size: 22px;
         width: unset;
         height: unset;
       }
@@ -1641,6 +1641,10 @@
   .container_release {
     margin-top: 3.6rem;
 
+    .want_list.row {
+      display: block;
+    }
+
     .main_subtitle {
       display: block;
       display: -webkit-box;
@@ -1757,7 +1761,7 @@
         height: calc(120px + 16px + 16px);
 
         span {
-          color: var(--purple-primary);
+          color: var(--text-primary);
           font-weight: 700;
           font-size: 1.6rem;
           pointer-events: none;
@@ -1799,11 +1803,11 @@
       }
 
       .release-btn-left {
-        left: -1rem;
+        left: 1rem;
       }
 
       .release-btn-right {
-        right: -1rem;
+        right: 1rem;
       }
     }
   }
@@ -1843,6 +1847,7 @@
       letter-spacing: -1px;
       text-overflow: ellipsis;
       margin-bottom: 8px;
+
     }
 
     .favorite_content-list {
@@ -1856,12 +1861,13 @@
 
   // Zing Chart
   .container_zing-chart {
-    margin-top: 3.6rem;
+    margin-top: .5rem;
     border-radius: 6px;
-    // background: url('../img/zingchartweeken/bg-chart.fd766403.jpg') top / cover no-repeat;
+    background: url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.7.20/static/media/bg-chart.fd766403.jpg') top / cover no-repeat;
 
     .material-icons {
       font-size: 3.4rem;
+      // color: var(--purple-primary);
     }
 
     .container_zing-chart-pos {
@@ -1870,10 +1876,11 @@
       opacity: 0.96;
       padding: 2rem;
       z-index: -2;
+      color: var(--white);
     }
 
     #myChart {
-      max-height: 300px;
+      max-height: 300px !important;
     }
 
     .zing-chart_top {
@@ -1885,16 +1892,19 @@
         color: var(--white);
         margin-bottom: 20px;
         transition: 0.2s;
-        cursor: context-menu;
+
+        &:hover {
+          color: var(--link-text-hover);
+        }
 
         span {
           margin-left: 4px;
           font-size: 3.4rem;
           cursor: pointer;
-          color: var(--link-text-hover);
+          color: var(--white);
 
           &:hover {
-            opacity: 0.8;
+            color: var(--link-text-hover);
           }
         }
       }
@@ -1920,9 +1930,6 @@
       flex-direction: column;
       height: auto;
       justify-content: center;
-
-
-
 
       .zing-chart_item {
         padding: 10px 15px;
@@ -1992,6 +1999,10 @@
                   font-size: 1.2rem;
                   color: var(--text-secondary);
 
+                  &:hover {
+                    text-decoration: underline;
+                    color: var(--link-text-hover);
+                  }
                 }
               }
             }
@@ -4205,4 +4216,36 @@
 
 .m-3 {
   margin: unset;
+}
+
+.favorite_content-name {
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  height: auto;
+  overflow: hidden;
+}
+
+.container-event {
+  position: relative;
+
+  .swiper-button-disabled {
+    opacity: .1;
+    cursor: default;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .event-btn-arrow {
+    color: var(--text-primary);
+    right: 10px;
+  }
+}
+
+.container_zing-chart {
+  .m-12 {
+    margin: unset;
+  }
 }

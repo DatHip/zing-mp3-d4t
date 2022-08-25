@@ -76,7 +76,7 @@ const Siderleft = () => {
                   </div>
                </NavLink>
                <NavLink
-                  to="/newfeed"
+                  to="/newfeed/Viet-Nam/IWZ9Z08I"
                   className={({ isActive }) =>
                      isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
                   }
@@ -129,7 +129,7 @@ const Siderleft = () => {
                   </div>
                </NavLink>
                <NavLink
-                  to="mv"
+                  to="mv/IWZ9Z08I"
                   className={({ isActive }) =>
                      isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
                   }

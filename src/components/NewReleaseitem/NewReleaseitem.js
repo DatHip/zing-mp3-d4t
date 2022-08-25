@@ -3,6 +3,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import getConterTimeRelese from "../../utils/getConterTimeRelese"
+import getFormartMiute from "../../utils/getFormartMiute"
+import getFormartTimeDDYY from "../../utils/getFormartTimeDDYY"
 
 const NewReleaseItemStyle = styled.div`
    &.is-disk {
@@ -82,7 +84,7 @@ const NewReleaseItemStyle = styled.div`
    }
 `
 
-const NewReleaseitem = ({ isDisk, classDisk, item }) => {
+const NewReleaseitem = ({ isRadio, isDisk, classDisk, item }) => {
    const { streamingStatus, thumbnailM, title, artists, releaseDate, isAlbum } = item
 
    const img = thumbnailM?.slice(thumbnailM.lastIndexOf("/"))
@@ -108,45 +110,59 @@ const NewReleaseitem = ({ isDisk, classDisk, item }) => {
                <div className="player_queue-music">
                   {title} <div className="is-vip_img"></div>
                </div>
-               <div className="player_queue-name">
-                  {artists &&
-                     artists?.slice(0, 3)?.map((e, index) => {
-                        let prara = ", "
+               {!isRadio && (
+                  <>
+                     <div className="player_queue-name">
+                        {artists &&
+                           artists?.slice(0, 3)?.map((e, index) => {
+                              let prara = ", "
 
-                        if (index === 2) {
-                           prara = "..."
-                        }
+                              if (index === 2) {
+                                 prara = "..."
+                              }
 
-                        if (artists.length === 1) {
-                           prara = ""
-                        }
-                        if (artists.length === 2 && index === 1) {
-                           prara = ""
-                        }
-                        if (artists.length === 3 && index === 2) {
-                           prara = ""
-                        }
-                        return (
-                           <span key={index}>
-                              <Link to={"/"}>{e.name}</Link>
-                              {prara}
-                           </span>
-                        )
-                     })}
+                              if (artists.length === 1) {
+                                 prara = ""
+                              }
+                              if (artists.length === 2 && index === 1) {
+                                 prara = ""
+                              }
+                              if (artists.length === 3 && index === 2) {
+                                 prara = ""
+                              }
+                              return (
+                                 <span key={index}>
+                                    <Link to={"/"}>{e.name}</Link>
+                                    {prara}
+                                 </span>
+                              )
+                           })}
+                     </div>
+                     <div className="player_queue-time">{timeRelease} trước</div>
+                  </>
+               )}
+               {isRadio && (
+                  <>
+                     <div className="player_queue-name">{item?.album?.title || ""}</div>
+                     <div className="player_queue-time">
+                        {getFormartTimeDDYY(item?.releaseDate)} • {getFormartMiute(item?.duration)} phút
+                     </div>
+                  </>
+               )}
+            </div>
+         </div>
+         {!isRadio && (
+            <div className="player_queue-item-right">
+               <div className="player_queue-btn player_btn zm-btn">
+                  <i className="icon ic-like" />
+                  <span className="playing_title-hover">Thêm vào thư viện </span>
                </div>
-               <div className="player_queue-time">{timeRelease} trước</div>
+               <div className="player_queue-btn player_btn zm-btn">
+                  <i className="icon ic-more" />
+                  <span className="playing_title-hover">Xem thêm</span>
+               </div>
             </div>
-         </div>
-         <div className="player_queue-item-right">
-            <div className="player_queue-btn player_btn zm-btn">
-               <i className="icon ic-like" />
-               <span className="playing_title-hover">Thêm vào thư viện </span>
-            </div>
-            <div className="player_queue-btn player_btn zm-btn">
-               <i className="icon ic-more" />
-               <span className="playing_title-hover">Xem thêm</span>
-            </div>
-         </div>
+         )}
       </NewReleaseItemStyle>
    )
 }

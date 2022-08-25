@@ -13,6 +13,9 @@ import SearchPage from "../pages/SearchPage"
 import Top100Page from "../pages/Top100Page"
 import ZingChartPage from "../pages/ZingChartPage"
 import { AnimatePresence } from "framer-motion"
+import NewMusicPage from "../pages/NewMusicPage"
+import MvPageList from "../components/MVpage/MvPageList"
+import NewFeedPageChidlen from "../components/Followpage/NewFeedPageChidlen"
 
 const RouterPage = () => {
    const mainPageRef = useRef()
@@ -31,7 +34,7 @@ const RouterPage = () => {
    const location = useLocation()
 
    return (
-      <div ref={mainPageRef} className="main-page">
+      <div ref={mainPageRef} id="scrollableDiv" className="main-page">
          <div className="container">
             <AnimatePresence>
                <Routes location={location} key={location.pathname}>
@@ -40,11 +43,15 @@ const RouterPage = () => {
                   <Route path="/" element={<HomePage></HomePage>}></Route>
                   <Route path="/zing-chart" element={<ZingChartPage></ZingChartPage>}></Route>
                   <Route path="/radio" element={<RadioPage></RadioPage>}></Route>
-                  <Route path="/newfeed" element={<NewFeedPage></NewFeedPage>}></Route>
-                  <Route path="/moi-phat-hanh" element={<NewFeedPage></NewFeedPage>}></Route>
+                  <Route path="newfeed/:nation" element={<NewFeedPage></NewFeedPage>}>
+                     <Route path=":id" element={<NewFeedPageChidlen></NewFeedPageChidlen>}></Route>
+                  </Route>
+                  <Route path="/moi-phat-hanh" element={<NewMusicPage></NewMusicPage>}></Route>
                   <Route path="/hub" element={<HubPage></HubPage>}></Route>
                   <Route path="/top100" element={<Top100Page></Top100Page>}></Route>
-                  <Route path="/mv" element={<MvPage></MvPage>}></Route>
+                  <Route path="/mv" element={<MvPage></MvPage>}>
+                     <Route path=":id" element={<MvPageList></MvPageList>}></Route>
+                  </Route>
                   {/*  */}
                   <Route path="/tim-kiem" element={<SearchPage></SearchPage>}></Route>
                   <Route path="/nghe-si" element={<ArtistPage></ArtistPage>}></Route>

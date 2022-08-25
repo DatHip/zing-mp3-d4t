@@ -378,6 +378,15 @@
 // Mobile
 @media (max-width: 719px) {
 
+  .favorite_content-list {
+    display: none;
+  }
+
+  .main-page .favorite_list-item .favorite_content-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
 
 
   .main-page .container_release .release_list .release_list-item {

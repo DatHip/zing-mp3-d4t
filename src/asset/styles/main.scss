@@ -185,7 +185,7 @@
   img {
     border-radius: 6px;
     transform: scale(1);
-    transition: .4s .05s ease-out;
+    transition: .5s .05s ease-out;
   }
 }
 
@@ -263,16 +263,18 @@
 
 // loading 
 .loading {
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--layout-bg);
-  position: relative;
-  overflow: hidden;
+  width: 100%;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10000 !important;
 }
+
+
+
 
 .loader {
   margin: 0 auto;
@@ -420,6 +422,123 @@
   visibility: hidden;
 }
 
-.m-2 {
+figure {
+  background-color: var(--loading-bg);
+}
+
+.m-2,
+.m-12,
+.m-6,
+.m-4,
+.m-9,
+.m-3,
+.m-8,
+.m-4 {
   margin: unset;
+}
+
+.zing-chart_btn {
+  margin: auto;
+  padding: 6px 26px;
+  margin-top: 10px;
+  border-radius: 999px;
+  color: var(--white);
+  border: 1px solid var(--white);
+  padding: 5px 25px;
+  transition: 0.2s;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: hsla(0deg, 0%, 100%, 0.2);
+  }
+}
+
+.tippy-content {
+  padding: 0 !important;
+}
+
+.my-masonry-grid {
+  display: -webkit-box;
+  /* Not needed if autoprefixing */
+  display: -ms-flexbox;
+  /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -20px;
+  /* gutter size offset */
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 20px;
+  /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column>div {
+  /* change div to reference your elements you put in <Masonry> */
+
+  margin-bottom: 20px;
+}
+
+@media (max-width: 800px) {
+  .my-masonry-grid {
+    margin-left: -15px;
+    /* gutter size offset */
+  }
+
+  .my-masonry-grid_column {
+    padding-left: 15px;
+    /* gutter size offset */
+  }
+
+  .my-masonry-grid_column>div {
+    margin-bottom: 15px;
+    /* space between items */
+  }
+}
+
+.icon.ic-like-full {
+  transition: .2s linear;
+  color: var(--purple-primary) !important;
+}
+
+
+.zm-navbar-menu {
+  font-weight: 400;
+  margin: 0 auto;
+  background-color: var(--alpha-bg);
+  padding: 3px;
+  border-radius: 15px;
+}
+
+.zm-navbar-item {
+  padding: 0;
+  font-size: 12px;
+  line-height: 1;
+  min-width: 120px;
+  margin: 0;
+  color: var(--navigation-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  position: relative;
+
+  &.is-active {
+    color: var(--text-item-hover);
+    border-radius: 15px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%);
+    background-color: var(--tab-active-bg);
+  }
+
+  a {
+    display: block;
+    padding: 7px 25px;
+
+    &:hover {
+      color: var(--text-item-hover);
+    }
+  }
 }

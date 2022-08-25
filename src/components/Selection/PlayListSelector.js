@@ -1,6 +1,16 @@
 import React, { memo } from "react"
 
-const PlayListSelector = ({ classAdd, childrenOption, title, all = false, allLink, children, isHistory = false }) => {
+const PlayListSelector = ({
+   classAdd2,
+   isTitleSub,
+   classAdd,
+   childrenOption,
+   title,
+   all = false,
+   allLink,
+   children,
+   isHistory = false,
+}) => {
    let class1
    let class2
    if (isHistory) {
@@ -13,9 +23,7 @@ const PlayListSelector = ({ classAdd, childrenOption, title, all = false, allLin
    return (
       <div className={` ${class1} ${classAdd}`}>
          <div className="recently_title">
-            <div>
-               <p>{title}</p>
-            </div>
+            <div>{isTitleSub ? isTitleSub : <p>{title}</p>}</div>
             {all && (
                <div className="playlist_selector-all">
                   <span>Tất Cả</span>
@@ -24,7 +32,7 @@ const PlayListSelector = ({ classAdd, childrenOption, title, all = false, allLin
             )}
          </div>
          {childrenOption}
-         <div className={`${class2} row`}>{children}</div>
+         <div className={`${class2} ${classAdd2} row`}>{children}</div>
       </div>
    )
 }

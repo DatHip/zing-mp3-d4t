@@ -1317,6 +1317,7 @@
       font-size: 2rem;
       font-weight: 700;
       color: var(--text-primary);
+      text-transform: capitalize;
     }
 
     .playlist_selector-all {
@@ -1590,49 +1591,45 @@
     .recently_btn-hover-play {
       margin: 0 1.6rem;
     }
+  }
 
-    .main-page_list-item_img {
-      // height: 224px;
+  .care_title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .care_title-text {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
     }
 
-    .care_title {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      margin-bottom: 1.6rem;
+    h3 {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
 
-      .care_title-text {
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        flex-direction: column;
+    a {
+      font-size: 1.8rem;
+      font-weight: 700;
+      transition: 0.2s;
+      color: var(--text-primary);
+
+      &:hover {
+        color: var(--link-text-hover);
       }
+    }
 
-      h3 {
-        font-size: 14px;
-        font-weight: 400;
-        color: var(--text-secondary);
-      }
+    .care_title-img {
+      border-radius: 5px;
+      width: 50px;
+      height: auto;
+      margin-right: 1.2rem;
 
-      a {
-        font-size: 1.8rem;
-        font-weight: 700;
-        transition: 0.2s;
-
-        &:hover {
-          color: var(--link-text-hover);
-        }
-      }
-
-      .care_title-img {
-        border-radius: 5px;
-        width: 50px;
-        height: auto;
-        margin-right: 1.2rem;
-
-        img {
-          border-radius: 6px;
-        }
+      img {
+        border-radius: 6px;
       }
     }
   }
@@ -1819,10 +1816,30 @@
   }
 
   .favorite_list-item {
+    transition: .3s linear;
+
+    &.is-hub {
+      .main_blur-bg {
+        background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5) 85%) !important;
+      }
+
+      .favorite_content-name {
+        font-size: 18px;
+        text-transform: uppercase;
+
+      }
+
+      .favorite_content-list {
+        justify-content: flex-start;
+      }
+
+      .favorite_content-img {
+        width: 20% !important;
+      }
+    }
 
     .recently_btn-hover-play {
       margin: 0 2.6rem 5rem;
-
     }
 
     .favorite_content {
@@ -1871,6 +1888,7 @@
     }
 
     .container_zing-chart-pos {
+      margin-top: 3rem;
       background-image: var(--linear-gradient-bg);
       border-radius: 6px;
       opacity: 0.96;
@@ -1899,12 +1917,12 @@
 
         span {
           margin-left: 4px;
-          font-size: 3.4rem;
+          font-size: 4rem;
           cursor: pointer;
-          color: var(--white);
+          color: var(--link-text-hover);
 
           &:hover {
-            color: var(--link-text-hover);
+            filter: brightness(.9);
           }
         }
       }
@@ -2331,6 +2349,7 @@
 
 .main-page {
   width: 100%;
+  position: relative;
 }
 
 .main_personal {
@@ -3066,7 +3085,7 @@
 
   svg {
     position: relative;
-    margin-top: 90px;
+
   }
 
 }
@@ -3074,7 +3093,7 @@
 // Main MV
 .main-page .main_mv {
   .main_mv-header {
-    padding-left: 6rem;
+    padding-left: 2rem;
     display: flex;
     border-bottom: 1px solid var(--border-primary);
     // min-height: 52px;
@@ -3113,7 +3132,8 @@
         padding: 1.6rem 2rem;
         line-height: normal;
         cursor: pointer;
-        transition: .2s ease-in;
+        transition: .3s ease-in;
+        border-bottom: 2px solid transparent;
 
         &:hover {
 
@@ -3124,6 +3144,7 @@
       .main_mv-header-item.active {
         color: var(--text-item-hover);
         transform: scale(1.05);
+        border-bottom: 2px solid var(--purple-primary);
       }
 
       .main_mv-line {
@@ -3143,6 +3164,7 @@
     .main_mv-search-dropdown {
       margin-bottom: 2rem;
       position: relative;
+      display: inline-block;
 
       .main_mv-search-dropdown-btn {
         display: inline-flex;
@@ -3157,9 +3179,7 @@
         cursor: pointer;
         transition: .2s ease-in;
 
-        .material-icons-outlined.up {
-          display: none;
-        }
+
 
         &.active {
           background-color: var(--border-primary);
@@ -3197,8 +3217,7 @@
       }
 
       .main_mv-dropdown-list {
-        opacity: 0;
-        visibility: hidden;
+
         padding: 5px;
         border-radius: 8px;
         background-color: var(--primary-bg);
@@ -3206,8 +3225,8 @@
         width: 400px;
         position: absolute;
         z-index: 110;
-        top: calc(100% + 10px);
-        left: 0;
+        // top: calc(100% + 10px);
+        // left: 0;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -4247,5 +4266,13 @@
 .container_zing-chart {
   .m-12 {
     margin: unset;
+  }
+}
+
+
+.main_topchart-week3 {
+  .zing-chart_item-right {
+    padding-left: 1rem !important;
+    width: unset !important;
   }
 }

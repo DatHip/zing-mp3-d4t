@@ -27,7 +27,7 @@ const Siderleft = () => {
          <div className="sider_menu sider_menu-c">
             <ul className="sider_menu-list">
                <NavLink
-                  to="/mymusic"
+                  to="/mymusic/"
                   title="Cá nhân"
                   className={({ isActive }) =>
                      isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "

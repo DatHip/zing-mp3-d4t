@@ -74,25 +74,6 @@ const Top100Page = () => {
                                  ></CarouselItem>
                               )
                            })}
-                        {!datas &&
-                           Array(5)
-                              .fill(0)
-                              .map((e, index) => {
-                                 let classGird = "col l-2-4 m-3 c-5"
-                                 if (index === 4) {
-                                    classGird = "col l-2-4 m-0 c-5"
-                                 }
-
-                                 return (
-                                    <CarouselItem.Loading
-                                       key={uuidv4()}
-                                       artis={false}
-                                       desc={false}
-                                       class1={classGird}
-                                       item={e}
-                                    ></CarouselItem.Loading>
-                                 )
-                              })}
                      </PlayListSelector>
                   )
                })}

@@ -1,6 +1,7 @@
 import React, { memo } from "react"
 
 const PlayListSelector = ({
+   notRow,
    classAdd2,
    isTitleSub,
    classAdd,
@@ -10,6 +11,7 @@ const PlayListSelector = ({
    allLink,
    children,
    isHistory = false,
+   isMyPage,
 }) => {
    let class1
    let class2
@@ -30,9 +32,10 @@ const PlayListSelector = ({
                   <span className="material-icons-outlined"> chevron_right </span>
                </div>
             )}
+            {isMyPage}
          </div>
          {childrenOption}
-         <div className={`${class2} ${classAdd2} row`}>{children}</div>
+         <div className={`${class2} ${classAdd2} ${notRow ? "" : "row"}`}>{children}</div>
       </div>
    )
 }

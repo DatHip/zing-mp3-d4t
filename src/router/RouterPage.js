@@ -16,6 +16,10 @@ import { AnimatePresence } from "framer-motion"
 import NewMusicPage from "../pages/NewMusicPage"
 import MvPageList from "../components/MVpage/MvPageList"
 import NewFeedPageChidlen from "../components/Followpage/NewFeedPageChidlen"
+import MyMusicAll from "../components/MyMusicPage/MyMusicAll"
+import MyMusicSong from "../components/MyMusicPage/MyMusicSong"
+import MyMusicPlayList from "../components/MyMusicPage/MyMusicPlayList"
+import MyMusicPostCast from "../components/MyMusicPage/MyMusicPostCast"
 
 const RouterPage = () => {
    const mainPageRef = useRef()
@@ -38,7 +42,12 @@ const RouterPage = () => {
          <div className="container">
             <AnimatePresence>
                <Routes location={location} key={location.pathname}>
-                  <Route path="/mymusic" element={<MyMusicPage></MyMusicPage>}></Route>
+                  <Route path="/mymusic/" element={<MyMusicPage></MyMusicPage>}>
+                     <Route index element={<MyMusicAll></MyMusicAll>}></Route>
+                     <Route path="song" element={<MyMusicSong></MyMusicSong>}></Route>
+                     <Route path="playlist" element={<MyMusicPlayList></MyMusicPlayList>}></Route>
+                     <Route path="podcast" element={<MyMusicPostCast></MyMusicPostCast>}></Route>
+                  </Route>
                   <Route index element={<HomePage></HomePage>}></Route>
                   <Route path="/" element={<HomePage></HomePage>}></Route>
                   <Route path="/zing-chart" element={<ZingChartPage></ZingChartPage>}></Route>

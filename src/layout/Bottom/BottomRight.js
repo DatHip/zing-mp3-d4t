@@ -46,25 +46,6 @@ const BottomRight = () => {
                   <ItemRighPlayer></ItemRighPlayer>
                   <ItemRighPlayer></ItemRighPlayer>
                   <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer active={true}></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
-                  <ItemRighPlayer></ItemRighPlayer>
                </ul>
             </div>
          </div>

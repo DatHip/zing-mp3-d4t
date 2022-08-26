@@ -75,7 +75,7 @@ const FollowItems = memo(({ data }) => {
    }
 
    return (
-      <div className="col !mb-[15px]">
+      <div className="col  !mb-[15px]">
          <ItemStyles className="zm-card feed-card  col text-white">
             <div className="feed-header mb-[10px]">
                <div className="media flex items-center justify-start">
@@ -100,7 +100,9 @@ const FollowItems = memo(({ data }) => {
             <div className=" mb-[15px] feed-content">
                <div onClick={handleClick} className={`want_list-item-link cursor-pointer main-page_list-item main_page-hover `}>
                   <div className="want_list-item-link main-page_list-item_img ">
-                     <img src={imgL || ""} alt="" />
+                     <figure>
+                        <img src={imgL || ""} alt="" />
+                     </figure>
                   </div>
                   {content.type === "feedVideo" && (
                      <div className="recently_list-item_hover text-white">

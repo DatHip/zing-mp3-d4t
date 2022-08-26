@@ -22,6 +22,8 @@ const RadioPage = () => {
    const selectorDiscoverPoscast = datas?.find((e) => e.sectionId === "radPromoteProgram")
 
    const selectorListent = datas?.find((e) => e.title === "Đón nghe")
+
+   console.log(selectorListent)
    const selectorCategoryRadio = datas?.find((e) => e.sectionId === "radPromoteCategory")
    const selectorFeaturedPrograms = datas?.find((e) => e.sectionId === "radSponsoredProgram")
    const selectorFeaturedEpisodes = datas?.find((e) => e.sectionId === "radPromoteEpisode")

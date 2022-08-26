@@ -2354,10 +2354,7 @@
 
 .main_personal {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+
 
   .main_personal-2 {
     width: 100%;
@@ -2384,14 +2381,13 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 5rem;
+    margin-top: 3rem;
+    margin-bottom: .6rem;
 
     .personal_user-img {
-      padding: 1.4rem;
+
       background-color: var(--alpha-bg);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
       border-radius: 99rem;
       margin-bottom: 1rem;
 
@@ -2461,29 +2457,24 @@
       justify-content: space-between;
       align-items: center;
 
-      a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: .2rem 1rem;
-        border: 1px solid var(--border-primary);
-        background-color: var(--alpha-bg);
-        margin-left: 1rem;
-        border-radius: 99rem;
-        font-size: 1.2rem;
-        font-weight: 400;
 
 
-        &:first-child {
-          padding-left: 1.4rem;
-        }
 
-        &:last-child {
-          padding-left: 1.4rem;
-        }
-      }
     }
   }
+}
+
+.personal_play-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .2rem 1rem .2rem 1.4rem;
+  border: 1px solid var(--border-primary);
+  background-color: var(--alpha-bg);
+  margin-left: 1rem;
+  border-radius: 99rem;
+  font-size: 1.2rem;
+  font-weight: 400;
 
   .personal_overview-main,
   .personal_thesong-main,
@@ -2778,11 +2769,13 @@
   }
 
   .main_topchart {
+
+
     .container_zing-chart .container_zing-chart-pos {
       padding: 0;
     }
 
-    .zing-chart_list .zing-chart_item {
+    .zing-chart_item {
       margin-bottom: 0;
     }
 
@@ -2860,94 +2853,94 @@
     }
   }
 
-  // item chart 1- 100
-  .main_topchart .container_zing-chart .zing-chart_list .zing-chart_item {
-    background: none;
-    border-bottom: 1px solid var(--border-primary);
+}
+
+// item chart 1- 100
+.main_topchart .container_zing-chart .zing-chart_list .zing-chart_item {
+  background: none;
+  border-bottom: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .zing-chart_item-left {
+    flex: 1;
+  }
+
+  .zing-chart_item-center,
+  .zing-chart_item-right {
+    width: 20%;
     display: flex;
     align-items: center;
+  }
+
+  .zing-chart_item-center {
+    justify-content: flex-start;
+  }
+
+  .zing-chart_item-right {
+    justify-content: flex-end;
+    padding-right: 2rem;
+  }
+}
+
+// sort rank num all
+.zing-chart_list {
+  .zing-chart-top {
+    min-width: 36px;
+    display: flex;
     justify-content: center;
-    width: 100%;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .zing-chart_item-left {
-      flex: 1;
-    }
-
-    .zing-chart_item-center,
-    .zing-chart_item-right {
-      width: 20%;
-      display: flex;
-      align-items: center;
-    }
-
-    .zing-chart_item-center {
-      justify-content: flex-start;
-    }
-
-    .zing-chart_item-right {
-      justify-content: flex-end;
-      padding-right: 2rem;
-    }
+    align-items: center;
   }
 
-  // sort rank num all
-  .zing-chart_list {
-    .zing-chart-top {
-      min-width: 36px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  .zing-chart_item-name {
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .zing-chart-rank {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    flex-direction: column;
+
+    .zing-chart-rank-num {
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      font-weight: 700;
     }
 
-    .zing-chart_item-name {
-      display: -webkit-box;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      height: auto;
-      overflow: hidden;
-    }
+    .zing-chart-rank-status {
+      line-height: .8rem;
 
-    .zing-chart-rank {
-      display: flex;
-      align-items: center;
-      // justify-content: center;
-      flex-direction: column;
-
-      .zing-chart-rank-num {
-        color: var(--text-primary);
-        font-size: 1.2rem;
-        font-weight: 700;
+      .material-icons-outlined.line {
+        line-height: 0 !important;
       }
 
-      .zing-chart-rank-status {
+      .material-icons-outlined.up {
+        font-size: 3rem;
+        color: #1dc186;
         line-height: .8rem;
+      }
 
-        .material-icons-outlined.line {
-          line-height: 0 !important;
-        }
-
-        .material-icons-outlined.up {
-          font-size: 3rem;
-          color: #1dc186;
-          line-height: .8rem;
-        }
-
-        .material-icons-outlined.down {
-          font-size: 3rem;
-          color: #e35050;
-          line-height: .8rem;
-        }
-
+      .material-icons-outlined.down {
+        font-size: 3rem;
+        color: #e35050;
+        line-height: .8rem;
       }
 
     }
-  }
 
+  }
 }
 
 // bxh tuan
@@ -4275,4 +4268,9 @@
     padding-left: 1rem !important;
     width: unset !important;
   }
+}
+
+.zing-chart_item .player_queue-btn:first-child .playing_title-hover {
+  top: -130%;
+  left: -48px;
 }

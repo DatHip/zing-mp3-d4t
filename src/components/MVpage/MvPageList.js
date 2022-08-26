@@ -11,15 +11,16 @@ import LoadingSvg from "../loading/LoadingSvg"
 const MvPageList = () => {
    const { id } = useParams()
    const [datas, setData] = useState([])
-   const [page, setPage] = useState(1)
+   const page = useRef(1)
    const [loading, setLoading] = useState(false)
 
    const fetchData = async () => {
-      setPage((value) => value + 1)
-      const data = await axios.get(tmdAPI.getListMv(id, page))
+      const data = await axios.get(tmdAPI.getListMv(id, page.current))
       const dataSelector = data.data.data.items
       const tolal = data.data.data.toltal
       const more = data.data.data.hasMore
+
+      page.current += 1
 
       if (datas.length >= tolal || !more) {
          return setLoading(false)

@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react"
-import usePortal from "react-cool-portal"
 import styled from "styled-components"
 import formartTimeNewFeed from "../../utils/formartTimeNewFeed"
 import MyComment from "../MVpage/MyComment"
+import ReactPlayer from "react-player"
 
 const PortalStyle = styled.div`
    .message-wrapper {
@@ -194,14 +194,15 @@ const PortalMVpage = ({ Portal, hide, data }) => {
       if (id === "theme-overlay" || id === "btn-close-feed") hide()
    }
 
-   console.log(data)
-   const { like, publisher, shortDescription, createdTime, title, content, commend } = data
+   const { like, publisher, createdTime, title, content, commend } = data
 
    let imgL
+   let urlVideo
    if (content.type === "album") {
       imgL = content?.photos[0].url
    } else if (content.type === "feedVideo") {
       imgL = content?.thumbnail
+      urlVideo = Object.values(content.source)[0]
    }
 
    return (
@@ -215,9 +216,23 @@ const PortalMVpage = ({ Portal, hide, data }) => {
                      </button>
                      <div className="flex row no-gutters  h-full overflow-y-auto">
                         <div className="col l-7 m-12 c-12  relative h-full feed-detail">
-                           <div className="">
-                              <img src={imgL || ""} style={{ maxWidth: "100%", height: "auto" }} />
-                           </div>
+                           {content.type === "album" && (
+                              <div>
+                                 <img src={imgL || ""} alt="" />
+                              </div>
+                           )}
+                           {content.type === "feedVideo" && (
+                              <div className="player-wrapper">
+                                 <ReactPlayer
+                                    url={urlVideo || ""}
+                                    className="react-player outline-none"
+                                    playing
+                                    width="100%"
+                                    height="100%"
+                                    controls
+                                 />
+                              </div>
+                           )}
                         </div>
                         <div className="l-5 m-12 c-12 w-full  !flex  flex-col items-center justify-between">
                            <div className="feed-top w-full flex flex-col flex-1 mb-auto">
@@ -264,9 +279,9 @@ const PortalMVpage = ({ Portal, hide, data }) => {
                                     <span>{like + (llike ? 1 : 0)} lượt thích </span>&nbsp;&nbsp;•&nbsp;&nbsp;{" "}
                                     <span>{commend} Bình luận</span>
                                  </div>
-                                 <>
+                                 {/* <>
                                     <MyComment></MyComment>
-                                 </>
+                                 </> */}
                               </div>
                            </div>
                            <div className="message-wrapper">

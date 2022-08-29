@@ -23,7 +23,7 @@ const PlayListSelector = ({
       class2 = "want_list"
    }
    return (
-      <div className={` ${class1} ${classAdd}`}>
+      <div className={` ${class1} ${classAdd || ""}`}>
          <div className="recently_title">
             <div>{isTitleSub ? isTitleSub : <p>{title}</p>}</div>
             {all && (

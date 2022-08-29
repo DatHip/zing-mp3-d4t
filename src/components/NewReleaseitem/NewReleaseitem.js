@@ -7,6 +7,36 @@ import getFormartMiute from "../../utils/getFormartMiute"
 import getFormartTimeDDYY from "../../utils/getFormartTimeDDYY"
 
 const NewReleaseItemStyle = styled.div`
+   &.is-artist {
+      &:hover {
+         background: unset;
+         transition: unset;
+      }
+   }
+   .media-content {
+      p {
+         font-size: 12px;
+         font-weight: 500;
+         line-height: 1.9;
+         color: var(--text-item-hover);
+      }
+      h3 {
+         text-transform: none;
+         font-size: 14px;
+         font-weight: 500;
+         line-height: 1.57;
+         margin-bottom: 2px;
+      }
+      h4 {
+         font-size: 12px;
+         white-space: nowrap;
+         text-overflow: ellipsis;
+         overflow: hidden;
+         max-width: 100%;
+         line-height: normal;
+      }
+   }
+
    &.is-disk {
       &:hover {
          .disk {
@@ -82,20 +112,48 @@ const NewReleaseItemStyle = styled.div`
       color: var(--text-secondary);
       margin-top: 3px;
    }
+   .media-content {
+      span {
+         font-size: 10px;
+         font-weight: 500;
+         line-height: 1.9;
+         color: var(--text-item-hover);
+      }
+      h3 {
+         text-transform: none;
+         font-size: 14px;
+         font-weight: 500;
+         line-height: 1.57;
+      }
+      h4 {
+         white-space: nowrap;
+         text-overflow: ellipsis;
+         overflow: hidden;
+         max-width: 100%;
+         line-height: normal;
+      }
+   }
 `
 
-const NewReleaseitem = ({ isRadio, isDisk, classDisk, item }) => {
-   const { streamingStatus, thumbnailM, title, artists, releaseDate, isAlbum } = item
-
-   const img = thumbnailM?.slice(thumbnailM.lastIndexOf("/"))
-   let timeRelease = getConterTimeRelese(releaseDate, isAlbum)
+const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
+   const img = item?.thumbnailM?.slice(item?.thumbnailM.lastIndexOf("/"))
+   let timeRelease = getConterTimeRelese(item?.releaseDate, item?.isAlbum)
 
    return (
-      <NewReleaseItemStyle className={`player_queue-item  ${isDisk ? "is-disk" : ""}`}>
+      <NewReleaseItemStyle className={`player_queue-item ${isArtist ? "is-artist" : ""}  ${isDisk ? "is-disk" : ""}`}>
          <div className="player_queue-item-left">
             <div className="relative z-[1]">
                <div className="player_queue-left">
-                  <LazyLoadImage visibleByDefault={thumbnailM === img} className="player_queue-img" src={thumbnailM} alt="" />
+                  {!isArtist && (
+                     <LazyLoadImage
+                        visibleByDefault={item?.thumbnailM === img}
+                        className="player_queue-img"
+                        src={item?.thumbnailM}
+                        alt=""
+                     />
+                  )}
+
+                  {isArtist && <LazyLoadImage className="player_queue-img" src={item?.thumbnailM} alt="" />}
                   <div className="player_queue-img-hover">
                      <i className="icon action-play ic-play" />
                   </div>
@@ -106,28 +164,35 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item }) => {
                   </figure>
                )}
             </div>
-            <div className={`player_queue-music-info ${streamingStatus === 1 ? "" : streamingStatus === 2 ? "is-vip" : ""}`}>
-               <div className="player_queue-music">
-                  {title} <div className="is-vip_img"></div>
-               </div>
-               {!isRadio && (
+            <div
+               className={`player_queue-music-info ${
+                  item?.streamingStatus === 1 ? "" : item?.streamingStatus === 2 ? "is-vip" : ""
+               }`}
+            >
+               {!isArtist && (
+                  <div className="player_queue-music">
+                     {item?.title} <div className="is-vip_img"></div>
+                  </div>
+               )}
+
+               {!isRadio && !isArtist && (
                   <>
                      <div className="player_queue-name">
-                        {artists &&
-                           artists?.slice(0, 3)?.map((e, index) => {
+                        {item?.artists &&
+                           item?.artists?.slice(0, 3)?.map((e, index) => {
                               let prara = ", "
 
                               if (index === 2) {
                                  prara = "..."
                               }
 
-                              if (artists.length === 1) {
+                              if (item?.artists?.length === 1) {
                                  prara = ""
                               }
-                              if (artists.length === 2 && index === 1) {
+                              if (item?.artists?.length === 2 && index === 1) {
                                  prara = ""
                               }
-                              if (artists.length === 3 && index === 2) {
+                              if (item?.artists?.length === 3 && index === 2) {
                                  prara = ""
                               }
                               return (
@@ -149,9 +214,16 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item }) => {
                      </div>
                   </>
                )}
+               {isArtist && (
+                  <div className="media-content">
+                     <p>Mới Nhất</p>
+                     <h3 className="player_queue-music">{item?.title}</h3>
+                     <h4 className="subtitle">{item?.releaseDate}</h4>
+                  </div>
+               )}
             </div>
          </div>
-         {!isRadio && (
+         {!isRadio && !isArtist && (
             <div className="player_queue-item-right">
                <div className="player_queue-btn player_btn zm-btn">
                   <i className="icon ic-like" />

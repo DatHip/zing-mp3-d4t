@@ -378,6 +378,31 @@
 // Mobile
 @media (max-width: 719px) {
 
+
+  .artist_page-title-deital {
+    order: 1;
+  }
+
+  .artist_page-title-right {
+    float: left;
+    margin-bottom: 2rem;
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  .zm-navbar-menu {
+    gap: 5px;
+  }
+
+  .zm-navbar-item a,
+  .zm-navbar-item span {
+    display: block;
+    padding: 7px 10px;
+  }
+
   .favorite_content-list {
     display: none;
   }

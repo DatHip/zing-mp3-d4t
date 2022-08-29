@@ -36,9 +36,9 @@ const MyMusicPage = () => {
                      <Link to="/mymusic/playlist">PLAYLIST</Link>
                   </div>
                </li>
-               <li className={`zm-navbar-item ${id === "/mymusic/podcast" ? "is-active" : ""}  `}>
+               <li className={`zm-navbar-item ${id === "/mymusic/nghe-si" ? "is-active" : ""}  `}>
                   <div className="navbar-link">
-                     <Link to="/mymusic/podcast">PODCAST</Link>
+                     <Link to="/mymusic/nghe-si">NGHỆ SĨ</Link>
                   </div>
                </li>
             </ul>

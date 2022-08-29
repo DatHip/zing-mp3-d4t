@@ -4,8 +4,6 @@ import { Link } from "react-router-dom"
 import fancyTimeFormat from "../../utils/fancyTimeFormat"
 
 const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFavourite }) => {
-   // const { title, rakingStatus, duration, album, artists } = item
-
    const getRankStatus = (startus) => {
       if (startus === 0) {
          return <span className="material-icons-outlined line">minimize</span>
@@ -45,7 +43,13 @@ const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFav
                   </div>
                </div>
                <div className="zing-chart_item-text">
-                  <div className="zing-chart_item-name">{item?.title}</div>
+                  <div
+                     className={`zing-chart_item-name ${
+                        item?.streamingStatus === 1 ? "" : item?.streamingStatus === 2 ? "is-vip" : ""
+                     }`}
+                  >
+                     {item?.title} <div className="is-vip_img"></div>
+                  </div>
                   <div className="zing-chart_item-artist">
                      {item?.artists &&
                         item?.artists?.slice(0, 3)?.map((e, index) => {

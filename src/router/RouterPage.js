@@ -19,7 +19,13 @@ import NewFeedPageChidlen from "../components/Followpage/NewFeedPageChidlen"
 import MyMusicAll from "../components/MyMusicPage/MyMusicAll"
 import MyMusicSong from "../components/MyMusicPage/MyMusicSong"
 import MyMusicPlayList from "../components/MyMusicPage/MyMusicPlayList"
-import MyMusicPostCast from "../components/MyMusicPage/MyMusicPostCast"
+import MyMusicArtis from "../components/MyMusicPage/MyMusicArtis"
+import ArtistALl from "../components/ArtistPage/ArtistALl"
+import ArtistSong from "../components/ArtistPage/ArtistSong"
+import ArtistAlbum from "../components/ArtistPage/ArtistAlbum"
+import ArtistMv from "../components/ArtistPage/ArtistMv"
+import ArtistSingle from "../components/ArtistPage/ArtistSingle"
+import HubDetailPage from "../components/HubPage/HubDetailPage"
 
 const RouterPage = () => {
    const mainPageRef = useRef()
@@ -46,7 +52,7 @@ const RouterPage = () => {
                      <Route index element={<MyMusicAll></MyMusicAll>}></Route>
                      <Route path="song" element={<MyMusicSong></MyMusicSong>}></Route>
                      <Route path="playlist" element={<MyMusicPlayList></MyMusicPlayList>}></Route>
-                     <Route path="podcast" element={<MyMusicPostCast></MyMusicPostCast>}></Route>
+                     <Route path="nghe-si" element={<MyMusicArtis></MyMusicArtis>}></Route>
                   </Route>
                   <Route index element={<HomePage></HomePage>}></Route>
                   <Route path="/" element={<HomePage></HomePage>}></Route>
@@ -56,14 +62,21 @@ const RouterPage = () => {
                      <Route path=":id" element={<NewFeedPageChidlen></NewFeedPageChidlen>}></Route>
                   </Route>
                   <Route path="/moi-phat-hanh" element={<NewMusicPage></NewMusicPage>}></Route>
-                  <Route path="/hub" element={<HubPage></HubPage>}></Route>
+                  <Route path="/hub/" element={<HubPage></HubPage>}></Route>
+                  <Route path="/hub/detail/:id" element={<HubDetailPage></HubDetailPage>}></Route>
                   <Route path="/top100" element={<Top100Page></Top100Page>}></Route>
                   <Route path="/mv" element={<MvPage></MvPage>}>
                      <Route path=":id" element={<MvPageList></MvPageList>}></Route>
                   </Route>
                   {/*  */}
                   <Route path="/tim-kiem" element={<SearchPage></SearchPage>}></Route>
-                  <Route path="/nghe-si" element={<ArtistPage></ArtistPage>}></Route>
+                  <Route path="/nghe-si/:name" element={<ArtistPage></ArtistPage>}>
+                     <Route index element={<ArtistALl></ArtistALl>}></Route>
+                     <Route path="song" element={<ArtistSong></ArtistSong>}></Route>
+                     <Route path="album" element={<ArtistAlbum></ArtistAlbum>}></Route>
+                     <Route path="mv" element={<ArtistMv></ArtistMv>}></Route>
+                     <Route path="single" element={<ArtistSingle></ArtistSingle>}></Route>
+                  </Route>
                   <Route path="/album" element={<AlbumPage></AlbumPage>}></Route>
                   <Route path="`*" element={<NotFound></NotFound>}></Route>
                </Routes>

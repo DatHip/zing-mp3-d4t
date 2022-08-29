@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from "react"
-import { useGetHomeChart } from "../../api/getHomeChart"
-import LoadingSvg from "../loading/LoadingSvg"
+import React from "react"
+import { useOutletContext } from "react-router"
 import PlayListSelector from "../Selection/PlayListSelector"
 import ItemChartList from "../TopChartPage/ItemChartList"
 
-const MyMusicSong = () => {
-   const [datas, setData] = useState([])
-
-   const { data, status } = useGetHomeChart()
-   useEffect(() => {
-      if (data) {
-         setData(data.data.RTChart.items.slice(0, 30))
-      }
-   }, [status])
-
-   if (datas.length === 0) return <LoadingSvg></LoadingSvg>
+const ArtistSong = () => {
+   const datas = useOutletContext()
+   const dataSelector = datas?.sections?.find((e) => e.sectionType === "song")
 
    return (
       <div>
+         {" "}
          <PlayListSelector
             classAdd="mb-[36px]"
             notRow
@@ -30,15 +22,15 @@ const MyMusicSong = () => {
                   </button>
                </div>
             }
-            title={"Bài Hát"}
+            title={"Danh Sách Bài Hát"}
          >
             <div className="main_topchart mt-2">
                <div className="container_zing-chart">
                   <div className="zing-chart_list pt-2">
-                     {datas &&
-                        datas.length > 0 &&
-                        datas.map((e, index) => {
-                           return <ItemChartList onFavourite isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
+                     {dataSelector &&
+                        dataSelector?.items?.length > 0 &&
+                        dataSelector?.items?.map((e, index) => {
+                           return <ItemChartList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
                         })}
                   </div>
                </div>
@@ -48,4 +40,4 @@ const MyMusicSong = () => {
    )
 }
 
-export default MyMusicSong
+export default ArtistSong

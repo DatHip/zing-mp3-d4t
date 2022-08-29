@@ -18,6 +18,8 @@ export const tmdAPI = {
 
    // get Thể Loại :
    getHubHome: () => `${tmdbEndpoint}/hubhome`,
+   // get Hub Detail:
+   getHubDetail: (id) => `${tmdbEndpoint}/hubdetails/${id}`,
 
    // get Top100Page :
    getTop100Page: () => `${tmdbEndpoint}/top100`,
@@ -28,7 +30,10 @@ export const tmdAPI = {
    // get Category Mv :
    getCategoryMv: (id) => `${tmdbEndpoint}/categorymv/${id}`,
 
-   //  get từ khóa hot :
+   // get getArtistPage:
+   getArtistPage: (id) => `${tmdbEndpoint}/artist/${id}`,
+
+   //  get từ khóa hot  :
    getHotKeyApi: () => `${tmdbEndpoint}/recommendkeyword`,
 
    // lấy key gợi ý :

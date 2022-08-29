@@ -1958,7 +1958,7 @@
         border-radius: 4px;
         transition: 0.2s;
         cursor: pointer;
-        margin-bottom: 1rem;
+        // margin-bottom: 1rem;
 
         &:hover {
           background-color: hsla(0, 0%, 100%, 0.2);
@@ -2381,7 +2381,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 3rem;
+    margin-top: 1rem;
     margin-bottom: .6rem;
 
     .personal_user-img {
@@ -2874,7 +2874,7 @@
 
   .zing-chart_item-center,
   .zing-chart_item-right {
-    width: 20%;
+    width: 26%;
     display: flex;
     align-items: center;
   }
@@ -4273,4 +4273,81 @@
 .zing-chart_item .player_queue-btn:first-child .playing_title-hover {
   top: -130%;
   left: -48px;
+}
+
+.artist-mv {
+
+  .col {
+    margin-bottom: 2rem;
+  }
+
+  .main_mv-item-time {
+    display: inline-block;
+    font-size: 12px;
+    line-height: normal;
+    color: #fff;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    padding: 3px 5px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .7);
+  }
+
+  .todaychoice_list-item-title {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+
+    .main_mv-avatr {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 999px;
+
+      img {
+        border-radius: 99rem;
+      }
+    }
+
+    .main_title-text {
+      font-size: 1.4rem;
+      font-weight: 500;
+      height: auto;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+
+    .main_subtitle {
+      font-size: 1.2rem;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      height: auto;
+      overflow: hidden;
+    }
+
+    .main_mv-info-title {
+      margin-left: 1rem;
+    }
+  }
+
+}
+
+.zm-brand-vip {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+
+  .icon.ic-svg-vip-label {
+    width: 39px;
+    height: 18px;
+    background-image: url(https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.7.26/static/media/vip-label.3dd6ac7e.svg);
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }

@@ -8,10 +8,10 @@ const RaidoItem = memo(({ item, className1 }) => {
       <div className={className1}>
          <a className="xones_list-item-link main-page_list-item main_page-hover" href="#">
             <div className="xones_list-item-link-img main-page_list-item_img">
-               <img src={program.thumbnail} alt="" />
+               <img src={item?.program?.thumbnail} alt="" />
             </div>
             <div className="xones_list-item-link-logo">
-               <LazyLoadImage src={thumbnail} alt="" />
+               <LazyLoadImage src={item?.thumbnail} alt="" />
             </div>
             <div className="xones_list-item-link-logo-live">
                <LazyLoadImage src="https://zmp3-static.zadn.vn/skins/zmp3-v6.1/images/icons/live-tag.svg" alt="" />
@@ -25,11 +25,11 @@ const RaidoItem = memo(({ item, className1 }) => {
             </div>
          </a>
          <div className="xones_list-item-title">
-            <a className="main_title-text" title="${e.host.name}" href="#">
-               {host.name}
+            <a className="main_title-text" href="#">
+               {item?.host?.name}
             </a>
             <div className="main_subtitle">
-               <p>{activeUsers} đang nghe </p>
+               <p>{item?.activeUsers} đang nghe </p>
             </div>
          </div>
       </div>

@@ -81,6 +81,11 @@ li {
 }
 
 :root {
+  --offset-x-second: calc(0px - ((230px - (230px * var(--scale-rate-second))) / 2 + 20px));
+  --offset-x-third: calc(0px - ((230px - (230px * var(--scale-rate-third))) / 2 + 40px));
+  --scale-rate-second: calc(196 / 230);
+  --scale-rate-third: calc(162 / 230);
+
   --image-queue-loader: url(https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/backgrounds/bg-empty-dark.svg); // loading thanh left
 
   --progressbar-active-bg: #fff;

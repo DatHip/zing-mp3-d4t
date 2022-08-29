@@ -2,7 +2,6 @@ import React, { memo } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import LoadingSkeleton from "../loading/LoadingSkeleton"
-import { LazyLoadImage } from "react-lazy-load-image-component"
 
 const StyleDiv = styled.div`
    .player_btn.like {
@@ -45,13 +44,11 @@ const CarouselItem = memo(
       item = {},
    }) => {
       const { title, encodeId, artists, sortDescription, thumbnailM } = item
-      // const img = thumbnailM.slice(thumbnailM.lastIndexOf("/"))
 
       return (
          <StyleDiv className={` ${class1}`} title={sortDescription}>
             <div className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}>
                <div className="want_list-item-link main-page_list-item_img">
-                  {/* {isSwiper ? <img src={thumbnailM} alt={title} /> : <LazyLoadImage src={thumbnailM} alt={title} />} */}
                   <img src={thumbnailM || item.thumbnail} alt={title} />
                </div>
                {!isHiddenButton && (

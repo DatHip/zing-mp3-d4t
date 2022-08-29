@@ -17,7 +17,7 @@ const MyMusicPlayList = memo(() => {
       <div className="main_songnew main-page-item active">
          <PlayListSelector title={"PlayList"}>
             {datas?.length > 0 &&
-               datas.slice(0, 8).map((e, index) => {
+               datas.slice(0, 20).map((e, index) => {
                   let classGird = "col l-2-4 m-3 c-5"
 
                   return <CarouselItem key={e.encodeId} artis={true} desc={false} class1={classGird} item={e}></CarouselItem>

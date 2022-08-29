@@ -7,10 +7,15 @@ const MvItem = memo(({ data }) => {
 
    return (
       <div className="col l-4 m-4 c-6 mv-items">
-         <a className="todaychoice_list-item-link main-page_list-item main_page-hover" href="#">
+         <a className="todaychoice_list-item-link main-page_list-item main_page-hover relative" href="#">
             <div className="todaychoice_list-item-link main-page_list-item_img" href="#">
                <figure>
                   <img src={thumbnailM} alt={title} />
+                  {data.streamingStatus === 2 && (
+                     <div className="zm-brand-vip">
+                        <i className="icon ic- z-ic-svg ic-svg-vip-label"></i>
+                     </div>
+                  )}
                </figure>
             </div>
             <div className="recently_list-item_hover">

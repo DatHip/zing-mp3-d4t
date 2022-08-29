@@ -2,7 +2,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import formartTimeNewFeed from "../../utils/formartTimeNewFeed"
-import MyComment from "../MVpage/MyComment"
 import ReactPlayer from "react-player"
 
 const PortalStyle = styled.div`
@@ -214,7 +213,7 @@ const PortalMVpage = ({ Portal, hide, data }) => {
                      <button onClick={() => hide()} id="btn-close-feed" className="zm-btn close-feed-modal button" tabIndex="0">
                         <i className="icon ic-svg-close-white"></i>
                      </button>
-                     <div className="flex row no-gutters  h-full overflow-y-auto">
+                     <div className="flex row no-gutters  h-full overflow-y-auto overflow-x-hidden">
                         <div className="col l-7 m-12 c-12  relative h-full feed-detail">
                            {content.type === "album" && (
                               <div>

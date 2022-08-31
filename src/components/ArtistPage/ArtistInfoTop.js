@@ -129,11 +129,15 @@ const ArtistInfoTop = memo(({ data }) => {
             <div className="artist_page-title-left artist_page-title-deital">
                <h3 className="artist-name title">{data?.name}</h3>
                <div>
-                  <span className="content-detail" dangerouslySetInnerHTML={{ __html: data?.sortBiography }}></span>
+                  {data?.sortBiography.length > 0 && (
+                     <>
+                        <span className="content-detail" dangerouslySetInnerHTML={{ __html: data?.sortBiography }}></span>
 
-                  <span onClick={() => show()} className="read-more ml-2">
-                     ...Xem Thêm
-                  </span>
+                        <span onClick={() => show()} className="read-more ml-2">
+                           ...Xem Thêm
+                        </span>
+                     </>
+                  )}
 
                   <Portal>
                      <PortalStyle>

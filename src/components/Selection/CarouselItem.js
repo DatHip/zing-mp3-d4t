@@ -47,7 +47,10 @@ const CarouselItem = memo(
 
       return (
          <StyleDiv className={` ${class1}`} title={sortDescription}>
-            <div className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}>
+            <Link
+               to={`/album/${encodeId}`}
+               className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
+            >
                <div className="want_list-item-link main-page_list-item_img">
                   <img src={thumbnailM || item.thumbnail} alt={title} />
                </div>
@@ -68,10 +71,12 @@ const CarouselItem = memo(
                      </div>
                   </div>
                )}
-            </div>
+            </Link>
             {!hiddenTitle && (
                <div className="want_list-item-title">
-                  <div className="main_title-text">{title}</div>
+                  <Link to={`/album/${encodeId}`} className="main_title-text">
+                     {title}
+                  </Link>
                   <div className="main_subtitle">
                      {artis && (
                         <>
@@ -95,7 +100,7 @@ const CarouselItem = memo(
 
                                  return (
                                     <span key={index}>
-                                       <Link to={"/"}>{e.name}</Link>
+                                       <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
                                        {prara}
                                     </span>
                                  )

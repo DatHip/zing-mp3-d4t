@@ -17,7 +17,7 @@ const ArtistALl = () => {
    return (
       <div>
          <div className="">
-            <PlayListSelector notRow classAdd2="w-full" title={dataSelector.title}>
+            <PlayListSelector notRow classAdd2="w-full" title={dataSelector?.title}>
                <div className="flex items-center">
                   <div className="m-none">
                      <SliderShow data={dataSelector}></SliderShow>

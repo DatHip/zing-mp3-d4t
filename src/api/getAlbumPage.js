@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { tmdAPI } from "../config"
 
-export const getArtistPage = (name) => {
+export const getAlbumPage = (id) => {
    return useQuery(
-      ["getArtistPage"],
+      ["GetAlbumPage"],
       async () => {
-         const data = await axios.get(tmdAPI.getArtistPage(name))
+         const data = await axios.get(tmdAPI.getAlbumPage(id))
          return data.data
       },
-      { keepPreviousData: true, getNextPageParam: true }
+      { keepPreviousData: true }
    )
 }

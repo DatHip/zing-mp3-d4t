@@ -100,7 +100,7 @@ const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
             ) : (
                <div className="want_list-item-link shadow main-page_list-item_img !rounded-full ">
                   <figure>
-                     <img src={data.thumbnailM} alt="" />
+                     <img src={data.thumbnailM || data.thumbnail} alt="" />
                   </figure>
                </div>
             )}
@@ -126,7 +126,12 @@ const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
                <>
                   <div className="subtitle">
                      <span className="followers">
-                        {data?.totalFollow > 10000 ? data?.totalFollow.toString().slice(0, -3) + "K" : data.totalFollow} quan tâm
+                        {data?.totalFollow > 1000000
+                           ? data?.totalFollow.toString().slice(0, -6) + "M"
+                           : data?.totalFollow > 10000
+                           ? data?.totalFollow.toString().slice(0, -3) + "K"
+                           : data.totalFollow}{" "}
+                        quan tâm
                      </span>
                   </div>
                   <div className="item-mvArits-footer mt-[10px]">

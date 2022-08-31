@@ -33,11 +33,18 @@ export const tmdAPI = {
    // get getArtistPage:
    getArtistPage: (id) => `${tmdbEndpoint}/artist/${id}`,
 
+   // get getAlbumPage :
+   getAlbumPage: (id) => `${tmdbEndpoint}/playlist/${id}`,
+
+   getSuggestedAlbum: (id) => `${tmdbEndpoint}/suggestedplaylists/${id}`,
+
    //  get từ khóa hot  :
    getHotKeyApi: () => `${tmdbEndpoint}/recommendkeyword`,
 
    // lấy key gợi ý :
    getHotSuggestionApi: (keyword) => `${tmdbEndpoint}/suggestionkeyword?keyword=${keyword}`,
+
+   getSearchByType: (keyword, type) => `${tmdbEndpoint}/searchtype?keyword=${keyword}&type=${type}`,
 
    //  bắt đầu search :
    getSearchAllKeyApi: (keyword) => `${tmdbEndpoint}/searchall?keyword=${keyword}`,

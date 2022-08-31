@@ -4,7 +4,7 @@ import { useCallback } from "react"
 const SliderShow = memo(({ data }) => {
    const datas = data?.items
 
-   let imgIndex = 3
+   let imgIndex = 2
    const slideShow = useCallback(() => {
       const slideImgs = document?.querySelectorAll(".container__slide-item")
       const slideImgFirst = document.querySelector(".container__slide-item.first")

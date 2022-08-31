@@ -71,7 +71,7 @@ const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFav
 
                            return (
                               <span key={index}>
-                                 <Link to={"/"}>{e.name}</Link>
+                                 <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
                                  {prara}
                               </span>
                            )

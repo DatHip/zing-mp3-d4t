@@ -146,6 +146,24 @@
 }
 
 @media (max-width: 1000px) {
+
+  .main_search.main_mv-header {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0rem !important;
+    gap: 6px;
+
+    h3 {
+      border-right: none !important;
+
+    }
+
+    .main_mv-header-item {
+      padding: 1rem 1.4rem !important;
+    }
+  }
+
+
   .main_page {
     overflow-x: clip;
   }

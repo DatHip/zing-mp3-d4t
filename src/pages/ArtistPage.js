@@ -1,10 +1,13 @@
+import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Outlet, useParams } from "react-router"
 import { NavLink } from "react-router-dom"
 import styled from "styled-components"
-import { getArtistPage } from "../api/getAritistPage"
+
 import ArtistInfoTop from "../components/ArtistPage/ArtistInfoTop"
 import LoadingSvg from "../components/loading/LoadingSvg"
+import { tmdAPI } from "../config"
+import scrollTop from "../utils/scrollToTop"
 
 const ArtistPageStyles = styled.div`
    .avatar {
@@ -43,16 +46,18 @@ const ArtistPageStyles = styled.div`
 const ArtistPage = () => {
    const { name } = useParams()
    const [datas, setData] = useState([])
-   const { data, status, error } = getArtistPage(name)
+
+   const fetchData = async () => {
+      const data = await axios.get(tmdAPI.getArtistPage(name))
+      setData(data.data.data)
+   }
 
    useEffect(() => {
-      if (data) {
-         setData(data.data)
-      }
-   }, [status])
-   if (datas?.length === 0) return <LoadingSvg></LoadingSvg>
+      scrollTop()
+      fetchData()
+   }, [name])
 
-   if (error) return <div>Loi</div>
+   if (datas?.length === 0) return <LoadingSvg></LoadingSvg>
 
    return (
       <ArtistPageStyles className="text-white mt-5 ">

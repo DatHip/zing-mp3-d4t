@@ -33,12 +33,14 @@ function App() {
    }, [])
 
    return (
-      <div className="main" style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}>
-         <Header></Header>
-         <Siderleft></Siderleft>
-         <BottomPlay></BottomPlay>
-         <RouterPage></RouterPage>
-      </div>
+      <>
+         <div className="main" style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}>
+            <Header></Header>
+            <Siderleft></Siderleft>
+            <BottomPlay></BottomPlay>
+            <RouterPage></RouterPage>
+         </div>
+      </>
    )
 }
 

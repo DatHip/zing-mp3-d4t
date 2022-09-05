@@ -397,17 +397,35 @@
 @media (max-width: 719px) {
 
 
+  .zm-navbar-menu {
+    .zm-navbar-item {
+      font-size: 10px;
+    }
+  }
+
+  .artist_page-title-deital {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .artist-name {
+    font-size: 30px !important;
+  }
+
   .artist_page-title-deital {
     order: 1;
   }
 
   .artist_page-title-right {
-    float: left;
+    float: none;
     margin-bottom: 2rem;
 
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 120px !important;
+      margin: auto !important;
+      height: 120px !important;
     }
   }
 

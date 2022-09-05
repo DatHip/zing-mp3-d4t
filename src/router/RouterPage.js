@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react"
+import React, { memo, useEffect, useRef, useState } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
 import AlbumPage from "../pages/AlbumPage"
 import ArtistPage from "../pages/ArtistPage"
@@ -31,9 +31,11 @@ import SearchPageArtist from "../components/SearchPage/SearchPageArtist"
 import SearchPageMv from "../components/SearchPage/SearchPageMv"
 import SearchPageSong from "../components/SearchPage/SearchPageSong"
 import SearchPagePlaylist from "../components/SearchPage/SearchPagePlaylist"
+import VideoPopUp from "../pages/VideoPopUp"
 
 const RouterPage = () => {
    const mainPageRef = useRef()
+
    useEffect(() => {
       const handleScroll = (e) => {
          if (mainPageRef.current.scrollTop > 30) {
@@ -53,6 +55,7 @@ const RouterPage = () => {
          <div className="container">
             <Routes location={location} key={location.pathname}>
                {/*  */}
+               <Route path="/video-clip/:id" element={<VideoPopUp></VideoPopUp>}></Route>
                <Route path="/mymusic/" element={<MyMusicPage></MyMusicPage>}>
                   <Route index element={<MyMusicAll></MyMusicAll>}></Route>
                   <Route path="song" element={<MyMusicSong></MyMusicSong>}></Route>
@@ -97,7 +100,7 @@ const RouterPage = () => {
                {/*  */}
                <Route path="/album/:id" element={<AlbumPage></AlbumPage>}></Route>
                {/*  */}
-               <Route path="`*" element={<NotFound></NotFound>}></Route>
+               <Route path="*" element={<NotFound></NotFound>}></Route>
             </Routes>
          </div>
       </div>

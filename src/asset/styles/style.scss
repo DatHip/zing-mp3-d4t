@@ -1220,94 +1220,348 @@
   }
 }
 
-// Main Page
 .main-page {
   margin-top: 8rem;
   margin-right: 33rem;
   overflow-y: scroll;
   margin-bottom: 9rem;
+}
 
-  .container {
-    padding: 0rem 6rem 6rem;
+// Main Page
+
+
+
+.container {
+  padding: 0rem 6rem 6rem;
+}
+
+.slider_list {
+  &:hover {
+
+    .slider_list-btn-left,
+    .slider_list-btn-right {
+      opacity: 1;
+    }
   }
 
-  .slider_list {
-    &:hover {
+  .slider_list-item {
+    padding: 0 1.5rem;
+    cursor: pointer;
 
-      .slider_list-btn-left,
-      .slider_list-btn-right {
-        opacity: 1;
+    img {
+      border-radius: 8px;
+    }
+  }
+}
+
+.slick-list {
+  margin: 0 -1.5rem;
+}
+
+.slider_list-btn-left,
+.slider_list-btn-right {
+  display: flex;
+  opacity: 0;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9;
+  padding: 1.4rem;
+  border-radius: 999px;
+  outline: none;
+  border: none;
+  background-color: hsla(0, 0%, 100%, 0.3);
+  box-shadow: 0 2px 4px 0 rgba(226, 102, 102, 0.3);
+  color: var(--white);
+  cursor: pointer;
+  transition: opacity 0.2s ease-in, background-color 0.1s;
+
+  &:hover {
+    background-color: hsla(0, 0%, 100%, 0.2);
+  }
+
+  &:active {
+    background-color: hsla(0, 0%, 100%, 0.5);
+  }
+
+  span {
+    font-size: 2.2rem;
+    font-weight: 200;
+  }
+}
+
+.slider_list-btn-left {
+  left: 2.2rem;
+}
+
+.slider_list-btn-right {
+  right: 2.2rem;
+}
+
+// Xem Gần Đây
+.container_recently {
+  margin-top: 3.6rem;
+
+  .m-2 {
+    margin: unset;
+  }
+
+}
+
+// text
+.recently_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+
+  p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: capitalize;
+  }
+
+  .playlist_selector-all {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    justify-content: center;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transform: 0.2s;
+
+    &:hover {
+      color: var(--link-text-hover);
+    }
+  }
+}
+
+// Có Thể Bạn Muốn NGhe
+.container_want {
+  margin-top: 3.6rem;
+
+  .want_list {
+    .want_list-item {
+
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .recently_btn-hover-play {
+        margin: 0 1.2rem;
       }
+
+
+
+      .want_list-item-link {
+        position: relative;
+      }
+
+    }
+  }
+}
+
+// Lựa Chọn Hôm Nay
+.container_todaychoice {
+  margin-top: 3.6rem;
+
+  .recently_btn-hover-play {
+    margin: 0 1.6rem;
+  }
+
+  .main-page_list-item_img {
+    max-height: 224px;
+  }
+}
+
+//XONE's CORNER
+.container_xones {
+  margin-top: 3.6rem;
+
+  .recently_btn-hover-play {
+    margin: 0 1.6rem;
+  }
+
+
+}
+
+// Radio
+.container_radio {
+  margin-top: 3.6rem;
+
+  .main_title-text {
+    margin-top: 1.6rem;
+    margin-bottom: 0;
+    cursor: context-menu;
+
+    &:hover {
+      color: unset;
+    }
+  }
+
+  .xones_list-item-link {
+    border: 999px;
+
+    .xones_list-item-link-img {
+      border-radius: 999px;
+      border: 4px solid red;
     }
 
-    .slider_list-item {
-      padding: 0 1.5rem;
-      cursor: pointer;
+    .recently_list-item_hover {
+      border-radius: 999px;
+    }
+
+    .xones_list-item-link-logo {
+      position: absolute;
+      border: 999px;
+      top: 85.3%;
+      left: 85.3%;
+      transform: translate(-60%, -60%);
+      z-index: 100;
 
       img {
-        border-radius: 8px;
+        border-radius: 999px;
+        border: 2px solid var(--layout-bg);
+        min-width: 55px;
+        height: auto;
+        transform: scale(1) !important;
+      }
+    }
+
+    .xones_list-item-link-logo-live {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      bottom: 0;
+      z-index: 100;
+
+      img {
+        transform: scale(1) !important;
       }
     }
   }
 
-  .slick-list {
-    margin: 0 -1.5rem;
+  .xones_list-item-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+// Nhac Mới Mỗi Ngày
+.container_everyday {
+  margin-top: 3.6rem;
+
+  .recently_btn-hover-play {
+    margin: 0 1.6rem;
   }
 
-  .slider_list-btn-left,
-  .slider_list-btn-right {
+  .main-page_list-item_img {
+    // height: 224px;
+  }
+}
+
+// Chart Tuần
+.container_chart-weekend {
+  margin-top: 2rem;
+
+  .main-page_list-item_img {
+    // height: 110px;
+  }
+
+  .m-4 {
+    margin: unset;
+  }
+}
+
+// Nghệ sĩ nỗi bật
+.container_choice {
+  margin-top: 3.6rem;
+
+  .choice_list {
+    position: relative;
+
+    &:hover {
+
+      .choice-btn-left,
+      .choice-btn-right {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  .choice_list-item-link {
+    display: block;
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+    transition: 0.2s ease-out;
+
+    &:hover {
+      filter: brightness(0.75);
+    }
+  }
+
+  .choice-btn-left,
+  .choice-btn-right {
     display: flex;
-    opacity: 0;
+    opacity: 0.2;
     align-items: center;
     justify-content: center;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 9;
-    padding: 1.4rem;
+    padding: 1.2rem;
     border-radius: 999px;
     outline: none;
     border: none;
-    background-color: hsla(0, 0%, 100%, 0.3);
+    background-color: white;
     box-shadow: 0 2px 4px 0 rgba(226, 102, 102, 0.3);
-    color: var(--white);
+    color: black;
     cursor: pointer;
-    transition: opacity 0.2s ease-in, background-color 0.1s;
+    transition: opacity 0.2s ease-in, background-color 0.2s;
 
     &:hover {
-      background-color: hsla(0, 0%, 100%, 0.2);
+      background-color: rgba(255, 255, 255, 0.8);
     }
 
     &:active {
-      background-color: hsla(0, 0%, 100%, 0.5);
+      background-color: rgba(230, 230, 230, 0.6);
     }
 
     span {
-      font-size: 2.2rem;
-      font-weight: 200;
+      font-size: 2rem;
+      font-weight: 300;
     }
   }
 
-  .slider_list-btn-left {
-    left: 2.2rem;
+  .choice-btn-left {
+    left: 1rem;
   }
 
-  .slider_list-btn-right {
-    right: 2.2rem;
+  .choice-btn-right {
+    right: 1rem;
+  }
+}
+
+// Top 100
+.container_top100 {
+  margin-top: 3.6rem;
+
+  .recently_btn-hover-play {
+    margin: 0 1.6rem;
   }
 
-  // Xem Gần Đây
-  .container_recently {
-    margin-top: 3.6rem;
-
-    .m-2 {
-      margin: unset;
-    }
-
+  .main-page_list-item_img {
+    // height: 224px;
   }
 
-  // text
-  .recently_title {
+  .top100_title {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1316,12 +1570,104 @@
     p {
       font-size: 2rem;
       font-weight: 700;
-      color: var(--text-primary);
-      text-transform: capitalize;
     }
 
-    .playlist_selector-all {
-      cursor: pointer;
+    a {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      justify-content: center;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transform: 0.2s;
+
+      &:hover {
+        color: var(--link-text-hover);
+      }
+    }
+  }
+}
+
+// Vì bạn đã quan tâm
+.container_care {
+  margin-top: 3.6rem;
+
+  .recently_btn-hover-play {
+    margin: 0 1.6rem;
+  }
+}
+
+.care_title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  .care_title-text {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
+
+  a {
+    font-size: 1.8rem;
+    font-weight: 700;
+    transition: 0.2s;
+    color: var(--text-primary);
+
+    &:hover {
+      color: var(--link-text-hover);
+    }
+  }
+
+  .care_title-img {
+    border-radius: 5px;
+    width: 50px;
+    height: auto;
+    margin-right: 1.2rem;
+
+    img {
+      border-radius: 6px;
+    }
+  }
+}
+
+// Mới Phát Hành
+.container_release {
+  margin-top: 3.6rem;
+
+  .want_list.row {
+    display: block;
+  }
+
+  .main_subtitle {
+    display: block;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    height: 21px;
+    overflow: hidden;
+  }
+
+  .release_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+
+    p {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    a {
       display: flex;
       align-items: center;
       font-size: 14px;
@@ -1336,174 +1682,95 @@
     }
   }
 
-  // Có Thể Bạn Muốn NGhe
-  .container_want {
-    margin-top: 3.6rem;
+  .release_list {
+    &:hover {
 
-    .want_list {
-      .want_list-item {
-
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-
-        .recently_btn-hover-play {
-          margin: 0 1.2rem;
-        }
-
-
-
-        .want_list-item-link {
-          position: relative;
-        }
-
-      }
-    }
-  }
-
-  // Lựa Chọn Hôm Nay
-  .container_todaychoice {
-    margin-top: 3.6rem;
-
-    .recently_btn-hover-play {
-      margin: 0 1.6rem;
-    }
-
-    .main-page_list-item_img {
-      max-height: 224px;
-    }
-  }
-
-  //XONE's CORNER
-  .container_xones {
-    margin-top: 3.6rem;
-
-    .recently_btn-hover-play {
-      margin: 0 1.6rem;
-    }
-
-
-  }
-
-  // Radio
-  .container_radio {
-    margin-top: 3.6rem;
-
-    .main_title-text {
-      margin-top: 1.6rem;
-      margin-bottom: 0;
-      cursor: context-menu;
-
-      &:hover {
-        color: unset;
+      .release-btn-left,
+      .release-btn-right {
+        opacity: 1 !important;
       }
     }
 
-    .xones_list-item-link {
-      border: 999px;
-
-      .xones_list-item-link-img {
-        border-radius: 999px;
-        border: 4px solid red;
-      }
-
-      .recently_list-item_hover {
-        border-radius: 999px;
-      }
-
-      .xones_list-item-link-logo {
-        position: absolute;
-        border: 999px;
-        top: 85.3%;
-        left: 85.3%;
-        transform: translate(-60%, -60%);
-        z-index: 100;
-
-        img {
-          border-radius: 999px;
-          border: 2px solid var(--layout-bg);
-          min-width: 55px;
-          height: auto;
-          transform: scale(1) !important;
-        }
-      }
-
-      .xones_list-item-link-logo-live {
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, 50%);
-        bottom: 0;
-        z-index: 100;
-
-        img {
-          transform: scale(1) !important;
-        }
-      }
-    }
-
-    .xones_list-item-title {
+    .release_list-item {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-  }
-
-  // Nhac Mới Mỗi Ngày
-  .container_everyday {
-    margin-top: 3.6rem;
-
-    .recently_btn-hover-play {
-      margin: 0 1.6rem;
-    }
-
-    .main-page_list-item_img {
-      // height: 224px;
-    }
-  }
-
-  // Chart Tuần
-  .container_chart-weekend {
-    margin-top: 2rem;
-
-    .main-page_list-item_img {
-      // height: 110px;
-    }
-
-    .m-4 {
-      margin: unset;
-    }
-  }
-
-  // Nghệ sĩ nỗi bật
-  .container_choice {
-    margin-top: 3.6rem;
-
-    .choice_list {
-      position: relative;
-
-      &:hover {
-
-        .choice-btn-left,
-        .choice-btn-right {
-          opacity: 1 !important;
-        }
-      }
-    }
-
-    .choice_list-item-link {
-      display: block;
-      padding-left: 1.4rem;
-      padding-right: 1.4rem;
+      justify-content: flex-start;
+      padding: 1.6rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px 0 var(--main-box-shadow);
+      background-color: var(--box-item-bg);
+      color: var(--text-primary);
+      cursor: pointer;
+      margin: 0 14px;
       transition: 0.2s ease-out;
 
       &:hover {
-        filter: brightness(0.75);
+        opacity: 0.8;
+      }
+
+      .release_list-item-left {
+        position: relative;
+        margin-right: 1.2rem;
+      }
+
+      .release_list-item-img {
+        width: 120px;
+        height: auto;
+      }
+
+      .main-page_list-item_img {}
+
+      .release_list-item-right {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+
+        .main_title-text {
+          font-size: 1.6rem;
+          margin: 0;
+          margin-bottom: 3px;
+        }
+
+        .release_list-item-right-bottom {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          width: 100%;
+
+          .release_list-item-chart {
+            opacity: 0.4;
+            -webkit-text-stroke: 1px #fff;
+            font-size: 40px;
+            font-weight: 900;
+            color: transparent;
+            line-height: 1;
+            font-family: "Roboto", sans-serif;
+          }
+
+          .release_list-item-date {
+            color: var(--text-secondary);
+          }
+        }
       }
     }
 
-    .choice-btn-left,
-    .choice-btn-right {
+    .release_list-item-last {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: calc(120px + 16px + 16px);
+
+      span {
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: 1.6rem;
+        pointer-events: none;
+      }
+    }
+
+    .release-btn-left,
+    .release-btn-right {
       display: flex;
       opacity: 0.2;
       align-items: center;
@@ -1536,492 +1803,228 @@
       }
     }
 
-    .choice-btn-left {
+    .release-btn-left {
       left: 1rem;
     }
 
-    .choice-btn-right {
+    .release-btn-right {
       right: 1rem;
     }
   }
+}
 
-  // Top 100
-  .container_top100 {
-    margin-top: 3.6rem;
+// Nghệ sĩ yêu thích
+.container_favorite-artist {
+  margin-top: 3.6rem;
 
-    .recently_btn-hover-play {
-      margin: 0 1.6rem;
-    }
+}
 
-    .main-page_list-item_img {
-      // height: 224px;
-    }
+.favorite_list-item {
+  transition: .3s linear;
 
-    .top100_title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.6rem;
-
-      p {
-        font-size: 2rem;
-        font-weight: 700;
-      }
-
-      a {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        justify-content: center;
-        font-weight: 500;
-        color: var(--text-secondary);
-        transform: 0.2s;
-
-        &:hover {
-          color: var(--link-text-hover);
-        }
-      }
-    }
-  }
-
-  // Vì bạn đã quan tâm
-  .container_care {
-    margin-top: 3.6rem;
-
-    .recently_btn-hover-play {
-      margin: 0 1.6rem;
-    }
-  }
-
-  .care_title {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    .care_title-text {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      flex-direction: column;
-    }
-
-    h3 {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-secondary);
-    }
-
-    a {
-      font-size: 1.8rem;
-      font-weight: 700;
-      transition: 0.2s;
-      color: var(--text-primary);
-
-      &:hover {
-        color: var(--link-text-hover);
-      }
-    }
-
-    .care_title-img {
-      border-radius: 5px;
-      width: 50px;
-      height: auto;
-      margin-right: 1.2rem;
-
-      img {
-        border-radius: 6px;
-      }
-    }
-  }
-
-  // Mới Phát Hành
-  .container_release {
-    margin-top: 3.6rem;
-
-    .want_list.row {
-      display: block;
-    }
-
-    .main_subtitle {
-      display: block;
-      display: -webkit-box;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      height: 21px;
-      overflow: hidden;
-    }
-
-    .release_title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.6rem;
-
-      p {
-        font-size: 2rem;
-        font-weight: 700;
-      }
-
-      a {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        justify-content: center;
-        font-weight: 500;
-        color: var(--text-secondary);
-        transform: 0.2s;
-
-        &:hover {
-          color: var(--link-text-hover);
-        }
-      }
-    }
-
-    .release_list {
-      &:hover {
-
-        .release-btn-left,
-        .release-btn-right {
-          opacity: 1 !important;
-        }
-      }
-
-      .release_list-item {
-        display: flex;
-        justify-content: flex-start;
-        padding: 1.6rem;
-        border-radius: 4px;
-        box-shadow: 0 2px 10px 0 var(--main-box-shadow);
-        background-color: var(--box-item-bg);
-        color: var(--text-primary);
-        cursor: pointer;
-        margin: 0 14px;
-        transition: 0.2s ease-out;
-
-        &:hover {
-          opacity: 0.8;
-        }
-
-        .release_list-item-left {
-          position: relative;
-          margin-right: 1.2rem;
-        }
-
-        .release_list-item-img {
-          width: 120px;
-          height: auto;
-        }
-
-        .main-page_list-item_img {}
-
-        .release_list-item-right {
-          flex: 1;
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          flex-direction: column;
-
-          .main_title-text {
-            font-size: 1.6rem;
-            margin: 0;
-            margin-bottom: 3px;
-          }
-
-          .release_list-item-right-bottom {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            width: 100%;
-
-            .release_list-item-chart {
-              opacity: 0.4;
-              -webkit-text-stroke: 1px #fff;
-              font-size: 40px;
-              font-weight: 900;
-              color: transparent;
-              line-height: 1;
-              font-family: "Roboto", sans-serif;
-            }
-
-            .release_list-item-date {
-              color: var(--text-secondary);
-            }
-          }
-        }
-      }
-
-      .release_list-item-last {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: calc(120px + 16px + 16px);
-
-        span {
-          color: var(--text-primary);
-          font-weight: 700;
-          font-size: 1.6rem;
-          pointer-events: none;
-        }
-      }
-
-      .release-btn-left,
-      .release-btn-right {
-        display: flex;
-        opacity: 0.2;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 9;
-        padding: 1.2rem;
-        border-radius: 999px;
-        outline: none;
-        border: none;
-        background-color: white;
-        box-shadow: 0 2px 4px 0 rgba(226, 102, 102, 0.3);
-        color: black;
-        cursor: pointer;
-        transition: opacity 0.2s ease-in, background-color 0.2s;
-
-        &:hover {
-          background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        &:active {
-          background-color: rgba(230, 230, 230, 0.6);
-        }
-
-        span {
-          font-size: 2rem;
-          font-weight: 300;
-        }
-      }
-
-      .release-btn-left {
-        left: 1rem;
-      }
-
-      .release-btn-right {
-        right: 1rem;
-      }
-    }
-  }
-
-  // Nghệ sĩ yêu thích
-  .container_favorite-artist {
-    margin-top: 3.6rem;
-
-  }
-
-  .favorite_list-item {
-    transition: .3s linear;
-
-    &.is-hub {
-      .main_blur-bg {
-        background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5) 85%) !important;
-      }
-
-      .favorite_content-name {
-        font-size: 18px;
-        text-transform: uppercase;
-
-      }
-
-      .favorite_content-list {
-        justify-content: flex-start;
-      }
-
-      .favorite_content-img {
-        width: 20% !important;
-      }
-    }
-
-    .recently_btn-hover-play {
-      margin: 0 2.6rem 5rem;
-    }
-
-    .favorite_content {
-      padding: 0 15px;
-      position: absolute;
-      width: 100%;
-      bottom: 15px;
-      z-index: 100;
-
-      .favorite_content-title {
-        color: var(--white);
-        font-size: 12px;
-        letter-spacing: 1px;
-        font-weight: 700;
-      }
+  &.is-hub {
+    .main_blur-bg {
+      background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5) 85%) !important;
     }
 
     .favorite_content-name {
-      font-weight: 700;
-      font-size: 22px;
-      color: var(--white);
-      letter-spacing: -1px;
-      text-overflow: ellipsis;
-      margin-bottom: 8px;
+      font-size: 18px;
+      text-transform: uppercase;
 
     }
 
     .favorite_content-list {
-      img {
-        transform: scale(1) !important;
-        border-radius: 6px;
+      justify-content: flex-start;
+    }
+
+    .favorite_content-img {
+      width: 20% !important;
+    }
+  }
+
+  .recently_btn-hover-play {
+    margin: 0 2.6rem 5rem;
+  }
+
+  .favorite_content {
+    padding: 0 15px;
+    position: absolute;
+    width: 100%;
+    bottom: 15px;
+    z-index: 100;
+
+    .favorite_content-title {
+      color: var(--white);
+      font-size: 12px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+  }
+
+  .favorite_content-name {
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: -1px;
+    text-overflow: ellipsis;
+    margin-bottom: 8px;
+
+  }
+
+  .favorite_content-list {
+    img {
+      transform: scale(1) !important;
+      border-radius: 6px;
+    }
+  }
+}
+
+
+// Zing Chart
+.container_zing-chart {
+  margin-top: .5rem;
+  border-radius: 6px;
+  background: url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.7.20/static/media/bg-chart.fd766403.jpg') top / cover no-repeat;
+
+  .material-icons {
+    font-size: 3.4rem;
+    // color: var(--purple-primary);
+  }
+
+  .container_zing-chart-pos {
+    margin-top: 3rem;
+    background-image: var(--linear-gradient-bg);
+    border-radius: 6px;
+    opacity: 0.96;
+    padding: 2rem;
+    z-index: -2;
+    color: var(--white);
+  }
+
+  #myChart {
+    max-height: 300px !important;
+  }
+
+  .zing-chart_top {
+    a {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      transition: 0.2s;
+
+      &:hover {
+        color: var(--link-text-hover);
+      }
+
+      span {
+        margin-left: 4px;
+        font-size: 4rem;
+        cursor: pointer;
+        color: var(--link-text-hover);
+
+        &:hover {
+          filter: brightness(.9);
+        }
       }
     }
   }
 
+  .main-page_list-item_img {
+    width: 60px;
+  }
 
-  // Zing Chart
-  .container_zing-chart {
-    margin-top: .5rem;
-    border-radius: 6px;
-    background: url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.7.20/static/media/bg-chart.fd766403.jpg') top / cover no-repeat;
+  .icon_play-btn {
+    font-size: 4.2rem;
+  }
 
-    .material-icons {
-      font-size: 3.4rem;
-      // color: var(--purple-primary);
-    }
+  .zing-chart_right {
+    max-height: 30rem;
+    z-index: 99;
+    background: transparent;
+  }
 
-    .container_zing-chart-pos {
-      margin-top: 3rem;
-      background-image: var(--linear-gradient-bg);
-      border-radius: 6px;
-      opacity: 0.96;
-      padding: 2rem;
-      z-index: -2;
-      color: var(--white);
-    }
+  .zing-chart_list {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: auto;
+    justify-content: center;
+    overflow-x: hidden;
 
-    #myChart {
-      max-height: 300px !important;
-    }
+    .zing-chart_item {
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 4px;
+      transition: 0.2s;
+      cursor: pointer;
+      // margin-bottom: 1rem;
 
-    .zing-chart_top {
-      a {
-        display: flex;
-        align-items: center;
-        font-size: 28px;
-        font-weight: 700;
-        color: var(--white);
-        margin-bottom: 20px;
-        transition: 0.2s;
+      &:hover {
+        background-color: hsla(0, 0%, 100%, 0.2);
+      }
 
-        &:hover {
-          color: var(--link-text-hover);
-        }
+      .zing-chart_item-right {
+        padding-left: 4px;
 
-        span {
-          margin-left: 4px;
-          font-size: 4rem;
-          cursor: pointer;
-          color: var(--link-text-hover);
+        p {
+          font-size: 1.6rem;
 
-          &:hover {
-            filter: brightness(.9);
-          }
+          font-weight: 700;
         }
       }
-    }
 
-    .main-page_list-item_img {
-      width: 60px;
-    }
-
-    .icon_play-btn {
-      font-size: 4.2rem;
-    }
-
-    .zing-chart_right {
-      max-height: 30rem;
-      z-index: 99;
-      background: transparent;
-    }
-
-    .zing-chart_list {
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-      height: auto;
-      justify-content: center;
-      overflow-x: hidden;
-
-      .zing-chart_item {
-        padding: 10px 15px;
+      .zing-chart_item-left {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        background-color: rgba(255, 255, 255, 0.07);
-        border-radius: 4px;
-        transition: 0.2s;
-        cursor: pointer;
-        // margin-bottom: 1rem;
 
-        &:hover {
-          background-color: hsla(0, 0%, 100%, 0.2);
+
+        .zing-chart_item-oder {
+          max-width: 90px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+          margin-right: 10px;
+          color: var(--song-item-action);
+          font-weight: 700;
+          margin-right: 1.2rem;
         }
 
-        .zing-chart_item-right {
-          padding-left: 4px;
-
-          p {
-            font-size: 1.6rem;
-
-            font-weight: 700;
-          }
-        }
-
-        .zing-chart_item-left {
+        .zing-chart_item-info {
           display: flex;
           align-items: center;
 
+          .zing-chart_item-text {
+            margin-left: 1rem;
 
-          .zing-chart_item-oder {
-            max-width: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            margin-right: 10px;
-            color: var(--song-item-action);
-            font-weight: 700;
-            margin-right: 1.2rem;
-          }
+            .zing-chart_item-name {
+              font-size: 1.4rem;
+              font-weight: 500;
+              color: var(--white);
+            }
 
-          .zing-chart_item-info {
-            display: flex;
-            align-items: center;
+            .zing-chart_item-artist {
+              display: -webkit-box;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+              height: 21px;
+              overflow: hidden;
+              color: var(--text-secondary);
 
-            .zing-chart_item-text {
-              margin-left: 1rem;
-
-              .zing-chart_item-name {
-                font-size: 1.4rem;
-                font-weight: 500;
-                color: var(--white);
-              }
-
-              .zing-chart_item-artist {
-                display: -webkit-box;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-                height: 21px;
-                overflow: hidden;
+              a {
+                font-size: 1.2rem;
                 color: var(--text-secondary);
 
-                a {
-                  font-size: 1.2rem;
-                  color: var(--text-secondary);
-
-                  &:hover {
-                    text-decoration: underline;
-                    color: var(--link-text-hover);
-                  }
+                &:hover {
+                  text-decoration: underline;
+                  color: var(--link-text-hover);
                 }
               }
             }
@@ -2029,57 +2032,58 @@
         }
       }
     }
+  }
 
-    .zing-chart_item-bottom {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  .zing-chart_item-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-      .zing-chart_btn {
-        margin: auto;
-        padding: 6px 26px;
-        margin-top: 10px;
-        border-radius: 999px;
-        color: var(--white);
-        border: 1px solid var(--white);
-        padding: 5px 25px;
-        transition: .2s;
-        background-color: transparent;
-        cursor: pointer;
+    .zing-chart_btn {
+      margin: auto;
+      padding: 6px 26px;
+      margin-top: 10px;
+      border-radius: 999px;
+      color: var(--white);
+      border: 1px solid var(--white);
+      padding: 5px 25px;
+      transition: .2s;
+      background-color: transparent;
+      cursor: pointer;
 
-        &:hover {
-          background-color: hsla(0, 0%, 100%, 0.2);
-        }
+      &:hover {
+        background-color: hsla(0, 0%, 100%, 0.2);
       }
     }
   }
+}
 
-  // Zing Copy
-  .container_copy {
-    margin-top: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+// Zing Copy
+.container_copy {
+  margin-top: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    h3 {
-      font-size: 14px;
-      letter-spacing: 1.71px;
-      font-weight: 700;
-      text-transform: uppercase;
+  h3 {
+    font-size: 14px;
+    letter-spacing: 1.71px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+
+    a {
       color: var(--text-secondary);
 
-      a {
-        color: var(--text-secondary);
-
-        &:hover {
-          color: var(--link-text-hover);
-          text-decoration: underline;
-        }
+      &:hover {
+        color: var(--link-text-hover);
+        text-decoration: underline;
       }
     }
   }
-
 }
+
+
 
 
 // Thanh ScrollBar
@@ -3085,7 +3089,7 @@
 }
 
 // Main MV
-.main-page .main_mv {
+.main_mv {
   .main_mv-header {
     padding-left: 2rem;
     display: flex;
@@ -4350,5 +4354,301 @@
     display: inline-block;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+}
+
+
+// Main Video PLay
+.zm-video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  width: 100%;
+  height: 100%;
+  background-color: #1e1e1e;
+
+  &.is-loading {
+    background-color: var(--primary-bg);
+  }
+
+  .mv_play-main {
+    position: absolute;
+    inset: 0px;
+    // overflow: hidden scroll;
+    margin-right: -6px;
+    margin-bottom: 0px;
+  }
+
+  .video-blur-bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+
+    .video-blur-image {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  .cover-bg {
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    background-position-y: 10%;
+    filter: blur(50px);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .blur-bg {
+    opacity: 0.3;
+    background-color: var(--primary-bg);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+    right: 0;
+  }
+
+  .video-container {
+    position: relative;
+    min-height: 100vh;
+
+    background-color: rgba(0, 0, 0, .5);
+  }
+
+  .media {
+    align-items: center;
+    display: flex;
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+
+  .todaychoice_list-item-title {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+
+    .main_mv-avatr {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 999px;
+
+      img {
+        border-radius: 99rem;
+      }
+    }
+
+    .main_title-text {
+      font-size: 18px;
+
+      font-weight: 700;
+      height: auto;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+
+    .main_subtitle {
+      font-size: 1.4rem;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      height: auto;
+      overflow: hidden;
+    }
+
+    .main_mv-info-title {
+      margin-left: 1rem;
+    }
+  }
+
+  .video_header {
+    .zm-btn {
+      i {
+        font-size: 20px;
+        vertical-align: middle;
+        color: var(--white);
+      }
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      padding: 1rem;
+      display: inline-block;
+
+      border-radius: 999px;
+      box-shadow: 0 2px 4px 0 rgb(133 105 208 / 11%);
+      background-color: hsla(0, 0%, 100%, .1);
+      cursor: pointer;
+      text-align: center;
+    }
+  }
+
+  .video-body {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .video-queue {
+    background-color: hsla(0, 0%, 100%, .10196078431372549);
+    overflow: auto;
+    height: calc(53.4375vw - 210px);
+    width: auto;
+    margin-top: 0;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset #fff;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: var(--scroll-thumb-bg);
+
+    }
+
+    .recently_title {
+      margin-bottom: 0;
+    }
+
+    .want_list {}
+  }
+
+  .video-player {
+    width: calc(100% - 350px);
+  }
+
+  .video-queuer {
+    width: 350px;
+  }
+
+  .video-recommend {
+    background-color: hsla(0, 0%, 100%, .05);
+  }
+
+  .video-footer {
+    position: relative;
+    color: #fff;
+    margin: 40px auto 0;
+    padding-bottom: 30px;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 95vw;
+  }
+
+}
+
+.video-queue-list {}
+
+
+
+.recently_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+
+  p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: capitalize;
+  }
+
+
+}
+
+
+.video-container {
+  overflow: auto;
+  height: 100vh;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset #fff;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--scroll-thumb-bg);
+  }
+
+}
+
+.title-hover {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .video-playing {
+    flex-direction: column;
+  }
+
+  .video-player,
+  .video-queuer {
+    width: 100% !important;
+  }
+
+  .video-playing-item {
+    width: 50%;
+  }
+
+  .video-queue-list .row {
+    flex-wrap: wrap;
+  }
+
+  .zm-video-modal .video-queue {
+
+    height: 300px;
+
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .video-playing-item {
+    width: 100%;
+  }
+
+  .btn-minimize {
+    display: none !important;
+  }
+
+  .main_mv-info-title .main_title-text {
+    font-size: 16px !important;
+  }
+
+  .zm-video-modal .video_header .zm-btn {
+
+    margin-right: 6px;
+    padding: .6rem;
+
   }
 }

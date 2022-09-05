@@ -71,7 +71,7 @@ const ChartHomePage = memo(() => {
                            const img = e.thumbnail?.slice(e.thumbnail?.lastIndexOf("/"))
 
                            return (
-                              <div key={e.encodeId} className="zing-chart_item main_page-hover">
+                              <div key={e.encodeId} className="zing-chart_item main_page-hover mb-[12px]">
                                  <div className="zing-chart_item-left">
                                     <div className="zing-chart_item-oder">
                                        <span className="zing-chart-top">{index + 1}</span>

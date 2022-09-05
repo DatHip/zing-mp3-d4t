@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-expressions */
 import React from "react"
 import styled from "styled-components"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { setName } from "../../features/formSearch/formSearch"
+import { memo } from "react"
 
 const SuggestListStyles = styled.ul`
    position: absolute;
@@ -62,8 +65,11 @@ const SuggestListStyles = styled.ul`
    }
 `
 
-const SuggestList = () => {
-   const { entities, loading } = useSelector((state) => state.formsearch)
+const SuggestList = ({ setOpen, setValue, value, refinput }) => {
+   const { entities, loading, entitiesNew, names } = useSelector((state) => state.formsearch)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
    return (
       <SuggestListStyles className="suggest__list">
          <div className="suggest__list--content">
@@ -77,18 +83,56 @@ const SuggestList = () => {
                </div>
             )}
 
+            {entitiesNew &&
+               !loading &&
+               refinput.current.value &&
+               refinput.current.value.length > 0 &&
+               entitiesNew[0].keywords?.map((e, index) => {
+                  return (
+                     <div key={index}>
+                        <div
+                           onClick={() => {
+                              dispatch(setName(e.keyword))
+                              setOpen(false)
+                              setValue(e.keyword)
+                              refinput.current.value = e.keyword
+                              navigate(`/tim-kiem/tatca/${e.keyword}`)
+                           }}
+                           className="suggest__item"
+                        >
+                           <i className="icon ic-trend" />
+                           <div className="is-oneline">{e.keyword}</div>
+                        </div>
+                     </div>
+                  )
+               })}
+
             {entities &&
-               entities.map((e, index) => (
-                  <div key={index}>
-                     <li className="suggest__item">
-                        <i className="icon ic-trend" />
-                        <div className="is-oneline">{e.keyword}</div>
-                     </li>
-                  </div>
-               ))}
+               !refinput.current.value &&
+               entities.length > 0 &&
+               entities?.map((e, index) => {
+                  if (e.link) return
+                  return (
+                     <div key={index}>
+                        <div
+                           onClick={() => {
+                              dispatch(setName(e.keyword))
+                              setOpen(false)
+                              setValue(e.keyword)
+                              refinput.current.value = e.keyword
+                              navigate(`/tim-kiem/tatca/${e.keyword}`)
+                           }}
+                           className="suggest__item"
+                        >
+                           <i className="icon ic-trend" />
+                           <div className="is-oneline">{e.keyword}</div>
+                        </div>
+                     </div>
+                  )
+               })}
          </div>
       </SuggestListStyles>
    )
 }
 
-export default SuggestList
+export default memo(SuggestList)

@@ -8,8 +8,6 @@ const ArtistMv = () => {
    const datas = useOutletContext()
    const dataSelector = datas?.sections?.find((e) => e.sectionType === "video")
 
-   console.log(dataSelector.items)
-
    return (
       <div className="main_mv main-page-item active">
          <div className="main_mv-container text-white">

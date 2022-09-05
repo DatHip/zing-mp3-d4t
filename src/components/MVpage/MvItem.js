@@ -1,13 +1,33 @@
 import React, { memo } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import fancyTimeFormat from "../../utils/fancyTimeFormat"
+import { useDispatch, useSelector } from "react-redux"
+import { setLocationOpen, setOpenOn } from "../../features/ToggleMainMv/toggleMainMv"
 
-const MvItem = memo(({ data }) => {
+const MvItem = memo(({ data, isMvFull }) => {
    const { artists, duration, encodeId, title, thumbnailM, artist, thumbnail } = data
+   const stateOpen = useSelector((state) => state.setOpenMainMv.isOpen)
+
+   const dispatch = useDispatch()
+
+   const location = useLocation()
+   const navigete = useNavigate()
+
+   const handleClick = () => {
+      navigete(`/video-clip/${encodeId}`)
+
+      if (!stateOpen) {
+         dispatch(setOpenOn())
+         dispatch(setLocationOpen(location.pathname))
+      }
+   }
 
    return (
-      <div className="col l-4 m-4 c-6 mv-items">
-         <a className="todaychoice_list-item-link main-page_list-item main_page-hover relative" href="#">
+      <div className={`col mv-items ${!isMvFull ? "l-4 m-4 c-6 " : "l-3 m-4 c-6 !mb-[20px]"}`}>
+         <div
+            onClick={() => handleClick()}
+            className="cursor-pointer todaychoice_list-item-link main-page_list-item main_page-hover relative"
+         >
             <div className="todaychoice_list-item-link main-page_list-item_img" href="#">
                <figure>
                   <img src={thumbnailM} alt={title} />
@@ -26,7 +46,7 @@ const MvItem = memo(({ data }) => {
                </div>
             </div>
             <div className="main_mv-item-time">{fancyTimeFormat(duration)}</div>
-         </a>
+         </div>
          <div className="todaychoice_list-item-title">
             <div className="main_mv-avatr">
                <img src={artist?.thumbnail || thumbnail || ""} alt={title} />
@@ -56,7 +76,7 @@ const MvItem = memo(({ data }) => {
 
                         return (
                            <span key={index}>
-                              <Link to={"/"}>{e.name}</Link>
+                              <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
                               {prara}
                            </span>
                         )

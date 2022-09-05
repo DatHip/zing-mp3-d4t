@@ -199,7 +199,7 @@ const ArtistInfoTop = memo(({ data }) => {
                <NewReleaseitem item={data.topAlbum} isArtist></NewReleaseitem>
             </div>
          </div>
-         <div className="col l-5 m-5 c-12">
+         <div className="col l-5 m-5 c-12 ">
             <div className="artist_page-title-right float-right">
                <figure className="image avatar is-48x48">
                   <img src={data.thumbnailM} alt="" />

@@ -30,6 +30,9 @@ export const tmdAPI = {
    // get Category Mv :
    getCategoryMv: (id) => `${tmdbEndpoint}/categorymv/${id}`,
 
+   // get Mv:
+   getVideoMv: (id) => `${tmdbEndpoint}/mv/${id}`,
+
    // get getArtistPage:
    getArtistPage: (id) => `${tmdbEndpoint}/artist/${id}`,
 

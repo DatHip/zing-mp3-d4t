@@ -1,7 +1,10 @@
 import React, { memo } from "react"
 import styled from "styled-components"
+
 import { motion } from "framer-motion"
+
 import ThemeItem from "./ThemeItem"
+
 import { themes } from "../../data/dataThemes"
 
 const ThemePortal = (props) => {

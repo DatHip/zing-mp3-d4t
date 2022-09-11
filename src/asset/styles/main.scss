@@ -214,6 +214,8 @@
     transition: .2s;
 
     &:hover {
+
+
       text-decoration: underline;
       color: var(--link-text-hover);
     }
@@ -260,6 +262,16 @@
     -webkit-text-stroke: 1.5px #e35050;
   }
 }
+
+.zing-chart_item.active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+
+  .recently_list-item_hover {
+    transition: 0.2s !important;
+    display: flex !important;
+  }
+}
+
 
 // loading 
 .loading {
@@ -655,4 +667,10 @@ a:hover {
 .container__slide-item.fourth {
   opacity: 0.1;
   transform: translate3d(var(--offset-x-third), 0, 0) scale(var(--scale-rate-third), var(--scale-rate-third));
+}
+
+.player_btn.disabled {
+  box-shadow: none;
+  opacity: .5;
+  cursor: not-allowed !important;
 }

@@ -17,7 +17,6 @@ const fetchHotKey = createAsyncThunk("formSearch/fetchHotKey", async () => {
 
 const fetchDataSearch = createAsyncThunk("formSearch/fetchDataSearch ", async (name) => {
    const response = await axios.get(tmdAPI.getHotSuggestionApi(name))
-   console.log(response.data.data.items)
    return response.data.data.items
 })
 

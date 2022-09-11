@@ -51,4 +51,7 @@ export const tmdAPI = {
 
    //  bắt đầu search :
    getSearchAllKeyApi: (keyword) => `${tmdbEndpoint}/searchall?keyword=${keyword}`,
+
+   // Lyrics :
+   getLyrics: (id) => `${tmdbEndpoint}/songlyrics/${id}`,
 }

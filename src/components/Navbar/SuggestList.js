@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { setName } from "../../features/formSearch/formSearch"
 import { memo } from "react"
+import OutstandingItems from "../SearchPage/OutstandingItems"
+import LoadingSvg from "../loading/LoadingSvg"
 
 const SuggestListStyles = styled.ul`
    position: absolute;
@@ -73,63 +75,86 @@ const SuggestList = ({ setOpen, setValue, value, refinput }) => {
    return (
       <SuggestListStyles className="suggest__list">
          <div className="suggest__list--content">
-            <div className="search__title">Đề xuất cho bạn</div>
-
             {loading && (
                <div>
-                  <li className="suggest__item">
-                     <div className="is-oneline">Loading...</div>
+                  <li className="suggest__item ">
+                     <div className="is-oneline w-full h-full text-center">
+                        <LoadingSvg isLoadMore></LoadingSvg>
+                     </div>
                   </li>
+                  {/* <li className="suggest__item ">
+                     <div className="is-oneline w-full text-center">Loading...</div>
+                  </li> */}
                </div>
             )}
-
-            {entitiesNew &&
-               !loading &&
-               refinput.current.value &&
-               refinput.current.value.length > 0 &&
-               entitiesNew[0].keywords?.map((e, index) => {
-                  return (
-                     <div key={index}>
-                        <div
-                           onClick={() => {
-                              dispatch(setName(e.keyword))
-                              setOpen(false)
-                              setValue(e.keyword)
-                              refinput.current.value = e.keyword
-                              navigate(`/tim-kiem/tatca/${e.keyword}`)
-                           }}
-                           className="suggest__item"
-                        >
-                           <i className="icon ic-trend" />
-                           <div className="is-oneline">{e.keyword}</div>
+            {entities && !refinput.current.value && entities.length > 0 && (
+               <>
+                  <div className="search__title ">Đề xuất cho bạn</div>
+                  {entities?.map((e, index) => {
+                     if (e.link)
+                        return (
+                           <div key={index}>
+                              <a href={e.link} target={"_blank"} hrefLang="eng" className="suggest__item" rel="noreferrer">
+                                 <i className="icon ic-trend" />
+                                 <div className="is-oneline">{e.keyword}</div>
+                              </a>
+                           </div>
+                        )
+                     return (
+                        <div key={index}>
+                           <div
+                              onClick={() => {
+                                 dispatch(setName(e.keyword))
+                                 setOpen(false)
+                                 setValue(e.keyword)
+                                 refinput.current.value = e.keyword
+                                 navigate(`/tim-kiem/tatca/${e.keyword}`)
+                              }}
+                              className="suggest__item"
+                           >
+                              <i className="icon ic-trend" />
+                              <div className="is-oneline">{e.keyword}</div>
+                           </div>
                         </div>
-                     </div>
-                  )
-               })}
+                     )
+                  })}
+               </>
+            )}
+            {entitiesNew && !loading && refinput.current.value && refinput.current.value.length > 0 && (
+               <>
+                  <div className="search__title">Từ khóa liên quan</div>
 
-            {entities &&
-               !refinput.current.value &&
-               entities.length > 0 &&
-               entities?.map((e, index) => {
-                  if (e.link) return
-                  return (
-                     <div key={index}>
-                        <div
-                           onClick={() => {
-                              dispatch(setName(e.keyword))
-                              setOpen(false)
-                              setValue(e.keyword)
-                              refinput.current.value = e.keyword
-                              navigate(`/tim-kiem/tatca/${e.keyword}`)
-                           }}
-                           className="suggest__item"
-                        >
-                           <i className="icon ic-trend" />
-                           <div className="is-oneline">{e.keyword}</div>
+                  {entitiesNew[0].keywords?.map((e, index) => {
+                     return (
+                        <div key={index}>
+                           <div
+                              onClick={() => {
+                                 dispatch(setName(e.keyword))
+                                 setOpen(false)
+                                 setValue(e.keyword)
+                                 refinput.current.value = e.keyword
+                                 navigate(`/tim-kiem/tatca/${e.keyword}`)
+                              }}
+                              className="suggest__item"
+                           >
+                              <i className="icon ic-trend" />
+                              <div className="is-oneline">{e.keyword}</div>
+                           </div>
                         </div>
-                     </div>
-                  )
-               })}
+                     )
+                  })}
+               </>
+            )}
+            {entitiesNew && !loading && refinput.current.value && refinput.current.value.length > 0 && (
+               <>
+                  <div className="search__title  !pt-[10px] ">Gợi ý kết quả</div>
+                  {entitiesNew[1]?.suggestions?.map((e, index) => {
+                     if (index > 5) return
+
+                     return <OutstandingItems isSearch key={index} data={e}></OutstandingItems>
+                  })}
+               </>
+            )}
          </div>
       </SuggestListStyles>
    )

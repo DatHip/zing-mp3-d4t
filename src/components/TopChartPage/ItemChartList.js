@@ -2,8 +2,11 @@ import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Link } from "react-router-dom"
 import fancyTimeFormat from "../../utils/fancyTimeFormat"
+import { useSelector, useDispatch } from "react-redux"
 
 const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFavourite }) => {
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+
    const getRankStatus = (startus) => {
       if (startus === 0) {
          return <span className="material-icons-outlined line">minimize</span>
@@ -15,7 +18,10 @@ const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFav
    }
 
    return (
-      <div className="zing-chart_item main_page-hover">
+      <div
+         className={`zing-chart_item main_page-hover
+       ${currentEncodeId === item?.encodeId ? "active" : ""}`}
+      >
          <div className="zing-chart_item-left">
             {!isNoneRank && (
                <div className="zing-chart_item-oder">

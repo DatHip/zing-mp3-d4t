@@ -4,7 +4,9 @@ import { setToggle } from "../../features/toggleRight/toggleRight"
 
 const BottomControlsRight = () => {
    const isToggle = useSelector((state) => state.toggleright)
+   const infoSong = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const dispatch = useDispatch()
+   let linkMv = infoSong?.mvlink
 
    useEffect(() => {
       const playbar = document.querySelector(".playing-bar")
@@ -20,10 +22,10 @@ const BottomControlsRight = () => {
 
    return (
       <div className="player_controls-right">
-         <div className="player_btn playing_mv">
+         <button className={`player_btn playing_mv ${linkMv ? "" : "disabled"}`}>
             <i className="icon ic-mv"></i>
             <div className="playing_title-hover">Xem MV</div>
-         </div>
+         </button>
          <div className="player_btn playing_karaoke">
             <i className="icon ic-karaoke"></i>
             <div className="playing_title-hover">Xem Lời bài hát</div>

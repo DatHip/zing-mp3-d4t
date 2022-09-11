@@ -28,15 +28,13 @@ const queryClient = new QueryClient({
 document.cookie = "SameSite=None"
 
 root.render(
-   <React.StrictMode>
-      <Provider store={store}>
-         <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-               <App />
-            </BrowserRouter>
-         </QueryClientProvider>
-      </Provider>
-   </React.StrictMode>
+   <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+         <BrowserRouter>
+            <App />
+         </BrowserRouter>
+      </QueryClientProvider>
+   </Provider>
 )
 
 reportWebVitals()

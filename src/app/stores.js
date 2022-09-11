@@ -1,7 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import formSearch from "../features/formSearch/formSearch"
+import logged from "../features/Logged/loggedFeatures"
+import Lyrics from "../features/Lyrics/Lyrics"
 import setTextBtn from "../features/MvState/MvStateFeatures"
+import toggleOpenMain from "../features/openMainFull/openMainFullFeatures"
+import queueNowPlay from "../features/QueueFeatures/QueueFeatures"
 import themeToggle from "../features/setTheme/themeSetFeatures"
+import setting from "../features/SettingPlay/settingPlay"
 import setOpenMainMv from "../features/ToggleMainMv/toggleMainMv"
 import toggleRight from "../features/toggleRight/toggleRight"
 
@@ -12,5 +17,10 @@ export const store = configureStore({
       toggleright: toggleRight,
       setTextBtn: setTextBtn,
       setOpenMainMv: setOpenMainMv,
+      toggleOpenMain: toggleOpenMain,
+      queueNowPlay: queueNowPlay,
+      logged: logged,
+      setting: setting,
+      lyrics: Lyrics,
    },
 })

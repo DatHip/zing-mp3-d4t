@@ -2,6 +2,8 @@ import React, { memo } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import LoadingSkeleton from "../loading/LoadingSkeleton"
+import { useDispatch } from "react-redux"
+import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
 
 const StyleDiv = styled.div`
    .player_btn.like {
@@ -45,9 +47,12 @@ const CarouselItem = memo(
    }) => {
       const { title, encodeId, artists, sortDescription, thumbnailM } = item
 
+       const dispatch = useDispatch()
+
       return (
          <StyleDiv className={` ${class1}`} title={sortDescription}>
             <Link
+               onClick={() => dispatch(fetchPlayList(encodeId))}
                to={`/album/${encodeId}`}
                className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
             >

@@ -7,6 +7,10 @@ import { useSelector } from "react-redux"
 
 function App() {
    const theme = useSelector((state) => state.themetoggle)
+   const queueNowPlaySelector = useSelector((state) => state.queueNowPlay)
+   const loggedSelector = useSelector((state) => state.logged)
+   const settingSelector = useSelector((state) => state.setting)
+   const lyricsSelector = useSelector((state) => state.lyrics)
 
    useMemo(() => {
       document.documentElement.setAttribute("data-theme", theme.dataTheme)
@@ -29,6 +33,27 @@ function App() {
          document.documentElement.setAttribute("style", param.join(" ; "))
       } else {
          document.documentElement.removeAttribute("style")
+      }
+   }, [])
+
+   // set localStorage
+   useMemo(() => {
+      const queueNowPlay = JSON.parse(localStorage.getItem("queue_nowplay"))
+      const logged = JSON.parse(localStorage.getItem("d4tmp3_logged"))
+      const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
+      const lyrics = JSON.parse(localStorage.getItem("d4tmp3_lyrics"))
+
+      if (!queueNowPlay) {
+         localStorage.setItem("queue_nowplay", JSON.stringify(queueNowPlaySelector))
+      }
+      if (!logged) {
+         localStorage.setItem("d4tmp3_logged", JSON.stringify(loggedSelector))
+      }
+      if (!setting) {
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(settingSelector))
+      }
+      if (!lyrics) {
+         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(lyricsSelector))
       }
    }, [])
 

@@ -395,6 +395,23 @@
 
 // Mobile
 @media (max-width: 719px) {
+  .container__slide {
+    display: none;
+  }
+
+  .scroll-content {
+    &.s {
+      font-size: 16px;
+    }
+
+    &.m {
+      font-size: 20px;
+    }
+
+    &.l {
+      font-size: 26px;
+    }
+  }
 
 
   .zm-navbar-menu {
@@ -608,28 +625,34 @@
     border-left: none;
     opacity: .3;
     transition: .4s linear;
-    z-index: 1;
-    bottom: -50px;
+    z-index: 10;
+    bottom: -55px;
     width: 100vw;
     min-height: 100vh;
     right: -100%;
     background: #C33764;
-    background: -webkit-linear-gradient(to right, rgba(29, 37, 113, 0.95), rgba(195, 55, 99, 0.95));
-    background: linear-gradient(to right, rgba(29, 37, 113, 0.95), rgba(195, 55, 99, 0.95));
+    background: -webkit-linear-gradient(to right, rgba(29, 37, 113, 0.95), rgba(195, 55, 99, 0.95)) !important;
+    background: linear-gradient(to right, rgba(29, 37, 113, 0.95), rgba(195, 55, 99, 0.95)) !important;
 
     .player_queue-item {
       padding: .8rem 1.2rem;
       margin-bottom: .4rem;
     }
 
+    .player_queue-listmusic {
+      padding: 0 1rem 2rem 1rem;
+      background: unset !important;
+    }
+
     &.player_queue-is_active {
       opacity: 1;
       animation: opacity .3s linear;
       transition: .4s linear;
-      z-index: 1;
-      bottom: -51px;
+      z-index: 10;
+      bottom: -55px;
       width: 100vw;
       min-height: 100vh;
+
 
     }
 
@@ -659,7 +682,7 @@
   .playing-bar.active .playing-bar-main .playing_random,
   .playing-bar.active .playing-bar-main .player_bottom,
   .playing-bar.active .playing-bar-main .playing_replay {
-    display: flex;
+    display: flex !important;
   }
 
 
@@ -682,9 +705,9 @@
         width: 0;
         height: 0;
 
-        .playing_playlist {
+        .toggle-right {
           position: fixed;
-          z-index: 1;
+          z-index: 12;
           bottom: 50px;
           right: 11.5%;
 
@@ -745,7 +768,7 @@
   }
 
   // now karaoke
-  .nowplaying .nowplaying-content .nowplaying-body .nowplaying-body_item.nowplaying-body_karaoke.active {
+  .nowplaying .nowplaying-content .nowplaying-body .nowplaying-body_item.nowplaying-body_karaoke {
     display: block;
     position: absolute;
     top: 50%;
@@ -754,7 +777,7 @@
     white-space: nowrap;
 
     h2 {
-      font-size: 2rem;
+      font-size: 2rem !important;
     }
   }
 
@@ -770,7 +793,7 @@
   }
 
   .nowplaying .nowplaying-content .nowplaying-body .nowplaying-body_lyrics .nowplaying-body_lyrics-item.lyrics ul {
-    font-size: 2.6rem;
+
     padding-right: 2rem;
     max-height: 100%;
     display: block;

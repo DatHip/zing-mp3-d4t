@@ -55,9 +55,9 @@ const SearchPageAll = () => {
          {/* Song */}
          {datas.songs && (
             <PlayListSelector classAdd2="w-full" title={"Bài Hát"}>
-               <div className="main_topchart w-full mt-2">
+               <div className="main_topchart w-full ">
                   <div className="container_zing-chart">
-                     <div className="zing-chart_list !flex-row pt-2">
+                     <div className="zing-chart_list !flex-row ">
                         <div className="col l-6 m-6 c-9">
                            {colSong1 &&
                               colSong1.map((e) => (

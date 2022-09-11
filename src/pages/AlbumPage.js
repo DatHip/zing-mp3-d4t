@@ -196,6 +196,19 @@ const AlbumPage = () => {
 }
 
 const AlbumPageStyles = styled.div`
+   @media (max-width: 600px) {
+      .playlist-header {
+         flex-wrap: wrap;
+         gap: 16px;
+         .media-left,
+         .media-content {
+            width: 100%;
+         }
+         .media-content {
+            margin-bottom: 10px;
+         }
+      }
+   }
    .zing-chart_item.none-hover {
       &:hover {
          background-color: unset !important;

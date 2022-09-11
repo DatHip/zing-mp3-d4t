@@ -72,7 +72,8 @@ const NavForm = () => {
                {refinput?.current?.value?.length > 2 && open && (
                   <button
                      onClick={() => {
-                        refinput.current.value = null
+                        refinput.current.value = ""
+                        dispatch(setValueNew())
                      }}
                      type="button"
                      className="header_btn-remove "

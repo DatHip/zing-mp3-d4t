@@ -5,11 +5,13 @@ import LoadingIcon from "../Icon/LoadingIcon"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import styled from "styled-components"
+
 import { Draggable } from "react-beautiful-dnd"
 
 const ItemRighPlayer = ({ data, index }) => {
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
+   const { playing } = useSelector((state) => state.setting)
+
    let active = index === currentIndexSong
 
    return (
@@ -29,9 +31,14 @@ const ItemRighPlayer = ({ data, index }) => {
                   <div className="player_queue-left">
                      <LazyLoadImage className="player_queue-img" src={data?.thumbnail} alt="" />
                      <div className="player_queue-img-hover">
-                        {/* <ActionIcon></ActionIcon> */}
-                        <ActionPlay></ActionPlay>
-                        {/* <LoadingIcon></LoadingIcon> */}
+                        {active && (
+                           <>
+                              {!playing && <ActionPlay></ActionPlay>}
+                              {playing && <ActionIcon></ActionIcon>}
+                              {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
+                           </>
+                        )}
+                        {!active && <>{<ActionPlay></ActionPlay>}</>}
                      </div>
                   </div>
                   <div className="player_queue-music-info">

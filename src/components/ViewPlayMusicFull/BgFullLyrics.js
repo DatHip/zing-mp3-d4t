@@ -29,8 +29,8 @@ const BgFullLyrics = memo(() => {
          <div className="col l-7 m-12 c-12">
             <div className="nowplaying-body_lyrics-item lyrics text-white">
                <ul className={`scroll-content ${isTextSize}`}>
-                  <li class="item is-over">Nhìn thấy em lao đao </li>
-                  <li class="item is-active">Dũng khí nào </li>
+                  {/* <li class="item is-over">Nhìn thấy em lao đao </li>
+                  <li class="item is-active">Dũng khí nào </li> */}
                   {lyricByLine &&
                      lyricByLine.length > 0 &&
                      lyricByLine.map((e, index) => {
@@ -39,7 +39,7 @@ const BgFullLyrics = memo(() => {
                            text += e.data + " "
                         })
                         return (
-                           <li key={uuidv4()} class="item ">
+                           <li key={uuidv4()} className="item ">
                               {" "}
                               {text}{" "}
                            </li>

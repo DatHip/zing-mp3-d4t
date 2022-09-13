@@ -72,7 +72,7 @@ const AlbumPage = () => {
                                  let prara = ", "
 
                                  if (index === datas.artists.length - 1) {
-                                    prara = "."
+                                    prara = ""
                                  }
 
                                  return (

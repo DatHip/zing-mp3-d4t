@@ -1,9 +1,13 @@
 import React, { memo } from "react"
 
 import { useSelector } from "react-redux"
+import ActionIcon from "../Icon/ActionIcon"
+import LoadingIcon from "../Icon/LoadingIcon"
 
 const ItemSong = memo(({ data }) => {
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const { playing } = useSelector((state) => state.setting)
+   let active = currentEncodeId === data?.encodeId
 
    return (
       <div className={`want_list-item slick-slide ${currentEncodeId === data?.encodeId ? "swiper-slide-active-playing" : ""}`}>
@@ -17,9 +21,18 @@ const ItemSong = memo(({ data }) => {
                   <span className="playing_title-hover">Thêm vào thư viện </span>
                </div>
                <div className="recently_btn-hover recently_btn-hover-play">
-                  <span>
-                     <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
-                  </span>
+                  {active && (
+                     <>
+                        {!playing && <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>}
+                        {playing && <ActionIcon></ActionIcon>}
+                        {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
+                     </>
+                  )}
+                  {!active && (
+                     <>
+                        <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                     </>
+                  )}
                </div>
                <div className="recently_btn-hover player_btn">
                   <span className="material-icons-outlined text-white"> more_horiz </span>

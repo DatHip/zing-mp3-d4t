@@ -1,25 +1,35 @@
 import React from "react"
-import { useDispatch, useSelector } from "react-redux"
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
 import Tippy from "@tippyjs/react"
+import { useDispatch, useSelector } from "react-redux"
+import BottomControlllPLayIng from "./BottomControlllPLayIng"
+import { setLoopSongs, setPlaying, setRandomSongs } from "../../features/SettingPlay/settingPlay"
+import LoadingIcon from "../Icon/LoadingIcon"
 
 const BottomControlsCenter = () => {
+   const dispatch = useDispatch()
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const infoSongNext = useSelector((state) => state.queueNowPlay.infoSongNext)
+   const { playing, isLoop, autoPlay, isRandom } = useSelector((state) => state.setting)
 
    return (
       <div className="player_controls-center">
          <div className="player_top">
-            <div id="randomMusic" className={`player_btn playing_random  `}>
+            <div
+               onClick={() => dispatch(setRandomSongs())}
+               id="randomMusic"
+               className={`player_btn playing_random  ${isRandom ? "active" : ""}`}
+            >
                <i className="icon ic-shuffle"></i>
-               <div className="playing_title-hover">Bật phát ngẫu nhiên</div>
+               <div className="playing_title-hover">{isRandom ? "Tắt" : "Bật"} phát ngẫu nhiên</div>
             </div>
             <div id="prevMusic" className={`player_btn playing_back ${currentIndexSong === 0 ? "disabled" : ""}`}>
                <i className="icon ic-pre"></i>
             </div>
-            <div className="player_playing-input ">
-               <i className="icon ic-play-circle-outline"></i>
+            <div onClick={() => dispatch(setPlaying())} className="player_playing-input relative">
+               {!playing && <i className="icon loading ic-play-circle-outline"></i>}
+               {playing && <i className="icon loading ic-pause-circle-outline"></i>}
+               {/* <LoadingIcon></LoadingIcon> */}
             </div>
 
             <Tippy
@@ -29,10 +39,10 @@ const BottomControlsCenter = () => {
                      <h4 className="pb-[8px] pl-[2px] main_subtitle">Phát Tiếp theo </h4>
                      <div className="tipper-next flex ">
                         <figure className="min-w-[50px]  h-[50px] flex   mr-[10px] rounded-xl overflow-hidden">
-                           <img src={infoSongNext.thumbnail} alt="" />
+                           <img src={infoSongNext?.thumbnail} alt="" />
                         </figure>
                         <div className="tipper-next-content  flex flex-col justify-center">
-                           <p className="want_list-item-title">{infoSongNext.title}</p>
+                           <p className="want_list-item-title">{infoSongNext?.title}</p>
                            <div className="main_subtitle">
                               {infoSongNext?.artists &&
                                  infoSongNext?.artists?.slice(0, 3)?.map((e, index) => {
@@ -71,20 +81,17 @@ const BottomControlsCenter = () => {
                   <i className="icon ic-next"></i>
                </div>
             </Tippy>
-            <div id="loopMusic" className="player_btn playing_replay">
+            <div
+               onClick={() => dispatch(setLoopSongs())}
+               id="loopMusic"
+               className={`player_btn playing_replay ${isLoop ? "active" : ""}`}
+            >
                <i className="icon ic-repeat"></i>
 
-               <div className="playing_title-hover">Bật phát lại</div>
+               <div className="playing_title-hover">{isLoop ? "Tắt" : "Bật"} phát lại</div>
             </div>
          </div>
-         <div className="player_bottom">
-            <p className="playing_time-left">0:01</p>
-            <div className="playing_time-up2 progress-area">
-               <div className="progress-bar" style={{ width: "1.78051%" }} />
-               <audio id="main-audio" src="http://api.mp3.zing.vn/api/streaming/audio/ZWBIFCUE/320/"></audio>
-            </div>
-            <p className="playing_time-right">{fancyTimeFormat(infoSongCurrent?.duration)}</p>
-         </div>
+         <BottomControlllPLayIng></BottomControlllPLayIng>
       </div>
    )
 }

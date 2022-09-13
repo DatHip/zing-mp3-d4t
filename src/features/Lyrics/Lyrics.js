@@ -22,7 +22,6 @@ export const lyrics = createSlice({
    },
    extraReducers: (builer) => {
       builer.addCase(fetchDataLyrics.fulfilled, (state, action) => {
-         console.log(action.payload)
          state.defaultIBGUrls = action.payload.defaultIBGUrls
          state.lyricByLine = action.payload.sentences
 

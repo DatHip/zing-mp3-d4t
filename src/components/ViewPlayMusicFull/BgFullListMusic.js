@@ -54,7 +54,7 @@ const BgFullListMusic = memo(() => {
                0: {
                   slidesPerView: 1,
                },
-               700: {
+               721: {
                   slidesPerView: 3,
                },
                1024: {

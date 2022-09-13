@@ -4,8 +4,24 @@ import { Link } from "react-router-dom"
 import LoadingSkeleton from "../loading/LoadingSkeleton"
 import { useDispatch } from "react-redux"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
+import { useSelector } from "react-redux"
+import ActionPlay from "../Icon/ActionPlay"
+import LoadingIcon from "../Icon/LoadingIcon"
+import ActionIcon from "../Icon/ActionIcon"
 
 const StyleDiv = styled.div`
+   &.active {
+      .recently_list-item_hover {
+         transition: 0.2s !important;
+         display: flex !important;
+      }
+
+      .recently_btn-hover-play .icon {
+         width: 34px;
+         height: 34px;
+      }
+   }
+
    .player_btn.like {
       display: flex;
       justify-content: center;
@@ -46,11 +62,14 @@ const CarouselItem = memo(
       item = {},
    }) => {
       const { title, encodeId, artists, sortDescription, thumbnailM } = item
+      const dispatch = useDispatch()
+      const { playlistEncodeId } = useSelector((state) => state.queueNowPlay)
+      const { playing } = useSelector((state) => state.setting)
 
-       const dispatch = useDispatch()
+      let active = playlistEncodeId === encodeId
 
       return (
-         <StyleDiv className={` ${class1}`} title={sortDescription}>
+         <StyleDiv className={` ${active ? "active" : ""} ${class1}`} title={sortDescription}>
             <Link
                onClick={() => dispatch(fetchPlayList(encodeId))}
                to={`/album/${encodeId}`}
@@ -67,7 +86,18 @@ const CarouselItem = memo(
                      </div>
                      <div className="recently_btn-hover recently_btn-hover-play">
                         <span>
-                           <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                           {active && (
+                              <>
+                                 {!playing && <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>}
+                                 {playing && <ActionIcon></ActionIcon>}
+                                 {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
+                              </>
+                           )}
+                           {!active && (
+                              <>
+                                 <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                              </>
+                           )}
                         </span>
                      </div>
                      <div className="recently_btn-hover player_btn">

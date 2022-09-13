@@ -13,18 +13,25 @@ import BtnSetting from "./BtnSetting"
 import Blur from "react-blur"
 import { useEffect } from "react"
 import { fetchDataLyrics } from "../../features/Lyrics/Lyrics"
+import { useRef } from "react"
 
 const ViewPlayMusicMain = () => {
    const dispatch = useDispatch()
    let btn = document.querySelector(".nowplaying-header_setting-btn.full")
    const [open, setOpen] = useState(1)
+
+   const bottomRef = useRef()
+
    const isBgFull = useSelector((state) => state.setting.isBgFull)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
 
    const img = infoSongCurrent.thumbnailM
    let fetch = true
    useEffect(() => {
+      console.log(bottomRef.current?.innerText?.length)
+
       if (!fetch) return
 
       dispatch(fetchDataLyrics(currentEncodeId))
@@ -57,6 +64,8 @@ const ViewPlayMusicMain = () => {
       }
    }, [])
 
+   console.log(infoSongCurrent)
+
    return (
       <div className="nowplaying text white">
          <div className="nowplaying-bg">
@@ -72,7 +81,7 @@ const ViewPlayMusicMain = () => {
                      </div>
                      <div className="info-text !text-white">
                         <p>Từ PlayLits</p>
-                        <p id="titleList">Top 100 Bài Hát Nhạc Trẻ Hay Nhất</p>
+                        <p id="titleList">{infoCurrenAlbum.title}</p>
                      </div>
                   </div>
                </div>
@@ -83,7 +92,11 @@ const ViewPlayMusicMain = () => {
                   <li onClick={() => setOpen(2)} className={`nowplaying-header_tab-item ${open === 2 ? "active" : ""}`}>
                      Karaoke
                   </li>
-                  <li onClick={() => setOpen(3)} className={`nowplaying-header_tab-item ${open === 3 ? "active" : ""}`}>
+                  <li
+                     onClick={() => setOpen(3)}
+                     id="full-lyrics"
+                     className={`nowplaying-header_tab-item  ${open === 3 ? "active" : ""}`}
+                  >
                      Lời bài hát
                   </li>
                </ul>
@@ -114,6 +127,46 @@ const ViewPlayMusicMain = () => {
                {open === 1 && <BgFullListMusic></BgFullListMusic>}
                {open === 2 && <BgFullKaroke></BgFullKaroke>}
                {open === 3 && <BgFullLyrics></BgFullLyrics>}
+            </div>
+            <div className="nowplaying-bottom">
+               {/* <div className="zm-text-transition-content flex items-center justify-center max-w-[400px] text-white mx-auto mb-[10px] ">
+                  <span className="zm-text-transition-item ">
+                     {infoSongCurrent.title + " - "}
+                     <span className="artist">  n</span>
+                  </span>
+               </div> */}
+
+               <div
+                  className={`zm-text-transition  ${
+                     bottomRef?.current?.innerText?.length > 70 ? " is-transition" : ""
+                  } flex items-center justify-center`}
+               >
+                  <div
+                     ref={bottomRef}
+                     className={`zm-text-transition-item  ${
+                        bottomRef?.current?.innerText?.length > 70 ? "transition-content" : ""
+                     }`}
+                  >
+                     {infoSongCurrent.title} -{" "}
+                     <span className="artist">
+                        {infoSongCurrent.artists &&
+                           infoSongCurrent.artists?.map((e, index) => {
+                              let prara = ", "
+
+                              if (index === infoSongCurrent.artists.length - 1) {
+                                 prara = ""
+                              }
+
+                              return (
+                                 <span key={index}>
+                                    <span className="is-ghost">{e.name}</span>
+                                    {prara}
+                                 </span>
+                              )
+                           })}
+                     </span>
+                  </div>
+               </div>
             </div>
          </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { setOpenClass, setOpenMain } from "../../features/openMainFull/openMainFullFeatures"
 import { setToggle } from "../../features/toggleRight/toggleRight"
 
 const BottomControlsRight = () => {
@@ -26,7 +27,16 @@ const BottomControlsRight = () => {
             <i className="icon ic-mv"></i>
             <div className="playing_title-hover">Xem MV</div>
          </button>
-         <div className="player_btn playing_karaoke">
+         <div
+            onClick={() => {
+               dispatch(setOpenMain())
+               setTimeout(() => {
+                  dispatch(setOpenClass())
+                  document.getElementById("full-lyrics").click()
+               }, 100)
+            }}
+            className="player_btn playing_karaoke"
+         >
             <i className="icon ic-karaoke"></i>
             <div className="playing_title-hover">Xem Lời bài hát</div>
          </div>

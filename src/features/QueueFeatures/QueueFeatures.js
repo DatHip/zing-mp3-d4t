@@ -26,6 +26,15 @@ export const queueNowPlay = createSlice({
    name: "queueNowPlay",
    initialState,
    reducers: {
+      setDuration: (state, action) => {
+         state.duration = action.payload
+         localStorage.setItem("queue_nowplay", JSON.stringify(state))
+      },
+      setCurrentTime: (state, action) => {
+         state.currentTime = action.payload
+         localStorage.setItem("queue_nowplay", JSON.stringify(state))
+      },
+
       setCurrentIndexSong: (state, action) => {
          // set current
          state.currentIndexSong = action.payload
@@ -46,6 +55,7 @@ export const queueNowPlay = createSlice({
          state.infoCurrenAlbum = action.payload
          state.listSong = action.payload.song.items.filter((e) => e.streamingStatus === 1)
          state.loading = false
+         state.currentTime = 0
          state.playlistEncodeId = action.payload.encodeId
          state.infoSongCurrent = state.listSong[state.currentIndexSong]
          state.infoSongNext = state.listSong[state.currentIndexSong + 1]
@@ -57,7 +67,7 @@ export const queueNowPlay = createSlice({
    },
 })
 
-export const { setCurrentIndexSong } = queueNowPlay.actions
+export const { setCurrentIndexSong, setDuration, setCurrentTime } = queueNowPlay.actions
 
 export default queueNowPlay.reducer
 export { fetchPlayList }

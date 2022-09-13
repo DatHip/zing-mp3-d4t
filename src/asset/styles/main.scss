@@ -674,3 +674,85 @@ a:hover {
   opacity: .5;
   cursor: not-allowed !important;
 }
+
+.is-transition {
+  -webkit-mask-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, .8) 5%, #fff 15%, #fff 85%, hsla(0, 0%, 100%, .8) 95%, hsla(0, 0%, 100%, 0));
+}
+
+.zm-text-transition {
+  width: 350px;
+  margin: auto;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--white);
+}
+
+.transition-content {
+  animation: news 10s infinite linear;
+}
+
+@keyframes news {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-95%);
+  }
+}
+
+.icon.load {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    fill: var(--player-text);
+  }
+}
+
+.icon.loading {
+  margin-right: 0;
+  border: 1px solid var(--player-text);
+  border-radius: 50%;
+  box-sizing: border-box;
+  width: 36px !important;
+  height: 36px !important;
+  position: absolute;
+  inset: 0;
+  transform: translate(-50%, -50%);
+  margin-left: 17px !important;
+  margin-right: 14px !important;
+
+  svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.icon.loading.ic-play-circle-outline,
+.icon.loading.ic-pause-circle-outline {
+  border: none !important;
+  border-radius: unset !important;
+}
+
+.ic-gif-playing-white {
+  background-image: url(https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 0;
+}
+
+.zing-chart_item-info {
+  .icon {
+    margin-right: 0 !important;
+  }
+}

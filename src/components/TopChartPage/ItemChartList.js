@@ -3,9 +3,13 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Link } from "react-router-dom"
 import fancyTimeFormat from "../../utils/fancyTimeFormat"
 import { useSelector, useDispatch } from "react-redux"
+import ActionPlay from "../Icon/ActionPlay"
+import LoadingIcon from "../Icon/LoadingIcon"
+import ActionIcon from "../Icon/ActionIcon"
 
 const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFavourite }) => {
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const { playing } = useSelector((state) => state.setting)
 
    const getRankStatus = (startus) => {
       if (startus === 0) {
@@ -16,6 +20,8 @@ const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFav
          return <span className="material-icons-outlined down"> arrow_drop_down </span>
       }
    }
+
+   let active = currentEncodeId === item?.encodeId
 
    return (
       <div
@@ -41,9 +47,18 @@ const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFav
                      </div>
                      <div className="recently_list-item_hover">
                         <div className="recently_btn-hover recently_btn-hover-play">
-                           <span>
-                              <i className="icon action-play ic-play text-white !mr-0"></i>
-                           </span>
+                           {active && (
+                              <>
+                                 {!playing && <ActionPlay></ActionPlay>}
+                                 {playing && <ActionIcon></ActionIcon>}
+                                 {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
+                              </>
+                           )}
+                           {!active && (
+                              <>
+                                 <ActionPlay></ActionPlay>
+                              </>
+                           )}
                         </div>
                      </div>
                   </div>

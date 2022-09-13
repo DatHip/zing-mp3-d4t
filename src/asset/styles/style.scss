@@ -699,6 +699,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 38px;
 
         i {
           display: flex;
@@ -4769,4 +4770,8 @@
     color: var(--player-text);
     padding: 6px;
   }
+}
+
+.zm-text-transition-item .artist {
+  color: hsla(0, 0%, 100%, .5);
 }

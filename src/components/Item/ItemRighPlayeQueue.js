@@ -3,16 +3,20 @@ import ActionIcon from "../Icon/ActionIcon"
 import ActionPlay from "../Icon/ActionPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
 import { Draggable } from "react-beautiful-dnd"
+import { setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
 const ItemRighPlayer = ({ data, index }) => {
-   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
-   const { playing } = useSelector((state) => state.setting)
+   const dispatch = useDispatch()
+   const { currentIndexSong } = useSelector((state) => state.queueNowPlay)
+   const { playing, isReady } = useSelector((state) => state.setting)
 
    let active = index === currentIndexSong
+   let isPre = index < currentIndexSong
 
    return (
       <Draggable key={data.encodeId} draggableId={data.encodeId} index={index}>
@@ -22,7 +26,7 @@ const ItemRighPlayer = ({ data, index }) => {
                ref={provoied.innerRef}
                {...provoied.dragHandleProps}
                {...provoied.draggableProps}
-               className={`player_queue-item ${snapshot.isDragging ? "active-dragg" : ""} ${
+               className={`player_queue-item ${isPre ? "is-pre" : ""} ${snapshot.isDragging ? "active-dragg" : ""} ${
                   active ? "player_queue-active" : ""
                } `}
             >
@@ -33,12 +37,28 @@ const ItemRighPlayer = ({ data, index }) => {
                      <div className="player_queue-img-hover">
                         {active && (
                            <>
-                              {!playing && <ActionPlay></ActionPlay>}
-                              {playing && <ActionIcon></ActionIcon>}
-                              {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
+                              {isReady && (
+                                 <>
+                                    {!playing && <ActionPlay></ActionPlay>}
+                                    {playing && <ActionIcon></ActionIcon>}
+                                 </>
+                              )}
+
+                              {!isReady && <LoadingIcon notLoading></LoadingIcon>}
                            </>
                         )}
-                        {!active && <>{<ActionPlay></ActionPlay>}</>}
+
+                        {!active && (
+                           <div
+                              onClick={() => {
+                                 dispatch(setReady(false))
+                                 dispatch(setCurrentIndexSong(index))
+                                 dispatch(setPlay(true))
+                              }}
+                           >
+                              {<ActionPlay></ActionPlay>}
+                           </div>
+                        )}
                      </div>
                   </div>
                   <div className="player_queue-music-info">

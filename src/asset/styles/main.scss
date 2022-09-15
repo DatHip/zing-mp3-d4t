@@ -181,6 +181,7 @@
   border-radius: 6px;
   position: relative;
   line-height: 0;
+  transition: border-radius 2s ease-out;
 
   img {
     border-radius: 6px;
@@ -731,6 +732,8 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    fill: var(--player-text);
+
   }
 }
 

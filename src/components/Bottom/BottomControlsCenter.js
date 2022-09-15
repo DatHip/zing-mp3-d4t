@@ -2,15 +2,16 @@ import React from "react"
 import Tippy from "@tippyjs/react"
 import { useDispatch, useSelector } from "react-redux"
 import BottomControlllPLayIng from "./BottomControlllPLayIng"
-import { setLoopSongs, setPlaying, setRandomSongs } from "../../features/SettingPlay/settingPlay"
+import { setLoopSongs, setPlay, setPlaying, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
+import { setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
 
 const BottomControlsCenter = () => {
    const dispatch = useDispatch()
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const infoSongNext = useSelector((state) => state.queueNowPlay.infoSongNext)
-   const { playing, isLoop, autoPlay, isRandom } = useSelector((state) => state.setting)
+   const { playing, isLoop, autoPlay, isRandom, isReady } = useSelector((state) => state.setting)
 
    return (
       <div className="player_controls-center">
@@ -23,13 +24,29 @@ const BottomControlsCenter = () => {
                <i className="icon ic-shuffle"></i>
                <div className="playing_title-hover">{isRandom ? "Tắt" : "Bật"} phát ngẫu nhiên</div>
             </div>
-            <div id="prevMusic" className={`player_btn playing_back ${currentIndexSong === 0 ? "disabled" : ""}`}>
+            <div
+               onClick={() => {
+                  dispatch(setCurrentIndexSong(currentIndexSong - 1))
+                  dispatch(setReady(false))
+
+                  if (!playing) {
+                     dispatch(setPlay(true))
+                  }
+               }}
+               id="prevMusic"
+               className={`player_btn playing_back ${currentIndexSong === 0 ? "disabled" : ""}`}
+            >
                <i className="icon ic-pre"></i>
             </div>
+
             <div onClick={() => dispatch(setPlaying())} className="player_playing-input relative">
-               {!playing && <i className="icon loading ic-play-circle-outline"></i>}
-               {playing && <i className="icon loading ic-pause-circle-outline"></i>}
-               {/* <LoadingIcon></LoadingIcon> */}
+               {isReady && (
+                  <>
+                     {!playing && <i className="icon loading ic-play-circle-outline"></i>}
+                     {playing && <i className="icon loading ic-pause-circle-outline"></i>}
+                  </>
+               )}
+               {!isReady && <LoadingIcon></LoadingIcon>}
             </div>
 
             <Tippy
@@ -77,7 +94,17 @@ const BottomControlsCenter = () => {
                placement={"top"}
                className="!rounded-xl"
             >
-               <div id="nextMusic" className="player_btn playing_next">
+               <div
+                  onClick={() => {
+                     dispatch(setCurrentIndexSong(currentIndexSong + 1))
+                     dispatch(setReady(false))
+                     if (!playing) {
+                        dispatch(setPlay(true))
+                     }
+                  }}
+                  id="nextMusic"
+                  className="player_btn playing_next"
+               >
                   <i className="icon ic-next"></i>
                </div>
             </Tippy>

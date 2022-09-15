@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react"
-import { getTop100page } from "../api/getTop100page"
 import CarouselItem from "../components/Selection/CarouselItem"
 import PlayListSelector from "../components/Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 import LoadingSvg from "../components/loading/LoadingSvg"
-import { getAlbumPage } from "../api/getAlbumPage"
-import { getSuggestedAlbum } from "../api/getSuggestedAlbum"
 import { useParams } from "react-router"
 import styled from "styled-components"
 import ItemChartList from "../components/TopChartPage/ItemChartList"
-import getFormartTimeDDYY from "../utils/getFormartTimeDDYY"
-import { Link } from "react-router-dom"
 import ItemArits from "../components/MyMusicPage/ItemArits"
 import fancyTimeFormat from "../utils/fancyTimeFormat"
 import axios from "axios"
 import { tmdAPI } from "../config"
 import scrollTop from "../utils/scrollToTop"
+import AlbumPageInfo from "../components/AlbumPages/AlbumPageInfo"
 
 const AlbumPage = () => {
    const { id } = useParams()
-
    const [datas, setData] = useState([])
    const [dataSuggested, setDataSuggested] = useState([])
 
+   let isFetch = true
    useEffect(() => {
       scrollTop()
-      fetchData()
-   }, [id])
-   useEffect(() => {
-      fetchDataSuggested()
+      if (isFetch) {
+         fetchData()
+         fetchDataSuggested()
+      }
+
+      return () => (isFetch = false)
    }, [id])
 
    const fetchData = async () => {
@@ -46,70 +44,14 @@ const AlbumPage = () => {
       <AlbumPageStyles className="text-white mt-[10px]">
          <div className="playlist-detail-container">
             <div className="clearfix">
-               <div className="media playlist-header sticky">
-                  <div className="media-left">
-                     <div className={`want_list-item-link cursor-pointer main-page_list-item main_page-hover`}>
-                        <div className="want_list-item-link main-page_list-item_img">
-                           <img src={datas.thumbnailM} alt="" />
-                        </div>
-
-                        <div className="recently_list-item_hover text-white">
-                           <div className="recently_btn-hover recently_btn-hover-play">
-                              <span>
-                                 <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
-                              </span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="media-content">
-                     <div className="content-top">
-                        <h3 className="title">{datas.title}</h3>
-                        <div className="release">Cập nhật: {getFormartTimeDDYY(datas?.contentLastUpdate)}</div>
-                        <div className="artists">
-                           {datas.artists &&
-                              datas.artists?.map((e, index) => {
-                                 let prara = ", "
-
-                                 if (index === datas.artists.length - 1) {
-                                    prara = ""
-                                 }
-
-                                 return (
-                                    <span key={index}>
-                                       <Link className="is-ghost" to={`/nghe-si/${e.alias}/`}>
-                                          {e.name}
-                                       </Link>
-                                       {prara}
-                                    </span>
-                                 )
-                              })}
-                        </div>
-                        <div className="like">
-                           {datas?.like > 10000 ? datas?.like.toString().slice(0, -3) + "K" : datas.like} người yêu thích
-                        </div>
-                     </div>
-                     <div className="actions">
-                        <button className="zm-btn btn-play-all is-outlined active is-medium is-upper button" tabIndex={0}>
-                           <i className="icon ic-play" />
-                           <span>Tiếp tục phát</span>
-                        </button>
-                        <div className="media_right">
-                           <div className="media_right-btn player_btn">
-                              <i className="icon ic-like"></i>
-                              <span className="playing_title-hover">Thêm vào thư viện </span>
-                           </div>
-                           <div className="media_right-btn player_btn">
-                              <i className="icon ic-more"></i>
-                              <span className="playing_title-hover">Xem thêm</span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+               <AlbumPageInfo datas={datas}></AlbumPageInfo>
                <div className="playlist-content">
                   <div className="description">
-                     <span>Lời tựa</span> {datas?.sortDescription}
+                     {datas?.sortDescription && (
+                        <>
+                           <span>Lời tựa</span> {datas?.sortDescription}
+                        </>
+                     )}
                   </div>
 
                   <div className="main_topchart mt-2">
@@ -130,7 +72,7 @@ const AlbumPage = () => {
                            </div>
 
                            {datas?.song?.items.map((e, index) => {
-                              return <ItemChartList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
+                              return <ItemChartList isNoneRank item={e} index={index} key={uuidv4()}></ItemChartList>
                            })}
                            <h3 className="bottom-info subtitle mt-[10px] ml-[12px]">
                               <span>{datas?.song?.total} bài hát</span>
@@ -187,7 +129,7 @@ const AlbumPage = () => {
                         </PlayListSelector>
                      )
                   }
-                  return <></>
+                  return <div key={uuidv4()}></div>
                })}
             </div>
          </div>

@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { useDispatch } from "react-redux"
 import axios from "axios"
 import { tmdAPI } from "../../config"
+import { setPlay } from "../SettingPlay/settingPlay"
 
 const initialState = JSON.parse(localStorage.getItem("queue_nowplay")) || {
    currentEncodeId: "",
@@ -18,7 +20,6 @@ const initialState = JSON.parse(localStorage.getItem("queue_nowplay")) || {
 
 const fetchPlayList = createAsyncThunk("queueNowPlay/fetchPlayList", async (id) => {
    const res = await axios.get(tmdAPI.getAlbumPage(id))
-
    return res.data.data
 })
 
@@ -30,6 +31,7 @@ export const queueNowPlay = createSlice({
          state.duration = action.payload
          localStorage.setItem("queue_nowplay", JSON.stringify(state))
       },
+
       setCurrentTime: (state, action) => {
          state.currentTime = action.payload
          localStorage.setItem("queue_nowplay", JSON.stringify(state))
@@ -37,7 +39,11 @@ export const queueNowPlay = createSlice({
 
       setCurrentIndexSong: (state, action) => {
          // set current
+         state.currentTime = 0
          state.currentIndexSong = action.payload
+         state.infoSongCurrent = state.listSong[state.currentIndexSong]
+         state.duration = state.infoSongCurrent.duration
+         state.currentEncodeId = state.infoSongCurrent.encodeId
          // set next
          state.infoSongNext = state.listSong[state.currentIndexSong + 1]
          localStorage.setItem("queue_nowplay", JSON.stringify(state))
@@ -56,12 +62,12 @@ export const queueNowPlay = createSlice({
          state.listSong = action.payload.song.items.filter((e) => e.streamingStatus === 1)
          state.loading = false
          state.currentTime = 0
+         state.currentIndexSong = 0
          state.playlistEncodeId = action.payload.encodeId
          state.infoSongCurrent = state.listSong[state.currentIndexSong]
          state.infoSongNext = state.listSong[state.currentIndexSong + 1]
          state.currentEncodeId = state.infoSongCurrent.encodeId
          state.duration = state.infoSongCurrent.duration
-
          localStorage.setItem("queue_nowplay", JSON.stringify(state))
       })
    },

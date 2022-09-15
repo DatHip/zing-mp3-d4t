@@ -1070,6 +1070,16 @@
   border-radius: 4px;
   // background-color: var(--layout-bg);
 
+  &.is-pre {
+
+
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   &.active-dragg {
     background-color: var(--purple-primary) !important;
   }
@@ -4774,4 +4784,65 @@
 
 .zm-text-transition-item .artist {
   color: hsla(0, 0%, 100%, .5);
+}
+
+
+.main-page_list-item.album-active {
+  .main-page_list-item_img img {
+    border-radius: 999px;
+    animation: 10s linear 0s infinite normal none running rotatePlay;
+    transition: all 3s linear;
+    transition: border-radius .5s linear;
+  }
+
+  .recently_list-item_hover {
+    background-color: unset !important;
+    display: flex !important;
+  }
+
+}
+
+.playlist-header .main-page_list-item_img img {
+  transition: all .5s linear;
+}
+
+
+.rotatePause {
+  animation: .5s ease 0s 1 normal forwards running rotatePause !important;
+  border-radius: 50% !important;
+  transition: .5s !important;
+}
+
+.rotatePlay {
+  animation: 10s linear 0s infinite normal none running rotatePlay;
+  border-radius: 50% !important;
+  transition: .5s;
+}
+
+@keyframes rotatePlay {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotatePause {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.btn-album_page .ic-gif-playing-white {
+  width: 30px;
+  padding: 2rem;
+  height: 30px;
+  border: 1.6px solid var(--white);
+  border-radius: 99rem;
 }

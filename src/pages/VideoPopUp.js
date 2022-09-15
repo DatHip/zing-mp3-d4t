@@ -1,5 +1,5 @@
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import ReactPlayer from "react-player"
 import { useParams } from "react-router"
 import { Link, useNavigate } from "react-router-dom"
@@ -12,10 +12,12 @@ import scrollTop from "../utils/scrollToTop"
 import MvDataList from "../components/MVpage/MvDataList"
 import { useSelector, useDispatch } from "react-redux"
 import { setOpenOff } from "../features/ToggleMainMv/toggleMainMv"
+import { setPlayingAction } from "../features/SettingPlay/settingPlay"
 
 const VideoPopUp = () => {
    const { id } = useParams()
    const [datas, setData] = useState([])
+   const clipRef = useRef()
    const dispatch = useDispatch()
    const navigator = useNavigate()
    const idOpen = useSelector((state) => state.setOpenMainMv.historyOpen)
@@ -28,6 +30,9 @@ const VideoPopUp = () => {
    }
 
    const handleClose = () => {
+      let video = document.querySelector("#video-react video")
+      console.log(video)
+      video.pause()
       navigator(`${idOpen}`)
       dispatch(setOpenOff())
    }
@@ -48,6 +53,13 @@ const VideoPopUp = () => {
 
       return () => (isFetch = false)
    }, [id])
+
+   useEffect(() => {
+      if (isFetch) {
+         dispatch(setPlayingAction(false))
+      }
+      return () => (isFetch = false)
+   }, [])
 
    if (datas?.length === 0 || !datas)
       return (
@@ -142,9 +154,11 @@ const VideoPopUp = () => {
                                           Object.values(datas.streaming.mp4)[0] ||
                                           ""
                                        }
+                                       id="video-react"
                                        className="react-player outline-none border-none"
-                                       playing
                                        width="100%"
+                                       ref={clipRef}
+                                       playing
                                        height="100%"
                                        controls
                                     />

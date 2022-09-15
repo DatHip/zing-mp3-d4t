@@ -9,7 +9,7 @@ import ActionIcon from "../Icon/ActionIcon"
 
 const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFavourite }) => {
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const { playing } = useSelector((state) => state.setting)
+   const { playing, isReady } = useSelector((state) => state.setting)
 
    const getRankStatus = (startus) => {
       if (startus === 0) {
@@ -49,9 +49,14 @@ const ItemChartList = memo(({ item, index, isChildren = false, isNoneRank, onFav
                         <div className="recently_btn-hover recently_btn-hover-play">
                            {active && (
                               <>
-                                 {!playing && <ActionPlay></ActionPlay>}
-                                 {playing && <ActionIcon></ActionIcon>}
-                                 {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
+                                 {isReady && (
+                                    <>
+                                       {!playing && <ActionPlay></ActionPlay>}
+                                       {playing && <ActionIcon></ActionIcon>}
+                                    </>
+                                 )}
+
+                                 {!isReady && <LoadingIcon notLoading></LoadingIcon>}
                               </>
                            )}
                            {!active && (

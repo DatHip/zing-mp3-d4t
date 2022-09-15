@@ -5,9 +5,11 @@ let initialState = JSON.parse(localStorage.getItem("d4tmp3_setting")) || {
    isRandom: false,
    autoPlay: false,
    volume: 0.8,
+   isVolume: 0.8,
    playing: false,
    muted: false,
    isLoading: false,
+   isReady: false,
    quality: 320,
    isBgFull: true,
    text: 2,
@@ -18,6 +20,27 @@ export const setting = createSlice({
    name: "setting",
    initialState,
    reducers: {
+      setIsVolume: (state, action) => {
+         state.isVolume = action.payload
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
+      },
+      toogleMuted: (state) => {
+         state.muted = !state.muted
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
+      },
+      setReady: (state, action) => {
+         state.isReady = action.payload
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
+      },
+      setPlay: (state, action) => {
+         state.playing = action.payload
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
+      },
+
+      setVolume: (state, action) => {
+         state.volume = action.payload
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
+      },
       setRandomSongs: (state, action) => {
          state.isRandom = !state.isRandom
          localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
@@ -29,7 +52,11 @@ export const setting = createSlice({
       },
       setPlaying: (state) => {
          state.playing = !state.playing
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
+      },
 
+      setPlayingAction: (state, action) => {
+         state.playing = action.payload
          localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
 
@@ -48,6 +75,18 @@ export const setting = createSlice({
    extraReducers: (builer) => {},
 })
 
-export const { setAciteTheme, setSizeText, setLoopSongs, setRandomSongs, setPlaying } = setting.actions
+export const {
+   setAciteTheme,
+   setSizeText,
+   setLoopSongs,
+   setRandomSongs,
+   setPlaying,
+   setVolume,
+   setPlay,
+   setReady,
+   toogleMuted,
+   setIsVolume,
+   setPlayingAction,
+} = setting.actions
 
 export default setting.reducer

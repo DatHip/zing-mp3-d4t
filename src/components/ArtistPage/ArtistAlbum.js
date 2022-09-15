@@ -7,7 +7,7 @@ import CarouselItem from "../Selection/CarouselItem"
 const ArtistAlbum = () => {
    const datas = useOutletContext()
    const dataSelector = datas?.sections?.find((e) => e.title === "Album")
-   console.log(dataSelector)
+
    return (
       <PlayListSelector classAdd2={"!flex-wrap"} key={uuidv4()} title={dataSelector.title}>
          {dataSelector &&

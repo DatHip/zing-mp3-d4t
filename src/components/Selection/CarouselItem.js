@@ -1,13 +1,15 @@
 import React, { memo } from "react"
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import LoadingSkeleton from "../loading/LoadingSkeleton"
 import { useDispatch } from "react-redux"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
+import { setReady } from "../../features/SettingPlay/settingPlay"
 import { useSelector } from "react-redux"
 import ActionPlay from "../Icon/ActionPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
 import ActionIcon from "../Icon/ActionIcon"
+import { setPlay } from "../../features/SettingPlay/settingPlay"
 
 const StyleDiv = styled.div`
    &.active {
@@ -63,6 +65,7 @@ const CarouselItem = memo(
    }) => {
       const { title, encodeId, artists, sortDescription, thumbnailM } = item
       const dispatch = useDispatch()
+      const navigate = useNavigate()
       const { playlistEncodeId } = useSelector((state) => state.queueNowPlay)
       const { playing } = useSelector((state) => state.setting)
 
@@ -70,8 +73,12 @@ const CarouselItem = memo(
 
       return (
          <StyleDiv className={` ${active ? "active" : ""} ${class1}`} title={sortDescription}>
-            <Link
-               onClick={() => dispatch(fetchPlayList(encodeId))}
+            <div
+               onClick={(e) => {
+                  if (e.target.className.includes("recently_list-item_hover")) {
+                     navigate(`/album/${encodeId}`)
+                  }
+               }}
                to={`/album/${encodeId}`}
                className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
             >
@@ -88,15 +95,31 @@ const CarouselItem = memo(
                         <span>
                            {active && (
                               <>
-                                 {!playing && <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>}
+                                 {!playing && (
+                                    <div
+                                       className="playlist"
+                                       onClick={(e) => {
+                                          dispatch(fetchPlayList(encodeId))
+                                          navigate(`/album/${encodeId}`)
+                                       }}
+                                    >
+                                       <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                                    </div>
+                                 )}
                                  {playing && <ActionIcon></ActionIcon>}
-                                 {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
                               </>
                            )}
                            {!active && (
-                              <>
+                              <span
+                                 onClick={async () => {
+                                    navigate(`/album/${encodeId}`)
+                                    dispatch(setReady(false))
+                                    await dispatch(fetchPlayList(encodeId))
+                                    dispatch(setPlay(true))
+                                 }}
+                              >
                                  <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
-                              </>
+                              </span>
                            )}
                         </span>
                      </div>
@@ -106,7 +129,7 @@ const CarouselItem = memo(
                      </div>
                   </div>
                )}
-            </Link>
+            </div>
             {!hiddenTitle && (
                <div className="want_list-item-title">
                   <Link to={`/album/${encodeId}`} className="main_title-text">

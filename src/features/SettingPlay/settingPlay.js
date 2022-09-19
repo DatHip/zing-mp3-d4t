@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 let initialState = JSON.parse(localStorage.getItem("d4tmp3_setting")) || {
    isLoop: false,
@@ -41,15 +41,17 @@ export const setting = createSlice({
          state.volume = action.payload
          localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
+
       setRandomSongs: (state, action) => {
          state.isRandom = !state.isRandom
          localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
+
       setLoopSongs: (state, action) => {
          state.isLoop = !state.isLoop
-
          localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
+
       setPlaying: (state) => {
          state.playing = !state.playing
          localStorage.setItem("d4tmp3_setting", JSON.stringify(state))

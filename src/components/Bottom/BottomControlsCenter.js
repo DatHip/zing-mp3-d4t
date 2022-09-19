@@ -4,20 +4,27 @@ import { useDispatch, useSelector } from "react-redux"
 import BottomControlllPLayIng from "./BottomControlllPLayIng"
 import { setLoopSongs, setPlay, setPlaying, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
-import { setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
+import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
+import scrollToActive from "../../utils/scrollToView"
 
 const BottomControlsCenter = () => {
    const dispatch = useDispatch()
+
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
-   const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const infoSongNext = useSelector((state) => state.queueNowPlay.infoSongNext)
-   const { playing, isLoop, autoPlay, isRandom, isReady } = useSelector((state) => state.setting)
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+
+   const { playing, isLoop, isRandom, isReady } = useSelector((state) => state.setting)
 
    return (
       <div className="player_controls-center">
          <div className="player_top">
             <div
-               onClick={() => dispatch(setRandomSongs())}
+               onClick={() => {
+                  dispatch(setRandomSongs())
+                  if (!isRandom) {
+                  }
+               }}
                id="randomMusic"
                className={`player_btn playing_random  ${isRandom ? "active" : ""}`}
             >
@@ -26,7 +33,13 @@ const BottomControlsCenter = () => {
             </div>
             <div
                onClick={() => {
-                  dispatch(setCurrentIndexSong(currentIndexSong - 1))
+                  if (isRandom) {
+                     dispatch(setCurrentIndexSongShuffle(currentIndexSong - 1))
+                  }
+                  if (!isRandom) {
+                     dispatch(setCurrentIndexSong(currentIndexSong - 1))
+                  }
+
                   dispatch(setReady(false))
 
                   if (!playing) {
@@ -96,11 +109,20 @@ const BottomControlsCenter = () => {
             >
                <div
                   onClick={() => {
-                     dispatch(setCurrentIndexSong(currentIndexSong + 1))
+                     let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
+
+                     if (isRandom) {
+                        dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
+                     }
+                     if (!isRandom) {
+                        dispatch(setCurrentIndexSong(currentIndexSong + 1))
+                     }
                      dispatch(setReady(false))
                      if (!playing) {
                         dispatch(setPlay(true))
                      }
+
+                     scrollToActive(node)
                   }}
                   id="nextMusic"
                   className="player_btn playing_next"

@@ -759,3 +759,20 @@ a:hover {
     margin-right: 0 !important;
   }
 }
+
+.Toastify__toast-container {
+
+  .Toastify__close-button {
+    color: var(--text-primary);
+  }
+
+  .Toastify__toast-theme--light {
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+  }
+
+  .Toastify__progress-bar--info {
+    // background: var(--toastify-color-progress-info);
+    background-color: var(--yellow);
+  }
+}

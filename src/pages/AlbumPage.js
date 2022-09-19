@@ -12,11 +12,27 @@ import axios from "axios"
 import { tmdAPI } from "../config"
 import scrollTop from "../utils/scrollToTop"
 import AlbumPageInfo from "../components/AlbumPages/AlbumPageInfo"
+import { useSelector } from "react-redux"
+import scrollIntoView from "smooth-scroll-into-view-if-needed"
 
 const AlbumPage = () => {
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const { id } = useParams()
    const [datas, setData] = useState([])
    const [dataSuggested, setDataSuggested] = useState([])
+
+   useEffect(() => {
+      let node = document.querySelector(`.main_topchart .zing-chart_item.main_page-hover.active`)
+
+      if (!node) return
+      setTimeout(() => {
+         scrollIntoView(node, {
+            block: "center",
+            behavior: "smooth",
+            scrollMode: "if-needed",
+         })
+      }, 200)
+   }, [currentEncodeId, datas])
 
    let isFetch = true
    useEffect(() => {
@@ -39,6 +55,10 @@ const AlbumPage = () => {
    }
 
    if (datas?.length === 0 || dataSuggested?.length === 0) return <LoadingSvg></LoadingSvg>
+
+   const idAlbum = datas?.encodeId
+
+   let indexItem = -1
 
    return (
       <AlbumPageStyles className="text-white mt-[10px]">
@@ -72,7 +92,20 @@ const AlbumPage = () => {
                            </div>
 
                            {datas?.song?.items.map((e, index) => {
-                              return <ItemChartList isNoneRank item={e} index={index} key={uuidv4()}></ItemChartList>
+                              if (e.streamingStatus === 1) {
+                                 indexItem++
+                              }
+
+                              return (
+                                 <ItemChartList
+                                    idAlbum={idAlbum}
+                                    isNoneRank
+                                    item={e}
+                                    index={index}
+                                    indexNotVip={indexItem}
+                                    key={uuidv4()}
+                                 ></ItemChartList>
+                              )
                            })}
                            <h3 className="bottom-info subtitle mt-[10px] ml-[12px]">
                               <span>{datas?.song?.total} bài hát</span>

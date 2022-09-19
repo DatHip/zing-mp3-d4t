@@ -9,7 +9,7 @@ const WantToHearHomePage = () => {
 
    // const dataSelector = data?.data.items.filter((e) => e.title === "Cuối Tuần Lên Nhạc")
 
-   const dataSelector = data?.data.items[4]
+   const dataSelector = data?.data?.items[4]
 
    useEffect(() => {
       if (data) {

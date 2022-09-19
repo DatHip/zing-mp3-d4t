@@ -7,102 +7,134 @@ import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
 import { Draggable } from "react-beautiful-dnd"
-import { setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
+import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
-const ItemRighPlayer = ({ data, index }) => {
+const ItemRighPlayer = ({ data, index, isHistory }) => {
    const dispatch = useDispatch()
-   const { currentIndexSong } = useSelector((state) => state.queueNowPlay)
-   const { playing, isReady } = useSelector((state) => state.setting)
 
-   let active = index === currentIndexSong
+   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
+   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+   const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+
+   const { playing, isReady, isRandom } = useSelector((state) => state.setting)
+
+   let active = data?.encodeId === currentEncodeId
    let isPre = index < currentIndexSong
 
    return (
       <Draggable key={data.encodeId} draggableId={data.encodeId} index={index}>
          {(provoied, snapshot) => (
-            <li
-               draggable
-               ref={provoied.innerRef}
-               {...provoied.dragHandleProps}
-               {...provoied.draggableProps}
-               className={`player_queue-item ${isPre ? "is-pre" : ""} ${snapshot.isDragging ? "active-dragg" : ""} ${
-                  active ? "player_queue-active" : ""
-               } `}
-            >
-               {/* player_queue-pre */}
-               <div className="player_queue-item-left">
-                  <div className="player_queue-left">
-                     <LazyLoadImage className="player_queue-img" src={data?.thumbnail} alt="" />
-                     <div className="player_queue-img-hover">
-                        {active && (
-                           <>
-                              {isReady && (
-                                 <>
-                                    {!playing && <ActionPlay></ActionPlay>}
-                                    {playing && <ActionIcon></ActionIcon>}
-                                 </>
-                              )}
+            <div draggable ref={provoied.innerRef} {...provoied.dragHandleProps} {...provoied.draggableProps}>
+               <li
+                  className={`player_queue-item ${isPre ? "is-pre" : ""} ${snapshot.isDragging ? "active-dragg" : ""} ${
+                     active ? "player_queue-active" : ""
+                  } `}
+               >
+                  {/* player_queue-pre */}
+                  <div className="player_queue-item-left">
+                     <div className="player_queue-left">
+                        <LazyLoadImage className="player_queue-img" src={data?.thumbnail} alt="" />
+                        <div className="player_queue-img-hover">
+                           {active && (
+                              <>
+                                 {isReady && (
+                                    <>
+                                       {!playing && (
+                                          <span onClick={() => dispatch(setPlay(true))}>
+                                             <ActionPlay></ActionPlay>
+                                          </span>
+                                       )}
+                                       {playing && (
+                                          <span onClick={() => dispatch(setPlay(false))}>
+                                             <ActionIcon></ActionIcon>
+                                          </span>
+                                       )}
+                                    </>
+                                 )}
 
-                              {!isReady && <LoadingIcon notLoading></LoadingIcon>}
-                           </>
-                        )}
+                                 {!isReady && <LoadingIcon notLoading></LoadingIcon>}
+                              </>
+                           )}
 
-                        {!active && (
-                           <div
-                              onClick={() => {
-                                 dispatch(setReady(false))
-                                 dispatch(setCurrentIndexSong(index))
-                                 dispatch(setPlay(true))
-                              }}
-                           >
-                              {<ActionPlay></ActionPlay>}
-                           </div>
-                        )}
+                           {!active && (
+                              <div
+                                 onClick={() => {
+                                    dispatch(setReady(false))
+                                    if (!isRandom) {
+                                       dispatch(setCurrentIndexSong(index))
+                                    }
+                                    if (isRandom) {
+                                       dispatch(setCurrentIndexSongShuffle(index))
+                                    }
+
+                                    dispatch(setPlay(true))
+                                 }}
+                              >
+                                 {<ActionPlay></ActionPlay>}
+                              </div>
+                           )}
+                        </div>
+                     </div>
+                     <div className="player_queue-music-info">
+                        <div className="player_queue-music">{data?.title}</div>
+                        <div className="player_queue-name">
+                           {data?.artists &&
+                              data?.artists?.slice(0, 3)?.map((e, index) => {
+                                 let prara = ", "
+
+                                 if (index === 2) {
+                                    prara = "..."
+                                 }
+
+                                 if (data?.artists.length === 1) {
+                                    prara = ""
+                                 }
+                                 if (data?.artists.length === 2 && index === 1) {
+                                    prara = ""
+                                 }
+                                 if (data?.artists.length === 3 && index === 2) {
+                                    prara = ""
+                                 }
+
+                                 return (
+                                    <span key={index}>
+                                       <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
+                                       {prara}
+                                    </span>
+                                 )
+                              })}
+                        </div>
                      </div>
                   </div>
-                  <div className="player_queue-music-info">
-                     <div className="player_queue-music">{data?.title}</div>
-                     <div className="player_queue-name">
-                        {data?.artists &&
-                           data?.artists?.slice(0, 3)?.map((e, index) => {
-                              let prara = ", "
-
-                              if (index === 2) {
-                                 prara = "..."
-                              }
-
-                              if (data?.artists.length === 1) {
-                                 prara = ""
-                              }
-                              if (data?.artists.length === 2 && index === 1) {
-                                 prara = ""
-                              }
-                              if (data?.artists.length === 3 && index === 2) {
-                                 prara = ""
-                              }
-
-                              return (
-                                 <span key={index}>
-                                    <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
-                                    {prara}
-                                 </span>
-                              )
-                           })}
+                  <div className="player_queue-item-right">
+                     <div className="player_queue-btn player_btn zm-btn">
+                        <i className="icon ic-like"></i>
+                        <span className="playing_title-hover">Thêm vào thư viện </span>
+                     </div>
+                     <div className="player_queue-btn player_btn zm-btn">
+                        <i className="icon ic-more"></i>
+                        <span className="playing_title-hover">Xem thêm</span>
                      </div>
                   </div>
-               </div>
-               <div className="player_queue-item-right">
-                  <div className="player_queue-btn player_btn zm-btn">
-                     <i className="icon ic-like"></i>
-                     <span className="playing_title-hover">Thêm vào thư viện </span>
+               </li>
+               {active && !isHistory && !snapshot.isDragging && (
+                  <div className="next-songs">
+                     <h3 className="title is-6">Tiếp theo</h3>
+                     <h3 className="subtitle is-6">
+                        <span>Từ playlist</span>
+                        <Link to={`/album/${playlistEncodeId}`}>
+                           <span>
+                              <span>{infoCurrenAlbum?.title}</span>
+
+                              <span style={{ position: "fixed", visibility: "hidden", top: 0, left: 0 }}>…</span>
+                           </span>
+                        </Link>
+                     </h3>
                   </div>
-                  <div className="player_queue-btn player_btn zm-btn">
-                     <i className="icon ic-more"></i>
-                     <span className="playing_title-hover">Xem thêm</span>
-                  </div>
-               </div>
-            </li>
+               )}
+            </div>
          )}
       </Draggable>
    )

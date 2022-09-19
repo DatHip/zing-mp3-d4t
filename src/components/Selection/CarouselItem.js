@@ -10,6 +10,7 @@ import ActionPlay from "../Icon/ActionPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
 import ActionIcon from "../Icon/ActionIcon"
 import { setPlay } from "../../features/SettingPlay/settingPlay"
+import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 
 const StyleDiv = styled.div`
    &.active {
@@ -96,7 +97,7 @@ const CarouselItem = memo(
                            {active && (
                               <>
                                  {!playing && (
-                                    <div
+                                    <span
                                        className="playlist"
                                        onClick={(e) => {
                                           dispatch(fetchPlayList(encodeId))
@@ -104,7 +105,7 @@ const CarouselItem = memo(
                                        }}
                                     >
                                        <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
-                                    </div>
+                                    </span>
                                  )}
                                  {playing && <ActionIcon></ActionIcon>}
                               </>
@@ -114,8 +115,12 @@ const CarouselItem = memo(
                                  onClick={async () => {
                                     navigate(`/album/${encodeId}`)
                                     dispatch(setReady(false))
+                                    dispatch(setPlay(false))
                                     await dispatch(fetchPlayList(encodeId))
                                     dispatch(setPlay(true))
+                                    if (item.textType === "Playlist") {
+                                       dispatch(pushPlayListsLogged(item))
+                                    }
                                  }}
                               >
                                  <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>

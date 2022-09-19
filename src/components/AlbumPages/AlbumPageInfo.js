@@ -5,16 +5,17 @@ import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { memo } from "react"
 import getFormartTimeDDYY from "../../utils/getFormartTimeDDYY"
-import { setPlay } from "../../features/SettingPlay/settingPlay"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
 import ActionIcon from "../Icon/ActionIcon"
 import { useEffect } from "react"
 import { useRef } from "react"
+import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 
 const AlbumPageInfo = memo(({ datas }) => {
    const dispatch = useDispatch()
    const { playing, isReady } = useSelector((state) => state.setting)
-   const { infoCurrenAlbum, playlistEncodeId } = useSelector((state) => state.queueNowPlay)
+   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
    const refDiv = useRef()
    const refNum = useRef(0)
    let activeAlbum = datas?.encodeId === playlistEncodeId
@@ -48,8 +49,16 @@ const AlbumPageInfo = memo(({ datas }) => {
                      <span>
                         {activeAlbum && (
                            <>
-                              {!playing && <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>}
-                              {playing && <ActionIcon></ActionIcon>}
+                              {!playing && (
+                                 <span onClick={() => dispatch(setPlay(true))}>
+                                    <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                                 </span>
+                              )}
+                              {playing && (
+                                 <span onClick={() => dispatch(setPlay(false))}>
+                                    <ActionIcon></ActionIcon>
+                                 </span>
+                              )}
                            </>
                         )}
                         {!activeAlbum && <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>}
@@ -93,7 +102,7 @@ const AlbumPageInfo = memo(({ datas }) => {
                            onClick={() => {
                               dispatch(setPlay(true))
                            }}
-                           className="zm-btn btn-play-all is-outlined active is-medium is-upper button"
+                           className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
                            tabIndex={0}
                         >
                            <i className="icon ic-play" />
@@ -105,7 +114,7 @@ const AlbumPageInfo = memo(({ datas }) => {
                            onClick={() => {
                               dispatch(setPlay(false))
                            }}
-                           className="zm-btn btn-play-all is-outlined active is-medium is-upper button"
+                           className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
                            tabIndex={0}
                         >
                            <i className="icon ic-pause" />
@@ -118,13 +127,19 @@ const AlbumPageInfo = memo(({ datas }) => {
                {!activeAlbum && (
                   <>
                      <button
-                        onClick={() => {
+                        onClick={async () => {
+                           dispatch(setPlay(false))
+                           dispatch(setReady(false))
                            dispatch(fetchPlayList(datas?.encodeId))
+                           dispatch(setPlay(true))
+                           if (datas.textType === "Playlist") {
+                              dispatch(pushPlayListsLogged(datas))
+                           }
                         }}
-                        className="zm-btn btn-play-all is-outlined active is-medium is-upper button"
+                        className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
                         tabIndex={0}
                      >
-                        <i className="icon ic-pause" />
+                        <i className="icon ic-play" />
                         <span>Phát Album</span>
                      </button>
                   </>

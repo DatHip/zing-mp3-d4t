@@ -1,15 +1,23 @@
-import React, { memo, useRef } from "react"
+import React, { memo, useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Lazy } from "swiper"
 import { v4 as uuidv4 } from "uuid"
 import ItemSong from "./itemSong"
 
-const BgFullListMusic = memo(() => {
+const BgFullListMusic = memo(({ isScroll }) => {
    const navigationPrevRef = useRef(null)
    const navigationNextRef = useRef(null)
+   const swiperERFf = useRef(null)
 
    const listSong = useSelector((state) => state.queueNowPlay.listSong)
+   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
+   const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
+   const { isRandom } = useSelector((state) => state.setting)
+
+   useEffect(() => {
+      swiperERFf.current.swiper.slideTo(currentIndexSong)
+   }, [currentIndexSong, isRandom, isScroll])
 
    return (
       <div className="want_list  nowplaying-body_item ">
@@ -33,6 +41,7 @@ const BgFullListMusic = memo(() => {
          </button>
 
          <Swiper
+            ref={swiperERFf}
             modules={[Navigation, Pagination, Lazy]}
             lazy={true}
             slidesPerView={5}
@@ -62,12 +71,23 @@ const BgFullListMusic = memo(() => {
                },
             }}
          >
-            {listSong &&
+            {!isRandom &&
+               listSong &&
                listSong.length > 0 &&
-               listSong.map((e) => {
+               listSong.map((e, index) => {
                   return (
                      <SwiperSlide key={uuidv4()}>
-                        <ItemSong data={e}></ItemSong>
+                        <ItemSong index={index} data={e}></ItemSong>
+                     </SwiperSlide>
+                  )
+               })}
+            {isRandom &&
+               listSongShuffle &&
+               listSongShuffle.length > 0 &&
+               listSongShuffle.map((e, index) => {
+                  return (
+                     <SwiperSlide key={uuidv4()}>
+                        <ItemSong index={index} data={e}></ItemSong>
                      </SwiperSlide>
                   )
                })}

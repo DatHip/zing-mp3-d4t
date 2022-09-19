@@ -1,7 +1,9 @@
 import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
+import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { setInfoCurrentMv } from "../../features/QueueFeatures/QueueFeatures"
 
 const VideoPlayItemsStyles = styled.div`
    .title {
@@ -16,11 +18,16 @@ const VideoPlayItemsStyles = styled.div`
 `
 
 const VideoPlayItems = memo(({ classGird, data }) => {
+   const dispatch = useDispatch()
+
    return (
       <VideoPlayItemsStyles className={`${classGird} video-playing-item  w-full `}>
          <div className="w-full flex items-center video-player-item py-[15px] px-[15px]">
             <div className="media-left">
                <Link
+                  onClick={() => {
+                     dispatch(setInfoCurrentMv(data))
+                  }}
                   to={`/video-clip/${data.encodeId}`}
                   className={`want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
                >
@@ -39,7 +46,14 @@ const VideoPlayItems = memo(({ classGird, data }) => {
             </div>
             <div className="media-right ml-[10px]">
                <div className="title">
-                  <Link to={`/video-clip/${data.encodeId}`}>{data.title}</Link>
+                  <Link
+                     onClick={() => {
+                        dispatch(setInfoCurrentMv(data))
+                     }}
+                     to={`/video-clip/${data.encodeId}`}
+                  >
+                     {data.title}
+                  </Link>
                </div>
                <div className="subtitle ">
                   {data.artists.map((e, index) => {

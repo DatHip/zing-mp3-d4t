@@ -13,6 +13,7 @@ import MvDataList from "../components/MVpage/MvDataList"
 import { useSelector, useDispatch } from "react-redux"
 import { setOpenOff } from "../features/ToggleMainMv/toggleMainMv"
 import { setPlayingAction } from "../features/SettingPlay/settingPlay"
+import { pushMvsLogged } from "../features/Logged/loggedFeatures"
 
 const VideoPopUp = () => {
    const { id } = useParams()
@@ -21,6 +22,7 @@ const VideoPopUp = () => {
    const dispatch = useDispatch()
    const navigator = useNavigate()
    const idOpen = useSelector((state) => state.setOpenMainMv.historyOpen)
+   const infoCurrentMv = useSelector((state) => state.queueNowPlay.infoCurrentMv)
 
    const fetchData = async () => {
       const data = await axios.get(tmdAPI.getVideoMv(id))
@@ -31,7 +33,7 @@ const VideoPopUp = () => {
 
    const handleClose = () => {
       let video = document.querySelector("#video-react video")
-      console.log(video)
+
       video.pause()
       navigator(`${idOpen}`)
       dispatch(setOpenOff())
@@ -161,6 +163,9 @@ const VideoPopUp = () => {
                                        playing
                                        height="100%"
                                        controls
+                                       onReady={() => {
+                                          dispatch(pushMvsLogged(infoCurrentMv))
+                                       }}
                                     />
                                  </div>
                               </div>

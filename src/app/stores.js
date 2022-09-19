@@ -5,6 +5,7 @@ import Lyrics from "../features/Lyrics/Lyrics"
 import setTextBtn from "../features/MvState/MvStateFeatures"
 import toggleOpenMain from "../features/openMainFull/openMainFullFeatures"
 import queueNowPlay from "../features/QueueFeatures/QueueFeatures"
+import currentTimes from "../features/QueueFeatures/SetTimeCurrent"
 import themeToggle from "../features/setTheme/themeSetFeatures"
 import setting from "../features/SettingPlay/settingPlay"
 import setOpenMainMv from "../features/ToggleMainMv/toggleMainMv"
@@ -22,5 +23,6 @@ export const store = configureStore({
       logged: logged,
       setting: setting,
       lyrics: Lyrics,
+      currentTimes: currentTimes,
    },
 })

@@ -1,10 +1,21 @@
 import React, { useState } from "react"
 import ItemRighPlayer from "../../components/Item/ItemRighPlayeQueue"
 import { useSelector, useDispatch } from "react-redux"
-import { v4 as uuidv4 } from "uuid"
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
+import { DragDropContext, Droppable } from "react-beautiful-dnd"
 import { useEffect } from "react"
-import { setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
+import {
+   setDraggItemActive,
+   setDraggUpdateList,
+   setListSongShuffle,
+   setNextSong,
+   setDraggItemActiveShuffle,
+   setDraggUpdateListShuffle,
+   setNextSongShuffle,
+} from "../../features/QueueFeatures/QueueFeatures"
+import lodash from "lodash"
+import { v4 as uuidv4 } from "uuid"
+
+import scrollIntoView from "smooth-scroll-into-view-if-needed"
 
 const reorder = (list, startIndex, endIndex) => {
    const result = Array.from(list)
@@ -17,6 +28,13 @@ const BottomRight = () => {
    const isToggle = useSelector((state) => state.toggleright)
    const listSong = useSelector((state) => state.queueNowPlay.listSong)
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
+   const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+   const recentSongs = useSelector((state) => state.logged.recentSongs)
+
+   const { isRandom } = useSelector((state) => state.setting)
+
    const [toggleSilde, setToggleSilde] = useState(false)
    const [items, setItems] = useState([])
 
@@ -30,8 +48,37 @@ const BottomRight = () => {
       return () => (alo = false)
    }, [listSong])
 
+   useEffect(() => {
+      if (isRandom && listSong.length > 0) {
+         // let hi = listSong.find((e) => e.encodeId === infoSongCurrent.encodeId)
+         let arrNext = listSong.filter((e) => e.encodeId !== infoSongCurrent.encodeId)
+         let arrShuffle = [infoSongCurrent, ...lodash.shuffle(arrNext)]
+         dispatch(setListSongShuffle(arrShuffle))
+         setItems(arrShuffle)
+      }
+
+      if (!isRandom) {
+         const indexCurrentSongActive = listSong.indexOf(infoSongCurrent)
+         setItems(listSong)
+         dispatch(setNextSong(indexCurrentSongActive))
+      }
+   }, [isRandom, playlistEncodeId])
+
+   useEffect(() => {
+      let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
+      if (!node) return
+
+      setTimeout(() => {
+         scrollIntoView(node, {
+            block: "center",
+            behavior: "smooth",
+            scrollMode: "if-needed",
+         })
+      }, 200)
+   }, [currentEncodeId, isRandom, playlistEncodeId])
+
    const onDragEnd = (result) => {
-      const { destination, source, draggableId } = result
+      const { destination, source } = result
 
       if (!destination) {
          return
@@ -39,11 +86,24 @@ const BottomRight = () => {
 
       const reorderedItems = reorder(items, source.index, destination.index)
 
-      if (source.index === currentIndexSong) {
-         dispatch(setCurrentIndexSong(destination.index))
-         dispatch(setCurrentIndexSong(destination.index))
+      let indexActive = reorderedItems.find((e) => e.encodeId === currentEncodeId)
+      if (!isRandom) {
+         console.log(source.index, destination.index)
+         if (source.index === currentIndexSong) {
+            dispatch(setDraggItemActive(destination.index))
+         }
+         setItems(reorderedItems)
+         dispatch(setNextSong(reorderedItems.indexOf(indexActive)))
+         dispatch(setDraggUpdateList(reorderedItems))
       }
-      setItems(reorderedItems)
+      if (isRandom) {
+         if (source.index === currentIndexSong) {
+            dispatch(setDraggItemActiveShuffle(destination.index))
+         }
+         setItems(reorderedItems)
+         dispatch(setNextSongShuffle(reorderedItems.indexOf(indexActive)))
+         dispatch(setDraggUpdateListShuffle(reorderedItems))
+      }
    }
 
    return (
@@ -70,21 +130,42 @@ const BottomRight = () => {
                </div>
             </div>
             <div className="player_queue-container">
-               <DragDropContext onDragEnd={onDragEnd}>
-                  <Droppable droppableId="droppable">
-                     {(provoied, snapshot) => {
-                        return (
-                           <ul className="player_queue-listmusic" {...provoied.droppableProps} ref={provoied.innerRef}>
-                              {items &&
-                                 items?.length > 0 &&
-                                 items?.map((e, index) => {
-                                    return <ItemRighPlayer key={e.encodeId} index={index} data={e}></ItemRighPlayer>
-                                 })}
-                           </ul>
-                        )
-                     }}
-                  </Droppable>
-               </DragDropContext>
+               {!toggleSilde && (
+                  <DragDropContext onDragEnd={onDragEnd}>
+                     <Droppable droppableId="droppable">
+                        {(provoied, snapshot) => {
+                           return (
+                              <ul className="player_queue-listmusic" {...provoied.droppableProps} ref={provoied.innerRef}>
+                                 {items &&
+                                    items?.length > 0 &&
+                                    items?.map((e, index) => {
+                                       return <ItemRighPlayer key={e.encodeId} index={index} data={e}></ItemRighPlayer>
+                                    })}
+                              </ul>
+                           )
+                        }}
+                     </Droppable>
+                  </DragDropContext>
+               )}
+               {toggleSilde && (
+                  <DragDropContext onDragEnd={onDragEnd}>
+                     <Droppable droppableId="droppable">
+                        {(provoied, snapshot) => {
+                           return (
+                              <ul className="player_queue-listmusic" {...provoied.droppableProps} ref={provoied.innerRef}>
+                                 {recentSongs &&
+                                    recentSongs?.length > 0 &&
+                                    recentSongs?.map((e, index) => {
+                                       return (
+                                          <ItemRighPlayer key={uuidv4()} index={index} isHistory={true} data={e}></ItemRighPlayer>
+                                       )
+                                    })}
+                              </ul>
+                           )
+                        }}
+                     </Droppable>
+                  </DragDropContext>
+               )}
             </div>
          </div>
       </div>

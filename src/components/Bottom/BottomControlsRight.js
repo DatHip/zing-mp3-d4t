@@ -16,7 +16,7 @@ const BottomControlsRight = () => {
 
    let linkMv = infoSong?.mvlink
    let alo = linkMv?.slice(linkMv.lastIndexOf("/") + 1)
-   let idMv = alo?.slice(0, indexOf("."))
+   let idMv = alo?.slice(0, -5)
 
    useEffect(() => {
       let x = setting.volume * 100
@@ -38,7 +38,7 @@ const BottomControlsRight = () => {
 
    return (
       <div className="player_controls-right">
-         <Link to={`/mv/${idMv}`} className={`player_btn playing_mv ${linkMv ? "" : "disabled"}`}>
+         <Link to={`/video-clip/${idMv}`} className={`player_btn playing_mv ${linkMv ? "" : "disabled"}`}>
             <i className="icon ic-mv"></i>
             <div className="playing_title-hover">Xem MV</div>
          </Link>

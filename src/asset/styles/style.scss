@@ -881,6 +881,7 @@
   border-bottom: none;
   border-left: 1px solid var(--border-primary);
 
+
   .player_queue-main {
     height: calc(100vh - 90px);
     max-height: calc(100vh - 90px);
@@ -892,6 +893,8 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: clip;
+    // background-color: var(--queue-player-popup-bg);
+    background-color: var(--layout-bg);
 
 
     &::-webkit-scrollbar-track {
@@ -924,7 +927,9 @@
       justify-content: space-between;
       position: fixed;
       z-index: 2;
+      // background-color: var(--queue-player-popup-bg);
       background-color: var(--layout-bg);
+
 
 
       .queue_list-history {
@@ -1052,7 +1057,7 @@
 
 .player_queue-listmusic {
   padding: 0 1rem 2rem 1rem;
-  background: var(--layout-bg);
+
 
   & li:first-child {
     .playing_title-hover {
@@ -3951,17 +3956,21 @@
     .player_controls-center,
     .slider_list-btn-right,
     .slider_list-btn-left,
-    .want_list-item:not(.swiper-slide .swiper-slide-active) {
+    .want_list-item:not(.swiper-slide-active-playing),
+    .nowplaying-bottom {
       opacity: 0 !important;
     }
   }
+
+
 
   .nowplaying-header_tab,
   .nowplaying-header_setting,
   .player_controls-center,
   .slider_list-btn-right,
   .slider_list-btn-left,
-  .want_list-item:not(.swiper-slide .swiper-slide-active) {
+  .nowplaying-bottom,
+  .want_list-item:not(.swiper-slide-active-playing) {
     transition: .3s ease-in;
   }
 }
@@ -4788,7 +4797,18 @@
 
 
 .main-page_list-item.album-active {
-  .main-page_list-item_img img {
+  // &:hover {
+  //   .main-page_list-item_img {
+  //     overflow: visible;
+  //   }
+
+  // }
+
+  img {
+    transform: unset !important;
+  }
+
+  .main-page_list-item_img {
     border-radius: 999px;
     animation: 10s linear 0s infinite normal none running rotatePlay;
     transition: all 3s linear;
@@ -4802,7 +4822,7 @@
 
 }
 
-.playlist-header .main-page_list-item_img img {
+.playlist-header .main-page_list-item_img {
   transition: all .5s linear;
 }
 
@@ -4811,13 +4831,13 @@
   animation: .5s ease 0s 1 normal forwards running rotatePause !important;
   border-radius: 50% !important;
   transition: .5s !important;
+
+  .recently_list-item_hover {
+    background-color: unset !important;
+  }
 }
 
-.rotatePlay {
-  animation: 10s linear 0s infinite normal none running rotatePlay;
-  border-radius: 50% !important;
-  transition: .5s;
-}
+
 
 @keyframes rotatePlay {
   0% {
@@ -4845,4 +4865,34 @@
   height: 30px;
   border: 1.6px solid var(--white);
   border-radius: 99rem;
+}
+
+.next-songs {
+  padding: 10px 8px 5px;
+
+  .title {
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: none;
+    margin-bottom: 0;
+    color: var(--text-primary);
+  }
+
+  .subtitle {
+    display: flex;
+    color: #a0a0a0;
+
+
+    a {
+      flex: 1 1;
+      display: inline-block;
+      margin-left: 5px;
+      max-width: 295px;
+      overflow: hidden;
+      white-space: pre;
+      text-overflow: ellipsis;
+      font-weight: 500;
+      color: var(--link-text-hover);
+    }
+  }
 }

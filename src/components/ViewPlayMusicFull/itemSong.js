@@ -1,13 +1,22 @@
 import React, { memo } from "react"
+import { useDispatch } from "react-redux"
 
 import { useSelector } from "react-redux"
+import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import ActionIcon from "../Icon/ActionIcon"
 import LoadingIcon from "../Icon/LoadingIcon"
 
-const ItemSong = memo(({ data }) => {
+const ItemSong = memo(({ data, index }) => {
+   const dispatch = useDispatch()
+
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const { playing } = useSelector((state) => state.setting)
+   const { playing, isRandom, isReady } = useSelector((state) => state.setting)
    let active = currentEncodeId === data?.encodeId
+
+   if (active) {
+      console.log("re-render")
+   }
 
    return (
       <div className={`want_list-item slick-slide ${currentEncodeId === data?.encodeId ? "swiper-slide-active-playing" : ""}`}>
@@ -23,15 +32,39 @@ const ItemSong = memo(({ data }) => {
                <div className="recently_btn-hover recently_btn-hover-play">
                   {active && (
                      <>
-                        {!playing && <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>}
-                        {playing && <ActionIcon></ActionIcon>}
-                        {/* {playing && <LoadingIcon notLoading></LoadingIcon>} */}
+                        {isReady && (
+                           <>
+                              {!playing && (
+                                 <span onClick={() => dispatch(setPlay(true))}>
+                                    <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                                 </span>
+                              )}
+                              {playing && (
+                                 <span onClick={() => dispatch(setPlay(false))}>
+                                    <ActionIcon></ActionIcon>
+                                 </span>
+                              )}
+                           </>
+                        )}
+                        {!isReady && <LoadingIcon notLoading></LoadingIcon>}
                      </>
                   )}
                   {!active && (
-                     <>
+                     <span
+                        onClick={() => {
+                           dispatch(setReady(false))
+                           if (!isRandom) {
+                              dispatch(setCurrentIndexSong(index))
+                           }
+                           if (isRandom) {
+                              dispatch(setCurrentIndexSongShuffle(index))
+                           }
+
+                           dispatch(setPlay(true))
+                        }}
+                     >
                         <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
-                     </>
+                     </span>
                   )}
                </div>
                <div className="recently_btn-hover player_btn">

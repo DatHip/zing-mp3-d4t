@@ -7,7 +7,13 @@ let initialState = JSON.parse(localStorage.getItem("data-theme")) || {
    bgImg: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme-background/xone-bg.jpg",
    bgPlaying: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1//images/theme/xone-miniplayer.jpg",
    bgHeader: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1//images/theme/xone-header.jpg",
-   dataStyle: ["--purple-primary: #d7cb1f", "--progressbar-active-bg: #d7cb1f", "--link-text-hover: #7cb1f"],
+   dataStyle: [
+      "--purple-primary: #d7cb1f",
+      "--progressbar-active-bg: #d7cb1f",
+      "--link-text-hover: #d7cb1f",
+      "--miniplayer-bg-img: url('https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/xone-miniplayer.jpg')",
+      "--header-bg-img: url('https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/xone-header.jpg')",
+   ],
 }
 
 export const themeToggle = createSlice({

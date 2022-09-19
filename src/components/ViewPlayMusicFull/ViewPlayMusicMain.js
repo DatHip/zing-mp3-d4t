@@ -17,28 +17,46 @@ import { useRef } from "react"
 
 const ViewPlayMusicMain = () => {
    const dispatch = useDispatch()
-   let btn = document.querySelector(".nowplaying-header_setting-btn.full")
    const [open, setOpen] = useState(1)
-
+   const [isScroll, setIsScroll] = useState(false)
    const bottomRef = useRef()
 
    const isBgFull = useSelector((state) => state.setting.isBgFull)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
-
    const img = infoSongCurrent.thumbnailM
+
    let fetch = true
    useEffect(() => {
-      console.log(bottomRef.current?.innerText?.length)
-
       if (!fetch) return
-
       dispatch(fetchDataLyrics(currentEncodeId))
       return () => (fetch = false)
    }, [currentEncodeId])
 
+   useEffect(() => {
+      const playingBar = document.querySelector(".playing-bar")
+      var timeout
+      const hidden = () => {
+         clearTimeout(timeout)
+         timeout = setTimeout(function () {
+            setTimeout(() => {
+               setIsScroll(true)
+               playingBar.classList.add("play_hidden")
+            }, 500)
+         }, 7000)
+         playingBar.classList.remove("play_hidden")
+         setIsScroll(false)
+      }
+
+      document.addEventListener("mousemove", hidden)
+
+      return () => document.removeEventListener("mousemove", hidden)
+   }, [])
+
    const toggleFullScreen = useCallback(() => {
+      const btn = document.querySelector(".nowplaying-header_setting-btn.full")
+
       if (
          (document.fullScreenElement && document.fullScreenElement !== null) ||
          (!document.mozFullScreen && !document.webkitIsFullScreen)
@@ -63,8 +81,6 @@ const ViewPlayMusicMain = () => {
          }
       }
    }, [])
-
-   console.log(infoSongCurrent)
 
    return (
       <div className="nowplaying text white">
@@ -124,7 +140,7 @@ const ViewPlayMusicMain = () => {
                </div>
             </div>
             <div className="nowplaying-body">
-               {open === 1 && <BgFullListMusic></BgFullListMusic>}
+               {open === 1 && <BgFullListMusic isScroll={isScroll}></BgFullListMusic>}
                {open === 2 && <BgFullKaroke></BgFullKaroke>}
                {open === 3 && <BgFullLyrics></BgFullLyrics>}
             </div>

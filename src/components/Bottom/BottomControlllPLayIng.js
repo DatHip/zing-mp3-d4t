@@ -64,7 +64,6 @@ const BottomControlllPLayIng = memo(() => {
                      audioRef.current.seekTo(currentTime)
                      setOke(true)
                   }
-
                   dispatch(pushSongsLogged(infoSongCurrent))
                }}
                onProgress={(e) => {

@@ -5,23 +5,120 @@ import LoadingIcon from "../Icon/LoadingIcon"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-
 import { Draggable } from "react-beautiful-dnd"
-import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
+import {
+   pushSongHistoryPlayList,
+   setCurrentIndexSongShuffle,
+   setCurrentIndexSong,
+} from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
-const ItemRighPlayer = ({ data, index, isHistory }) => {
+const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde }) => {
    const dispatch = useDispatch()
+   const { playing, isReady, isRandom } = useSelector((state) => state.setting)
 
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
    const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
 
-   const { playing, isReady, isRandom } = useSelector((state) => state.setting)
-
    let active = data?.encodeId === currentEncodeId
    let isPre = index < currentIndexSong
+
+   if (isHistory) {
+      return (
+         <li className={`player_queue-item   ${active ? "player_queue-active" : ""} `}>
+            <div className="player_queue-item-left">
+               <div className="player_queue-left">
+                  <LazyLoadImage className="player_queue-img" src={data?.thumbnail} alt="" />
+                  <div className="player_queue-img-hover">
+                     {!active && (
+                        <div
+                           onClick={() => {
+                              dispatch(setReady(false))
+                              const item = [...items]
+                              let isFind = item.find((e) => e.encodeId === data.encodeId)
+                              if (isFind) {
+                                 let index = item.indexOf(isFind)
+                                 item.splice(index, 1)
+                              }
+                              const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)]
+                              const res = insert(item, currentIndexSong + 1, data)
+                              dispatch(pushSongHistoryPlayList({ item: data, list: res, index: currentIndexSong + 1 }))
+                              setToggleSilde((value) => !value)
+                              dispatch(setPlay(true))
+                           }}
+                        >
+                           {<ActionPlay></ActionPlay>}
+                        </div>
+                     )}
+
+                     {active && (
+                        <>
+                           {isReady && (
+                              <>
+                                 {!playing && (
+                                    <span onClick={() => dispatch(setPlay(true))}>
+                                       <ActionPlay></ActionPlay>
+                                    </span>
+                                 )}
+                                 {playing && (
+                                    <span onClick={() => dispatch(setPlay(false))}>
+                                       <ActionIcon></ActionIcon>
+                                    </span>
+                                 )}
+                              </>
+                           )}
+
+                           {!isReady && <LoadingIcon notLoading></LoadingIcon>}
+                        </>
+                     )}
+                  </div>
+               </div>
+               <div className="player_queue-music-info">
+                  <div className="player_queue-music">{data?.title}</div>
+                  <div className="player_queue-name">
+                     {data?.artists &&
+                        data?.artists?.slice(0, 3)?.map((e, index) => {
+                           let prara = ", "
+
+                           if (index === 2) {
+                              prara = "..."
+                           }
+
+                           if (data?.artists.length === 1) {
+                              prara = ""
+                           }
+                           if (data?.artists.length === 2 && index === 1) {
+                              prara = ""
+                           }
+                           if (data?.artists.length === 3 && index === 2) {
+                              prara = ""
+                           }
+
+                           return (
+                              <span key={index}>
+                                 <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
+                                 {prara}
+                              </span>
+                           )
+                        })}
+                  </div>
+               </div>
+            </div>
+            <div className="player_queue-item-right">
+               <div className="player_queue-btn player_btn zm-btn">
+                  <i className="icon ic-like"></i>
+                  <span className="playing_title-hover">Thêm vào thư viện </span>
+               </div>
+               <div className="player_queue-btn player_btn zm-btn">
+                  <i className="icon ic-more"></i>
+                  <span className="playing_title-hover">Xem thêm</span>
+               </div>
+            </div>
+         </li>
+      )
+   }
 
    return (
       <Draggable key={data.encodeId} draggableId={data.encodeId} index={index}>
@@ -32,7 +129,6 @@ const ItemRighPlayer = ({ data, index, isHistory }) => {
                      active ? "player_queue-active" : ""
                   } `}
                >
-                  {/* player_queue-pre */}
                   <div className="player_queue-item-left">
                      <div className="player_queue-left">
                         <LazyLoadImage className="player_queue-img" src={data?.thumbnail} alt="" />

@@ -26,18 +26,18 @@ const reorder = (list, startIndex, endIndex) => {
 
 const BottomRight = () => {
    const isToggle = useSelector((state) => state.toggleright)
+
    const listSong = useSelector((state) => state.queueNowPlay.listSong)
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+
    const recentSongs = useSelector((state) => state.logged.recentSongs)
 
    const { isRandom } = useSelector((state) => state.setting)
-
    const [toggleSilde, setToggleSilde] = useState(false)
    const [items, setItems] = useState([])
-
    const dispatch = useDispatch()
 
    let alo = true
@@ -50,7 +50,6 @@ const BottomRight = () => {
 
    useEffect(() => {
       if (isRandom && listSong.length > 0) {
-         // let hi = listSong.find((e) => e.encodeId === infoSongCurrent.encodeId)
          let arrNext = listSong.filter((e) => e.encodeId !== infoSongCurrent.encodeId)
          let arrShuffle = [infoSongCurrent, ...lodash.shuffle(arrNext)]
          dispatch(setListSongShuffle(arrShuffle))
@@ -88,7 +87,6 @@ const BottomRight = () => {
 
       let indexActive = reorderedItems.find((e) => e.encodeId === currentEncodeId)
       if (!isRandom) {
-         console.log(source.index, destination.index)
          if (source.index === currentIndexSong) {
             dispatch(setDraggItemActive(destination.index))
          }
@@ -148,23 +146,22 @@ const BottomRight = () => {
                   </DragDropContext>
                )}
                {toggleSilde && (
-                  <DragDropContext onDragEnd={onDragEnd}>
-                     <Droppable droppableId="droppable">
-                        {(provoied, snapshot) => {
+                  <ul className="player_queue-listmusic">
+                     {recentSongs &&
+                        recentSongs?.length > 0 &&
+                        recentSongs?.map((e, index) => {
                            return (
-                              <ul className="player_queue-listmusic" {...provoied.droppableProps} ref={provoied.innerRef}>
-                                 {recentSongs &&
-                                    recentSongs?.length > 0 &&
-                                    recentSongs?.map((e, index) => {
-                                       return (
-                                          <ItemRighPlayer key={uuidv4()} index={index} isHistory={true} data={e}></ItemRighPlayer>
-                                       )
-                                    })}
-                              </ul>
+                              <ItemRighPlayer
+                                 setToggleSilde={setToggleSilde}
+                                 items={items}
+                                 key={e.encodeId}
+                                 index={index}
+                                 isHistory={true}
+                                 data={e}
+                              ></ItemRighPlayer>
                            )
-                        }}
-                     </Droppable>
-                  </DragDropContext>
+                        })}
+                  </ul>
                )}
             </div>
          </div>

@@ -103,7 +103,7 @@ const AlbumPage = () => {
                                     item={e}
                                     index={index}
                                     indexNotVip={indexItem}
-                                    key={uuidv4()}
+                                    key={e.encodeId}
                                  ></ItemChartList>
                               )
                            })}

@@ -1,21 +1,18 @@
-import React from "react"
-import { v4 as uuidv4 } from "uuid"
-
-import { Link } from "react-router-dom"
+import React, { memo, useEffect, useRef, useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { memo } from "react"
+import { Link } from "react-router-dom"
+import { v4 as uuidv4 } from "uuid"
 import getFormartTimeDDYY from "../../utils/getFormartTimeDDYY"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
 import ActionIcon from "../Icon/ActionIcon"
-import { useEffect } from "react"
-import { useRef } from "react"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 
 const AlbumPageInfo = memo(({ datas }) => {
    const dispatch = useDispatch()
-   const { playing, isReady } = useSelector((state) => state.setting)
+   const playing = useSelector((state) => state.setting.playing)
    const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+   const loading = useSelector((state) => state.queueNowPlay.loading)
    const refDiv = useRef()
    const refNum = useRef(0)
    let activeAlbum = datas?.encodeId === playlistEncodeId
@@ -30,6 +27,16 @@ const AlbumPageInfo = memo(({ datas }) => {
          }, 500)
       }
    }, [playing])
+
+   const onClickBtn = useCallback(async () => {
+      dispatch(setPlay(false))
+      dispatch(setReady(false))
+      await dispatch(fetchPlayList(datas?.encodeId))
+      if (datas.textType === "Playlist") {
+         dispatch(pushPlayListsLogged(datas))
+      }
+      dispatch(setPlay(true))
+   }, [])
 
    return (
       <div className="media playlist-header sticky">
@@ -126,22 +133,28 @@ const AlbumPageInfo = memo(({ datas }) => {
 
                {!activeAlbum && (
                   <>
-                     <button
-                        onClick={async () => {
-                           dispatch(setPlay(false))
-                           dispatch(setReady(false))
-                           dispatch(fetchPlayList(datas?.encodeId))
-                           dispatch(setPlay(true))
-                           if (datas.textType === "Playlist") {
-                              dispatch(pushPlayListsLogged(datas))
-                           }
-                        }}
-                        className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
-                        tabIndex={0}
-                     >
-                        <i className="icon ic-play" />
-                        <span>Phát Album</span>
-                     </button>
+                     {loading && (
+                        <>
+                           <button
+                              className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
+                              tabIndex={0}
+                           >
+                              <span>Loading...</span>
+                           </button>
+                        </>
+                     )}
+                     {!loading && (
+                        <>
+                           <button
+                              onClick={onClickBtn}
+                              className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
+                              tabIndex={0}
+                           >
+                              <i className="icon ic-play" />
+                              <span>Phát Album</span>
+                           </button>
+                        </>
+                     )}
                   </>
                )}
 

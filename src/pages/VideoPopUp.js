@@ -1,11 +1,11 @@
 import axios from "axios"
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useCallback, useLayoutEffect } from "react"
 import ReactPlayer from "react-player"
 import { useParams } from "react-router"
 import { Link, useNavigate } from "react-router-dom"
 import LoadingSvg from "../components/loading/LoadingSvg"
 import PlayListSelector from "../components/Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
+
 import VideoPlayItems from "../components/VideoMv/VideoPlayItems"
 import { tmdAPI } from "../config"
 import scrollTop from "../utils/scrollToTop"
@@ -24,20 +24,19 @@ const VideoPopUp = () => {
    const idOpen = useSelector((state) => state.setOpenMainMv.historyOpen)
    const infoCurrentMv = useSelector((state) => state.queueNowPlay.infoCurrentMv)
 
-   const fetchData = async () => {
+   const fetchData = useCallback(async () => {
       const data = await axios.get(tmdAPI.getVideoMv(id))
       if (datas.length === 0 || !datas) {
          setData(data.data.data)
       }
-   }
+   }, [])
 
-   const handleClose = () => {
+   const handleClose = useCallback(() => {
       let video = document.querySelector("#video-react video")
-
       video.pause()
       navigator(`${idOpen}`)
       dispatch(setOpenOff())
-   }
+   }, [])
 
    useEffect(() => {
       document.getElementById("scrollableDiv").style.zIndex = "120"
@@ -46,21 +45,13 @@ const VideoPopUp = () => {
       }
    }, [])
 
-   let isFetch = true
-   useEffect(() => {
+   useLayoutEffect(() => {
       scrollTop()
-      if (isFetch) {
-         fetchData()
-      }
-
-      return () => (isFetch = false)
+      fetchData()
    }, [id])
 
-   useEffect(() => {
-      if (isFetch) {
-         dispatch(setPlayingAction(false))
-      }
-      return () => (isFetch = false)
+   useLayoutEffect(() => {
+      dispatch(setPlayingAction(false))
    }, [])
 
    if (datas?.length === 0 || !datas)
@@ -174,7 +165,7 @@ const VideoPopUp = () => {
                                     <div className="video-queue-list p-[1.6rem]">
                                        <PlayListSelector classAdd={"!mt-0"} title="Danh Sách Phát">
                                           {datas.recommends.map((e) => {
-                                             return <VideoPlayItems key={uuidv4()} data={e}></VideoPlayItems>
+                                             return <VideoPlayItems key={e.encodeId} data={e}></VideoPlayItems>
                                           })}
                                        </PlayListSelector>
                                     </div>
@@ -187,8 +178,8 @@ const VideoPopUp = () => {
                         <div className="video-footer ">
                            <div className="main_mv main-page-item active">
                               <div className="main_mv-container text-white">
-                                 {datas?.artists?.map((e) => {
-                                    return <MvDataList key={uuidv4()} item={e}></MvDataList>
+                                 {datas?.artists?.map((e, index) => {
+                                    return <MvDataList key={index} item={e}></MvDataList>
                                  })}
                               </div>
                            </div>

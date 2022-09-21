@@ -1,13 +1,13 @@
-import React, { memo, useRef } from "react"
+import React, { memo, useRef, useEffect, useState } from "react"
 import fancyTimeFormat from "../../utils/fancyTimeFormat"
 import { useDispatch, useSelector } from "react-redux"
 import ReactPlayer from "react-player/lazy"
 import { setCurrentIndexSong, setCurrentIndexSongShuffle, setCurrentTime } from "../../features/QueueFeatures/QueueFeatures"
-import { useEffect } from "react"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import { useState } from "react"
-import scrollToActive from "../../utils/scrollToView"
 import { pushSongsLogged } from "../../features/Logged/loggedFeatures"
+import { useCallback } from "react"
+import { useLayoutEffect } from "react"
+import { toast } from "react-toastify"
 
 const BottomControlllPLayIng = memo(() => {
    const progressBar = useRef()
@@ -23,14 +23,17 @@ const BottomControlllPLayIng = memo(() => {
 
    const { isLoop, volume, playing, muted, isRandom } = useSelector((state) => state.setting)
 
-   const setTimeSong1 = (e) => {
-      let progressWidhtVal = progresArea.current.clientWidth // Lấy chiều x
-      let clickedOffSetX = e.nativeEvent.offsetX // lấy value chiều x khi click
-      let res = (clickedOffSetX / progressWidhtVal) * infoSongCurrent?.duration
-      progressBar.current.style.width = (res / infoSongCurrent?.duration) * 100 + "%"
-      dispatch(setCurrentTime(res))
-      audioRef.current.seekTo(res)
-   }
+   const setTimeSong1 = useCallback(
+      (e) => {
+         let progressWidhtVal = progresArea.current.clientWidth // Lấy chiều x
+         let clickedOffSetX = e.nativeEvent.offsetX // lấy value chiều x khi click
+         let res = (clickedOffSetX / progressWidhtVal) * infoSongCurrent?.duration
+         progressBar.current.style.width = (res / infoSongCurrent?.duration) * 100 + "%"
+         dispatch(setCurrentTime(res))
+         audioRef.current.seekTo(res)
+      },
+      [progresArea, infoSongCurrent, progressBar]
+   )
 
    useEffect(() => {
       const setOff = () => {
@@ -42,7 +45,7 @@ const BottomControlllPLayIng = memo(() => {
       }
    }, [])
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       progressBar.current.style.width = (currentTime / infoSongCurrent?.duration) * 100 + "%"
    }, [currentTime])
 
@@ -55,7 +58,7 @@ const BottomControlllPLayIng = memo(() => {
                width={0}
                height={0}
                ref={audioRef}
-               progressInterval={500}
+               progressInterval={200}
                config={{ file: { forceAudio: true } }}
                onReady={(e) => {
                   dispatch(setReady(true))
@@ -71,7 +74,6 @@ const BottomControlllPLayIng = memo(() => {
                }}
                onEnded={() => {
                   if (!isLoop) {
-                     // let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
                      if (isRandom) {
                         dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
                      }
@@ -82,11 +84,12 @@ const BottomControlllPLayIng = memo(() => {
                      if (!playing) {
                         dispatch(setPlay(true))
                      }
-                     // scrollToActive(node)
                   }
                }}
-               onError={(e) => {
-                  console.log(e)
+               onError={() => {
+                  return toast("Có lỗi xảy ra, vui lòng thử lại", {
+                     type: "error",
+                  })
                }}
                playing={playing}
                loop={isLoop}

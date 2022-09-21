@@ -21,10 +21,21 @@ export const lyrics = createSlice({
       setThemes: (state, action) => {},
    },
    extraReducers: (builer) => {
+      builer.addCase(fetchDataLyrics.pending, (state, action) => {
+         state.isLoading = true
+      })
+      builer.addCase(fetchDataLyrics.rejected, (state, action) => {
+         state.isLoading = false
+      })
       builer.addCase(fetchDataLyrics.fulfilled, (state, action) => {
          state.defaultIBGUrls = action.payload.defaultIBGUrls
-         state.lyricByLine = action.payload.sentences
 
+         if (action.payload.sentences) {
+            state.lyricByLine = action.payload.sentences
+         } else {
+            state.lyricByLine = false
+         }
+         state.isLoading = false
          localStorage.setItem("d4tmp3_lyrics", JSON.stringify(state))
       })
    },

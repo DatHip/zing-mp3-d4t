@@ -10,6 +10,7 @@ import {
    pushSongHistoryPlayList,
    setCurrentIndexSongShuffle,
    setCurrentIndexSong,
+   pushSongHistoryPlayListShuffle,
 } from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
@@ -42,9 +43,15 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde }) => {
                                  let index = item.indexOf(isFind)
                                  item.splice(index, 1)
                               }
+
                               const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)]
                               const res = insert(item, currentIndexSong + 1, data)
+
                               dispatch(pushSongHistoryPlayList({ item: data, list: res, index: currentIndexSong + 1 }))
+                              if (isRandom) {
+                                 dispatch(pushSongHistoryPlayListShuffle({ item: data, list: res, index: currentIndexSong + 1 }))
+                              }
+
                               setToggleSilde((value) => !value)
                               dispatch(setPlay(true))
                            }}

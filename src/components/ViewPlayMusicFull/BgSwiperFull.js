@@ -25,8 +25,8 @@ const BgSwiperFull = () => {
             speed={1200}
          >
             {imgBgViewFull &&
-               imgBgViewFull.map((e) => (
-                  <SwiperSlide key={uuidv4()}>
+               imgBgViewFull.map((e, index) => (
+                  <SwiperSlide key={index}>
                      <li>
                         <img src={e} alt="bgc"></img>
                      </li>

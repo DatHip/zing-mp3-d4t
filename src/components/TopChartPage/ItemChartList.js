@@ -1,16 +1,16 @@
-import React, { memo } from "react"
-import { LazyLoadImage } from "react-lazy-load-image-component"
-import { Link } from "react-router-dom"
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
+import React, { memo, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import fancyTimeFormat from "../../utils/fancyTimeFormat"
 import ActionPlay from "../Icon/ActionPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
 import ActionIcon from "../Icon/ActionIcon"
 import { setPlay, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
 import { fetchPlayList, setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
-import { useState } from "react"
-import { toast } from "react-toastify"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import { useCallback } from "react"
 
 const ItemChartList = memo(({ indexNotVip, idAlbum, item, index, isChildren = false, isNoneRank, onFavourite }) => {
    const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const ItemChartList = memo(({ indexNotVip, idAlbum, item, index, isChildren = fa
 
    const { playing, isReady, isRandom } = useSelector((state) => state.setting)
 
-   const getRankStatus = (startus) => {
+   const getRankStatus = useCallback((startus) => {
       if (startus === 0) {
          return <span className="material-icons-outlined line">minimize</span>
       } else if (startus > 0) {
@@ -31,10 +31,67 @@ const ItemChartList = memo(({ indexNotVip, idAlbum, item, index, isChildren = fa
       } else if (startus < 0) {
          return <span className="material-icons-outlined down"> arrow_drop_down </span>
       }
-   }
+   }, [])
 
    let active = currentEncodeId === item?.encodeId
    let activeAlbum = idAlbum === playlistEncodeId
+
+   const fetchSongs = async (e) => {
+      // check active album && not vip
+      if (item?.streamingStatus === 2) {
+         return toast("Dành Cho Tài Khoản VIP", {
+            type: "info",
+         })
+      }
+
+      if (activeAlbum) {
+         if (!isRandom) {
+            dispatch(setReady(false))
+            dispatch(setCurrentIndexSong(indexNotVip))
+            dispatch(setPlay(true))
+         }
+
+         if (isRandom) {
+            dispatch(setPlay(false))
+            dispatch(setReady(false))
+            const indexSheffle = listSongShuffle.find((e) => e.encodeId === item?.encodeId)
+            const indexOff = listSongShuffle.indexOf(indexSheffle)
+            if (indexOff !== -1) {
+               dispatch(setCurrentIndexSongShuffle(indexOff))
+            }
+            dispatch(setPlay(true))
+         }
+      }
+      if (!activeAlbum) {
+         if (!isRandom) {
+            const hi = async () => {
+               setToggleBtn(true)
+               dispatch(setReady(false))
+               dispatch(setPlay(false))
+               await dispatch(fetchPlayList(idAlbum))
+               await dispatch(setCurrentIndexSong(indexNotVip))
+               await dispatch(setPlay(true))
+               await dispatch(pushPlayListsLogged(infoCurrenAlbum))
+            }
+            hi()
+         }
+
+         if (isRandom) {
+            const hi = async () => {
+               setToggleBtn(true)
+               dispatch(setReady(false))
+               dispatch(setPlay(false))
+               await dispatch(fetchPlayList(idAlbum))
+               await dispatch(setCurrentIndexSong(indexNotVip))
+               await dispatch(setPlay(true))
+               await dispatch(pushPlayListsLogged(infoCurrenAlbum))
+               await dispatch(setRandomSongs())
+               await dispatch(setRandomSongs())
+            }
+            hi()
+         }
+      }
+   }
 
    return (
       <div
@@ -81,64 +138,7 @@ const ItemChartList = memo(({ indexNotVip, idAlbum, item, index, isChildren = fa
                               </>
                            )}
                            {!active && (
-                              <span
-                                 onClick={async (e) => {
-                                    // check active album && not vip
-                                    if (item?.streamingStatus === 2) {
-                                       return toast("Dành Cho Tài Khoản VIP", {
-                                          type: "info",
-                                       })
-                                    }
-
-                                    if (activeAlbum) {
-                                       if (!isRandom) {
-                                          dispatch(setReady(false))
-                                          dispatch(setCurrentIndexSong(indexNotVip))
-                                          dispatch(setPlay(true))
-                                       }
-
-                                       if (isRandom) {
-                                          dispatch(setPlay(false))
-                                          dispatch(setReady(false))
-                                          const indexSheffle = listSongShuffle.find((e) => e.encodeId === item?.encodeId)
-                                          const indexOff = listSongShuffle.indexOf(indexSheffle)
-                                          if (indexOff !== -1) {
-                                             dispatch(setCurrentIndexSongShuffle(indexOff))
-                                          }
-                                          dispatch(setPlay(true))
-                                       }
-                                    }
-                                    if (!activeAlbum) {
-                                       if (!isRandom) {
-                                          const hi = async () => {
-                                             setToggleBtn(true)
-                                             dispatch(setReady(false))
-                                             dispatch(setPlay(false))
-                                             await dispatch(fetchPlayList(idAlbum))
-                                             await dispatch(setCurrentIndexSong(indexNotVip))
-                                             await dispatch(setPlay(true))
-                                             await dispatch(pushPlayListsLogged(infoCurrenAlbum))
-                                          }
-                                          hi()
-                                       }
-
-                                       if (isRandom) {
-                                          const hi = async () => {
-                                             setToggleBtn(true)
-                                             dispatch(setReady(false))
-                                             dispatch(setPlay(false))
-                                             await dispatch(fetchPlayList(idAlbum))
-                                             await dispatch(setCurrentIndexSong(indexNotVip))
-                                             await dispatch(setPlay(true))
-                                             await dispatch(pushPlayListsLogged(infoCurrenAlbum))
-                                             await dispatch(setRandomSongs())
-                                             await dispatch(setRandomSongs())
-                                          }
-                                          hi()
-                                       }
-                                    }
-                                 }}
-                              >
+                              <span onClick={fetchSongs}>
                                  {!toggleBtn ? <ActionPlay></ActionPlay> : !isReady && <LoadingIcon notLoading></LoadingIcon>}
                               </span>
                            )}

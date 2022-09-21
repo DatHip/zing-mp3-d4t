@@ -4,18 +4,18 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Lazy } from "swiper"
 import { v4 as uuidv4 } from "uuid"
 import ItemSong from "./itemSong"
+import { useLayoutEffect } from "react"
 
 const BgFullListMusic = memo(({ isScroll }) => {
    const navigationPrevRef = useRef(null)
    const navigationNextRef = useRef(null)
    const swiperERFf = useRef(null)
-
    const listSong = useSelector((state) => state.queueNowPlay.listSong)
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
    const { isRandom } = useSelector((state) => state.setting)
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       swiperERFf.current.swiper.slideTo(currentIndexSong)
    }, [currentIndexSong, isRandom, isScroll])
 
@@ -76,7 +76,7 @@ const BgFullListMusic = memo(({ isScroll }) => {
                listSong.length > 0 &&
                listSong.map((e, index) => {
                   return (
-                     <SwiperSlide key={uuidv4()}>
+                     <SwiperSlide key={e.encodeId}>
                         <ItemSong index={index} data={e}></ItemSong>
                      </SwiperSlide>
                   )
@@ -86,7 +86,7 @@ const BgFullListMusic = memo(({ isScroll }) => {
                listSongShuffle.length > 0 &&
                listSongShuffle.map((e, index) => {
                   return (
-                     <SwiperSlide key={uuidv4()}>
+                     <SwiperSlide key={e.encodeId}>
                         <ItemSong index={index} data={e}></ItemSong>
                      </SwiperSlide>
                   )

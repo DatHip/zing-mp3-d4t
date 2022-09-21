@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 import { setOpenClass, setOpenMain } from "../../features/openMainFull/openMainFullFeatures"
 
 const BottomControlLeft = () => {
+   const dispatch = useDispatch()
    const infoSong = useSelector((state) => state.queueNowPlay.infoSongCurrent)
 
-   const dispatch = useDispatch()
    return (
       <div className="player_controls-left">
          <div className="player_controls-media">

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useLayoutEffect, useCallback } from "react"
+import { useParams } from "react-router"
+import { v4 as uuidv4 } from "uuid"
+import axios from "axios"
+import { useSelector } from "react-redux"
 import CarouselItem from "../components/Selection/CarouselItem"
 import PlayListSelector from "../components/Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
 import LoadingSvg from "../components/loading/LoadingSvg"
-import { useParams } from "react-router"
 import styled from "styled-components"
 import ItemChartList from "../components/TopChartPage/ItemChartList"
 import ItemArits from "../components/MyMusicPage/ItemArits"
 import fancyTimeFormat from "../utils/fancyTimeFormat"
-import axios from "axios"
 import { tmdAPI } from "../config"
 import scrollTop from "../utils/scrollToTop"
 import AlbumPageInfo from "../components/AlbumPages/AlbumPageInfo"
-import { useSelector } from "react-redux"
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
 
 const AlbumPage = () => {
@@ -34,25 +34,21 @@ const AlbumPage = () => {
       }, 200)
    }, [currentEncodeId, datas])
 
-   let isFetch = true
-   useEffect(() => {
+   useLayoutEffect(() => {
       scrollTop()
-      if (isFetch) {
-         fetchData()
-         fetchDataSuggested()
-      }
-
-      return () => (isFetch = false)
+      fetchData()
+      fetchDataSuggested()
    }, [id])
 
-   const fetchData = async () => {
+   const fetchData = useCallback(async () => {
       const data = await axios.get(tmdAPI.getAlbumPage(id))
       setData(data.data.data)
-   }
-   const fetchDataSuggested = async () => {
+   }, [])
+
+   const fetchDataSuggested = useCallback(async () => {
       const data = await axios.get(tmdAPI.getSuggestedAlbum(id))
       setDataSuggested(data.data.data)
-   }
+   }, [])
 
    if (datas?.length === 0 || dataSuggested?.length === 0) return <LoadingSvg></LoadingSvg>
 

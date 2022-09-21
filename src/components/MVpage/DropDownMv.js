@@ -6,38 +6,37 @@ import { useDispatch, useSelector } from "react-redux"
 import { setText } from "../../features/MvState/MvStateFeatures"
 import axios from "axios"
 import { tmdAPI } from "../../config"
+import { useLayoutEffect } from "react"
+import { useCallback } from "react"
 
 const DropDownMv = memo(() => {
    const { id } = useParams()
    const [datas, setData] = useState([])
-
    const count = useSelector((state) => state.setTextBtn)
-
    const dispatch = useDispatch()
    const navigate = useNavigate()
-
    const [open, setOpen] = useState(false)
 
-   const fetchData = async () => {
+   const fetchData = useCallback(async () => {
       const data = await axios.get(tmdAPI.getCategoryMv(id))
       const dataSelector = data.data.data
       setData(dataSelector)
-   }
+   }, [])
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       fetchData()
    }, [])
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       if (id === "IWZ9Z08I" || id === "IWZ9Z08O" || id === "IWZ9Z08W" || id === "IWZ9Z086") {
          dispatch(setText("Tất Cả"))
       }
    }, [id])
 
-   const handleClick = (e) => {
+   const handleClick = useCallback((e) => {
       dispatch(setText(e.title))
       navigate(`/mv/${e.id}`, { state: true })
-   }
+   }, [])
 
    return (
       <div className="main_mv-search-dropdown">

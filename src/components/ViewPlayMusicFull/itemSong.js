@@ -14,10 +14,6 @@ const ItemSong = memo(({ data, index }) => {
    const { playing, isRandom, isReady } = useSelector((state) => state.setting)
    let active = currentEncodeId === data?.encodeId
 
-   if (active) {
-      console.log("re-render")
-   }
-
    return (
       <div className={`want_list-item slick-slide ${currentEncodeId === data?.encodeId ? "swiper-slide-active-playing" : ""}`}>
          <div className="want_list-item-link main-page_list-item main_page-hover" href="#">

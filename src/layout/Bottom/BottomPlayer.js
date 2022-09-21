@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import BottomControlLeft from "../../components/Bottom/BottomControlLeft"
 import BottomControlsCenter from "../../components/Bottom/BottomControlsCenter"
 import BottomControlsRight from "../../components/Bottom/BottomControlsRight"
@@ -15,4 +15,4 @@ const BottomPlayer = () => {
    )
 }
 
-export default BottomPlayer
+export default memo(BottomPlayer)

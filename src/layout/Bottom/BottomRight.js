@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { memo, useState } from "react"
 import ItemRighPlayer from "../../components/Item/ItemRighPlayeQueue"
 import { useSelector, useDispatch } from "react-redux"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
@@ -16,6 +16,8 @@ import lodash from "lodash"
 import { v4 as uuidv4 } from "uuid"
 
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
+import { useLayoutEffect } from "react"
+import { useCallback } from "react"
 
 const reorder = (list, startIndex, endIndex) => {
    const result = Array.from(list)
@@ -40,15 +42,11 @@ const BottomRight = () => {
    const [items, setItems] = useState([])
    const dispatch = useDispatch()
 
-   let alo = true
-   useEffect(() => {
-      if (alo) {
-         setItems(listSong)
-      }
-      return () => (alo = false)
+   useLayoutEffect(() => {
+      setItems(listSong)
    }, [listSong])
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       if (isRandom && listSong.length > 0) {
          let arrNext = listSong.filter((e) => e.encodeId !== infoSongCurrent.encodeId)
          let arrShuffle = [infoSongCurrent, ...lodash.shuffle(arrNext)]
@@ -63,7 +61,7 @@ const BottomRight = () => {
       }
    }, [isRandom, playlistEncodeId])
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
       if (!node) return
 
@@ -74,35 +72,38 @@ const BottomRight = () => {
             scrollMode: "if-needed",
          })
       }, 200)
-   }, [currentEncodeId, isRandom, playlistEncodeId])
+   }, [currentEncodeId, isRandom, playlistEncodeId, toggleSilde])
 
-   const onDragEnd = (result) => {
-      const { destination, source } = result
+   const onDragEnd = useCallback(
+      (result) => {
+         const { destination, source } = result
 
-      if (!destination) {
-         return
-      }
-
-      const reorderedItems = reorder(items, source.index, destination.index)
-
-      let indexActive = reorderedItems.find((e) => e.encodeId === currentEncodeId)
-      if (!isRandom) {
-         if (source.index === currentIndexSong) {
-            dispatch(setDraggItemActive(destination.index))
+         if (!destination) {
+            return
          }
-         setItems(reorderedItems)
-         dispatch(setNextSong(reorderedItems.indexOf(indexActive)))
-         dispatch(setDraggUpdateList(reorderedItems))
-      }
-      if (isRandom) {
-         if (source.index === currentIndexSong) {
-            dispatch(setDraggItemActiveShuffle(destination.index))
+
+         const reorderedItems = reorder(items, source.index, destination.index)
+
+         let indexActive = reorderedItems.find((e) => e.encodeId === currentEncodeId)
+         if (!isRandom) {
+            if (source.index === currentIndexSong) {
+               dispatch(setDraggItemActive(destination.index))
+            }
+            setItems(reorderedItems)
+            dispatch(setNextSong(reorderedItems.indexOf(indexActive)))
+            dispatch(setDraggUpdateList(reorderedItems))
          }
-         setItems(reorderedItems)
-         dispatch(setNextSongShuffle(reorderedItems.indexOf(indexActive)))
-         dispatch(setDraggUpdateListShuffle(reorderedItems))
-      }
-   }
+         if (isRandom) {
+            if (source.index === currentIndexSong) {
+               dispatch(setDraggItemActiveShuffle(destination.index))
+            }
+            setItems(reorderedItems)
+            dispatch(setNextSongShuffle(reorderedItems.indexOf(indexActive)))
+            dispatch(setDraggUpdateListShuffle(reorderedItems))
+         }
+      },
+      [items, currentEncodeId, isRandom]
+   )
 
    return (
       <div className={`player_queue ${isToggle ? "player_queue-is_active" : ""}`}>
@@ -169,4 +170,4 @@ const BottomRight = () => {
    )
 }
 
-export default BottomRight
+export default memo(BottomRight)

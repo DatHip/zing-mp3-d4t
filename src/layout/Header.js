@@ -8,11 +8,6 @@ const Header = () => {
    return (
       <header className="header">
          <div className="header_content">
-            {/* <div className="header_content-btn-user-c">
-               <div className="setting_item setting_item-user">
-                  <span className="material-icons-outlined"> person </span>
-               </div>
-            </div> */}
             <div className="header_content-btn-user-c">
                <ItemLogin isTitle={false}></ItemLogin>
             </div>

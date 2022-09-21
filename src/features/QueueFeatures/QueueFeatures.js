@@ -39,6 +39,19 @@ export const queueNowPlay = createSlice({
          localStorage.setItem("queue_nowplay", JSON.stringify(state))
       },
 
+      pushSongHistoryPlayListShuffle: (state, action) => {
+         let isExists = action.payload.list.filter((e) => action.payload.item.encodeId === e.encodeId)
+         let index = action.payload.list.indexOf(isExists)
+         state.listSongShuffle.splice(index, 1)
+         state.listSongShuffle = action.payload.list
+         state.currentIndexSong = action.payload.index
+         state.currentTime = 0
+         state.currentEncodeId = action.payload.item.encodeId
+         state.infoSongCurrent = action.payload.item
+         state.duration = state.infoSongCurrent.duration
+         localStorage.setItem("queue_nowplay", JSON.stringify(state))
+      },
+
       setInfoCurrentMv: (state, action) => {
          state.infoCurrentMv = action.payload
          localStorage.setItem("queue_nowplay", JSON.stringify(state))
@@ -178,6 +191,7 @@ export const {
    setNextSongShuffle,
    setInfoCurrentMv,
    pushSongHistoryPlayList,
+   pushSongHistoryPlayListShuffle,
 } = queueNowPlay.actions
 
 export default queueNowPlay.reducer

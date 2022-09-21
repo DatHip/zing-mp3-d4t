@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from "react"
-import { useCallback } from "react"
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+import React, { useCallback, useState, useEffect, useRef, memo, useLayoutEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { setOffClass, setOffMain } from "../../features/openMainFull/openMainFullFeatures"
 import BgFullKaroke from "./BgFullKaroke"
 import BgFullListMusic from "./BgFullListMusic"
@@ -11,30 +8,26 @@ import BgFullLyrics from "./BgFullLyrics"
 import BgSwiperFull from "./BgSwiperFull"
 import BtnSetting from "./BtnSetting"
 import Blur from "react-blur"
-import { useEffect } from "react"
 import { fetchDataLyrics } from "../../features/Lyrics/Lyrics"
-import { useRef } from "react"
 
 const ViewPlayMusicMain = () => {
    const dispatch = useDispatch()
    const [open, setOpen] = useState(1)
    const [isScroll, setIsScroll] = useState(false)
    const bottomRef = useRef()
-
    const isBgFull = useSelector((state) => state.setting.isBgFull)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
    const img = infoSongCurrent.thumbnailM
 
-   let fetch = true
-   useEffect(() => {
-      if (!fetch) return
+   // fetch lyric
+   useLayoutEffect(() => {
       dispatch(fetchDataLyrics(currentEncodeId))
-      return () => (fetch = false)
    }, [currentEncodeId])
 
-   useEffect(() => {
+   // hidden
+   useLayoutEffect(() => {
       const playingBar = document.querySelector(".playing-bar")
       var timeout
       const hidden = () => {
@@ -54,6 +47,7 @@ const ViewPlayMusicMain = () => {
       return () => document.removeEventListener("mousemove", hidden)
    }, [])
 
+   // Toggle full screen
    const toggleFullScreen = useCallback(() => {
       const btn = document.querySelector(".nowplaying-header_setting-btn.full")
 
@@ -145,13 +139,6 @@ const ViewPlayMusicMain = () => {
                {open === 3 && <BgFullLyrics></BgFullLyrics>}
             </div>
             <div className="nowplaying-bottom">
-               {/* <div className="zm-text-transition-content flex items-center justify-center max-w-[400px] text-white mx-auto mb-[10px] ">
-                  <span className="zm-text-transition-item ">
-                     {infoSongCurrent.title + " - "}
-                     <span className="artist">  n</span>
-                  </span>
-               </div> */}
-
                <div
                   className={`zm-text-transition  ${
                      bottomRef?.current?.innerText?.length > 70 ? " is-transition" : ""
@@ -189,4 +176,4 @@ const ViewPlayMusicMain = () => {
    )
 }
 
-export default ViewPlayMusicMain
+export default memo(ViewPlayMusicMain)

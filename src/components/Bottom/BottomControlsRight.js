@@ -93,7 +93,6 @@ const BottomControlsRight = () => {
          <div className="player_device-column" />
          <div onClick={() => dispatch(setToggle())} className={`toggle-right ${isToggle ? "active" : null}`}>
             <div className="zm-btn">
-               {/* playing_playlist-btn */}
                <i className="icon ic-list-music"></i>
                <div className="playing_title-hover">Danh sách phát</div>
             </div>

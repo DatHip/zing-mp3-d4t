@@ -13,6 +13,7 @@ let initialState = JSON.parse(localStorage.getItem("d4tmp3_setting")) || {
    quality: 320,
    isBgFull: true,
    text: 2,
+   progressInterval: 500,
    titleKey: "D4T MP3 | Nghe nhạc chất lượng cao trên desktop, mobile và TV",
 }
 
@@ -20,6 +21,10 @@ export const setting = createSlice({
    name: "setting",
    initialState,
    reducers: {
+      setProgressInterval: (state, action) => {
+         state.progressInterval = action.payload
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
+      },
       setIsVolume: (state, action) => {
          state.isVolume = action.payload
          localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
@@ -89,6 +94,7 @@ export const {
    toogleMuted,
    setIsVolume,
    setPlayingAction,
+   setProgressInterval,
 } = setting.actions
 
 export default setting.reducer

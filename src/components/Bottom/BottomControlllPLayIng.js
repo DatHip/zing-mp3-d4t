@@ -21,7 +21,7 @@ const BottomControlllPLayIng = memo(() => {
    const currentTime = useSelector((state) => state.queueNowPlay.currentTime)
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
 
-   const { isLoop, volume, playing, muted, isRandom } = useSelector((state) => state.setting)
+   const { isLoop, volume, playing, muted, isRandom, progressInterval } = useSelector((state) => state.setting)
 
    const setTimeSong1 = useCallback(
       (e) => {
@@ -58,7 +58,7 @@ const BottomControlllPLayIng = memo(() => {
                width={0}
                height={0}
                ref={audioRef}
-               progressInterval={200}
+               progressInterval={progressInterval}
                config={{ file: { forceAudio: true } }}
                onReady={(e) => {
                   dispatch(setReady(true))

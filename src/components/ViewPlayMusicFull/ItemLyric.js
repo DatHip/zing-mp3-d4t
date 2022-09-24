@@ -1,7 +1,6 @@
 import React, { memo, useRef } from "react"
 import { useCallback } from "react"
 import { useSelector } from "react-redux"
-import scrollIntoView from "scroll-into-view-if-needed"
 import smoothScrollIntoView from "smooth-scroll-into-view-if-needed"
 import formatTime from "../../utils/formatTimeLyric"
 
@@ -17,7 +16,7 @@ const ItemLyric = memo(({ data, index }) => {
             block: "center",
             behavior: "smooth",
          })
-      }, 100)
+      }, 50)
    }, [])
 
    let text = ""

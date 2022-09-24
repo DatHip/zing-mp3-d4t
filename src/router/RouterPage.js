@@ -32,6 +32,10 @@ import SearchPageMv from "../components/SearchPage/SearchPageMv"
 import SearchPageSong from "../components/SearchPage/SearchPageSong"
 import SearchPagePlaylist from "../components/SearchPage/SearchPagePlaylist"
 import VideoPopUp from "../pages/VideoPopUp"
+import HistoryPage from "../pages/HistoryPage"
+import HistroryPlayList from "../components/HistoryPage/HistroryPlayList"
+import HistoryVideo from "../components/HistoryPage/HistoryVideo"
+import HistorySong from "../components/HistoryPage/HistorySong"
 
 const RouterPage = () => {
    const mainPageRef = useRef()
@@ -96,6 +100,11 @@ const RouterPage = () => {
                   <Route path="album" element={<ArtistAlbum></ArtistAlbum>}></Route>
                   <Route path="mv" element={<ArtistMv></ArtistMv>}></Route>
                   <Route path="single" element={<ArtistSingle></ArtistSingle>}></Route>
+               </Route>
+               <Route path="/history/" element={<HistoryPage></HistoryPage>}>
+                  <Route index path="playlist" element={<HistroryPlayList></HistroryPlayList>}></Route>
+                  <Route path="song" element={<HistorySong></HistorySong>}></Route>
+                  <Route path="video" element={<HistoryVideo></HistoryVideo>}></Route>
                </Route>
                {/*  */}
                <Route path="/album/:id" element={<AlbumPage></AlbumPage>}></Route>

@@ -74,6 +74,19 @@ const BottomRight = () => {
       }, 200)
    }, [currentEncodeId, isRandom, playlistEncodeId, toggleSilde])
 
+   useEffect(() => {
+      let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
+      if (!node) return
+
+      setTimeout(() => {
+         scrollIntoView(node, {
+            block: "center",
+            behavior: "smooth",
+            scrollMode: "if-needed",
+         })
+      }, 200)
+   }, [])
+
    const onDragEnd = useCallback(
       (result) => {
          const { destination, source } = result
@@ -138,7 +151,20 @@ const BottomRight = () => {
                                  {items &&
                                     items?.length > 0 &&
                                     items?.map((e, index) => {
-                                       return <ItemRighPlayer key={e.encodeId} index={index} data={e}></ItemRighPlayer>
+                                       let lastIndex = false
+
+                                       if (index + 1 === items.length) {
+                                          lastIndex = true
+                                       }
+
+                                       return (
+                                          <ItemRighPlayer
+                                             lastIndex={lastIndex}
+                                             key={e.encodeId}
+                                             index={index}
+                                             data={e}
+                                          ></ItemRighPlayer>
+                                       )
                                     })}
                               </ul>
                            )
@@ -146,6 +172,7 @@ const BottomRight = () => {
                      </Droppable>
                   </DragDropContext>
                )}
+
                {toggleSilde && (
                   <ul className="player_queue-listmusic">
                      {recentSongs &&

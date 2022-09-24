@@ -395,6 +395,40 @@
 
 // Mobile
 @media (max-width: 719px) {
+  .sider-navbar {
+
+    .sider_vip,
+    .slider-history {
+      display: none;
+    }
+  }
+
+
+
+  .sider_active {
+    border-left: unset !important;
+  }
+
+  .playlist-detail-container {
+    .actions {
+      margin-top: 2rem;
+    }
+
+    .media {
+      overflow: hidden;
+    }
+
+    .media-left {
+      .main-page_list-item {
+        display: inline-flex;
+      }
+    }
+  }
+
+  .history-playlist.row {
+    flex-wrap: wrap;
+  }
+
   .nowplaying-bottom {
     display: none;
   }
@@ -1640,7 +1674,7 @@
   }
 
   .main-page .main_topchart .container_zing-chart .zing-chart_list .zing-chart_item {
-    padding: 8px 2px;
+    padding: 8px;
   }
 
   .main-page .zing-chart_right-top .zing-chart_right-top_item:nth-child(2) {

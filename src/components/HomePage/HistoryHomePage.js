@@ -1,23 +1,36 @@
 import React from "react"
+import { useSelector } from "react-redux"
 import CarouselItem from "../Selection/CarouselItem"
 import PlayListSelector from "../Selection/PlayListSelector"
 
 const HistoryHomePage = () => {
-   const item = {
-      sortDescription: "Thứ Bảy là phải nhảy theo những track Remix thịnh hành này",
-      thumbnailM: "https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_png/cover/f/0/8/f/f08f6d37403389636c560d0df79880b9.png",
-      title: "Nhạc Cho Thứ Bảy",
+   const recentPlaylist = useSelector((state) => state.logged.recentPlaylist)
+   let all = false
+
+   if (recentPlaylist.length < 3) {
+      return
    }
 
+   if (recentPlaylist.length > 7) {
+      all = true
+   }
    return (
-      <PlayListSelector isHistory title={"Lịch Sử"} all={true}>
-         <CarouselItem item={item} desc={false} artis={false} class1={"col l-1-4 m-2 c-4 m2-6 m2-5"}></CarouselItem>
-         <CarouselItem item={item} desc={false} artis={false} class1={"col l-1-4 m-2 c-4 m2-6 m2-5"}></CarouselItem>
-         <CarouselItem item={item} desc={false} artis={false} class1={"col l-1-4 m-2 c-4 m2-6 m2-5"}></CarouselItem>
-         <CarouselItem item={item} desc={false} artis={false} class1={"col l-1-4 m-2 c-4 m2-6 m2-5"}></CarouselItem>
-         <CarouselItem item={item} desc={false} artis={false} class1={"col l-1-4 m-2 c-4 m2-6 m2-5"}></CarouselItem>
-         <CarouselItem item={item} desc={false} artis={false} class1={"col l-1-4 m-2 c-4 m2-6 m2-none"}></CarouselItem>
-         <CarouselItem item={item} desc={false} artis={false} class1={"col l-1-4 m-none c-4"}></CarouselItem>
+      <PlayListSelector isHistory title={"Gần đây"} classAdd2={"!no-wrap"} all={all}>
+         {recentPlaylist &&
+            recentPlaylist.length > 0 &&
+            recentPlaylist.slice(0, 7).map((item, index) => {
+               let classGrid = "col l-1-4 m-2 c-4 m2-6 m2-5"
+
+               if (index === 5) {
+                  classGrid = "col l-1-4 m-2 c-4 m2-6 m2-none"
+               }
+               if (index === 6) {
+                  // eslint-disable-next-line no-unused-vars
+                  classGrid = "col l-1-4 m-none c-4"
+               }
+
+               return <CarouselItem key={index} item={item} desc={false} artis={false} class1={classGrid}></CarouselItem>
+            })}
       </PlayListSelector>
    )
 }

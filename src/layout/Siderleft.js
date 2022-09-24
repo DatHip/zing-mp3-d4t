@@ -142,12 +142,30 @@ const Siderleft = () => {
                </NavLink>
             </ul>
          </div>
-         <div className="sider_vip text-white">
+
+         <div className="sider_vip !pt-0 !pb-0 text-white">
             <div className="sider_vip-main">
                <p>Đăng nhập để khám phá playlist dành riêng cho bạn</p>
                <button>Đăng Nhập</button>
             </div>
          </div>
+
+         <NavLink
+            to="history/playlist"
+            className={({ isActive }) =>
+               isActive
+                  ? "slider-history sider_menu-item sider_menu-item-acitve sider_active !mb-[2rem] !mt-[.6rem]"
+                  : "sider_menu-item sider_menu-item-acitve slider-history !mt-[.6rem] !mb-[2rem]"
+            }
+            title="Nhạc mới"
+         >
+            <div className="cursor-pointer">
+               <i className="icon">
+                  <img src="https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.0.13/static/media/my-history.374cb625.svg" alt="" />
+               </i>
+               <span className="sider_menu-item-title font-normal">Gần đây</span>
+            </div>
+         </NavLink>
 
          <button onClick={setIsToggle} className="sider-navbar-exanded">
             <span className="material-icons-outlined navbar-exanded-btn-left"> navigate_next </span>

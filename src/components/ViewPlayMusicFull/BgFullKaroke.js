@@ -1,13 +1,10 @@
-import React, { memo } from "react"
-import { useLayoutEffect } from "react"
-import { useRef } from "react"
-import { useMemo } from "react"
-import { useState } from "react"
-import { useEffect } from "react"
+import React, { memo, useLayoutEffect, useRef, useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components"
-import { setProgressInterval } from "../../features/SettingPlay/settingPlay"
-import ItemLyricKaraoke from "./ItemLyricKaraoke"
+import { setIsSeek } from "../../features/Lyrics/Lyrics"
+import { setPlaying, setProgressInterval } from "../../features/SettingPlay/settingPlay"
+import LoadingSvg from "../loading/LoadingSvg"
 
 const LyricStyleds = styled.li`
    animation: opactiy 0.5s linear forwards;
@@ -54,34 +51,28 @@ const LyricStyleds = styled.li`
    }
 `
 
-const NextWord = memo(({ index, refIndex }) => {
+const Word = memo(({ data, index }) => {
    const liRef = useRef()
-   const lyricByLine = useSelector((state) => state.lyrics.lyricByLine)
+   const progressBar = useRef()
    const current = useSelector((state) => state.queueNowPlay.currentTime)
-   const progressBar = useRef(null)
-   const data = lyricByLine[index]
+   const isSeek = useSelector((state) => state.lyrics.isSeek)
    const isUp = useRef(false)
 
-   let text = ""
-   let e = data.words
-   data.words.forEach((e) => {
-      text += e.data + " "
-   })
-
-   let startTime = e[0].startTime / 1000
-   let endTime = e[e.length - 1].endTime / 1000
+   let text = data?.text
+   let startTime = data?.startTime
+   let endTime = data?.endTime
 
    const hi = async () => {
       isUp.current = true
-      await liRef.current.classList.add("up")
-      refIndex.current += 2
+      await liRef.current?.classList.add("up")
+      index.current += 2
    }
 
    useLayoutEffect(() => {
-      if (current >= startTime && current <= endTime) {
+      if (current >= startTime && current <= endTime && !isSeek) {
          let duration = endTime - startTime
          var radio = (100 / duration) * (endTime - current) - 100
-         let res = radio * -1 + 3
+         let res = radio * -1 + 4
          if (current < endTime) {
             if (res > 100) {
                res = 100
@@ -89,6 +80,7 @@ const NextWord = memo(({ index, refIndex }) => {
             progressBar.current.style.width = res + "%"
          }
       }
+
       if (current > endTime) {
          hi()
       }
@@ -100,7 +92,7 @@ const NextWord = memo(({ index, refIndex }) => {
       if (current < endTime) {
          liRef.current.classList.remove("up")
       }
-   }, [current])
+   }, [current, isSeek])
 
    return (
       <LyricStyleds ref={liRef} className={`item`}>
@@ -116,14 +108,74 @@ const NextWord = memo(({ index, refIndex }) => {
 
 const BgFullKaroke = memo(() => {
    const dispatch = useDispatch()
+   const [state, setState] = useState([])
    const textSize = useSelector((state) => state.setting.text)
    const lyricByLine = useSelector((state) => state.lyrics.lyricByLine)
-
+   const loading = useSelector((state) => state.lyrics.loading)
    const current = useSelector((state) => state.queueNowPlay.currentTime)
-   const progressBar = useRef(null)
-   const progressInterval = useSelector((state) => state.setting.progressInterval)
+   const isReady = useSelector((state) => state.setting.isReady)
+
+   const ref0 = useRef(0)
+   const ref1 = useRef(1)
+   useLayoutEffect(() => {
+      let lyric = lyricByLine.map((data, index) => {
+         let text = ""
+         let e = data.words
+         data.words.forEach((e) => {
+            text += e.data + " "
+         })
+
+         let startTime = e[0].startTime / 1000
+         let endTime = e[e.length - 1].endTime / 1000
+
+         return {
+            text: text,
+            startTime: startTime,
+            endTime: endTime,
+            index: index,
+         }
+      })
+
+      setState(lyric)
+   }, [lyricByLine])
+
+   useLayoutEffect(() => {
+      let audio = document.querySelector("audio")
+
+      const onSeekToAudio = () => {
+         dispatch(setIsSeek(true))
+         dispatch(setPlaying(false))
+         if (current === 0) {
+            ref0.current = 0
+            ref1.current = 1
+         }
+
+         for (let i = 0; i < state?.length; i++) {
+            if (current >= state[i].startTime && current <= state[i].endTime) {
+               if (i % 2 === 0) {
+                  ref0.current = i
+                  ref1.current = i + 1
+               } else {
+                  ref0.current = i - 1
+                  ref1.current = i
+               }
+            }
+         }
+         dispatch(setPlaying(true))
+         setTimeout(() => {
+            dispatch(setIsSeek(false))
+         }, 300)
+      }
+
+      audio.addEventListener("seeked", onSeekToAudio)
+
+      return () => audio.removeEventListener("seeked", onSeekToAudio)
+   }, [])
 
    useEffect(() => {
+      toast("Karaoke đang quá trình phát triển, sẽ có lỗi khi seeked, Vui lòng thông cảm !", {
+         type: "info",
+      })
       dispatch(setProgressInterval(10))
 
       return () => {
@@ -142,19 +194,19 @@ const BgFullKaroke = memo(() => {
       isTextSize = "l"
    }
 
-   const ref0 = useRef(0)
-   const ref1 = useRef(1)
+   if (loading) {
+      return <LoadingSvg></LoadingSvg>
+   }
 
    return (
       <div className="nowplaying-body_item nowplaying-body_karaoke text-white">
          <ul className={`scroll-content ${isTextSize} inline-flex  flex-col`}>
-            <NextWord refIndex={ref0} index={ref0.current}></NextWord>
-            <NextWord refIndex={ref1} index={ref1.current}></NextWord>
-            {/* {lyricByLine &&
-               lyricByLine.length > 0 &&
-               lyricByLine.slice(0, 6).map((e, index) => {
-                  return <ItemLyricKaraoke key={index} data={e}></ItemLyricKaraoke>
-               })} */}
+            {!loading && state && state.length > 0 && (
+               <>
+                  <Word data={state[ref0.current]} index={ref0}></Word>
+                  <Word data={state[ref1.current]} index={ref1}></Word>
+               </>
+            )}
          </ul>
       </div>
    )

@@ -27,7 +27,12 @@
   align-items: stretch;
   justify-content: flex-start;
   transition: .3s linear;
-  overflow-x: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .sider-navbar-exanded {
     display: none;
@@ -990,7 +995,7 @@
     }
 
     .player_queue-container {
-      margin-top: 70px;
+      margin-top: 73px;
     }
 
     //  Trong ul khi ko co gi
@@ -2161,7 +2166,7 @@
 
 // Thanh navleft change
 .navbar-left-actice {
-  overflow: hidden;
+
   max-width: 7rem;
   width: 100%;
   position: fixed;
@@ -2185,7 +2190,7 @@
   }
 
   .sider {
-    height: 70px;
+    min-height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2234,7 +2239,8 @@
     border: none;
     width: 40px;
     height: 40px;
-    background-color: var(--alpha-bg);
+    // background-color: var(--alpha-bg);
+    background: var(--border-box);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2287,7 +2293,8 @@
     border: none;
     width: 40px;
     height: 40px;
-    background-color: var(--alpha-bg);
+    background: var(--border-box);
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3038,7 +3045,7 @@
 // top 100
 .main-page .main_songnew {
   .col {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   .main_title-text {

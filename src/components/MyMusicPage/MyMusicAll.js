@@ -14,6 +14,7 @@ const MyMusicAll = () => {
    const [datas, setData] = useState([])
 
    const { data, status } = useGetHomeChart()
+
    useEffect(() => {
       if (data) {
          setData(data.data.RTChart.items.slice(0, 30))

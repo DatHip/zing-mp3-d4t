@@ -26,6 +26,20 @@ export const queueNowPlay = createSlice({
    name: "queueNowPlay",
    initialState,
    reducers: {
+      playSongNotAlbum: (state, action) => {
+         state.infoCurrenAlbum = []
+         state.listSong = [action.payload]
+         state.currentTime = 0
+         state.currentIndexSong = 0
+         state.playlistEncodeId = false
+         state.infoSongCurrent = state.listSong[state.currentIndexSong]
+         state.infoSongNext = {}
+         state.currentEncodeId = action.payload.encodeId
+         state.duration = action.payload.duration
+         state.listSongShuffle = []
+         localStorage.setItem("queue_nowplay", JSON.stringify(state))
+      },
+
       pushSongHistoryPlayList: (state, action) => {
          let isExists = action.payload.list.filter((e) => action.payload.item.encodeId === e.encodeId)
          let index = action.payload.list.indexOf(isExists)
@@ -192,6 +206,7 @@ export const {
    setInfoCurrentMv,
    pushSongHistoryPlayList,
    pushSongHistoryPlayListShuffle,
+   playSongNotAlbum,
 } = queueNowPlay.actions
 
 export default queueNowPlay.reducer

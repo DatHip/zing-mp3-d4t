@@ -14,7 +14,7 @@ import {
 } from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
-const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde }) => {
+const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastIndex }) => {
    const dispatch = useDispatch()
    const { playing, isReady, isRandom } = useSelector((state) => state.setting)
 
@@ -222,9 +222,9 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde }) => {
                      </div>
                   </div>
                </li>
-               {active && !isHistory && !snapshot.isDragging && (
+               {active && infoCurrenAlbum.length !== 0 && !isHistory && !snapshot.isDragging && (
                   <div className="next-songs">
-                     <h3 className="title is-6">Tiếp theo</h3>
+                     {!lastIndex && <h3 className="title is-6">Tiếp theo</h3>}
                      <h3 className="subtitle is-6">
                         <span>Từ playlist</span>
                         <Link to={`/album/${playlistEncodeId}`}>

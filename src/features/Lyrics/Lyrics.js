@@ -7,6 +7,9 @@ let initialState = JSON.parse(localStorage.getItem("d4tmp3_lyrics")) || {
    lyricByLine: [],
    lyricKara: [],
    isLoading: false,
+   isSeek: false,
+   word0: 0,
+   word1: 1,
 }
 
 const fetchDataLyrics = createAsyncThunk("lyrics/fetchDataLyrics", async (id) => {
@@ -18,7 +21,10 @@ export const lyrics = createSlice({
    name: "lyrics",
    initialState,
    reducers: {
-      setThemes: (state, action) => {},
+      setIsSeek: (state, action) => {
+         state.isSeek = action.payload
+         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(state))
+      },
    },
    extraReducers: (builer) => {
       builer.addCase(fetchDataLyrics.pending, (state, action) => {
@@ -41,6 +47,6 @@ export const lyrics = createSlice({
    },
 })
 
-export const { setThemes } = lyrics.actions
+export const { setIsSeek } = lyrics.actions
 export { fetchDataLyrics }
 export default lyrics.reducer

@@ -8,11 +8,16 @@ import ActionPlay from "../Icon/ActionPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
 import ActionIcon from "../Icon/ActionIcon"
 import { setPlay, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
-import { fetchPlayList, setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
+import {
+   fetchPlayList,
+   playSongNotAlbum,
+   setCurrentIndexSong,
+   setCurrentIndexSongShuffle,
+} from "../../features/QueueFeatures/QueueFeatures"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 import { useCallback } from "react"
 
-const ItemChartList = memo(({ indexNotVip, idAlbum, item, index, isChildren = false, isNoneRank, onFavourite }) => {
+const ItemChartList = memo(({ isNotList, indexNotVip, idAlbum, item, index, isChildren = false, isNoneRank, onFavourite }) => {
    const dispatch = useDispatch()
    const [toggleBtn, setToggleBtn] = useState(false)
 
@@ -137,7 +142,25 @@ const ItemChartList = memo(({ indexNotVip, idAlbum, item, index, isChildren = fa
                                  {!isReady && <LoadingIcon notLoading></LoadingIcon>}
                               </>
                            )}
-                           {!active && (
+
+                           {!active && isNotList && (
+                              <span
+                                 onClick={() => {
+                                    const hi = async () => {
+                                       setToggleBtn(true)
+                                       dispatch(setReady(false))
+                                       dispatch(setPlay(false))
+                                       await dispatch(playSongNotAlbum(item))
+                                       dispatch(setPlay(true))
+                                    }
+                                    hi()
+                                 }}
+                              >
+                                 {!toggleBtn ? <ActionPlay></ActionPlay> : !isReady && <LoadingIcon notLoading></LoadingIcon>}
+                              </span>
+                           )}
+
+                           {!active && !isNotList && (
                               <span onClick={fetchSongs}>
                                  {!toggleBtn ? <ActionPlay></ActionPlay> : !isReady && <LoadingIcon notLoading></LoadingIcon>}
                               </span>

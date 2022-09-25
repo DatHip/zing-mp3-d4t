@@ -1,20 +1,76 @@
 import React, { memo } from "react"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router"
+import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
+import ActionIcon from "../Icon/ActionIcon"
 
 const FavoriteArtisItem = memo(({ item, clasName, isHub, isCenter }) => {
    const { encodeId, thumbnailM, song, artistsNames, title } = item
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+   const { playing } = useSelector((state) => state.setting)
+
+   let active = playlistEncodeId === encodeId
 
    return (
       <>
-         <div className={`favorite_list-item ${isHub ? "is-hub" : ""} ${clasName}`}>
-            <a className="main-page_list-item main_page-hover" href="#">
+         <div className={`favorite_list-item ${active ? "active" : ""} ${isHub ? "is-hub" : ""} ${clasName}`}>
+            <div
+               onClick={(e) => {
+                  if (isHub) return
+
+                  if (e.target.className.includes("recently_list-item_hover")) {
+                     navigate(`/album/${encodeId}`)
+                  }
+               }}
+               className="main-page_list-item main_page-hover cursor-pointer"
+            >
                <div className="main-page_list-item_img">
                   <img src={thumbnailM || item.thumbnail} alt={title} />
                </div>
                {!isHub && (
                   <div className="recently_list-item_hover">
                      <div className="recently_btn-hover recently_btn-hover-play">
-                        <span>
+                        {/* <span>
                            <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                        </span> */}
+                        <span>
+                           {active && (
+                              <>
+                                 {!playing && (
+                                    <span
+                                       className="playlist"
+                                       onClick={(e) => {
+                                          dispatch(setPlay(true))
+                                       }}
+                                    >
+                                       <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                                    </span>
+                                 )}
+                                 {playing && (
+                                    <span onClick={() => dispatch(setPlay(false))}>
+                                       <ActionIcon></ActionIcon>
+                                    </span>
+                                 )}
+                              </>
+                           )}
+                           {!active && (
+                              <span
+                                 onClick={async () => {
+                                    navigate(`/album/${encodeId}`)
+                                    dispatch(setReady(false))
+                                    dispatch(setPlay(false))
+                                    await dispatch(fetchPlayList(encodeId))
+                                    dispatch(setPlay(true))
+                                 }}
+                              >
+                                 <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                              </span>
+                           )}
                         </span>
                      </div>
                   </div>
@@ -56,7 +112,7 @@ const FavoriteArtisItem = memo(({ item, clasName, isHub, isCenter }) => {
                   )}
                </div>
                <div className="main_blur-bg" />
-            </a>
+            </div>
          </div>
       </>
    )

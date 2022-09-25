@@ -1848,6 +1848,13 @@
 .favorite_list-item {
   transition: .3s linear;
 
+  &.active {
+    .recently_list-item_hover {
+      transition: 0.2s !important;
+      display: flex !important;
+    }
+  }
+
   &.is-hub {
     .main_blur-bg {
       background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5) 85%) !important;
@@ -1932,8 +1939,8 @@
   }
 
   .zing-chart_top {
-    a {
-      display: flex;
+    .zing-chartBtn {
+      display: inline-flex;
       align-items: center;
       font-size: 28px;
       font-weight: 700;
@@ -4902,4 +4909,19 @@
       color: var(--link-text-hover);
     }
   }
+}
+
+.history-icon-c {
+  border-radius: 42%/42%;
+  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
+.zing-chartBtn {
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 20px;
+  transition: 0.2s;
 }

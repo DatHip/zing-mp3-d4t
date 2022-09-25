@@ -5,37 +5,34 @@ import NewReleaseitem from "../NewReleaseitem/NewReleaseitem"
 import PlayListSelector from "../Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 
+const NewReleaseStyle = styled.div`
+   .m-6 {
+      margin: unset;
+   }
+   .genre-select {
+      color: var(--white);
+      .zm-btn.active {
+         border-color: var(--purple-primary);
+         background-color: var(--purple-primary);
+         color: var(--white);
+      }
+
+      .zm-btn {
+         padding: 4px 24px;
+         border: 1px solid var(--border-primary);
+         border-radius: 100px;
+         font-weight: 400;
+         font-size: 12px;
+         text-transform: uppercase;
+         margin-right: 15px;
+      }
+   }
+`
 const NewReleaseHomePage = memo(() => {
    const [datas, setData] = useState(null)
    const [selectList, setSelectList] = useState(false)
    const { data, status } = useGetHomePage()
    const dataSelector = data?.data.items.find((e) => e.sectionType === "new-release")
-
-   // const dataSelector = data?.data.items[4]
-
-   const NewReleaseStyle = styled.div`
-      .m-6 {
-         margin: unset;
-      }
-      .genre-select {
-         color: var(--white);
-         .zm-btn.active {
-            border-color: var(--purple-primary);
-            background-color: var(--purple-primary);
-            color: var(--white);
-         }
-
-         .zm-btn {
-            padding: 4px 24px;
-            border: 1px solid var(--border-primary);
-            border-radius: 100px;
-            font-weight: 400;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-right: 15px;
-         }
-      }
-   `
 
    useEffect(() => {
       if (dataSelector) {
@@ -90,6 +87,7 @@ const NewReleaseHomePage = memo(() => {
    return (
       <NewReleaseStyle>
          <PlayListSelector
+            to="moi-phat-hanh"
             childrenOption={
                <div className="genre-select mb-[20px]">
                   <button onClick={() => setSelectList(false)} className={`zm-btn  button ${selectList ? "" : "active"}`}>

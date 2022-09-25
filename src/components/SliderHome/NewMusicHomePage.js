@@ -26,7 +26,7 @@ const NewMusicHomePage = memo(() => {
 
    try {
       return (
-         <PlayListSelector classAdd={`container_release`} title={dataSelector?.title} all={true}>
+         <PlayListSelector to="moi-phat-hanh" classAdd={`container_release`} title={dataSelector?.title} all={true}>
             <div className="release_list">
                {datas && datas.length > 0 && (
                   <Swiper
@@ -126,6 +126,11 @@ const NewMusicHomePage = memo(() => {
                         )
                      })}
 
+                     {/* <SwiperSlide>
+                        <div className="release_list-item flex items-center justify-center h-[152px] ">
+                           <span>Xem Tất Cả</span>
+                        </div>
+                     </SwiperSlide> */}
                      <>
                         <button ref={navigationPrevRef} type="button" className="release-btn-left slick-prev slick-arrow">
                            <span span="" className="material-icons-outlined">

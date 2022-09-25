@@ -1,15 +1,31 @@
 import React, { memo, useEffect, useState } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useGetHomePage } from "../../api/getHomePage"
 import CharHomeItem from "../Selection/CharHomeItem"
+import { useDispatch, useSelector } from "react-redux"
+import { setPlay, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
+import { fetchPlayList, setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
+import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import { toast } from "react-toastify"
+import { useLayoutEffect } from "react"
 
 const ChartHomePage = memo(() => {
    const [datas, setData] = useState(null)
    const { data, status } = useGetHomePage()
    const dataSelector = data?.data.items.find((e) => e.sectionType === "RTChart")
+   const navigate = useNavigate()
 
-   useEffect(() => {
+   const dispatch = useDispatch()
+
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+   const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
+   const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
+
+   const { playing, isReady, isRandom } = useSelector((state) => state.setting)
+
+   useLayoutEffect(() => {
       if (data) {
          setData(dataSelector)
       }
@@ -42,10 +58,21 @@ const ChartHomePage = memo(() => {
          <div className="container_zing-chart-pos">
             <div className="zing-chart_top">
                <div className="zing-chart_top-item">
-                  <Link className="cursor-pointer" to={"zing-chart"}>
-                     Top Chart
-                     <span className="material-icons-round"> play_circle</span>
-                  </Link>
+                  <div className="cursor-pointer zing-chartBtn">
+                     <Link to={"zing-chart"}>Top Chart</Link>
+                     <span
+                        onClick={async () => {
+                           dispatch(setReady(false))
+                           dispatch(setPlay(false))
+                           await dispatch(fetchPlayList("ZO68OC68"))
+                           dispatch(setPlay(true))
+                        }}
+                        className="material-icons-round"
+                     >
+                        {" "}
+                        play_circle
+                     </span>
+                  </div>
                </div>
             </div>
             <div className="row zing-chart_bottom">
@@ -69,6 +96,42 @@ const ChartHomePage = memo(() => {
                            }
 
                            const img = e.thumbnail?.slice(e.thumbnail?.lastIndexOf("/"))
+                           let active = currentEncodeId === e?.encodeId
+
+                           const fetchSongs = async (e) => {
+                              // check active album && not vip
+                              if (e?.streamingStatus === 2) {
+                                 return toast("Dành Cho Tài Khoản VIP", {
+                                    type: "info",
+                                 })
+                              }
+
+                              if (!isRandom) {
+                                 const hi = async () => {
+                                    dispatch(setReady(false))
+                                    dispatch(setPlay(false))
+                                    await dispatch(fetchPlayList("ZO68OC68"))
+                                    await dispatch(setCurrentIndexSong(index))
+                                    await dispatch(setPlay(true))
+                                    await dispatch(pushPlayListsLogged(infoCurrenAlbum))
+                                 }
+                                 hi()
+                              }
+
+                              if (isRandom) {
+                                 const hi = async () => {
+                                    dispatch(setReady(false))
+                                    dispatch(setPlay(false))
+                                    await dispatch(fetchPlayList("ZO68OC68"))
+                                    await dispatch(setCurrentIndexSong(index))
+                                    await dispatch(setPlay(true))
+                                    await dispatch(pushPlayListsLogged(infoCurrenAlbum))
+                                    await dispatch(setRandomSongs())
+                                    await dispatch(setRandomSongs())
+                                 }
+                                 hi()
+                              }
+                           }
 
                            return (
                               <div key={e.encodeId} className="zing-chart_item main_page-hover mb-[12px]">
@@ -88,7 +151,11 @@ const ChartHomePage = memo(() => {
                                              </div>
                                              <div className="recently_list-item_hover">
                                                 <div className="recently_btn-hover recently_btn-hover-play">
-                                                   <span>
+                                                   <span
+                                                      onClick={() => {
+                                                         fetchSongs()
+                                                      }}
+                                                   >
                                                       <i className="icon action-play ic-play !mr-0" />
                                                    </span>
                                                 </div>

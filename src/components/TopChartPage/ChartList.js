@@ -13,7 +13,15 @@ const ChartList = memo(({ data }) => {
             {datas &&
                datas.length > 0 &&
                datas.map((e, index) => {
-                  return <ItemChartList item={e} index={index} key={e.encodeId}></ItemChartList>
+                  return (
+                     <ItemChartList
+                        indexNotVip={index}
+                        idAlbum={"ZO68OC68"}
+                        item={e}
+                        index={index}
+                        key={e.encodeId}
+                     ></ItemChartList>
+                  )
                })}
          </div>
          <div className="zing-chart_item-bottom">

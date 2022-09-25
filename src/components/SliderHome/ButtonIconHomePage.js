@@ -24,15 +24,21 @@ const ButtonIconHomePage = () => {
                </Link>
             </div>
             <div id="btnMvC" title="MV" className="sider_menu-item col c-2-4">
-               <Link to={"mv"}>
+               <Link to={"mv/IWZ9Z08I"}>
                   <span className="material-icons-outlined"> movie_filter </span>
                   <span className="sider_menu-item-title">MV</span>
                </Link>
             </div>
             <div title="diamond" className="sider_menu-item col c-2-4">
-               <Link to={"/"}>
-                  <span className="material-icons-outlined"> diamond </span>
-                  <span className="sider_menu-item-title">VIP</span>
+               <Link to={"history/playlist"}>
+                  <span className="">
+                     <img
+                        className="w-[42px] h-[42px] mb-[6px] history-icon-c"
+                        src="https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.0.13/static/media/my-history.374cb625.svg"
+                        alt=""
+                     />
+                  </span>
+                  <span className="sider_menu-item-title">Gần Đây</span>
                </Link>
             </div>
          </div>

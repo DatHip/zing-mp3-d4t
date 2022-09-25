@@ -15,7 +15,7 @@ const HistoryHomePage = () => {
       all = true
    }
    return (
-      <PlayListSelector isHistory title={"Gần đây"} classAdd2={"!no-wrap"} all={all}>
+      <PlayListSelector to={"history/playlist"} isHistory title={"Gần đây"} classAdd2={"!no-wrap"} all={all}>
          {recentPlaylist &&
             recentPlaylist.length > 0 &&
             recentPlaylist.slice(0, 7).map((item, index) => {

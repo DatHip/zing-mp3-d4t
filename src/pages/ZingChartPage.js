@@ -4,11 +4,14 @@ import { useGetHomeChart } from "../api/getHomeChart"
 import ChartList from "../components/TopChartPage/ChartList"
 import WeekList from "../components/TopChartPage/WeekList"
 import LoadingSvg from "../components/loading/LoadingSvg"
+import { useDispatch } from "react-redux"
+import { setPlay, setReady } from "../features/SettingPlay/settingPlay"
+import { fetchPlayList } from "../features/QueueFeatures/QueueFeatures"
 
 const ZingChartPage = () => {
    const [datas, setData] = useState([])
    const { data, status, error: err, isLoading } = useGetHomeChart()
-
+   const dispatch = useDispatch()
    useEffect(() => {
       if (data) {
          setData(data.data)
@@ -27,9 +30,21 @@ const ZingChartPage = () => {
             <div className="container_zing-chart">
                <div className="container_zing-chart-pos">
                   <div className="zing-chart_top">
-                     <a href="#">
-                        Top Chart <span className="material-icons-round"> play_circle </span>
-                     </a>
+                     <div className="cursor-pointer zing-chartBtn">
+                        <p className="">Top Chart</p>
+                        <span
+                           onClick={async () => {
+                              dispatch(setReady(false))
+                              dispatch(setPlay(false))
+                              await dispatch(fetchPlayList("ZO68OC68"))
+                              dispatch(setPlay(true))
+                           }}
+                           className="material-icons-round"
+                        >
+                           {" "}
+                           play_circle
+                        </span>
+                     </div>
                   </div>
 
                   <div className="row zing-chart_bottom">

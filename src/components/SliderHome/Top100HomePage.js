@@ -17,7 +17,7 @@ const NewMusicEveryDayHomePage = () => {
    }, [status])
 
    return (
-      <PlayListSelector title={dataSelector?.title} all={true}>
+      <PlayListSelector to="/top100" title={dataSelector?.title} all={true}>
          {datas?.length > 0 &&
             datas.map((e, index) => {
                if (index > 4) return

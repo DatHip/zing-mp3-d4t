@@ -1,4 +1,5 @@
 import React, { memo } from "react"
+import { Link } from "react-router-dom"
 
 const PlayListSelector = ({
    notRow,
@@ -12,6 +13,7 @@ const PlayListSelector = ({
    children,
    isHistory = false,
    isMyPage,
+   to = "/",
 }) => {
    let class1
    let class2
@@ -27,10 +29,10 @@ const PlayListSelector = ({
          <div className="recently_title">
             <div>{isTitleSub ? isTitleSub : <p>{title}</p>}</div>
             {all && (
-               <div className="playlist_selector-all">
-                  <span>Tất Cả</span>
+               <Link to={to} className="playlist_selector-all">
+                  <span>TẤT CẢ</span>
                   <span className="material-icons-outlined"> chevron_right </span>
-               </div>
+               </Link>
             )}
             {isMyPage}
          </div>

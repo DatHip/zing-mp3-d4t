@@ -2,14 +2,15 @@ import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import React, { memo, useEffect, useState } from "react"
-import { Navigation, Autoplay, Pagination } from "swiper"
+import { Navigation, Autoplay, Pagination, Lazy } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { dataAritsHomePage } from "../../data/dataArtisHomePage"
+import { useNavigate } from "react-router"
 
 const ArtistSpotlight = memo(() => {
    const [datas, setData] = useState(null)
-
+   const navigate = useNavigate()
    useEffect(() => {
       if (!datas) {
          setData(dataAritsHomePage)
@@ -25,11 +26,12 @@ const ArtistSpotlight = memo(() => {
             <div className="choice_list">
                {datas && datas.length > 0 && (
                   <Swiper
-                     modules={[Navigation, Autoplay, Pagination]}
+                     modules={[Navigation, Autoplay, Pagination, Lazy]}
                      autoplay={{
                         delay: 4000,
                         disableOnInteraction: false,
                      }}
+                     lazy={true}
                      loopFillGroupWithBlank={true}
                      loop={true}
                      spaceBetween={2}
@@ -83,10 +85,15 @@ const ArtistSpotlight = memo(() => {
                         datas.map((e, index) => {
                            return (
                               <SwiperSlide key={index}>
-                                 <div className="choice_list-item slick-slide slick-cloned slick-active cursor-pointer">
-                                    <a className="choice_list-item-link">
+                                 <div
+                                    onClick={() => {
+                                       navigate(`/nghe-si/${e.linkTo}`)
+                                    }}
+                                    className="choice_list-item slick-slide slick-cloned slick-active cursor-pointer"
+                                 >
+                                    <div className="choice_list-item-link">
                                        <img src={e.img} alt="" />
-                                    </a>
+                                    </div>
                                  </div>
                               </SwiperSlide>
                            )

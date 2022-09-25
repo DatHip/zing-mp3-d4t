@@ -1,12 +1,41 @@
 import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import getConterTimeRelese from "../../utils/getConterTimeRelese"
 import getFormartMiute from "../../utils/getFormartMiute"
 import getFormartTimeDDYY from "../../utils/getFormartTimeDDYY"
+import { useSelector, useDispatch } from "react-redux"
+import { toast } from "react-toastify"
+import ActionPlay from "../Icon/ActionPlay"
+import ActionIcon from "../Icon/ActionIcon"
+import LoadingIcon from "../Icon/LoadingIcon"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
+import { fetchPlayList, playSongNotAlbum } from "../../features/QueueFeatures/QueueFeatures"
+import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 
 const NewReleaseItemStyle = styled.div`
+   &.active {
+      background: var(--alpha-bg);
+      transition: 0.2s;
+      .player_queue-item-right {
+         display: flex !important;
+      }
+      .player_queue-img-hover {
+         visibility: visible !important;
+      }
+   }
+   &.active-album {
+      background: var(--alpha-bg);
+      transition: 0.2s;
+      .player_queue-item-right {
+         display: flex !important;
+      }
+      .player_queue-img-hover {
+         visibility: visible !important;
+      }
+   }
+
    &.is-artist {
       &:hover {
          background: unset;
@@ -136,11 +165,25 @@ const NewReleaseItemStyle = styled.div`
 `
 
 const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
    const img = item?.thumbnailM?.slice(item?.thumbnailM.lastIndexOf("/"))
-   let timeRelease = getConterTimeRelese(item?.releaseDate, item?.isAlbum)
+   const timeRelease = getConterTimeRelese(item?.releaseDate, item?.isAlbum)
+
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+
+   const { playing, isReady } = useSelector((state) => state.setting)
+   let active = item?.encodeId === currentEncodeId
+   let activeAlbum = playlistEncodeId === item?.encodeId
 
    return (
-      <NewReleaseItemStyle className={`player_queue-item ${isArtist ? "is-artist" : ""}  ${isDisk ? "is-disk" : ""}`}>
+      <NewReleaseItemStyle
+         className={`player_queue-item ${activeAlbum ? "active-album" : ""} ${active ? "active" : ""} ${
+            isArtist ? "is-artist" : ""
+         }  ${isDisk ? "is-disk" : ""}`}
+      >
          <div className="player_queue-item-left">
             <div className="relative z-[1]">
                <div className="player_queue-left">
@@ -154,10 +197,76 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
                   )}
 
                   {isArtist && <LazyLoadImage className="player_queue-img" src={item?.thumbnailM} alt="" />}
-                  <div className="player_queue-img-hover">
-                     <i className="icon action-play ic-play" />
+                  <div
+                     onClick={(e) => {
+                        if (!isDisk) return
+
+                        if (e.target.className.includes("player_queue-img-hover")) {
+                           navigate(`/album/${item?.encodeId}`)
+                        }
+                     }}
+                     className="player_queue-img-hover"
+                  >
+                     {!active && !activeAlbum && (
+                        <span
+                           onClick={() => {
+                              if (item?.streamingStatus === 2) {
+                                 return toast("Dành Cho Tài Khoản VIP", {
+                                    type: "info",
+                                 })
+                              }
+
+                              if (!isDisk) {
+                                 const hi = async () => {
+                                    dispatch(setReady(false))
+                                    dispatch(setPlay(false))
+                                    await dispatch(playSongNotAlbum(item))
+                                    dispatch(setPlay(true))
+                                 }
+                                 hi()
+                              }
+
+                              if (isDisk) {
+                                 const handele = async () => {
+                                    navigate(`/album/${item?.encodeId}`)
+                                    dispatch(setReady(false))
+                                    dispatch(setPlay(false))
+                                    await dispatch(fetchPlayList(item?.encodeId))
+                                    dispatch(setPlay(true))
+                                    if (item.textType === "Playlist") {
+                                       dispatch(pushPlayListsLogged(item))
+                                    }
+                                 }
+                                 handele()
+                              }
+                           }}
+                        >
+                           <i className="icon action-play ic-play" />
+                        </span>
+                     )}
+                     {(active || activeAlbum) && (
+                        <>
+                           {isReady && (
+                              <>
+                                 {!playing && (
+                                    <span onClick={() => dispatch(setPlay(true))}>
+                                       <ActionPlay></ActionPlay>
+                                    </span>
+                                 )}
+                                 {playing && (
+                                    <span onClick={() => dispatch(setPlay(false))}>
+                                       <ActionIcon></ActionIcon>
+                                    </span>
+                                 )}
+                              </>
+                           )}
+
+                           {!isReady && <LoadingIcon notLoading></LoadingIcon>}
+                        </>
+                     )}
                   </div>
                </div>
+
                {isDisk && (
                   <figure className={`image disk ${classDisk ? classDisk : ""}`}>
                      <LazyLoadImage src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/album-disk.png" alt="" />
@@ -197,7 +306,7 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
                               }
                               return (
                                  <span key={index}>
-                                    <Link to={"/"}>{e.name}</Link>
+                                    <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
                                     {prara}
                                  </span>
                               )

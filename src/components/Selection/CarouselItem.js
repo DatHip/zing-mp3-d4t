@@ -2,12 +2,9 @@ import React, { memo } from "react"
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
 import LoadingSkeleton from "../loading/LoadingSkeleton"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
 import { setReady } from "../../features/SettingPlay/settingPlay"
-import { useSelector } from "react-redux"
-import ActionPlay from "../Icon/ActionPlay"
-import LoadingIcon from "../Icon/LoadingIcon"
 import ActionIcon from "../Icon/ActionIcon"
 import { setPlay } from "../../features/SettingPlay/settingPlay"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
@@ -22,6 +19,14 @@ const StyleDiv = styled.div`
       .recently_btn-hover-play .icon {
          width: 34px;
          height: 34px;
+      }
+   }
+
+   @media (max-width: 719px) {
+      &.active {
+         .player_btn {
+            display: none !important;
+         }
       }
    }
 
@@ -67,7 +72,7 @@ const CarouselItem = memo(
       const { title, encodeId, artists, sortDescription, thumbnailM } = item
       const dispatch = useDispatch()
       const navigate = useNavigate()
-      const { playlistEncodeId } = useSelector((state) => state.queueNowPlay)
+      const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
       const { playing } = useSelector((state) => state.setting)
 
       let active = playlistEncodeId === encodeId
@@ -80,7 +85,6 @@ const CarouselItem = memo(
                      navigate(`/album/${encodeId}`)
                   }
                }}
-               to={`/album/${encodeId}`}
                className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
             >
                <div className="want_list-item-link main-page_list-item_img">
@@ -100,14 +104,17 @@ const CarouselItem = memo(
                                     <span
                                        className="playlist"
                                        onClick={(e) => {
-                                          dispatch(fetchPlayList(encodeId))
-                                          navigate(`/album/${encodeId}`)
+                                          dispatch(setPlay(true))
                                        }}
                                     >
                                        <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                                     </span>
                                  )}
-                                 {playing && <ActionIcon></ActionIcon>}
+                                 {playing && (
+                                    <span onClick={() => dispatch(setPlay(false))}>
+                                       <ActionIcon></ActionIcon>
+                                    </span>
+                                 )}
                               </>
                            )}
                            {!active && (

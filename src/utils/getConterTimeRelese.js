@@ -2,12 +2,13 @@ const getConterTimeRelese = (timeRelease, isAlbum = false) => {
    const d = new Date()
    let time = d.getTime() / 1000
 
-   if (isAlbum) {
-      let dateString = timeRelease
-      let dateParts = dateString.split("/")
-      let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])
-      timeRelease = dateObject.getTime() / 1000
-   }
+   // if (isAlbum) {
+   //    let dateString = timeRelease
+   //    console.log(dateString)
+   //    // let dateParts = dateString?.split("/")
+   //    // let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])
+   //    // timeRelease = dateObject.getTime() / 1000
+   // }
 
    let timeFormat = Math.ceil(time - timeRelease)
    let day = Math.ceil(timeFormat / (3600 * 24))

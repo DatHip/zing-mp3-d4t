@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react"
+import React, { memo, useEffect, useRef } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
 import AlbumPage from "../pages/AlbumPage"
 import ArtistPage from "../pages/ArtistPage"

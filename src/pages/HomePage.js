@@ -16,8 +16,14 @@ import NewMusicHomePage2 from "../components/SliderHome/NewMusicHomePage2"
 import EventHomePage from "../components/SliderHome/EventHomePage"
 import ChartHomePage from "../components/SliderHome/ChartHomePage"
 import ButtonIconHomePage from "../components/SliderHome/ButtonIconHomePage"
+import scrollTop from "../utils/scrollToTop"
+import { useEffect } from "react"
 
 const HomePage = () => {
+   useEffect(() => {
+      scrollTop()
+   }, [])
+
    return (
       <div>
          {/* Thanh Slider */}

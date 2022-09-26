@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react"
+import { useLayoutEffect } from "react"
 import { Link } from "react-router-dom"
 import { useGetHomeChart } from "../../api/getHomeChart"
 import LoadingSvg from "../loading/LoadingSvg"
-
 import CarouselItem from "../Selection/CarouselItem"
 import PlayListSelector from "../Selection/PlayListSelector"
-
 import ItemChartList from "../TopChartPage/ItemChartList"
 import ItemArits from "./ItemArits"
 import SliderShow from "./SliderShow"
 
 const MyMusicAll = () => {
    const [datas, setData] = useState([])
-
    const { data, status } = useGetHomeChart()
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       if (data) {
          setData(data.data.RTChart.items.slice(0, 30))
       }

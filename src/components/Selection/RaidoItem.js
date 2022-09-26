@@ -1,12 +1,11 @@
 import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
+import { toast } from "react-toastify"
 
 const RaidoItem = memo(({ item, className1 }) => {
-   const { activeUsers, host, encodeId, program, thumbnail } = item
-
    return (
       <div className={className1}>
-         <a className="xones_list-item-link main-page_list-item main_page-hover" href="#">
+         <div className="xones_list-item-link main-page_list-item main_page-hover">
             <div className="xones_list-item-link-img main-page_list-item_img">
                <img src={item?.program?.thumbnail} alt="" />
             </div>
@@ -18,16 +17,22 @@ const RaidoItem = memo(({ item, className1 }) => {
             </div>
             <div className="recently_list-item_hover">
                <div className="recently_btn-hover recently_btn-hover-play">
-                  <span>
+                  <span
+                     onClick={() => {
+                        return toast("Radio đang phát triển, vui lòng thông cảm !", {
+                           type: "info",
+                        })
+                     }}
+                  >
                      <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                   </span>
                </div>
             </div>
-         </a>
+         </div>
          <div className="xones_list-item-title">
-            <a className="main_title-text" href="#">
+            <div className="main_title-text" href="#">
                {item?.host?.name}
-            </a>
+            </div>
             <div className="main_subtitle">
                <p>{item?.activeUsers} đang nghe </p>
             </div>

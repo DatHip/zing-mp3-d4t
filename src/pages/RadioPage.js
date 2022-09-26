@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { toast } from "react-toastify"
 import { useGetRadioPage } from "../api/getRaidoPage"
 import LoadingSvg from "../components/loading/LoadingSvg"
 import CategoryRadio from "../components/RadioPage/CategoryRadio"
@@ -16,6 +17,9 @@ const RadioPage = () => {
    useEffect(() => {
       if (data) {
          setData(data.data.items)
+         toast("Radio đang phát triển  , vui lòng thông cảm !", {
+            type: "info",
+         })
       }
    }, [status])
 
@@ -23,7 +27,6 @@ const RadioPage = () => {
 
    const selectorListent = datas?.find((e) => e.title === "Đón nghe")
 
-   console.log(selectorListent)
    const selectorCategoryRadio = datas?.find((e) => e.sectionId === "radPromoteCategory")
    const selectorFeaturedPrograms = datas?.find((e) => e.sectionId === "radSponsoredProgram")
    const selectorFeaturedEpisodes = datas?.find((e) => e.sectionId === "radPromoteEpisode")
@@ -35,11 +38,11 @@ const RadioPage = () => {
    return (
       <div className="mt-1">
          {/* Raido home */}
-         <RadioHomePage></RadioHomePage>
+         <RadioHomePage isNotAll></RadioHomePage>
          {/* Khám Phá Poscast */}
          <DiscoverPoscast data={selectorDiscoverPoscast}></DiscoverPoscast>
          {/* Đón Nghe  */}
-         <SidleRadio data={selectorListent}></SidleRadio>
+         {/* <SidleRadio data={selectorListent}></SidleRadio>   */}
          {/* Thể Loại Poscast */}
          <CategoryRadio data={selectorCategoryRadio}></CategoryRadio>
          {/* Tập Nổi Bật */}

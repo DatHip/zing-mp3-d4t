@@ -14,6 +14,13 @@ const HistorySong = () => {
                   recentSongs.map((e, index) => {
                      return <ItemChartList isNotList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
                   })}
+
+               {recentSongs && recentSongs.length === 0 && (
+                  <div className="personal_podcast-main personal_container-main active">
+                     <div className="personal_podcast-img"></div>
+                     <div className="personal_podcast-text">Không có tập mới</div>
+                  </div>
+               )}
             </div>
          </div>
       </div>

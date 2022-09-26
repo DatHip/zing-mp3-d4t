@@ -81,7 +81,7 @@ const EventHomePage = memo(() => {
                      datas.length > 0 &&
                      datas.map((e, index) => {
                         return (
-                           <SwiperSlide key={uuidv4()}>
+                           <SwiperSlide key={index}>
                               <EventHomeItem className="col" key={index} item={e}></EventHomeItem>
                            </SwiperSlide>
                         )

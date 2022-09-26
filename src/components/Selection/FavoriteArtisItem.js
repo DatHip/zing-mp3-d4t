@@ -1,8 +1,6 @@
 import React, { memo } from "react"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router"
-import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import ActionIcon from "../Icon/ActionIcon"
@@ -21,7 +19,9 @@ const FavoriteArtisItem = memo(({ item, clasName, isHub, isCenter }) => {
          <div className={`favorite_list-item ${active ? "active" : ""} ${isHub ? "is-hub" : ""} ${clasName}`}>
             <div
                onClick={(e) => {
-                  if (isHub) return
+                  if (isHub) {
+                     navigate(`/hub/detail/${encodeId}`)
+                  }
 
                   if (e.target.className.includes("recently_list-item_hover")) {
                      navigate(`/album/${encodeId}`)
@@ -35,9 +35,6 @@ const FavoriteArtisItem = memo(({ item, clasName, isHub, isCenter }) => {
                {!isHub && (
                   <div className="recently_list-item_hover">
                      <div className="recently_btn-hover recently_btn-hover-play">
-                        {/* <span>
-                           <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
-                        </span> */}
                         <span>
                            {active && (
                               <>

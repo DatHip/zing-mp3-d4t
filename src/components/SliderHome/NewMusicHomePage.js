@@ -7,11 +7,23 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { useGetHomePage } from "../../api/getHomePage"
 import PlayListSelector from "../Selection/PlayListSelector"
 
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
+import ActionPlay from "../Icon/ActionPlay"
+import ActionIcon from "../Icon/ActionIcon"
+import { playSongNotAlbum } from "../../features/QueueFeatures/QueueFeatures"
+import LoadingIcon from "../Icon/LoadingIcon"
 
 const NewMusicHomePage = memo(() => {
    const { data, status } = useGetHomePage()
    const [datas, setData] = useState(null)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const { playing, isReady } = useSelector((state) => state.setting)
 
    const dataSelector = data?.data.items.find((e) => e.title === "Nhạc mới")
 
@@ -70,6 +82,7 @@ const NewMusicHomePage = memo(() => {
                   >
                      {datas.map((e, index) => {
                         const { title, encodeId, artists, thumbnailM, album } = e
+                        let active = e?.encodeId === currentEncodeId
 
                         return (
                            <SwiperSlide key={encodeId}>
@@ -78,11 +91,50 @@ const NewMusicHomePage = memo(() => {
                                     <div className="release_list-item-img">
                                        <img src={thumbnailM} alt={title} />
                                     </div>
-                                    <div className="recently_list-item_hover">
+                                    <div
+                                       onClick={(e) => {
+                                          if (e.target.className.includes("recently_list-item_hover")) {
+                                             navigate("moi-phat-hanh")
+                                          }
+                                       }}
+                                       className="recently_list-item_hover"
+                                    >
                                        <div className="recently_btn-hover recently_btn-hover-play">
-                                          <span>
-                                             <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
-                                          </span>
+                                          {active && (
+                                             <>
+                                                {isReady && (
+                                                   <>
+                                                      {!playing && (
+                                                         <span onClick={() => dispatch(setPlay(true))}>
+                                                            <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                                                         </span>
+                                                      )}
+                                                      {playing && (
+                                                         <span onClick={() => dispatch(setPlay(false))}>
+                                                            <ActionIcon></ActionIcon>
+                                                         </span>
+                                                      )}
+                                                   </>
+                                                )}
+
+                                                {!isReady && <LoadingIcon notLoading></LoadingIcon>}
+                                             </>
+                                          )}
+                                          {!active && (
+                                             <span
+                                                onClick={() => {
+                                                   const hi = async () => {
+                                                      dispatch(setReady(false))
+                                                      dispatch(setPlay(false))
+                                                      await dispatch(playSongNotAlbum(e))
+                                                      dispatch(setPlay(true))
+                                                   }
+                                                   hi()
+                                                }}
+                                             >
+                                                <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
+                                             </span>
+                                          )}
                                        </div>
                                     </div>
                                  </div>

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 
 const DiscoverPoscast = ({ data }) => {
    return (
-      <PlayListSelector title={data?.title} all={true}>
+      <PlayListSelector title={data?.title}>
          {data?.items?.length > 0 &&
             data?.items.map((e, index) => {
                if (index > 4) return

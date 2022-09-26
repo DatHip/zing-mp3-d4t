@@ -3,7 +3,7 @@ import { useGetHomePage } from "../../api/getHomePage"
 import PlayListSelector from "../Selection/PlayListSelector"
 import RaidoItem from "../Selection/RaidoItem"
 
-const RadioHomePage = memo(() => {
+const RadioHomePage = memo(({ isNotAll }) => {
    const [datas, setData] = useState(null)
    const { data, status } = useGetHomePage()
 
@@ -17,7 +17,7 @@ const RadioHomePage = memo(() => {
    }, [status])
 
    return (
-      <PlayListSelector classAdd={`container_radio`} title={dataSelector?.title} all={true}>
+      <PlayListSelector to="radio" classAdd={`container_radio`} title={dataSelector?.title} all={!isNotAll}>
          {datas &&
             datas.length > 0 &&
             datas.map((e, index) => {

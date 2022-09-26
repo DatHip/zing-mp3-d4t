@@ -1424,9 +1424,7 @@
     margin-bottom: 0;
     cursor: context-menu;
 
-    &:hover {
-      color: unset;
-    }
+
   }
 
   .xones_list-item-link {
@@ -2710,21 +2708,7 @@
     }
   }
 
-  .personal_podcast-main {
-    .personal_podcast-img {
-      height: 120px;
-      background-size: cover;
-      width: 120px;
-      background-image: var(--empty-episode-icon);
-    }
 
-    .personal_podcast-text {
-      font-size: 14px;
-      margin-top: 16px;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-  }
 
   .personal_overview-main,
   .personal_thesong-main,
@@ -4924,4 +4908,27 @@
   color: var(--white);
   margin-bottom: 20px;
   transition: 0.2s;
+}
+
+.personal_podcast-main {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .personal_podcast-img {
+    height: 120px;
+    background-size: cover;
+    width: 120px;
+    background-image: var(--empty-episode-icon);
+  }
+
+  .personal_podcast-text {
+    font-size: 14px;
+    margin-top: 16px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
 }

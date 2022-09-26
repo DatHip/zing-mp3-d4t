@@ -1,10 +1,9 @@
 import React from "react"
 import { Outlet, useParams } from "react-router"
 import { Link } from "react-router-dom"
-import PortalMVpage from "../components/Portal/PortalMVpage"
 
 const NewFeedPage = () => {
-   const { nation, id } = useParams()
+   const { nation } = useParams()
 
    return (
       <div>

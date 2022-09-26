@@ -15,6 +15,13 @@ const HistroryPlayList = () => {
 
                   return <CarouselItem key={e.encodeId} artis={true} desc={false} class1={classGird} item={e}></CarouselItem>
                })}
+
+            {recentPlaylist && recentPlaylist.length === 0 && (
+               <div className="personal_podcast-main personal_container-main active">
+                  <div className="personal_podcast-img"></div>
+                  <div className="personal_podcast-text">Không có tập mới</div>
+               </div>
+            )}
          </PlayListSelector>
       </div>
    )

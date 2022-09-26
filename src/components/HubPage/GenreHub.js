@@ -10,7 +10,7 @@ const GenreHub = memo(({ data }) => {
             data.length > 0 &&
             data.slice(0, 18).map((e, index) => {
                return (
-                  <PlayListSelector key={index} title={e?.title} all={true}>
+                  <PlayListSelector key={index} to={`/hub/detail/${e?.encodeId}`} title={e?.title} all={true}>
                      {e?.playlists?.length > 0 &&
                         e?.playlists.map((e, index) => {
                            if (index > 4) return

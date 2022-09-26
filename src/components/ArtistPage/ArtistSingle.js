@@ -3,11 +3,14 @@ import PlayListSelector from "../Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 import { useOutletContext } from "react-router"
 import CarouselItem from "../Selection/CarouselItem"
+import LoadingSvg from "../loading/LoadingSvg"
 
 const ArtistSingle = () => {
    const datas = useOutletContext()
    const dataSelector = datas?.sections?.find((e) => e.title === "Single & EP")
-   console.log(datas?.sections)
+
+   if (datas?.length === 0 || !datas) return <LoadingSvg></LoadingSvg>
+
    return (
       <PlayListSelector classAdd2={"!flex-wrap"} key={uuidv4()} title={dataSelector.title}>
          {dataSelector &&

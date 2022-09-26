@@ -1,8 +1,7 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useLayoutEffect, useState } from "react"
 import { useGetHomePage } from "../../api/getHomePage"
 import CarouselItem from "../Selection/CarouselItem"
 import PlayListSelector from "../Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
 
 const NewMusicEveryDayHomePage = () => {
    const [datas, setData] = useState(null)
@@ -10,9 +9,7 @@ const NewMusicEveryDayHomePage = () => {
 
    const dataSelector = data?.data.items.find((e) => e.title === "XONE's CORNER")
 
-   //  const dataSelector = data?.data.items[4]
-
-   useEffect(() => {
+   useLayoutEffect(() => {
       if (data) {
          setData(dataSelector.items)
       }
@@ -40,7 +37,7 @@ const NewMusicEveryDayHomePage = () => {
 
                   return (
                      <CarouselItem.Loading
-                        key={uuidv4()}
+                        key={index}
                         artis={false}
                         desc={false}
                         class1={classGird}

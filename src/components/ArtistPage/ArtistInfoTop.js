@@ -2,17 +2,13 @@ import React, { memo, useState } from "react"
 import styled from "styled-components"
 import NewReleaseitem from "../NewReleaseitem/NewReleaseitem"
 import usePortal from "react-cool-portal"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
+import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
+import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 
 const InfoTopStyles = styled.div`
-   /* .content-detail {
-      display: -webkit-box;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      height: auto;
-      overflow: hidden !important;
-   } */
-
    .read-more {
       display: inline-block;
       color: var(--text-item-hover);
@@ -116,6 +112,13 @@ const PortalStyle = styled.div`
 `
 
 const ArtistInfoTop = memo(({ data }) => {
+   const dispatch = useDispatch()
+   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+   const loading = useSelector((state) => state.queueNowPlay.loading)
+   const { playing } = useSelector((state) => state.setting)
+
+   let active = playlistEncodeId === data?.playlistId
+
    const [care, setCare] = useState(false)
    const { Portal, show, hide } = usePortal({ defaultShow: false })
 
@@ -123,13 +126,14 @@ const ArtistInfoTop = memo(({ data }) => {
       const id = e.target.id
       if (id === "theme-overlay" || id === "portal-bio-arits") hide()
    }
+
    return (
       <InfoTopStyles className="artist_page-title row !flex-wrap mb-[40px]">
          <div className="col l-7 m-7 c-12 artist_page-title-deital">
             <div className="artist_page-title-left artist_page-title-deital">
                <h3 className="artist-name title">{data?.name}</h3>
                <div>
-                  {data?.sortBiography.length > 0 && (
+                  {data?.sortBiography.length > 0 && data && (
                      <>
                         <span className="content-detail" dangerouslySetInnerHTML={{ __html: data?.sortBiography }}></span>
 
@@ -182,8 +186,32 @@ const ArtistInfoTop = memo(({ data }) => {
                   </Portal>
                </div>
                <div className="actions mt-[20px] mb-[15px] inline-flex gap-[10px] items-center justify-start">
-                  <button className=" zm-btn mar-r-10 is-outlined active is-medium is-upper button" tabIndex="0">
-                     <span>Phát nhạc</span>
+                  <button
+                     onClick={async () => {
+                        if (active) {
+                           if (!playing) {
+                              dispatch(setPlay(true))
+                           } else {
+                              dispatch(setPlay(false))
+                           }
+                        }
+                        if (!active) {
+                           dispatch(setReady(false))
+                           dispatch(setPlay(false))
+                           await dispatch(fetchPlayList(data?.playlistId))
+                           dispatch(setPlay(true))
+                           if (data?.textType === "Playlist") {
+                              dispatch(pushPlayListsLogged(data))
+                           }
+                        }
+                     }}
+                     className=" zm-btn mar-r-10 is-outlined active is-medium is-upper button"
+                     tabIndex="0"
+                  >
+                     {loading && <span>Loading...</span>}
+                     {!active && !loading && <span>Phát nhạc</span>}
+                     {active && playing && <span>Tạm Dừng</span>}
+                     {active && !playing && <span>Phát Nhạc</span>}
                   </button>
                   <button
                      onClick={() => setCare((value) => !value)}
@@ -192,17 +220,17 @@ const ArtistInfoTop = memo(({ data }) => {
                   >
                      <span>
                         {care ? "ĐÃ QUAN TÂM" : "QUAN TÂM"} •{" "}
-                        {data?.follow > 10000 ? data?.follow.toString().slice(0, -3) + "K" : data.follow}
+                        {data?.follow > 10000 ? data?.follow.toString().slice(0, -3) + "K" : data?.follow}
                      </span>
                   </button>
                </div>
-               <NewReleaseitem item={data.topAlbum} isArtist></NewReleaseitem>
+               <NewReleaseitem item={data?.topAlbum} isArtist></NewReleaseitem>
             </div>
          </div>
          <div className="col l-5 m-5 c-12 ">
             <div className="artist_page-title-right float-right">
                <figure className="image avatar is-48x48">
-                  <img src={data.thumbnailM} alt="" />
+                  <img src={data?.thumbnailM} alt="" />
                </figure>
             </div>
          </div>

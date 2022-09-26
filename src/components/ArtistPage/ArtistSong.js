@@ -1,11 +1,14 @@
 import React from "react"
 import { useOutletContext } from "react-router"
+import LoadingSvg from "../loading/LoadingSvg"
 import PlayListSelector from "../Selection/PlayListSelector"
 import ItemChartList from "../TopChartPage/ItemChartList"
 
 const ArtistSong = () => {
    const datas = useOutletContext()
    const dataSelector = datas?.sections?.find((e) => e.sectionType === "song")
+
+   if (datas?.length === 0 || !datas) return <LoadingSvg></LoadingSvg>
 
    return (
       <div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import styled from "styled-components"
 import { getHubHome } from "../api/getHubHome"
 import GenreHub from "../components/HubPage/GenreHub"
@@ -17,7 +18,7 @@ const HubStyles = styled.div`
 const HubPage = () => {
    const [datas, setData] = useState([])
    const { data, status } = getHubHome()
-
+   const navigate = useNavigate()
    useEffect(() => {
       if (data) {
          setData(data.data)
@@ -30,10 +31,20 @@ const HubPage = () => {
 
    if (datas.length === 0) return <LoadingSvg></LoadingSvg>
 
+   const linkVip = datas.banners[0].link
+   let first = linkVip?.lastIndexOf("/")
+   let last = linkVip?.lastIndexOf(".")
+   let linkPara = linkVip.slice(first + 1, last)
+
    return (
       <HubStyles className="text-white transition-all">
          <div>
-            <figure className="image banner-image is-48x48">
+            <figure
+               onClick={() => {
+                  navigate(`/hub/detail/${linkPara}`)
+               }}
+               className="cursor-pointer image banner-image is-48x48 !rounded-xl overflow-hidden"
+            >
                <img src={datas?.banners[0].cover} alt="" />
             </figure>
          </div>

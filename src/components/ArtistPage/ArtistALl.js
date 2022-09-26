@@ -7,12 +7,15 @@ import { v4 as uuidv4 } from "uuid"
 import CarouselItem from "../Selection/CarouselItem"
 import ItemArits from "../MyMusicPage/ItemArits"
 import MvItem from "../MVpage/MvItem"
+import LoadingSvg from "../loading/LoadingSvg"
 
 const ArtistALl = () => {
    const datas = useOutletContext()
 
    const dataSelector = datas?.sections?.find((e) => e.sectionType === "song")
    const dataSelector2 = datas?.sections?.filter((e) => e.sectionType !== "song")
+
+   if (datas?.length === 0 || !datas) return <LoadingSvg></LoadingSvg>
 
    return (
       <div>

@@ -8,6 +8,7 @@ import LoadingSvg from "../loading/LoadingSvg"
 import { v4 as uuidv4 } from "uuid"
 import Masonry from "@mui/lab/Masonry"
 import useWindowSize from "../../hook/useResizeHook"
+import { useLayoutEffect } from "react"
 
 const NewFeedPageChidlen = () => {
    const { nation, id } = useParams()
@@ -24,7 +25,7 @@ const NewFeedPageChidlen = () => {
    if (width <= 600) {
       col = 1
    }
-   useEffect(() => {
+   useLayoutEffect(() => {
       fetchData()
    }, [])
 

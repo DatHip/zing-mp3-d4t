@@ -1,14 +1,13 @@
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
+import { useLayoutEffect } from "react"
 import { Outlet, useParams } from "react-router"
 import { NavLink } from "react-router-dom"
 import styled from "styled-components"
-
-import ArtistInfoTop from "../components/ArtistPage/ArtistInfoTop"
 import LoadingSvg from "../components/loading/LoadingSvg"
 import { tmdAPI } from "../config"
 import scrollTop from "../utils/scrollToTop"
-
+import ArtistInfoTop from "../components/ArtistPage/ArtistInfoTop"
 const ArtistPageStyles = styled.div`
    .avatar {
       width: 260px;
@@ -49,13 +48,14 @@ const ArtistPage = () => {
 
    const fetchData = async () => {
       const data = await axios.get(tmdAPI.getArtistPage(name))
-      setData(data.data.data)
+      console.log(data.data.data)
+      setData(data?.data?.data)
    }
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       scrollTop()
       fetchData()
-   }, [name])
+   }, [])
 
    if (datas?.length === 0) return <LoadingSvg></LoadingSvg>
 

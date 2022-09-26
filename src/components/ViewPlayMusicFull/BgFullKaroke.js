@@ -118,7 +118,9 @@ const BgFullKaroke = memo(() => {
    const ref0 = useRef(0)
    const ref1 = useRef(1)
    useLayoutEffect(() => {
-      let lyric = lyricByLine.map((data, index) => {
+      if (!lyricByLine) return
+
+      let lyric = lyricByLine?.map((data, index) => {
          let text = ""
          let e = data.words
          data.words.forEach((e) => {

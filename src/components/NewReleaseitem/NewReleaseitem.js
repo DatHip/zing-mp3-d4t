@@ -216,6 +216,22 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
                                  })
                               }
 
+                              if (isRadio) {
+                                 return toast("Radio đang phát triển , vui lòng thông cảm !", {
+                                    type: "info",
+                                 })
+                              }
+
+                              if (isArtist) {
+                                 const handele = async () => {
+                                    dispatch(setReady(false))
+                                    dispatch(setPlay(false))
+                                    await dispatch(fetchPlayList(item?.encodeId))
+                                    dispatch(setPlay(true))
+                                 }
+                                 handele()
+                              }
+
                               if (!isDisk) {
                                  const hi = async () => {
                                     dispatch(setReady(false))

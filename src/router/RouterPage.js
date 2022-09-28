@@ -36,6 +36,7 @@ import HistoryPage from "../pages/HistoryPage"
 import HistroryPlayList from "../components/HistoryPage/HistroryPlayList"
 import HistoryVideo from "../components/HistoryPage/HistoryVideo"
 import HistorySong from "../components/HistoryPage/HistorySong"
+import AuthenticationPage from "../pages/AuthenticationPage"
 
 const RouterPage = () => {
    const mainPageRef = useRef()
@@ -68,6 +69,7 @@ const RouterPage = () => {
                </Route>
                {/*  */}
 
+               <Route path="/auth" element={<AuthenticationPage></AuthenticationPage>}></Route>
                <Route index element={<HomePage></HomePage>}></Route>
                <Route path="/" element={<HomePage></HomePage>}></Route>
                <Route path="/zing-chart" element={<ZingChartPage></ZingChartPage>}></Route>

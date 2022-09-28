@@ -1,9 +1,7 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
-
 import { v4 as uuidv4 } from "uuid"
-
 import { tmdAPI } from "../../config"
 import scrollTop from "../../utils/scrollToTop"
 import LoadingSvg from "../loading/LoadingSvg"
@@ -22,7 +20,6 @@ const SearchPageAll = () => {
    const fetchData = async () => {
       const data = await axios.get(tmdAPI.getSearchAllKeyApi(id))
       setData(data.data.data)
-      console.log(data.data.data)
    }
 
    useEffect(() => {
@@ -61,13 +58,13 @@ const SearchPageAll = () => {
                         <div className="col l-6 m-6 c-9">
                            {colSong1 &&
                               colSong1.map((e) => (
-                                 <ItemChartList isNoneRank isChildren item={e} key={e.encodeId}></ItemChartList>
+                                 <ItemChartList isNotList isNoneRank isChildren item={e} key={e.encodeId}></ItemChartList>
                               ))}
                         </div>
                         <div className="col l-6 m-6 c-9">
                            {colSong2 &&
                               colSong2.map((e) => (
-                                 <ItemChartList isNoneRank isChildren item={e} key={e.encodeId}></ItemChartList>
+                                 <ItemChartList isNotList isNoneRank isChildren item={e} key={e.encodeId}></ItemChartList>
                               ))}
                         </div>
                      </div>

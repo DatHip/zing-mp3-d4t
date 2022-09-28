@@ -1,6 +1,9 @@
 import React, { memo } from "react"
-import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
 const ItemAritsStyles = styled.div`
    .main-page_list-item_img {
@@ -86,6 +89,9 @@ const ItemAritsStyles = styled.div`
 `
 
 const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+
    return (
       <ItemAritsStyles className={`mvpage-item-arits  ${classGird}`}>
          <div
@@ -98,14 +104,30 @@ const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
                   <i className="icon ic-16-Arrow-Next-1"></i>
                </Link>
             ) : (
-               <div className="want_list-item-link shadow main-page_list-item_img !rounded-full ">
+               <div
+                  onClick={() => {
+                     navigate(`/nghe-si/${data.alias}`)
+                  }}
+                  className="want_list-item-link shadow main-page_list-item_img !rounded-full "
+               >
                   <figure>
                      <img src={data.thumbnailM || data.thumbnail} alt="" />
                   </figure>
                </div>
             )}
             {!isLinkToAll && (
-               <button className="zm-btn is-mvpage button" tabIndex="0">
+               <button
+                  onClick={async () => {
+                     if (!data.playlistId) return
+
+                     dispatch(setReady(false))
+                     dispatch(setPlay(false))
+                     await dispatch(fetchPlayList(data.playlistId))
+                     dispatch(setPlay(true))
+                  }}
+                  className="zm-btn is-mvpage button"
+                  tabIndex="0"
+               >
                   <i className="icon ic-shuffle"></i>
                </button>
             )}
@@ -117,7 +139,7 @@ const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
                      Xem Tất Cả
                   </Link>
                ) : (
-                  <Link to="/" className="is-ghost">
+                  <Link to={`/nghe-si/${data.alias}`} className="is-ghost">
                      {data?.name}
                   </Link>
                )}
@@ -139,8 +161,10 @@ const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
                         className="zm-btn is-outlined mt-[12px] mb-[15px] !flex items-center justify-center  play-btn button"
                         tabIndex="0"
                      >
-                        <i className="icon ic-20-Shuffle"></i>
-                        <span>GÓC NHẠC</span>
+                        {/* <i className="icon ic-20-Shuffle"></i>
+                        <span>GÓC NHẠC</span> */}
+                        <i className="icon ic-addfriend"></i>
+                        <span>Quan Tâm</span>
                      </button>
                   </div>
                </>

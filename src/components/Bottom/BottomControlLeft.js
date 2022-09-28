@@ -11,7 +11,7 @@ const BottomControlLeft = () => {
       <div className="player_controls-left">
          <div className="player_controls-media">
             <div className="media_left">
-               <img className="media-avatar" src={infoSong.thumbnail} alt="" />
+               <img className="media-avatar" src={infoSong.thumbnail || infoSong.thumb} alt="" />
                <div
                   onClick={() => {
                      dispatch(setOpenMain())

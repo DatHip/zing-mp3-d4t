@@ -48,7 +48,6 @@ const ArtistPage = () => {
 
    const fetchData = async () => {
       const data = await axios.get(tmdAPI.getArtistPage(name))
-      console.log(data.data.data)
       setData(data?.data?.data)
    }
 

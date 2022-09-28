@@ -160,7 +160,7 @@ const BottomRight = () => {
                                        return (
                                           <ItemRighPlayer
                                              lastIndex={lastIndex}
-                                             key={e.encodeId}
+                                             key={e.encodeId || e.id}
                                              index={index}
                                              data={e}
                                           ></ItemRighPlayer>
@@ -182,7 +182,7 @@ const BottomRight = () => {
                               <ItemRighPlayer
                                  setToggleSilde={setToggleSilde}
                                  items={items}
-                                 key={e.encodeId}
+                                 key={e.encodeId || e.id}
                                  index={index}
                                  isHistory={true}
                                  data={e}

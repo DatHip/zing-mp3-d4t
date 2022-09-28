@@ -1,6 +1,10 @@
 import React, { memo } from "react"
-import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import { fetchPlayList, playSongNotAlbum, playSongNotAlbumById } from "../../features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
 const OutstandingItemsStyles = styled.div`
    &.is-item-search {
@@ -80,20 +84,38 @@ const OutstandingItemsStyles = styled.div`
    }
 `
 
-const OutstandingItems = memo(({ data, classGrid, type, isSearch }) => {
+const OutstandingItems = memo(({ data, classGrid, type, isSearch, setOpen }) => {
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+
    if (isSearch) {
       return (
          <OutstandingItemsStyles className={`${classGrid || null} ${isSearch ? "is-item-search" : null} media-hover`}>
-            <div className="media artist-item ">
+            <div
+               onClick={() => {
+                  if (data?.type === 4) {
+                     navigate(`/nghe-si/${data?.aliasName}`)
+                     setOpen(false)
+                  }
+
+                  if (data?.type === 1) {
+                     dispatch(setReady(false))
+                     dispatch(setPlay(false))
+                     dispatch(playSongNotAlbumById(data))
+                     dispatch(setPlay(true))
+                     setOpen(false)
+                  }
+               }}
+               className="media artist-item "
+            >
                <div className="media-left mr-[10px]">
                   {isSearch && (
-                     <Link
-                        to={`/album/${data?.encodeId}`}
+                     <div
                         className={`${
                            isSearch ? "w-[50px] h-[50px]" : "w-[80px] h-[80px]"
-                        } want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
+                        } want_list-item-link main-page_list-item main_page-hover`}
                      >
-                        <div className="want_list-item-link main-page_list-item_img">
+                        <div className="want_list-item-link  cursor-pointer main-page_list-item_img">
                            <img src={data?.thumbnail || data?.avatar || data?.thumb} alt="" />
                         </div>
 
@@ -106,7 +128,7 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch }) => {
                               </div>
                            </div>
                         )}
-                     </Link>
+                     </div>
                   )}
                </div>
                <div className="media-right overflow-hidden">
@@ -180,19 +202,47 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch }) => {
    if (type === "Nghệ sĩ") {
       typeLink = `/nghe-si${data?.link}/`
    }
+
    if (type === "Playlist") {
       typeLink = `/album/${data?.playlistId}`
    }
+
    if (type === "Bài Hát") {
       typeLink = `/album/${data?.playlistId}`
    }
+
    return (
       <OutstandingItemsStyles className={`${classGrid || null} ${isSearch ? "is-item-search" : null} media-hover`}>
-         <Link to={typeLink || "/"} className="media artist-item  cursor-pointer">
-            <div className="media-left mr-[20px]">
+         <div to={typeLink || "/"} className="media artist-item  cursor-pointer">
+            <div
+               onClick={() => {
+                  if (type === "Nghệ sĩ") {
+                     dispatch(setReady(false))
+                     dispatch(setPlay(false))
+                     dispatch(fetchPlayList(data?.playlistId))
+                     dispatch(setPlay(true))
+                  }
+                  if (type === "Playlist") {
+                     navigate(`/album/${data?.encodeId}`)
+                     dispatch(setReady(false))
+                     dispatch(setPlay(false))
+                     dispatch(fetchPlayList(data?.encodeId))
+                     dispatch(setPlay(true))
+                     if (data.textType === "Playlist") {
+                        dispatch(pushPlayListsLogged(data))
+                     }
+                  }
+                  if (type === "Bài Hát") {
+                     dispatch(setReady(false))
+                     dispatch(setPlay(false))
+                     dispatch(playSongNotAlbum(data))
+                     dispatch(setPlay(true))
+                  }
+               }}
+               className="media-left mr-[20px]"
+            >
                {type === "Nghệ sĩ" && (
                   <div
-                     // to={`/album/${data?.playlistId}`}
                      className={`${
                         isSearch ? "w-[50px] h-[50px]" : "w-[80px] h-[80px]"
                      } want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
@@ -232,7 +282,6 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch }) => {
                )}
                {isSearch && (
                   <div
-                     // to={`/album/${data?.encodeId}`}
                      className={`${
                         isSearch ? "w-[40px] h-[40px]" : "w-[80px] h-[80px]"
                      } want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
@@ -316,7 +365,7 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch }) => {
                   </>
                )}
             </div>
-         </Link>
+         </div>
       </OutstandingItemsStyles>
    )
 })

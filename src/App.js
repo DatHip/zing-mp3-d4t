@@ -21,12 +21,24 @@ function App() {
 
    useEffect(() => {
       const keyboardShortcuts = (e) => {
+         let input = document.querySelectorAll("input")
+
          let data = e.keyCode
+
          // eslint-disable-next-line default-case
          switch (data) {
             case 32:
-               e.preventDefault()
-               dispatch(setPlaying())
+               let isInput = false
+               input.forEach((e) => {
+                  if (e === document.activeElement) {
+                     isInput = true
+                  }
+               })
+
+               if (!isInput) {
+                  e.preventDefault()
+                  dispatch(setPlaying())
+               }
                break
             case 39:
                document.querySelector("#nextMusic").click()

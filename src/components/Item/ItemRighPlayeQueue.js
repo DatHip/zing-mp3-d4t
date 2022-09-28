@@ -23,7 +23,7 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
    const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
 
-   let active = data?.encodeId === currentEncodeId
+   let active = data?.encodeId === currentEncodeId || data?.id === currentEncodeId
    let isPre = index < currentIndexSong
 
    if (isHistory) {
@@ -31,7 +31,7 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
          <li className={`player_queue-item   ${active ? "player_queue-active" : ""} `}>
             <div className="player_queue-item-left">
                <div className="player_queue-left">
-                  <LazyLoadImage className="player_queue-img" src={data?.thumbnail} alt="" />
+                  <LazyLoadImage className="player_queue-img" src={data?.thumbnail || data?.thumb} alt="" />
                   <div className="player_queue-img-hover">
                      {!active && (
                         <div
@@ -128,7 +128,7 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
    }
 
    return (
-      <Draggable key={data.encodeId} draggableId={data.encodeId} index={index}>
+      <Draggable key={data.encodeId || data.id} draggableId={data.encodeId || data.id} index={index}>
          {(provoied, snapshot) => (
             <div draggable ref={provoied.innerRef} {...provoied.dragHandleProps} {...provoied.draggableProps}>
                <li
@@ -138,7 +138,7 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
                >
                   <div className="player_queue-item-left">
                      <div className="player_queue-left">
-                        <LazyLoadImage className="player_queue-img" src={data?.thumbnail} alt="" />
+                        <LazyLoadImage className="player_queue-img" src={data?.thumbnail || data?.thumb} alt="" />
                         <div className="player_queue-img-hover">
                            {active && (
                               <>

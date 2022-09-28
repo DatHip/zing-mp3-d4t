@@ -2,7 +2,7 @@
 import React from "react"
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { setName } from "../../features/formSearch/formSearch"
 import { memo } from "react"
 import OutstandingItems from "../SearchPage/OutstandingItems"
@@ -82,9 +82,6 @@ const SuggestList = ({ setOpen, setValue, value, refinput }) => {
                         <LoadingSvg isLoadMore></LoadingSvg>
                      </div>
                   </li>
-                  {/* <li className="suggest__item ">
-                     <div className="is-oneline w-full text-center">Loading...</div>
-                  </li> */}
                </div>
             )}
             {entities && !refinput.current.value && entities.length > 0 && (
@@ -151,7 +148,7 @@ const SuggestList = ({ setOpen, setValue, value, refinput }) => {
                   {entitiesNew[1]?.suggestions?.map((e, index) => {
                      if (index > 5) return
 
-                     return <OutstandingItems isSearch key={index} data={e}></OutstandingItems>
+                     return <OutstandingItems setOpen={setOpen} isSearch key={index} data={e}></OutstandingItems>
                   })}
                </>
             )}

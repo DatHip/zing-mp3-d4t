@@ -34,7 +34,7 @@ const SearchPageSong = () => {
                      {datas &&
                         datas?.items?.length > 0 &&
                         datas?.items?.map((e, index) => {
-                           return <ItemChartList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
+                           return <ItemChartList isNotList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
                         })}
                   </div>
                </div>

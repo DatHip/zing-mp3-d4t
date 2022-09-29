@@ -1,5 +1,6 @@
 import React, { memo } from "react"
 import { useForm } from "react-hook-form"
+import FirebaseApp from "../../firebase/firebaseApp"
 
 const SignInForm = memo(({ setSign }) => {
    const {
@@ -8,12 +9,13 @@ const SignInForm = memo(({ setSign }) => {
       formState: { errors },
    } = useForm()
 
-   const onSubmit = (data) => console.log(data)
-
    console.log(errors)
+
+   const onSubmit = (data) => console.log(data)
 
    return (
       <div>
+         <FirebaseApp></FirebaseApp>
          <form onSubmit={handleSubmit(onSubmit)} name="loginForm" className="loginForm w-full">
             <div className="form-group">
                <input type="email" className="form-control email" name="username" placeholder="Email " />

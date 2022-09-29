@@ -13,7 +13,7 @@ const SignUpStyles = styled.div`
    width: 100vw;
    height: 100vh;
    background-color: var(--layout-bg);
-   z-index: 100000;
+   z-index: 8888;
    transition: all 0.3s;
    overflow-y: auto;
    .sider {
@@ -118,7 +118,7 @@ const SignUpStyles = styled.div`
       color: #333333;
       font-size: 18px;
       height: 50px;
-      margin-bottom: 20px;
+      margin-top: 16px;
       padding: 12px 22px;
       border-radius: 4px;
       border: solid 1px #bcc2ce;
@@ -130,6 +130,7 @@ const SignUpStyles = styled.div`
       color: white;
       width: 100%;
       padding: 12px;
+      margin-top: 2rem;
       font-size: 16px;
       font-weight: 500;
       border-radius: 4px;
@@ -179,7 +180,7 @@ const AuthenticationPage = () => {
                            </div>
                         </div>
 
-                        <div className="text-center mb-[2rem] font-semibold">Đăng nhập bằng mạng xã hội để truy cập nhanh</div>
+                        <div className="text-center mb-[2rem]  font-semibold">Đăng nhập bằng mạng xã hội để truy cập nhanh</div>
 
                         <div className="flex flex-col justify-start items-center gap-[16px]">
                            <button className="btnAuth bg-[#3b5998]">Tiếp tục với Facebook</button>
@@ -189,7 +190,7 @@ const AuthenticationPage = () => {
                      </div>
 
                      <div className="col l-7 m-7 c-12 right">
-                        <div className="flex gap-[20px] items-baseline justify-center mb-[30px]">
+                        <div className="flex  items-baseline justify-center ">
                            <div className="text-header active">{sign ? "Đăng Nhập" : "Đăng Ký"}</div>
                         </div>
 

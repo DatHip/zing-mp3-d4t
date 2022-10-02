@@ -16,7 +16,6 @@ const FirebaseApp = () => {
                ...docs.data(),
             })
          })
-         console.log(posts)
       })
    }, [])
    return <div></div>

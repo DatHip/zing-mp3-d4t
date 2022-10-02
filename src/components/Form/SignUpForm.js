@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import FirebaseApp from "../../firebase/firebaseApp"
-import { collection, getDocs, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp, updateDoc, getDoc } from "firebase/firestore"
-import { auth, database } from "../../firebase/firebase-config"
 import { toast } from "react-toastify"
+import * as yup from "yup"
+import { collection, addDoc, doc, onSnapshot } from "firebase/firestore"
+import { auth, database } from "../../firebase/firebase-config"
 
-import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged } from "firebase/auth"
+import { useNavigate } from "react-router"
+import { useDispatch } from "react-redux"
 
 const schema = yup.object({
    email: yup.string().required("Vui lòng nhập trường này").max(40).email(),
@@ -24,40 +25,23 @@ const SignUpForm = ({ setSign }) => {
       register,
       handleSubmit,
       reset,
-      formState: { errors },
+      formState: { errors, isSubmitting },
       setFocus,
    } = useForm({
       resolver: yupResolver(schema),
       mode: "onChange",
    })
-
-   const [post, setPost] = useState([])
-   const colRef = collection(database, "posts")
-
-   // remove, addDoc ,getDoc , update,
-   const removeDoc = async () => {
-      const colRefDel = doc(database, "posts", "YDfp0gR3yeci2n6jra6g")
-      await deleteDoc(colRefDel)
-      console.log("oke")
-   }
-
-   const handleUpadatePost = async () => {
-      const colRefUpdate = doc(database, "posts", "oq9bUMZkdGNDjDNzFnyu")
-      await updateDoc(colRefUpdate, {
-         name: "ahihiihhii",
-      })
-      console.log("oke")
-   }
+   const [currentInfo, setCurrnetInfo] = useState({})
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const onSubmit = async (data) => {
       createUserWithEmailAndPassword(auth, data.email, data.password)
-         .then((userCredential) => {
+         .then(async (userCredential) => {
             const user = userCredential.user
 
-            console.log(user, "success")
-
-            toast("Đăng ký Thành Công ", {
-               type: "success",
+            updateProfile(auth.currentUser, {
+               displayName: data.name,
             })
 
             setTimeout(() => {
@@ -69,93 +53,54 @@ const SignUpForm = ({ setSign }) => {
                })
             }, 1000)
 
+            const userRef = collection(database, "users")
+            await addDoc(userRef, {
+               email: data.email,
+               password: data.password,
+               name: data.name,
+               id: user.uid,
+            })
             // ...
+
+            console.log(user)
+            dispatch()
+
+            toast("Đăng ký Thành Công ", {
+               type: "success",
+            })
+
+            setTimeout(() => {
+               // navigate("/")
+            }, 1000)
          })
 
          .catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
-
             return toast("Đăng ký Không Thành Công ", {
                type: "error",
             })
          })
    }
-   // const onSubmit = async (data) => {
-   //    console.log(errors, data)
-
-   //    // handleUpadatePost()
-
-   //    if (!errors) return
-
-   //    addDoc(colRef, {
-   //       email: data.email,
-   //       password: data.password,
-   //       name: data.name,
-   //       createAt: serverTimestamp(),
-   //    })
-   //       .then(() => {
-   //          console.log("success")
-   //          reset({
-   //             email: "",
-   //             password: "",
-   //             passwordCheck: "",
-   //             name: "",
-   //          })
-   //          toast("Wow so easy!")
-   //          // removeDoc()
-   //       })
-   //       .catch(() => {
-   //          console.log("error")
-   //       })
-   // }
-   //
 
    useEffect(() => {
       setFocus("email")
    }, [setFocus])
 
    useEffect(() => {
-      // getDocs(colRef).then((spanshot) => {
-      //    let posts = []
-      //    spanshot.docs.forEach((docs) => {
-      //       posts.push({
-      //          id: docs.id,
-      //          ...docs.data(),
-      //       })
-      //    })
-      //    console.log(posts)
-      //    setPost(posts)
-      // })
-
-      onSnapshot(colRef, (snapshot) => {
-         let posts = []
-         snapshot.docs.forEach((docs) => {
-            posts.push({
-               id: docs.id,
-               ...docs.data(),
-            })
-         })
-
-         setPost(posts)
+      onAuthStateChanged(auth, (user) => {
+         if (user) {
+            setCurrnetInfo(user)
+         } else {
+            setCurrnetInfo(false)
+         }
       })
-
-      // getData
-      const docRefSingle = doc(database, "posts", "yMWfn8Lkzh1Kt9pajCnF")
-      onSnapshot(docRefSingle, (value) => {
-         // console.log(value.data())
-      })
-      // getDoc(docRefSingle).then((value) => {
-      //    console.log(value.data())
-      // })
    }, [])
+
+   const handleSignOut = () => {
+      signOut(auth)
+   }
 
    return (
       <div>
-         {post.length > 0 &&
-            post.map((e, index) => {
-               return <div key={index}>{e?.name}</div>
-            })}
          <form onSubmit={handleSubmit(onSubmit)} name="loginForm" className="loginForm w-full">
             <div className="form-group">
                <input {...register("email")} type="email" className="form-control email" name="email" placeholder="Email " />
@@ -192,8 +137,8 @@ const SignUpForm = ({ setSign }) => {
             </div>
             <div className="mt-[6px]  px-[1rem] text-red-500">{errors?.name?.message}</div>
 
-            <button className="btn-login " type="submit">
-               Đăng Ký
+            <button disabled={isSubmitting} className="btn-login " type="submit">
+               {isSubmitting ? "Loading..." : "Đăng Ký"}
             </button>
          </form>
          <div className="flex items-center justify-between mt-[20px]">
@@ -212,3 +157,18 @@ const SignUpForm = ({ setSign }) => {
 }
 
 export default SignUpForm
+
+// remove, addDoc ,getDoc , update,
+// const removeDoc = async () => {
+//    const colRefDel = doc(database, "posts", "YDfp0gR3yeci2n6jra6g")
+//    await deleteDoc(colRefDel)
+//    console.log("oke")
+// }
+
+// const handleUpadatePost = async () => {
+//    const colRefUpdate = doc(database, "posts", "oq9bUMZkdGNDjDNzFnyu")
+//    await updateDoc(colRefUpdate, {
+//       name: "ahihiihhii",
+//    })
+//    console.log("oke")
+// }

@@ -1,31 +1,91 @@
-import React, { memo } from "react"
+import React, { memo, useEffect } from "react"
 import { useForm } from "react-hook-form"
-import FirebaseApp from "../../firebase/firebaseApp"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+import { auth } from "../../firebase/firebase-config"
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router"
+
+const schema = yup.object({
+   email: yup.string().required("Vui lòng nhập trường này").max(40).email(),
+   password: yup.string().required("Vui lòng nhập trường này").max(30).min(7, "Độ dài tối thiểu 7 ký tự"),
+})
 
 const SignInForm = memo(({ setSign }) => {
    const {
       register,
       handleSubmit,
+      reset,
       formState: { errors },
-   } = useForm()
+      setFocus,
+   } = useForm({ resolver: yupResolver(schema), mode: "onChange" })
 
-   console.log(errors)
+   const navigate = useNavigate()
 
-   const onSubmit = (data) => console.log(data)
+   useEffect(() => {
+      setFocus("email")
+   }, [setFocus])
+
+   useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+         console.log(user)
+         if (user) {
+            // setCurrnetInfo(user)
+         } else {
+            // setCurrnetInfo(false)
+         }
+      })
+   }, [])
+
+   const onSubmitLogin = (data) => {
+      signInWithEmailAndPassword(auth, data.email, data.password)
+         .then((userCredential) => {
+            const user = userCredential.user
+
+            setTimeout(() => {
+               reset({
+                  email: "",
+                  password: "",
+               })
+            }, 1000)
+
+            toast("Đăng Nhập Thành Công", {
+               type: "success",
+            })
+         })
+         .catch((error) => {
+            toast("Đăng Nhập không thành công , Tài Khoản hoặc Mật Khẩu không chính xác", {
+               type: "error",
+            })
+            setTimeout(() => {
+               reset({
+                  password: "",
+               })
+            }, 1000)
+         })
+   }
 
    return (
       <div>
-         <FirebaseApp></FirebaseApp>
-         <form onSubmit={handleSubmit(onSubmit)} name="loginForm" className="loginForm w-full">
+         <form onSubmit={handleSubmit(onSubmitLogin)} name="loginForm" className="loginForm w-full">
             <div className="form-group">
-               <input type="email" className="form-control email" name="username" placeholder="Email " />
+               <input {...register("email")} type="email" className="form-control email" name="email" placeholder="Email " />
             </div>
+            <div className="mt-[6px]  px-[1rem] text-red-500">{errors?.email?.message}</div>
+
             <div className="form-group">
-               <input type="password" className="form-control password" name="password" placeholder="Password" />
+               <input
+                  {...register("password")}
+                  type="password"
+                  className="form-control password"
+                  name="password"
+                  placeholder="Password"
+               />
                <span className="fa fa-eye-slash pwd-toggle" />
             </div>
-
-            <button className="btn-login " type="button">
+            <div className="mt-[6px]  px-[1rem] text-red-500">{errors?.password?.message}</div>
+            <button className="btn-login " type="submit">
                Đăng Nhập
             </button>
          </form>

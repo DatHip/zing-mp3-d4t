@@ -16,6 +16,7 @@ function App() {
    const settingSelector = useSelector((state) => state.setting)
    const lyricsSelector = useSelector((state) => state.lyrics)
    const timeSelector = useSelector((state) => state.currentTimes)
+   const usersSelcetor = useSelector((state) => state.users)
 
    const dispatch = useDispatch()
 
@@ -25,20 +26,18 @@ function App() {
 
          let data = e.keyCode
 
+         let isInput = false
+         input.forEach((e) => {
+            if (e === document.activeElement) {
+               isInput = true
+            }
+         })
+         if (isInput) return
          // eslint-disable-next-line default-case
          switch (data) {
             case 32:
-               let isInput = false
-               input.forEach((e) => {
-                  if (e === document.activeElement) {
-                     isInput = true
-                  }
-               })
-
-               if (!isInput) {
-                  e.preventDefault()
-                  dispatch(setPlaying())
-               }
+               e.preventDefault()
+               dispatch(setPlaying())
                break
             case 39:
                document.querySelector("#nextMusic").click()
@@ -90,6 +89,7 @@ function App() {
       const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
       const lyrics = JSON.parse(localStorage.getItem("d4tmp3_lyrics"))
       const time = JSON.parse(localStorage.getItem("d4tmp3_timeCurrent"))
+      const users = JSON.parse(localStorage.getItem("d4tmp3_users"))
 
       if (!queueNowPlay) {
          localStorage.setItem("queue_nowplay", JSON.stringify(queueNowPlaySelector))
@@ -105,6 +105,9 @@ function App() {
       }
       if (!time) {
          localStorage.setItem("d4tmp3_timeCurrent", JSON.stringify(timeSelector))
+      }
+      if (!users) {
+         localStorage.setItem("d4tmp3_users", JSON.stringify(usersSelcetor))
       }
    }, [])
 

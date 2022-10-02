@@ -10,6 +10,7 @@ import themeToggle from "../features/setTheme/themeSetFeatures"
 import setting from "../features/SettingPlay/settingPlay"
 import setOpenMainMv from "../features/ToggleMainMv/toggleMainMv"
 import toggleRight from "../features/toggleRight/toggleRight"
+import users from "../features/User/userFeatures"
 
 export const store = configureStore({
    reducer: {
@@ -24,5 +25,6 @@ export const store = configureStore({
       setting: setting,
       lyrics: Lyrics,
       currentTimes: currentTimes,
+      users: users,
    },
 })

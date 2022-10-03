@@ -1,22 +1,29 @@
 import React from "react"
+import { useEffect } from "react"
 import { memo } from "react"
-import { Link, Outlet, useLocation, useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom"
 
 const MyMusicPage = () => {
    const { pathname: id } = useLocation()
+   const navigate = useNavigate()
+   const { activeUser, name } = useSelector((state) => state.users)
+
+   useEffect(() => {
+      if (!activeUser) {
+         navigate("/auth")
+      }
+   }, [])
 
    return (
       <div className="main_personal text-white">
          <div className="personal_user">
             <div className="personal_user-img w-[60px] h-[60px]">
                <figure>
-                  <img
-                     src="https://scontent.fhph2-1.fna.fbcdn.net/v/t39.30808-6/247626715_666350100997661_669949583673348293_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=GxJ2uKj8nKUAX9RZevX&_nc_ht=scontent.fhph2-1.fna&oh=00_AT9_rrjOIAN6CB2qJMh6hsV4eGiuznr2r1W0kTeA6v5aXg&oe=630CE24F"
-                     alt=""
-                  />
+                  <img src="https://avatar.talk.zdn.vn/default" alt="" />
                </figure>
             </div>
-            <h3>Đạt Huỳnh</h3>
+            <h3>{name || "User"}</h3>
          </div>
 
          <div className="flex items-center min-h-[52px] my-[30px]">
@@ -39,6 +46,11 @@ const MyMusicPage = () => {
                <li className={`zm-navbar-item ${id === "/mymusic/nghe-si" ? "is-active" : ""}  `}>
                   <div className="navbar-link">
                      <Link to="/mymusic/nghe-si">NGHỆ SĨ</Link>
+                  </div>
+               </li>
+               <li className={`zm-navbar-item ${id === "/mymusic/info" ? "is-active" : ""}  `}>
+                  <div className="navbar-link">
+                     <Link to="/mymusic/info">Thông tin</Link>
                   </div>
                </li>
             </ul>

@@ -9,6 +9,7 @@ import { auth, database } from "../../firebase/firebase-config"
 import { createUserWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged } from "firebase/auth"
 import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux"
+import { setUser } from "../../features/User/userFeatures"
 
 const schema = yup.object({
    email: yup.string().required("Vui lòng nhập trường này").max(40).email(),
@@ -62,15 +63,21 @@ const SignUpForm = ({ setSign }) => {
             })
             // ...
 
-            console.log(user)
-            dispatch()
+            dispatch(
+               setUser({
+                  displayName: user.displayName,
+                  photoURL: user.photoURL,
+                  email: user.email,
+                  uid: user.uid,
+               })
+            )
 
             toast("Đăng ký Thành Công ", {
                type: "success",
             })
 
             setTimeout(() => {
-               // navigate("/")
+               navigate("/")
             }, 1000)
          })
 

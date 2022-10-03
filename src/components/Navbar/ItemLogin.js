@@ -2,6 +2,13 @@ import Tippy from "@tippyjs/react"
 import "tippy.js/animations/perspective-extreme.css"
 import React, { useState } from "react"
 import styled from "styled-components"
+import { useLocation, useNavigate } from "react-router"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase/firebase-config"
+import { toast } from "react-toastify"
+import { useDispatch } from "react-redux"
+import { logOut } from "../../features/User/userFeatures"
+import { useSelector } from "react-redux"
 
 const LoginPortalStyyles = styled.div`
    background-color: var(--primary-bg);
@@ -52,7 +59,28 @@ const LoginPortalStyyles = styled.div`
    }
 `
 
-const LoginPortal = () => {
+const LoginPortal = ({ setOpen }) => {
+   const { pathname } = useLocation()
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+   const activeUser = useSelector((state) => state.users.activeUser)
+
+   const handleSignOut = async () => {
+      signOut(auth)
+         .then(() => {
+            let path = pathname.search("mymusic")
+            setOpen(false)
+            dispatch(logOut())
+
+            if (path > 0) {
+               navigate("/")
+            }
+
+            toast("Đã đăng xuất")
+         })
+         .catch((err) => console.log(err))
+   }
+
    return (
       <LoginPortalStyyles className="menu menu-settings setting-header header-dropdown pad-t-0">
          <ul className="menu-list">
@@ -62,20 +90,43 @@ const LoginPortal = () => {
                   href="https://zingmp3.vn/vip?utm_source=desktop&utm_campaign=VIP&utm_medium=%s"
                   rel="noreferrer"
                >
-                  <button className="zm-btn button" tabIndex={0}>
+                  <button className="zm-btn button w-full" tabIndex={0}>
                      <i className="icon ic-20-VIP-2" />
                      <span>Nâng cấp VIP</span>
                   </button>
                </a>
             </li>
+            <li className="header-player-setting">
+               {activeUser && (
+                  <button onClick={() => {}} className="w-full zm-btn button cursor-pointer" tabIndex={0}>
+                     <i className="icon ic-24-Privacy"></i>
+                     <span>Thông tin tài khoản</span>
+                  </button>
+               )}
+            </li>
 
             <li className="header-player-setting logout-header">
-               <a>
-                  <button className="zm-btn button" tabIndex={0}>
-                     <i className="icon ic-log-out" />
-                     <span>Đăng xuất</span>
-                  </button>
-               </a>
+               <div>
+                  {activeUser && (
+                     <button onClick={handleSignOut} className="w-full zm-btn button cursor-pointer" tabIndex={0}>
+                        <i className="icon ic-log-out" />
+                        <span>Đăng xuất</span>
+                     </button>
+                  )}
+
+                  {!activeUser && (
+                     <button
+                        onClick={() => {
+                           navigate("/auth")
+                        }}
+                        className="w-full zm-btn button cursor-pointer"
+                        tabIndex={0}
+                     >
+                        <i className="icon ic-log-out" />
+                        <span>Đăng Nhập</span>
+                     </button>
+                  )}
+               </div>
             </li>
          </ul>
       </LoginPortalStyyles>
@@ -90,7 +141,7 @@ const ItemLogin = ({ isTitle = true, width = 38, height = 38 }) => {
          animation={"perspective-extreme"}
          onClickOutside={() => setOpen(false)}
          visible={open}
-         content={<LoginPortal></LoginPortal>}
+         content={<LoginPortal setOpen={setOpen}></LoginPortal>}
          interactive={true}
          arrow={false}
          offset={[0, 10]}

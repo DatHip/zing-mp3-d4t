@@ -6,6 +6,8 @@ import { auth } from "../../firebase/firebase-config"
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
+import { useDispatch } from "react-redux"
+import { setUser } from "../../features/User/userFeatures"
 
 const schema = yup.object({
    email: yup.string().required("Vui lòng nhập trường này").max(40).email(),
@@ -22,21 +24,21 @@ const SignInForm = memo(({ setSign }) => {
    } = useForm({ resolver: yupResolver(schema), mode: "onChange" })
 
    const navigate = useNavigate()
-
+   const dispatch = useDispatch()
    useEffect(() => {
       setFocus("email")
    }, [setFocus])
 
-   useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-         console.log(user)
-         if (user) {
-            // setCurrnetInfo(user)
-         } else {
-            // setCurrnetInfo(false)
-         }
-      })
-   }, [])
+   // useEffect(() => {
+   //    onAuthStateChanged(auth, (user) => {
+   //       console.log(user)
+   //       if (user) {
+   //          // setCurrnetInfo(user)
+   //       } else {
+   //          // setCurrnetInfo(false)
+   //       }
+   //    })
+   // }, [])
 
    const onSubmitLogin = (data) => {
       signInWithEmailAndPassword(auth, data.email, data.password)
@@ -50,9 +52,21 @@ const SignInForm = memo(({ setSign }) => {
                })
             }, 1000)
 
+            dispatch(
+               setUser({
+                  displayName: user.displayName,
+                  photoURL: user.photoURL,
+                  email: user.email,
+                  uid: user.uid,
+               })
+            )
             toast("Đăng Nhập Thành Công", {
                type: "success",
             })
+
+            setTimeout(() => {
+               navigate("/")
+            }, 700)
          })
          .catch((error) => {
             toast("Đăng Nhập không thành công , Tài Khoản hoặc Mật Khẩu không chính xác", {

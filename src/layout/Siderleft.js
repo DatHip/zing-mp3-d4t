@@ -1,12 +1,18 @@
 import React, { memo } from "react"
-import { NavLink, Link } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom"
 import useWindowSize from "../hook/useResizeHook"
 import useToggle from "../hook/useToggleHook"
 
 const Siderleft = () => {
    const { width } = useWindowSize()
+   const navigate = useNavigate()
+   const { pathname } = useLocation()
+
+   let pathMyMusic = pathname.indexOf("mymusic")
 
    const [isToggle, setIsToggle] = useToggle(false)
+   const activeUser = useSelector((state) => state.users.activeUser)
 
    return (
       <aside
@@ -26,18 +32,31 @@ const Siderleft = () => {
          </div>
          <div className="sider_menu sider_menu-c">
             <ul className="sider_menu-list">
-               <NavLink
+               <div
+                  onClick={() => {
+                     if (!activeUser) {
+                        // eslint-disable-next-line no-restricted-globals
+                        if (confirm("Bạn cần đăng nhập") === true) {
+                           navigate("/auth")
+                        } else {
+                           return
+                        }
+                     } else {
+                        navigate("/mymusic/")
+                     }
+                  }}
                   to="/mymusic/"
                   title="Cá nhân"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
+                  // className={({ isActive }) =>
+                  //    isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                  // }
+                  className={`sider_menu-item sider_menu-item-acitve ${pathMyMusic > 0 ? "sider_active" : ""} `}
                >
                   <div>
                      <i className="icon  ic-24-LibraryTab"></i>
                      <span className="sider_menu-item-title">Cá Nhân</span>
                   </div>
-               </NavLink>
+               </div>
 
                <NavLink
                   to="/"

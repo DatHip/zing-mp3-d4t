@@ -37,6 +37,7 @@ import HistroryPlayList from "../components/HistoryPage/HistroryPlayList"
 import HistoryVideo from "../components/HistoryPage/HistoryVideo"
 import HistorySong from "../components/HistoryPage/HistorySong"
 import AuthenticationPage from "../pages/AuthenticationPage"
+import MyInfoPage from "../components/MyMusicPage/MyInfoPage"
 
 const RouterPage = () => {
    const mainPageRef = useRef()
@@ -66,6 +67,7 @@ const RouterPage = () => {
                   <Route path="song" element={<MyMusicSong></MyMusicSong>}></Route>
                   <Route path="playlist" element={<MyMusicPlayList></MyMusicPlayList>}></Route>
                   <Route path="nghe-si" element={<MyMusicArtis></MyMusicArtis>}></Route>
+                  <Route path="info" element={<MyInfoPage></MyInfoPage>}></Route>
                </Route>
                {/*  */}
 

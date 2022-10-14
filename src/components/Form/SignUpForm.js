@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
+import * as yup from "yup"
+import { toast } from "react-toastify"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { toast } from "react-toastify"
-import * as yup from "yup"
-import { collection, addDoc, doc, onSnapshot } from "firebase/firestore"
-import { auth, database } from "../../firebase/firebase-config"
-
-import { createUserWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged } from "firebase/auth"
+import { setDoc, doc, serverTimestamp } from "firebase/firestore"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux"
+import { auth, database } from "../../firebase/firebase-config"
 import { setUser } from "../../features/User/userFeatures"
 
 const schema = yup.object({
@@ -22,6 +21,8 @@ const schema = yup.object({
 })
 
 const SignUpForm = ({ setSign }) => {
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
    const {
       register,
       handleSubmit,
@@ -32,9 +33,6 @@ const SignUpForm = ({ setSign }) => {
       resolver: yupResolver(schema),
       mode: "onChange",
    })
-   const [currentInfo, setCurrnetInfo] = useState({})
-   const navigate = useNavigate()
-   const dispatch = useDispatch()
 
    const onSubmit = async (data) => {
       createUserWithEmailAndPassword(auth, data.email, data.password)
@@ -54,14 +52,16 @@ const SignUpForm = ({ setSign }) => {
                })
             }, 1000)
 
-            const userRef = collection(database, "users")
-            await addDoc(userRef, {
+            await setDoc(doc(database, "users", user.uid), {
                email: data.email,
                password: data.password,
                name: data.name,
                id: user.uid,
+               favouriteSongs: [],
+               favouritePlaylist: [],
+               favouriteArtist: [],
+               timestamp: serverTimestamp(),
             })
-            // ...
 
             dispatch(
                setUser({
@@ -82,6 +82,7 @@ const SignUpForm = ({ setSign }) => {
          })
 
          .catch((error) => {
+            console.log(error)
             return toast("Đăng ký Không Thành Công ", {
                type: "error",
             })
@@ -91,20 +92,6 @@ const SignUpForm = ({ setSign }) => {
    useEffect(() => {
       setFocus("email")
    }, [setFocus])
-
-   useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-         if (user) {
-            setCurrnetInfo(user)
-         } else {
-            setCurrnetInfo(false)
-         }
-      })
-   }, [])
-
-   const handleSignOut = () => {
-      signOut(auth)
-   }
 
    return (
       <div>

@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useEffect } from "react"
+import React, { memo, useMemo, useEffect, useLayoutEffect } from "react"
 import BottomPlay from "./layout/Bottom/BottomPlay"
 import Header from "./layout/Header"
 import Siderleft from "./layout/Siderleft"
@@ -8,6 +8,9 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { useDispatch } from "react-redux"
 import { setPlaying } from "./features/SettingPlay/settingPlay"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "./firebase/firebase-config"
+import { setUser } from "./features/User/userFeatures"
 
 function App() {
    const theme = useSelector((state) => state.themetoggle)
@@ -19,6 +22,21 @@ function App() {
    const usersSelcetor = useSelector((state) => state.users)
 
    const dispatch = useDispatch()
+
+   useLayoutEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+         if (!usersSelcetor.activeUser && user) {
+            dispatch(
+               setUser({
+                  displayName: user.displayName,
+                  photoURL: user.photoURL,
+                  email: user.email,
+                  uid: user.uid,
+               })
+            )
+         }
+      })
+   }, [])
 
    useEffect(() => {
       const keyboardShortcuts = (e) => {
@@ -89,7 +107,7 @@ function App() {
       const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
       const lyrics = JSON.parse(localStorage.getItem("d4tmp3_lyrics"))
       const time = JSON.parse(localStorage.getItem("d4tmp3_timeCurrent"))
-      const users = JSON.parse(localStorage.getItem("d4tmp3_users"))
+      const user = JSON.parse(localStorage.getItem("d4tmp3_user"))
 
       if (!queueNowPlay) {
          localStorage.setItem("queue_nowplay", JSON.stringify(queueNowPlaySelector))
@@ -106,9 +124,9 @@ function App() {
       if (!time) {
          localStorage.setItem("d4tmp3_timeCurrent", JSON.stringify(timeSelector))
       }
-      if (!users) {
-         localStorage.setItem("d4tmp3_users", JSON.stringify(usersSelcetor))
-      }
+      // if (!user) {
+      //    localStorage.setItem("d4tmp3_users", JSON.stringify(usersSelcetor))
+      // }
    }, [])
 
    return (

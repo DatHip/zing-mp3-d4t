@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react"
+import React, { memo } from "react"
 import styled from "styled-components"
 import NewReleaseitem from "../NewReleaseitem/NewReleaseitem"
 import usePortal from "react-cool-portal"
@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import useLikeHook from "../../hook/useLikeHook"
 
 const InfoTopStyles = styled.div`
    .read-more {
@@ -119,7 +120,8 @@ const ArtistInfoTop = memo(({ data }) => {
 
    let active = playlistEncodeId === data?.playlistId
 
-   const [care, setCare] = useState(false)
+   const { isLike, handleLike } = useLikeHook(data, 3)
+
    const { Portal, show, hide } = usePortal({ defaultShow: false })
 
    const handleClickBackdrop = (e) => {
@@ -214,12 +216,12 @@ const ArtistInfoTop = memo(({ data }) => {
                      {active && !playing && <span>Phát Nhạc</span>}
                   </button>
                   <button
-                     onClick={() => setCare((value) => !value)}
-                     className={`zm-btn is-outlined ${care ? "" : "active"}  mar-r-15 is-medium is-upper button`}
+                     onClick={handleLike}
+                     className={`zm-btn is-outlined ${isLike ? "" : "active"}  mar-r-15 is-medium is-upper button`}
                      tabIndex="0"
                   >
                      <span>
-                        {care ? "ĐÃ QUAN TÂM" : "QUAN TÂM"} •{" "}
+                        {isLike ? "ĐÃ QUAN TÂM" : "QUAN TÂM"} •{" "}
                         {data?.follow > 10000 ? data?.follow.toString().slice(0, -3) + "K" : data?.follow}
                      </span>
                   </button>

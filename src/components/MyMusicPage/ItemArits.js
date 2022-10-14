@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
+import useLikeHook from "../../hook/useLikeHook"
 
 const ItemAritsStyles = styled.div`
    .main-page_list-item_img {
@@ -92,6 +93,8 @@ const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
+   const { isLike, handleLike } = useLikeHook(data, 3)
+
    return (
       <ItemAritsStyles className={`mvpage-item-arits  ${classGird}`}>
          <div
@@ -157,15 +160,34 @@ const ItemArits = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
                      </span>
                   </div>
                   <div className="item-mvArits-footer mt-[10px]">
-                     <button
-                        className="zm-btn is-outlined mt-[12px] mb-[15px] !flex items-center justify-center  play-btn button"
-                        tabIndex="0"
-                     >
-                        {/* <i className="icon ic-20-Shuffle"></i>
-                        <span>GÓC NHẠC</span> */}
-                        <i className="icon ic-addfriend"></i>
-                        <span>Quan Tâm</span>
-                     </button>
+                     {!isLike && (
+                        <button
+                           onClick={handleLike}
+                           className="zm-btn is-outlined mt-[12px] mb-[15px] !flex items-center justify-center  play-btn button"
+                           tabIndex="0"
+                        >
+                           <i className="icon ic-addfriend"></i>
+                           <span>Quan Tâm</span>
+                        </button>
+                     )}
+
+                     {isLike && (
+                        <button
+                           onClick={async () => {
+                              if (!data.playlistId) return
+
+                              dispatch(setReady(false))
+                              dispatch(setPlay(false))
+                              await dispatch(fetchPlayList(data.playlistId))
+                              dispatch(setPlay(true))
+                           }}
+                           className="zm-btn is-outlined mt-[12px] mb-[15px] !flex items-center justify-center  play-btn button"
+                           tabIndex="0"
+                        >
+                           <i className="icon ic-20-Shuffle"></i>
+                           <span>GÓC NHẠC</span>
+                        </button>
+                     )}
                   </div>
                </>
             )}

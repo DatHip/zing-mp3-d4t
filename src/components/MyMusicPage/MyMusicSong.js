@@ -1,49 +1,38 @@
-import React, { useEffect, useState } from "react"
-import { useGetHomeChart } from "../../api/getHomeChart"
+import React from "react"
+import { useOutletContext } from "react-router"
+import EmptyContent from "../Bottom/EmptyContent"
 import LoadingSvg from "../loading/LoadingSvg"
 import PlayListSelector from "../Selection/PlayListSelector"
 import ItemChartList from "../TopChartPage/ItemChartList"
 
 const MyMusicSong = () => {
-   const [datas, setData] = useState([])
+   const { docs } = useOutletContext()
 
-   const { data, status } = useGetHomeChart()
-   useEffect(() => {
-      if (data) {
-         setData(data.data.RTChart.items.slice(0, 30))
-      }
-   }, [status])
-
-   if (datas.length === 0) return <LoadingSvg></LoadingSvg>
+   if (!docs?.email) return <LoadingSvg></LoadingSvg>
 
    return (
       <div>
-         <PlayListSelector
-            classAdd="mb-[36px]"
-            notRow
-            classAdd2="w-full"
-            isMyPage={
-               <div className="flex items-center justify-center ">
-                  <button className="personal_play-all">
-                     Phát Tất Cả
-                     <span className="material-icons">play_arrow</span>
-                  </button>
-               </div>
-            }
-            title={"Bài Hát"}
-         >
-            <div className="main_topchart mt-2">
-               <div className="container_zing-chart">
-                  <div className="zing-chart_list pt-2">
-                     {datas &&
-                        datas.length > 0 &&
-                        datas.map((e, index) => {
-                           return <ItemChartList onFavourite isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
+         {docs.favouriteSongs.length === 0 && (
+            <EmptyContent
+               icon="favorite-song"
+               text={"Chưa có mục yêu thích trong thư viện"}
+               textBtn={"Khám phá ngay"}
+            ></EmptyContent>
+         )}
+
+         {docs.favouriteSongs.length > 0 && (
+            <PlayListSelector classAdd="mb-[36px]" notRow classAdd2="w-full" title={"Bài Hát"}>
+               <div className="main_topchart mt-2">
+                  <div className="container_zing-chart">
+                     <div className="zing-chart_list pt-2">
+                        {docs.favouriteSongs.map((e, index) => {
+                           return <ItemChartList notAlbum isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
                         })}
+                     </div>
                   </div>
                </div>
-            </div>
-         </PlayListSelector>
+            </PlayListSelector>
+         )}
       </div>
    )
 }

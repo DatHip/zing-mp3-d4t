@@ -13,10 +13,12 @@ import {
    pushSongHistoryPlayListShuffle,
 } from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
+import useLikeHook from "../../hook/useLikeHook"
 
 const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastIndex }) => {
    const dispatch = useDispatch()
    const { playing, isReady, isRandom } = useSelector((state) => state.setting)
+   const { isLike, handleLike } = useLikeHook(data, 2)
 
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
@@ -114,9 +116,9 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
                </div>
             </div>
             <div className="player_queue-item-right">
-               <div className="player_queue-btn player_btn zm-btn">
-                  <i className="icon ic-like"></i>
-                  <span className="playing_title-hover">Thêm vào thư viện </span>
+               <div onClick={handleLike} className="player_queue-btn player_btn zm-btn">
+                  <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
+                  <span className="playing_title-hover"> {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện </span>
                </div>
                <div className="player_queue-btn player_btn zm-btn">
                   <i className="icon ic-more"></i>
@@ -212,9 +214,13 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
                      </div>
                   </div>
                   <div className="player_queue-item-right">
-                     <div className="player_queue-btn player_btn zm-btn">
+                     {/* <div className="player_queue-btn player_btn zm-btn">
                         <i className="icon ic-like"></i>
                         <span className="playing_title-hover">Thêm vào thư viện </span>
+                     </div> */}
+                     <div onClick={handleLike} className="player_queue-btn player_btn zm-btn">
+                        <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
+                        <span className="playing_title-hover"> {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện </span>
                      </div>
                      <div className="player_queue-btn player_btn zm-btn">
                         <i className="icon ic-more"></i>

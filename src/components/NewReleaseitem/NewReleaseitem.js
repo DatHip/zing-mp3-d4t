@@ -13,6 +13,7 @@ import LoadingIcon from "../Icon/LoadingIcon"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import { fetchPlayList, playSongNotAlbum } from "../../features/QueueFeatures/QueueFeatures"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import useLikeHook from "../../hook/useLikeHook"
 
 const NewReleaseItemStyle = styled.div`
    &.active {
@@ -167,6 +168,8 @@ const NewReleaseItemStyle = styled.div`
 const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
+
+   let { isLike, handleLike } = useLikeHook(item, isDisk ? 1 : 2)
 
    const img = item?.thumbnailM?.slice(item?.thumbnailM.lastIndexOf("/"))
    const timeRelease = getConterTimeRelese(item?.releaseDate, item?.isAlbum)
@@ -350,9 +353,9 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
          </div>
          {!isRadio && !isArtist && (
             <div className="player_queue-item-right">
-               <div className="player_queue-btn player_btn zm-btn">
-                  <i className="icon ic-like" />
-                  <span className="playing_title-hover">Thêm vào thư viện </span>
+               <div onClick={handleLike} className="player_queue-btn player_btn zm-btn">
+                  <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
+                  <span className="playing_title-hover"> {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện </span>
                </div>
                <div className="player_queue-btn player_btn zm-btn">
                   <i className="icon ic-more" />

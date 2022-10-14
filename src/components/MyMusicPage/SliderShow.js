@@ -2,7 +2,7 @@ import React, { memo, useEffect } from "react"
 import { useCallback } from "react"
 
 const SliderShow = memo(({ data }) => {
-   const datas = data?.items
+   const datas = data.items || data
 
    let imgIndex = 2
    const slideShow = useCallback(() => {
@@ -25,10 +25,11 @@ const SliderShow = memo(({ data }) => {
    }, [])
 
    useEffect(() => {
+      imgIndex = 2
       const slideImgs = document?.querySelectorAll(".container__slide-item")
       if (!slideImgs) return
       slideShow()
-   }, [])
+   }, [datas])
 
    return (
       <div className="container__slide">

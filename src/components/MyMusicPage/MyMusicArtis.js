@@ -1,29 +1,29 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo } from "react"
 import PlayListSelector from "../Selection/PlayListSelector"
 import LoadingSvg from "../loading/LoadingSvg"
 import ItemArits from "./ItemArits"
-import { useGetHomeChart } from "../../api/getHomeChart"
+
+import { useOutletContext } from "react-router"
+import EmptyContent from "../Bottom/EmptyContent"
 const MyMusicArtis = memo(() => {
-   const [datas, setData] = useState([])
+   const { docs } = useOutletContext()
 
-   const { data, status } = useGetHomeChart()
-   useEffect(() => {
-      if (data) {
-         setData(data.data.RTChart.items.slice(0, 30))
-      }
-   }, [status])
-
-   if (datas.length === 0) return <LoadingSvg></LoadingSvg>
+   if (!docs?.email) return <LoadingSvg></LoadingSvg>
    return (
-      <PlayListSelector all={false} classAdd={"container_radio "} classAdd2={"mb-[10px]"} title={"Nghệ Sĩ"}>
-         {datas &&
-            datas.length > 0 &&
-            datas.map((e, index) => {
-               let classGird = "col l-2-4 m-3 c-5 !mb-[30px]"
+      <>
+         {docs.favouriteArtist.length === 0 && (
+            <EmptyContent icon={"album"} text={"Chưa có mục yêu thích trong thư viện"} textBtn={"Khám phá ngay"}></EmptyContent>
+         )}
+         {docs.favouriteArtist.length > 0 && (
+            <PlayListSelector all={false} classAdd={"container_radio "} classAdd2={"mb-[10px]"} title={"Nghệ Sĩ"}>
+               {docs.favouriteArtist.map((e, index) => {
+                  let classGird = "col l-2-4 m-3 c-5 !mb-[30px]"
 
-               return <ItemArits classGird={classGird} key={e.encodeId} data={e}></ItemArits>
-            })}
-      </PlayListSelector>
+                  return <ItemArits classGird={classGird} key={e.id} data={e}></ItemArits>
+               })}
+            </PlayListSelector>
+         )}
+      </>
    )
 })
 

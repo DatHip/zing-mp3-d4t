@@ -7,8 +7,6 @@ const WantToHearHomePage = () => {
    const [datas, setData] = useState(null)
    const { data, status } = useGetHomePage()
 
-   // const dataSelector = data?.data.items.filter((e) => e.title === "Cuối Tuần Lên Nhạc")
-
    const dataSelector = data?.data?.items[4]
 
    useEffect(() => {

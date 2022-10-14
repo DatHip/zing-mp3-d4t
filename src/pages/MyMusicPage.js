@@ -1,17 +1,31 @@
+import { doc, getDoc } from "firebase/firestore"
 import React from "react"
 import { useEffect } from "react"
+import { useState } from "react"
 import { memo } from "react"
 import { useSelector } from "react-redux"
-import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom"
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
+import { database } from "../firebase/firebase-config"
 
 const MyMusicPage = () => {
    const { pathname: id } = useLocation()
+
    const navigate = useNavigate()
-   const { activeUser, name } = useSelector((state) => state.users)
+   const { activeUser, name, id: ids } = useSelector((state) => state.users)
+   const [docs, setDocs] = useState()
 
    useEffect(() => {
       if (!activeUser) {
          navigate("/auth")
+      }
+   }, [])
+
+   useEffect(() => {
+      if (activeUser) {
+         const docRef = doc(database, "users", ids)
+         getDoc(docRef).then((value) => {
+            setDocs(value.data())
+         })
       }
    }, [])
 
@@ -56,7 +70,7 @@ const MyMusicPage = () => {
             </ul>
          </div>
 
-         <Outlet></Outlet>
+         <Outlet context={{ docs }}></Outlet>
       </div>
    )
 }

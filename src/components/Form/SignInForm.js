@@ -29,16 +29,11 @@ const SignInForm = memo(({ setSign }) => {
       setFocus("email")
    }, [setFocus])
 
-   // useEffect(() => {
-   //    onAuthStateChanged(auth, (user) => {
-   //       console.log(user)
-   //       if (user) {
-   //          // setCurrnetInfo(user)
-   //       } else {
-   //          // setCurrnetInfo(false)
-   //       }
-   //    })
-   // }, [])
+   useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+         console.log(user)
+      })
+   }, [])
 
    const onSubmitLogin = (data) => {
       signInWithEmailAndPassword(auth, data.email, data.password)
@@ -69,6 +64,8 @@ const SignInForm = memo(({ setSign }) => {
             }, 700)
          })
          .catch((error) => {
+            console.log(error)
+
             toast("Đăng Nhập không thành công , Tài Khoản hoặc Mật Khẩu không chính xác", {
                type: "error",
             })

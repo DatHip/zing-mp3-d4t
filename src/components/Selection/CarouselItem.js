@@ -8,6 +8,7 @@ import { setReady } from "../../features/SettingPlay/settingPlay"
 import ActionIcon from "../Icon/ActionIcon"
 import { setPlay } from "../../features/SettingPlay/settingPlay"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import useLikeHook from "../../hook/useLikeHook"
 
 const StyleDiv = styled.div`
    &.active {
@@ -74,8 +75,9 @@ const CarouselItem = memo(
       const navigate = useNavigate()
       const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
       const { playing } = useSelector((state) => state.setting)
-
       let active = playlistEncodeId === encodeId
+
+      const { isLike, handleLike } = useLikeHook(item, 1)
 
       return (
          <StyleDiv className={` ${active ? "active" : ""} ${class1}`} title={sortDescription}>
@@ -92,10 +94,11 @@ const CarouselItem = memo(
                </div>
                {!isHiddenButton && (
                   <div className="recently_list-item_hover text-white">
-                     <div className="recently_btn-hover player_btn like">
-                        <i className="icon ic-like "></i>
-                        <span className="playing_title-hover">Thêm vào thư viện </span>
+                     <div onClick={handleLike} className="recently_btn-hover player_btn like">
+                        <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
+                        <span className="playing_title-hover"> {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện </span>
                      </div>
+
                      <div className="recently_btn-hover recently_btn-hover-play">
                         <span>
                            {active && (

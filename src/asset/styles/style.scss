@@ -4932,3 +4932,16 @@
     font-weight: 500;
   }
 }
+
+.zing-chart_item.main_page-hover {
+  .player_queue-btn {
+    transition: none !important;
+    visibility: hidden;
+  }
+
+  &:hover {
+    .player_queue-btn {
+      visibility: visible !important;
+    }
+  }
+}

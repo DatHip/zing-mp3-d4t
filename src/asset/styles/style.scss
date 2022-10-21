@@ -898,8 +898,7 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: clip;
-    // background-color: var(--queue-player-popup-bg);
-    background-color: var(--layout-bg);
+    // background-color: var(--layout-bg);
 
 
     &::-webkit-scrollbar-track {
@@ -1232,6 +1231,13 @@
 .player_queue-active {
   background-color: var(--purple-primary) !important;
   transition: .2s;
+
+  .player_queue-music {
+        color: var(--white) !important;
+  }
+.player_queue-name {
+  color: hsla(0,0%,100%,.6) !important;
+}
 
   .player_queue-img-hover {
     visibility: unset !important;
@@ -2037,7 +2043,7 @@
             .zing-chart_item-name {
               font-size: 1.4rem;
               font-weight: 500;
-              color: var(--white);
+           
             }
 
             .zing-chart_item-artist {
@@ -4149,6 +4155,10 @@
     height: 100vh !important;
     transition: .2s linear;
 
+  }
+
+  .player_bottom {
+    display: none;
   }
 
   .player_queue {

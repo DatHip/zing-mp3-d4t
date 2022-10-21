@@ -107,7 +107,6 @@ function App() {
       const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
       const lyrics = JSON.parse(localStorage.getItem("d4tmp3_lyrics"))
       const time = JSON.parse(localStorage.getItem("d4tmp3_timeCurrent"))
-      const user = JSON.parse(localStorage.getItem("d4tmp3_user"))
 
       if (!queueNowPlay) {
          localStorage.setItem("queue_nowplay", JSON.stringify(queueNowPlaySelector))
@@ -124,14 +123,14 @@ function App() {
       if (!time) {
          localStorage.setItem("d4tmp3_timeCurrent", JSON.stringify(timeSelector))
       }
-      // if (!user) {
-      //    localStorage.setItem("d4tmp3_users", JSON.stringify(usersSelcetor))
-      // }
    }, [])
 
    return (
       <>
-         <div className="main" style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}>
+         <div
+            className={`main ${queueNowPlaySelector.currentEncodeId ? "" : "hide-bottom"}`}
+            style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}
+         >
             <Header></Header>
             <Siderleft></Siderleft>
             <BottomPlay></BottomPlay>

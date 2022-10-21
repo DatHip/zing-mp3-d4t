@@ -11,6 +11,7 @@ import {
    setDraggItemActiveShuffle,
    setDraggUpdateListShuffle,
    setNextSongShuffle,
+   fetchPlayList,
 } from "../../features/QueueFeatures/QueueFeatures"
 import lodash from "lodash"
 import { v4 as uuidv4 } from "uuid"
@@ -18,6 +19,7 @@ import { v4 as uuidv4 } from "uuid"
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
+import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 
 const reorder = (list, startIndex, endIndex) => {
    const result = Array.from(list)
@@ -142,7 +144,7 @@ const BottomRight = () => {
                </div>
             </div>
             <div className="player_queue-container">
-               {!toggleSilde && (
+               {!toggleSilde && currentEncodeId && (
                   <DragDropContext onDragEnd={onDragEnd}>
                      <Droppable droppableId="droppable">
                         {(provoied, snapshot) => {
@@ -173,7 +175,7 @@ const BottomRight = () => {
                   </DragDropContext>
                )}
 
-               {toggleSilde && (
+               {toggleSilde && currentEncodeId && (
                   <ul className="player_queue-listmusic">
                      {recentSongs &&
                         recentSongs?.length > 0 &&
@@ -189,6 +191,29 @@ const BottomRight = () => {
                               ></ItemRighPlayer>
                            )
                         })}
+                  </ul>
+               )}
+
+               {!currentEncodeId && (
+                  <ul className="player_queue-listmusic">
+                     <div className="empty">
+                        <div className="empty-img" />
+                     </div>
+                     <div className="empty-queue">
+                        <div className="content">Khám phá thêm các bài hát mới của D4T MP3</div>
+                        <button
+                           onClick={async () => {
+                              dispatch(setReady(false))
+                              dispatch(setPlay(false))
+                              await dispatch(fetchPlayList("ZO68OC68"))
+                              dispatch(setPlay(true))
+                           }}
+                           className="empty-queue-btn"
+                        >
+                           <span className="material-symbols-outlined">play_arrow</span>
+                           <span>Phát nhạc mới phát hành</span>
+                        </button>
+                     </div>
                   </ul>
                )}
             </div>

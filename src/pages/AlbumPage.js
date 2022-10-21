@@ -57,7 +57,7 @@ const AlbumPage = () => {
    let indexItem = -1
 
    return (
-      <AlbumPageStyles className="text-white mt-[10px]">
+      <AlbumPageStyles className=" mt-[10px]">
          <div className="playlist-detail-container">
             <div className="clearfix">
                <AlbumPageInfo datas={datas}></AlbumPageInfo>

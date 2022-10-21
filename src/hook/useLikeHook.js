@@ -32,11 +32,13 @@ const useLikeHook = (item, type) => {
             let like = await likeSelector
             if (like) {
                setLike(() => true)
+            } else {
+               setLike(() => false)
             }
          })
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
+   }, [item])
 
    const handleLike = () => {
       if (!activeUser) {

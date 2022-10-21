@@ -95,7 +95,7 @@ const BottomControlllPLayIng = memo(() => {
                loop={isLoop}
                volume={volume}
                muted={muted}
-               url={`http://api.mp3.zing.vn/api/streaming/audio/${currentEncodeId}/320`}
+               url={currentEncodeId ? `http://api.mp3.zing.vn/api/streaming/audio/${currentEncodeId}/320` : ""}
             ></ReactPlayer>
          </div>
          <p className="playing_time-right">{fancyTimeFormat(infoSongCurrent?.duration)}</p>

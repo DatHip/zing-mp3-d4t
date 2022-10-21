@@ -2,10 +2,12 @@ import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { setOpenClass, setOpenMain } from "../../features/openMainFull/openMainFullFeatures"
+import useLikeHook from "../../hook/useLikeHook"
 
 const BottomControlLeft = () => {
    const dispatch = useDispatch()
    const infoSong = useSelector((state) => state.queueNowPlay.infoSongCurrent)
+   const { isLike, handleLike } = useLikeHook(infoSong, 2)
 
    return (
       <div className="player_controls-left">
@@ -55,10 +57,9 @@ const BottomControlLeft = () => {
                </div>
             </div>
             <div className="media_right">
-               <div className="media_right-btn player_btn">
-                  <i className="icon ic-like"></i>
-
-                  <span className="playing_title-hover">Thêm vào thư viện </span>
+               <div onClick={handleLike} className="media_right-btn player_btn">
+                  <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
+                  <span className="playing_title-hover"> {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện </span>
                </div>
                <div className="media_right-btn player_btn">
                   <i className="icon ic-more"></i>

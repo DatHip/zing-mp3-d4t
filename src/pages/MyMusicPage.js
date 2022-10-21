@@ -9,6 +9,7 @@ import { database } from "../firebase/firebase-config"
 
 const MyMusicPage = () => {
    const { pathname: id } = useLocation()
+   const users = useSelector((state) => state.users)
 
    const navigate = useNavigate()
    const { activeUser, name, id: ids } = useSelector((state) => state.users)
@@ -32,9 +33,13 @@ const MyMusicPage = () => {
    return (
       <div className="main_personal text-white">
          <div className="personal_user">
-            <div className="personal_user-img w-[60px] h-[60px]">
+            <div className="personal_user-img w-[60px] h-[60px] shadow-sm border border-dashed ">
                <figure>
-                  <img src="https://avatar.talk.zdn.vn/default" alt="" />
+                  <img
+                     className="object-cover h-[60px]"
+                     src={users.imgUrl ? users.imgUrl : "https://avatar.talk.zdn.vn/default"}
+                     alt=""
+                  />
                </figure>
             </div>
             <h3>{name || "User"}</h3>

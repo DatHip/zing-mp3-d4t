@@ -20,6 +20,16 @@ export const users = createSlice({
          state.activeUser = true
          localStorage.setItem("d4tmp3_user", JSON.stringify(state))
       },
+      updateUser: (state, action) => {
+         state.name = action.payload.displayName
+         localStorage.setItem("d4tmp3_user", JSON.stringify(state))
+      },
+
+      setImgUrl: (state, action) => {
+         state.imgUrl = action.payload.photoURL
+         localStorage.setItem("d4tmp3_user", JSON.stringify(state))
+      },
+
       logOut: (state, action) => {
          state.name = ""
          state.imgUrl = ""
@@ -31,6 +41,6 @@ export const users = createSlice({
    },
 })
 
-export const { setUser, logOut } = users.actions
+export const { setUser, logOut, updateUser, setImgUrl } = users.actions
 
 export default users.reducer

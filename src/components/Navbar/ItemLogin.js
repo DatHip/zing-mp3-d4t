@@ -135,6 +135,7 @@ const LoginPortal = ({ setOpen }) => {
 
 const ItemLogin = ({ isTitle = true, width = 38, height = 38 }) => {
    const [open, setOpen] = useState(false)
+   const users = useSelector((state) => state.users)
 
    return (
       <Tippy
@@ -149,11 +150,14 @@ const ItemLogin = ({ isTitle = true, width = 38, height = 38 }) => {
       >
          <div onClick={() => setOpen((value) => !value)} className="setting_item setting_item-user">
             <div className={`w-[${width}px] h-[${height}px] setting_item-user-img  overflow-hidden rounded-full`}>
-               {/* <img
-                        src="https://s120-ava-talk-zmp3.zmdcdn.me/4/8/a/7/2/120/15dc5dc4244b6e7bef603c69a042f13d.jpg"
-                        alt=""
-                     ></img> */}
-               <img src="https://avatar.talk.zdn.vn/default.jpg" alt=""></img>
+               <figure>
+                  <img
+                     className={`object-cover h-[40px] w-[40px]`}
+                     src={users.imgUrl ? users.imgUrl : "https://avatar.talk.zdn.vn/default"}
+                     alt=""
+                  />
+               </figure>
+               {/* <img src="https://avatar.talk.zdn.vn/default.jpg" alt=""></img> */}
             </div>
             {isTitle && !open && <span className="setting_item-title">Cá Nhân</span>}
          </div>

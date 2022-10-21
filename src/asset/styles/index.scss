@@ -19,13 +19,14 @@ html {
   font-size: 62.5%;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: smooth;
 }
 
 body {
   line-height: 1.5;
   font-size: 1.4rem;
   font-weight: 400;
-  overscroll-behavior: none;
+  overscroll-behavior: smooth;
   overflow: hidden;
 }
 

@@ -43,15 +43,6 @@ const SignUpForm = ({ setSign }) => {
                displayName: data.name,
             })
 
-            setTimeout(() => {
-               reset({
-                  email: "",
-                  password: "",
-                  passwordCheck: "",
-                  name: "",
-               })
-            }, 1000)
-
             await setDoc(doc(database, "users", user.uid), {
                email: data.email,
                password: data.password,
@@ -65,12 +56,21 @@ const SignUpForm = ({ setSign }) => {
 
             dispatch(
                setUser({
-                  displayName: user.displayName,
+                  displayName: data.name,
                   photoURL: user.photoURL,
                   email: user.email,
                   uid: user.uid,
                })
             )
+
+            setTimeout(() => {
+               reset({
+                  email: "",
+                  password: "",
+                  passwordCheck: "",
+                  name: "",
+               })
+            }, 1000)
 
             toast("Đăng ký Thành Công ", {
                type: "success",

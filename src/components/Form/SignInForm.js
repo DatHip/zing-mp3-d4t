@@ -29,11 +29,11 @@ const SignInForm = memo(({ setSign }) => {
       setFocus("email")
    }, [setFocus])
 
-   useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-         console.log(user)
-      })
-   }, [])
+   // useEffect(() => {
+   //    onAuthStateChanged(auth, (user) => {
+   //       console.log(user)
+   //    })
+   // }, [])
 
    const onSubmitLogin = (data) => {
       signInWithEmailAndPassword(auth, data.email, data.password)

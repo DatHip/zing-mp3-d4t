@@ -395,6 +395,11 @@
 
 // Mobile
 @media (max-width: 719px) {
+
+  .player_queue-listmusic {
+    height: calc(100vh - 71px - 116px) !important;
+  }
+
   .sider-navbar {
 
     .sider_vip,
@@ -1445,6 +1450,7 @@
   .player_queue .player_queue-main {
     height: calc(100vh - 114px);
     max-height: calc(100vh - 114px);
+    // overflow: hidden;
   }
 
   .player_queue {

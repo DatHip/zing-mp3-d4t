@@ -896,14 +896,16 @@
     border-radius: inherit;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    
     overflow-x: clip;
     // background-color: var(--layout-bg);
 
+    ul {
 
-    &::-webkit-scrollbar-track {
-      background-color: transparent;
-      cursor: pointer;
+      
+      &::-webkit-scrollbar-track {
+        background-color: transparent;
+        cursor: pointer;
     }
 
     &::-webkit-scrollbar {
@@ -922,6 +924,7 @@
       }
     }
 
+  }
 
     .player_queue-header {
       transition: .5s linear;
@@ -932,7 +935,7 @@
       position: fixed;
       z-index: 2;
       // background-color: var(--queue-player-popup-bg);
-      background-color: var(--layout-bg);
+      // background-color: var(--layout-bg);
 
 
 
@@ -1061,8 +1064,8 @@
 
 .player_queue-listmusic {
   padding: 0 1rem 2rem 1rem;
-
-
+    height: calc(100vh - 71px - 90px);
+    overflow-y: auto;
   & li:first-child {
     .playing_title-hover {
       display: none !important;
@@ -1253,7 +1256,7 @@
 }
 
 .main-page {
-  margin-top: 8rem;
+  margin-top: 7.2rem;
   margin-right: 33rem;
   overflow-y: scroll;
   margin-bottom: 9rem;

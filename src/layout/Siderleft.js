@@ -47,9 +47,6 @@ const Siderleft = () => {
                   }}
                   to="/mymusic/"
                   title="Cá nhân"
-                  // className={({ isActive }) =>
-                  //    isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  // }
                   className={`sider_menu-item sider_menu-item-acitve ${pathMyMusic > 0 ? "sider_active" : ""} `}
                >
                   <div>
@@ -161,13 +158,21 @@ const Siderleft = () => {
                </NavLink>
             </ul>
          </div>
-
-         <div className="sider_vip !pt-0 !pb-0 text-white">
-            <div className="sider_vip-main">
-               <p>Đăng nhập để khám phá playlist dành riêng cho bạn</p>
-               <button>Đăng Nhập</button>
+         {!activeUser && (
+            <div className="sider_vip !pt-0 !pb-0 text-white">
+               <div className="sider_vip-main">
+                  <p>Đăng nhập để khám phá playlist dành riêng cho bạn</p>
+                  <button
+                     onClick={() => {
+                        navigate("/auth")
+                     }}
+                  >
+                     Đăng Nhập
+                  </button>
+               </div>
             </div>
-         </div>
+         )}
+         {activeUser && <div className="sider_divide" />}
 
          <NavLink
             to="history/playlist"

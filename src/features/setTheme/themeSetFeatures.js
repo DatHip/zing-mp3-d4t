@@ -1,18 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 let initialState = JSON.parse(localStorage.getItem("data-theme")) || {
-   name: "XONE",
-   itemS: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/xone-thumbn.jpg",
-   dataTheme: "dark",
-   bgImg: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme-background/xone-bg.jpg",
-   bgPlaying: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1//images/theme/xone-miniplayer.jpg",
-   bgHeader: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1//images/theme/xone-header.jpg",
+   name: "Zing Music Awards",
+   itemS: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/zma.jpg",
+   dataTheme: "blue",
+   bgImg: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme-background/zma.svg",
+   bgPlaying: "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme-player/zma.png",
+   bgHeader: false,
    dataStyle: [
-      "--purple-primary: #d7cb1f",
-      "--progressbar-active-bg: #d7cb1f",
-      "--link-text-hover: #d7cb1f",
-      "--miniplayer-bg-img: url('https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/xone-miniplayer.jpg')",
-      "--header-bg-img: url('https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/xone-header.jpg')",
+      "--layout-bg: #37075d",
+      "--primary-bg: #6a39af",
+      "--queue-player-popup-bg: #5d218c",
+      "--purple-primary: #ed2b91",
+      "--link-text-hover: #fe63da",
+      "--sidebar-popup-bg: #572f90",
+      "--linear-gradient-bg: linear-gradient(to bottom, #740091, #2d1a4c)",
+      "--miniplayer-bg-img: url('https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme-player/zma.png')",
    ],
 }
 

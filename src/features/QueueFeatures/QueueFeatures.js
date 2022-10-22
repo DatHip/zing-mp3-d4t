@@ -39,6 +39,21 @@ export const queueNowPlay = createSlice({
          state.listSongShuffle = []
          localStorage.setItem("queue_nowplay", JSON.stringify(state))
       },
+      removeList: (state) => {
+         state.currentEncodeId = ""
+         state.playlistEncodeId = ""
+         state.listSong = []
+         state.listSongShuffle = []
+         state.infoCurrenAlbum = {}
+         state.currentIndexSong = 0
+         state.infoSongCurrent = {}
+         state.infoSongNext = {}
+         state.duration = 0
+         state.currentTime = 0
+         state.infoCurrentMv = {}
+         state.loading = false
+         localStorage.setItem("queue_nowplay", JSON.stringify(state))
+      },
       playSongNotAlbumById: (state, action) => {
          state.infoCurrenAlbum = []
          state.listSong = [action.payload]
@@ -221,6 +236,7 @@ export const {
    pushSongHistoryPlayListShuffle,
    playSongNotAlbum,
    playSongNotAlbumById,
+   removeList,
 } = queueNowPlay.actions
 
 export default queueNowPlay.reducer

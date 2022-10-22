@@ -157,7 +157,6 @@ const ItemLogin = ({ isTitle = true, width = 38, height = 38 }) => {
                      alt=""
                   />
                </figure>
-               {/* <img src="https://avatar.talk.zdn.vn/default.jpg" alt=""></img> */}
             </div>
             {isTitle && !open && <span className="setting_item-title">Cá Nhân</span>}
          </div>

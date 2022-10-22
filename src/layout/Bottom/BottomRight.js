@@ -14,12 +14,13 @@ import {
    fetchPlayList,
 } from "../../features/QueueFeatures/QueueFeatures"
 import lodash from "lodash"
-import { v4 as uuidv4 } from "uuid"
 
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
+import RemoveList from "../../components/ClockAndRemove/RemoveList"
+import CloclAlarm from "../../components/ClockAndRemove/CloclAlarm"
 
 const reorder = (list, startIndex, endIndex) => {
    const result = Array.from(list)
@@ -133,17 +134,11 @@ const BottomRight = () => {
                   </div>
                </div>
                <div className="queue_list-btn">
-                  <div className="player_btn queue_time">
-                     <span className="material-icons-outlined"> alarm </span>
-                     <div className="playing_title-hover">Hẹn giờ</div>
-                  </div>
-                  <div className="player_btn queue_more">
-                     <span className="material-icons-outlined"> more_horiz </span>
-                     <div className="playing_title-hover">Khác</div>
-                  </div>
+                  <CloclAlarm></CloclAlarm>
+                  <RemoveList></RemoveList>
                </div>
             </div>
-            <div className="player_queue-container">
+            <div className="player_queue-container  ">
                {!toggleSilde && currentEncodeId && (
                   <DragDropContext onDragEnd={onDragEnd}>
                      <Droppable droppableId="droppable">

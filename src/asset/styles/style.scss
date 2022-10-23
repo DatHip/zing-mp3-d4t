@@ -4970,3 +4970,8 @@
   width: 1px;
   white-space: nowrap;
 }
+
+.player_btn.queue_time.active {
+      background-color: var(--purple-primary) !important;
+    color: #fff !important;
+}

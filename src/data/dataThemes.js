@@ -77,7 +77,7 @@ export const themes = [
             bgHeader: false,
             dataStyle: [
                "--layout-bg: #37075d",
-               "--primary-bg: #6a39af",
+               "--primary-bg: #4B1178",
                "--queue-player-popup-bg: #5d218c",
                "--purple-primary: #ed2b91",
                "--link-text-hover: #fe63da",

@@ -396,6 +396,10 @@
 // Mobile
 @media (max-width: 719px) {
 
+.container {
+  margin-bottom : 50px; 
+}
+
   .player_queue-listmusic {
     height: calc(100vh - 71px - 116px) !important;
   }
@@ -1462,7 +1466,7 @@
   }
 
   .playing-bar {
-    bottom: 55px;
+    bottom: 53.5px;
 
 
     .playing-bar-main {

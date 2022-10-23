@@ -116,7 +116,7 @@ const ArtistInfoTop = memo(({ data }) => {
    const dispatch = useDispatch()
    const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
    const loading = useSelector((state) => state.queueNowPlay.loading)
-   const { playing } = useSelector((state) => state.setting)
+   const playing = useSelector((state) => state.setting.playing)
 
    let active = playlistEncodeId === data?.playlistId
 

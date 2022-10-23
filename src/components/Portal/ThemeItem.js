@@ -29,7 +29,7 @@ const Items = memo(({ item }) => {
                      <div>
                         <button
                            onClick={() => handleClickApply()}
-                           className="zm-btn active is-small is-outlined is-upper button hover:brightness-90"
+                           className="zm-btn active is-small is-outlined is-upper button hover:brightness-90 "
                            tabIndex={0}
                         >
                            Áp dụng

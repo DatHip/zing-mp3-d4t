@@ -125,8 +125,25 @@ function App() {
       }
    }, [])
 
+   useEffect(() => {
+      window.addEventListener("load", () => {
+         document.querySelector(".loadings")?.remove()
+      })
+   }, [])
+
    return (
       <>
+         <div className="loadings">
+            <div className="loader">
+               <div className="bar1"></div>
+               <div className="bar2"></div>
+               <div className="bar3"></div>
+               <div className="bar4"></div>
+               <div className="bar5"></div>
+               <div className="bar6"></div>
+            </div>
+         </div>
+
          <div
             className={`main ${queueNowPlaySelector.currentEncodeId ? "" : "hide-bottom"}`}
             style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}

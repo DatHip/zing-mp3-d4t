@@ -98,7 +98,14 @@ const LoginPortal = ({ setOpen }) => {
             </li>
             <li className="header-player-setting">
                {activeUser && (
-                  <button onClick={() => {}} className="w-full zm-btn button cursor-pointer" tabIndex={0}>
+                  <button
+                     onClick={() => {
+                        navigate("/mymusic/info")
+                        setOpen(false)
+                     }}
+                     className="w-full zm-btn button cursor-pointer"
+                     tabIndex={0}
+                  >
                      <i className="icon ic-24-Privacy"></i>
                      <span>Thông tin tài khoản</span>
                   </button>

@@ -2,7 +2,7 @@ import React from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { EffectFade, Navigation, Pagination, Autoplay } from "swiper"
 import { imgBgViewFull } from "../../data/dataBgImgFull"
-import { v4 as uuidv4 } from "uuid"
+
 // Import Swiper styles
 import "swiper/css"
 import "swiper/css/effect-fade"

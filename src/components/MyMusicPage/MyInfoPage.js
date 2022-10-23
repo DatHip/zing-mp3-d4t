@@ -1,22 +1,18 @@
-import React, { memo, useEffect } from "react"
+import React, { memo, useEffect, useState } from "react"
+import * as yup from "yup"
+import { useForm } from "react-hook-form"
+import { toast } from "react-toastify"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useDispatch, useSelector } from "react-redux"
 import ImageUpload from "../Form/ImageUpload"
 import PlayListSelector from "../Selection/PlayListSelector"
-import { useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import { toast } from "react-toastify"
-import { onAuthStateChanged, updateProfile } from "firebase/auth"
+import { updateProfile } from "firebase/auth"
 import { auth, database } from "../../firebase/firebase-config"
-import { useOutletContext } from "react-router"
-import LoadingSvg from "../loading/LoadingSvg"
 import styled from "styled-components"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage"
-
-import { useDispatch, useSelector } from "react-redux"
-import { setImgUrl, setUser, updateUser } from "../../features/User/userFeatures"
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
-import { getAuth, updatePassword } from "firebase/auth"
-import { useState } from "react"
+import { setImgUrl, updateUser } from "../../features/User/userFeatures"
+import { doc, getDoc, updateDoc } from "firebase/firestore"
+import { updatePassword } from "firebase/auth"
 
 const UpdateProfileStyled = styled.div`
    max-width: 500px;
@@ -73,10 +69,14 @@ const schema2 = yup.object({
 })
 
 const MyInfoPage = memo(() => {
-   const [nameImg, setNameImg] = useState("")
-   const [image, setImage] = useState("")
    const dispatch = useDispatch()
    const users = useSelector((state) => state.users)
+   const storage = getStorage()
+
+   const [nameImg, setNameImg] = useState("")
+   const [image, setImage] = useState("")
+   const [changePasswordPage, setChangePasswordPage] = useState(false)
+
    const {
       register,
       handleSubmit,
@@ -84,14 +84,13 @@ const MyInfoPage = memo(() => {
       setValue,
       formState: { errors, isValid, isSubmitting },
    } = useForm({ resolver: yupResolver(schema), mode: "onChange" })
-   const [changePasswordPage, setChangePasswordPage] = useState(false)
+
    const {
       register: register2,
       handleSubmit: handleSubmit2,
       reset: reset2,
       formState: { errors: error2, isValid: isValid2, isSubmitting: isSubmitting2 },
    } = useForm({ resolver: yupResolver(schema2), mode: "onChange" })
-   const storage = getStorage()
 
    useEffect(() => {
       if (!users?.email) return
@@ -112,8 +111,6 @@ const MyInfoPage = memo(() => {
    }, [])
 
    const onUpdateProfile = async (data) => {
-      console.log(data)
-
       if (!isValid) return
 
       if (data.fileImg) {
@@ -183,7 +180,6 @@ const MyInfoPage = memo(() => {
    }
 
    const onChangePasswords = async (data) => {
-      console.log(data)
       const docRef = doc(database, "users", users.id)
       const docSnap = await getDoc(docRef)
 

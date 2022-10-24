@@ -1,46 +1,133 @@
-# Getting Started with Create React App and Redux
+# Xin Chào, Tôi là Tiến Đạt 👋
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+## Chào Mừng tới dự án web nghe nhạc của tôi 👏
 
-## Available Scripts
+### Được sủ dụng những công nghệ 🧑‍🔧:
 
-In the project directory, you can run:
+<img align="left" alt="Visual Studio Code" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" style="padding-right:10px;" />
 
-### `npm start`
+<img align="left" alt="HTML5" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="padding-right:10px;" />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<img align="left" alt="CSS3" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" style="padding-right:10px;" />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<img align="left" alt="Sass" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" style="padding-right:10px;" />
 
-### `npm test`
+<img align="left" alt="JavaScript" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" style="padding-right:10px;" />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**ChartJs** **SlickJs**
 
-### `npm run build`
+<br />
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Giao Diện :
 
-### `npm run eject`
+-  Giao diện được lấy ý tưởng từ web Zingmp3
+-  Đa số data được gọi từ Api
+-  Nguồn tham khảo https://www.npmjs.com/package/zingmp3-api-full
+-  Nguồn dữ liệu api được thu nhập trên các mxh:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   Song :
+   https://dathuynhmusictest.vercel.app/api/song?id=ZO98F9W6
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   Playlist :
+   https://dathuynhmusictest.vercel.app/api/playlist?id=ZWZB969E
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   Home :
+   https://dathuynhmusictest.vercel.app/api/home?page=1
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   Top 100 :
+   https://mp3.zing.vn/xhr/chart-realtime?songId=0&videoId=0&albumId=0&chart=song&time=-1
 
-## Learn More
+   Lyric :
+   https://dathuynhmusictest.vercel.app/api/lyric?id=ZOACFBBU
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   List MV :
+   https://dathuynhmusictest.vercel.app/api/listMV?id=IWZ9Z08I&page=1&count=15
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br />
+
+---
+
+<br />
+
+## Chức Năng Chính 🦾 :
+
+      -  Play / Pause
+      -  Next / Prev
+      -  Next bài ngẫu nhiên
+      -  Lặp lại bài hát
+      -  Khi bài hát kết thúc tự động next bài tiếp theo
+      -  Click nhạc được chọn
+      -  Click thanh progress tua nhạc
+      -  Click và kéo On / Off Volume
+      -  Xem Lời Bản Nhạc, Active thời gian thực
+      -  Trình phát nhạc tập trung (không gian fullscreen)
+
+<br />
+
+---
+
+## Hướng dẫn sử dụng :
+
+-  Nghe Nhạc:
+
+   -  Click vào nút play khi hover vào 1 list nhạc sẽ xuất ra danh sách nhạc bên tab Danh sách phát (bên phải)
+
+      <img src="./img/logo/demo1.PNG">
+
+   -  Bài hát đầu tiên của list sẽ được play()
+   -  Tại tab Danh sách phát bạn có thể hover vào item vào click btn Play để chay bản nhạc đó
+   -  Đến trình phát nhạc tập trung hover vào ảnh thanh bottom và click
+   -   <img src="./img/logo/demo2.PNG">
+      <br />
+
+   *  Danh sách các phím tắt
+      -  next: Mũi tên phải ->
+      -  prev : Mũi tên trái <-
+      -  pause / play : Space
+      -  Bật / Tắt phát ngẫu nhiên : j
+      -  Bật / Tắt lặp lại : l
+   *  Lưu ý:
+      -  Những bài có Vip sẽ ko lấy dữ liệu và phát nhạc được
+      -  Thanh Header, Tab Cá Nhân, Mv Đang trong thời gian phát triên nên chưa có chức năng
+      -  Bạn thông cảm nhé!
+
+<br />
+
+---
+
+<br />
+
+## Những sai sót trong quá trình triển khai dự án
+
+-  Không triển khai trình tự cho các chức năng dẫn đến mất nhiều thời gian fix bug
+-  Sử dụng bem & đặt class chưa tốt
+-  Chưa add loading khi lấy api nên web khá thô và nặng
+-  Clear code ko tốt
+
+<br />
+
+---
+
+<br />
+
+## Những chức năng sẽ có sắp tới
+
+-  Yêu thích bài hát và list nhạc
+-  Lưu lịch sử bài hát được nghe và list nhạc
+-  Xem MV
+-  Đăng nhập, đăng ký
+-  Thay đổi nền
+-  Search nhạc, Nghệ sĩ
+-  Add loading khi gọi api
+
+<br />
+
+---
+
+## Cảm ơn đã đọc. rất mong nhận được sự góp ý của bạn.
+
+### Liên hệ với tôi: **huynhtiiendat99@gmail.com**

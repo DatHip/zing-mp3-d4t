@@ -54,7 +54,7 @@ const AlbumPageInfo = memo(({ datas }) => {
                   <img src={datas?.thumbnailM} alt="" />
                </div>
 
-               <div className="recently_list-item_hover text-white">
+               <div className="recently_list-item_hover ">
                   <div className="recently_btn-hover recently_btn-hover-play btn-album_page">
                      <span>
                         {activeAlbum && (

@@ -13,8 +13,8 @@ const ArtistMv = () => {
 
    return (
       <div className="main_mv main-page-item active">
-         <div className="main_mv-container text-white">
-            <PlayListSelector classAdd2={"container_top100-list text-white"} key={uuidv4()} title={dataSelector?.title}>
+         <div className="main_mv-container ">
+            <PlayListSelector classAdd2={"container_top100-list "} key={uuidv4()} title={dataSelector?.title}>
                {dataSelector &&
                   dataSelector?.items?.length > 0 &&
                   dataSelector?.items?.map((e, index) => {

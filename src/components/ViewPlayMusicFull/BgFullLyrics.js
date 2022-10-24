@@ -1,6 +1,5 @@
 import React, { memo } from "react"
 import { useSelector } from "react-redux"
-import { v4 as uuidv4 } from "uuid"
 import LoadingSvg from "../loading/LoadingSvg"
 import ItemLyric from "./ItemLyric"
 const BgFullLyrics = memo(() => {
@@ -30,7 +29,7 @@ const BgFullLyrics = memo(() => {
             </div>
          </div>
          <div className="col l-7 m-12 c-12">
-            <div className="nowplaying-body_lyrics-item lyrics text-white">
+            <div className="nowplaying-body_lyrics-item lyrics ">
                <ul className={`scroll-content ${isTextSize}`}>
                   {isLoading && (
                      <li className="item ">

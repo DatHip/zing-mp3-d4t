@@ -64,19 +64,6 @@ const BottomRight = () => {
       }
    }, [isRandom, playlistEncodeId])
 
-   useLayoutEffect(() => {
-      let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
-      if (!node) return
-
-      setTimeout(() => {
-         scrollIntoView(node, {
-            block: "center",
-            behavior: "smooth",
-            scrollMode: "if-needed",
-         })
-      }, 200)
-   }, [currentEncodeId, isRandom, playlistEncodeId, toggleSilde])
-
    useEffect(() => {
       let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
       if (!node) return
@@ -88,7 +75,7 @@ const BottomRight = () => {
             scrollMode: "if-needed",
          })
       }, 200)
-   }, [])
+   }, [currentEncodeId, isRandom, playlistEncodeId, toggleSilde])
 
    const onDragEnd = useCallback(
       (result) => {

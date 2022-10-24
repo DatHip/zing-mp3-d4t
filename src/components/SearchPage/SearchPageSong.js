@@ -15,7 +15,6 @@ const SearchPageSong = () => {
    const fetchData = async () => {
       const data = await axios.get(tmdAPI.getSearchByType(id, "song"))
       setData(data.data.data)
-      console.log(data.data.data)
    }
 
    useEffect(() => {

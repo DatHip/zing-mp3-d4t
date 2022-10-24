@@ -20,7 +20,7 @@ const ItemSong = memo(({ data, index }) => {
             <div className="want_list-item-link main-page_list-item_img">
                <img src={data?.thumbnailM || data?.thumbnail} alt={data?.title} />
             </div>
-            <div className="recently_list-item_hover text-white">
+            <div className="recently_list-item_hover ">
                <div className="recently_btn-hover player_btn like">
                   <i className="icon ic-like "></i>
                   <span className="playing_title-hover">Thêm vào thư viện </span>
@@ -64,7 +64,7 @@ const ItemSong = memo(({ data, index }) => {
                   )}
                </div>
                <div className="recently_btn-hover player_btn">
-                  <span className="material-icons-outlined text-white"> more_horiz </span>
+                  <span className="material-icons-outlined "> more_horiz </span>
                   <span className="playing_title-hover">Xem thêm</span>
                </div>
             </div>

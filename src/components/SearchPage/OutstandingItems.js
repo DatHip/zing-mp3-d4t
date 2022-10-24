@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 import { fetchPlayList, playSongNotAlbum, playSongNotAlbumById } from "../../features/QueueFeatures/QueueFeatures"
@@ -120,7 +120,7 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch, setOpen }) => 
                         </div>
 
                         {data?.type !== 4 && (
-                           <div className="recently_list-item_hover text-white">
+                           <div className="recently_list-item_hover ">
                               <div className="recently_btn-hover recently_btn-hover-play">
                                  <span>
                                     <i className="icon ic-play"></i>
@@ -251,7 +251,7 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch, setOpen }) => 
                         <img src={data?.thumbnail || data?.avatar || data?.thumb} alt="" />
                      </div>
 
-                     <div className="recently_list-item_hover text-white">
+                     <div className="recently_list-item_hover ">
                         <div className="recently_btn-hover recently_btn-hover-play">
                            <span>
                               <i className="icon action-play ic-24-Shuffle"></i>
@@ -271,7 +271,7 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch, setOpen }) => 
                         <img src={data?.thumbnail || data?.avatar || data?.thumb} alt="" />
                      </div>
 
-                     <div className="recently_list-item_hover text-white">
+                     <div className="recently_list-item_hover ">
                         <div className="recently_btn-hover recently_btn-hover-play">
                            <span>
                               <i className="icon ic-play"></i>
@@ -290,7 +290,7 @@ const OutstandingItems = memo(({ data, classGrid, type, isSearch, setOpen }) => 
                         <img src={data?.thumbnail || data?.avatar || data?.thumb} alt="" />
                      </div>
 
-                     <div className="recently_list-item_hover text-white">
+                     <div className="recently_list-item_hover ">
                         <div className="recently_btn-hover recently_btn-hover-play">
                            <span>
                               <i className="icon ic-play"></i>

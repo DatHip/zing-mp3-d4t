@@ -25,14 +25,6 @@ const NewMusicPage = () => {
       <div className="main_topchart songnew">
          <div className="container_zing-chart">
             <div className="zing-chart_top">
-               {/* <div className="zing-chart_top-item">
-                  <a href="#">
-                     Nhạc Mới
-                     <span className="material-icons-round" encodeid="ZDB6EB9C">
-                        play_circle
-                     </span>
-                  </a>
-               </div> */}
                <div className="cursor-pointer zing-chartBtn">
                   <p className="">Mới Phát Hành</p>
                   <span
@@ -50,7 +42,7 @@ const NewMusicPage = () => {
                </div>
             </div>
             <div className="zing-chart_bottom">
-               <div className="zing-chart_list text-white">
+               <div className="zing-chart_list ">
                   {datas &&
                      datas.length > 0 &&
                      datas.map((e, index) => {

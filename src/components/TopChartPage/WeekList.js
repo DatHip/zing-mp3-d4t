@@ -11,7 +11,7 @@ const WeekList = memo(({ data }) => {
    const dispatch = useDispatch()
 
    return (
-      <div className="main_topchart-week text-white">
+      <div className="main_topchart-week ">
          <h3>Bảng Xếp Hạng Tuần</h3>
          <div className="main_topchart-week3 row">
             <div className="col l-4 m-12 c-12">

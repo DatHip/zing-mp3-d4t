@@ -78,7 +78,7 @@ const VideoPopUp = () => {
                   />
 
                   <div className="blur-bg"></div>
-                  <div className="video-container pt-3 text-white">
+                  <div className="video-container pt-3 ">
                      <div className=" w-[95vw] mx-auto">
                         <div className="video_header flex items-center justify-between w-full">
                            <div className="video_header-favourite flex items-center gap-[16px]">
@@ -177,7 +177,7 @@ const VideoPopUp = () => {
                      <div className="video-recommend">
                         <div className="video-footer ">
                            <div className="main_mv main-page-item active">
-                              <div className="main_mv-container text-white">
+                              <div className="main_mv-container ">
                                  {datas?.artists?.map((e, index) => {
                                     return <MvDataList key={index} item={e}></MvDataList>
                                  })}

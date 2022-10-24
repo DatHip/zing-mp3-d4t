@@ -35,10 +35,10 @@ const VideoPlayItems = memo(({ classGird, data }) => {
                      <LazyLoadImage src={data.thumbnailM} alt={""} />
                   </div>
 
-                  <div className="recently_list-item_hover text-white">
+                  <div className="recently_list-item_hover ">
                      <div className="recently_btn-hover recently_btn-hover-play">
                         <span>
-                           <i className="icon action-play ic-play text-white !mr-0"></i>
+                           <i className="icon action-play ic-play  !mr-0"></i>
                         </span>
                      </div>
                   </div>

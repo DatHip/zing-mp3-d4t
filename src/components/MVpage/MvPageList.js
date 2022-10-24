@@ -58,10 +58,10 @@ const MvPageList = () => {
    if (datas.length === 0) return <LoadingSvg></LoadingSvg>
 
    return (
-      <div className="text-white">
+      <div className="">
          <DropDownMv></DropDownMv>
 
-         <div className="container_top100-list row  text-white  transition-all">
+         <div className="container_top100-list row    transition-all">
             {datas?.map((e) => (
                <MvItem key={uuidv4()} data={e}></MvItem>
             ))}

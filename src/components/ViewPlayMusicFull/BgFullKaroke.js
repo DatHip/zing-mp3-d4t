@@ -201,7 +201,7 @@ const BgFullKaroke = memo(() => {
    }
 
    return (
-      <div className="nowplaying-body_item nowplaying-body_karaoke text-white">
+      <div className="nowplaying-body_item nowplaying-body_karaoke ">
          <ul className={`scroll-content ${isTextSize} inline-flex  flex-col`}>
             {!loading && state && state.length > 0 && (
                <>

@@ -34,7 +34,7 @@ const HistoryPage = () => {
                </NavLink>
             </nav>
          </div>
-         <div className="main_mv-container text-white">
+         <div className="main_mv-container ">
             <Outlet></Outlet>
          </div>
       </div>

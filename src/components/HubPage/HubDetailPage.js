@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useParams } from "react-router"
 import styled from "styled-components"
-import { GetHubDetail } from "../../api/GetHubDetail"
 import { v4 as uuidv4 } from "uuid"
 import LoadingSvg from "../loading/LoadingSvg"
 import PlayListSelector from "../Selection/PlayListSelector"
@@ -152,7 +151,7 @@ const HubDetailPage = () => {
                   }
                   if (e.sectionType === "video") {
                      return (
-                        <PlayListSelector classAdd="artist-mv text-white" key={uuidv4()} title={e.title}>
+                        <PlayListSelector classAdd="artist-mv " key={uuidv4()} title={e.title}>
                            {e?.items?.map((item, index) => {
                               if (index > 2) return
 

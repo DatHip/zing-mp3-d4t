@@ -208,7 +208,7 @@ const PortalMVpage = ({ Portal, hide, data }) => {
       <Portal>
          <PortalStyle>
             <div className="zm-portal-modal theme-modal-overlay" id="theme-overlay" onClick={handleClickBackdrop}>
-               <div className="modal theme-modal is-active overflow-hidden text-white">
+               <div className="modal theme-modal is-active overflow-hidden ">
                   <div className="modal-content  h-[80vh]">
                      <button onClick={() => hide()} id="btn-close-feed" className="zm-btn close-feed-modal button" tabIndex="0">
                         <i className="icon ic-svg-close-white"></i>

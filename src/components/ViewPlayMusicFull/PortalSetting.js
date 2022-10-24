@@ -23,7 +23,7 @@ const PortalSetting = () => {
          </li>
          <li>
             <p>Cỡ chữ lời nhạc</p>
-            <div className={`list text-white `}>
+            <div className={`list  `}>
                <button
                   onClick={() => onClickTextSize(1)}
                   className={`nowplaying-header_setting-item-font-text ${textSize === 1 ? "active" : ""}`}

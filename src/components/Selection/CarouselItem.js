@@ -93,7 +93,7 @@ const CarouselItem = memo(
                   <img src={thumbnailM || item.thumbnail} alt={title} />
                </div>
                {!isHiddenButton && (
-                  <div className="recently_list-item_hover text-white">
+                  <div className="recently_list-item_hover ">
                      <div onClick={handleLike} className="recently_btn-hover player_btn like">
                         <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
                         <span className="playing_title-hover"> {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện </span>
@@ -139,7 +139,7 @@ const CarouselItem = memo(
                         </span>
                      </div>
                      <div className="recently_btn-hover player_btn">
-                        <span className="material-icons-outlined text-white"> more_horiz </span>
+                        <span className="material-icons-outlined "> more_horiz </span>
                         <span className="playing_title-hover">Xem thêm</span>
                      </div>
                   </div>

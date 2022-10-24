@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useGetHomePage } from "../../api/getHomePage"
 import CharHomeItem from "../Selection/CharHomeItem"
 import { useDispatch, useSelector } from "react-redux"
@@ -14,16 +14,14 @@ const ChartHomePage = memo(() => {
    const [datas, setData] = useState(null)
    const { data, status } = useGetHomePage()
    const dataSelector = data?.data.items.find((e) => e.sectionType === "RTChart")
-   const navigate = useNavigate()
 
    const dispatch = useDispatch()
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-   const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
+
    const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
 
-   const { playing, isReady, isRandom } = useSelector((state) => state.setting)
+   const isRandom = useSelector((state) => state.setting.isRandom)
 
    useLayoutEffect(() => {
       if (data) {

@@ -1,6 +1,4 @@
-import { indexOf } from "lodash"
-import React, { useEffect, useMemo, useRef } from "react"
-import { useState } from "react"
+import React, { useEffect, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import { setOpenClass, setOpenMain } from "../../features/openMainFull/openMainFullFeatures"

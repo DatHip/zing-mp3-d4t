@@ -37,7 +37,7 @@ const HubPage = () => {
    let linkPara = linkVip.slice(first + 1, last)
 
    return (
-      <HubStyles className="text-white transition-all">
+      <HubStyles className=" transition-all">
          <div>
             <figure
                onClick={() => {

@@ -28,8 +28,8 @@ const SearchPageMv = () => {
 
    return (
       <div className="main_mv main-page-item active">
-         <div className="main_mv-container text-white">
-            <PlayListSelector classAdd2={"container_top100-list text-white"} title={"MV"}>
+         <div className="main_mv-container ">
+            <PlayListSelector classAdd2={"container_top100-list "} title={"MV"}>
                {datas &&
                   datas?.items?.length > 0 &&
                   datas?.items?.map((e, index) => {

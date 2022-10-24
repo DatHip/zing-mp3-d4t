@@ -6,7 +6,7 @@ const HistoryVideo = memo(() => {
    const recentMvs = useSelector((state) => state.logged.recentMvs)
 
    return (
-      <div className="container_top100-list row  text-white  transition-all">
+      <div className="container_top100-list row    transition-all">
          {recentMvs && recentMvs.length > 0 && recentMvs?.map((e, index) => <MvItem key={index} data={e}></MvItem>)}
 
          {recentMvs && recentMvs.length === 0 && (

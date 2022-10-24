@@ -15,7 +15,6 @@ const Items = memo(({ item }) => {
 
    const img = itemS.slice(itemS.lastIndexOf("/"))
    return (
-      // <div className="column mb-[20px] is-fullhd-2 is-widescreen-2 is-desktop-20 is-touch-3 is-tablet-4 c-12">
       <div className="column mb-[20px] is-fullhd-2 is-widescreen-2 is-desktop-20 is-touch-3 is-tablet-4 mobile-12">
          <div className="zm-card zm-card-theme">
             <div className="zm-card-image theme-image">

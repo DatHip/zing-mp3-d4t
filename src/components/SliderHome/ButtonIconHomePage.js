@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 const ButtonIconHomePage = () => {
    return (
-      <div className="container_btn-icon-c text-white">
+      <div className="container_btn-icon-c ">
          <div className="sider_menu-list row">
             <div id="btnNhacMoiC" title="Nhạc mới" className="sider_menu-item col c-2-4">
                <Link to={"moi-phat-hanh"}>

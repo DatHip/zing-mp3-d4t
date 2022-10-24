@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useNavigate, useParams } from "react-router-dom"
 import Tippy from "@tippyjs/react"

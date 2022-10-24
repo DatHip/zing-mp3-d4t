@@ -1,10 +1,9 @@
 import axios from "axios"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import { tmdAPI } from "../../config"
 import PlayListSelector from "../Selection/PlayListSelector"
 import MvItem from "./MvItem"
 import { v4 as uuidv4 } from "uuid"
-import LoadingSvg from "../loading/LoadingSvg"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
 
@@ -24,7 +23,7 @@ const MvDataList = memo(({ item }) => {
    if (datas.length === 0) return
 
    return (
-      <PlayListSelector classAdd2={"container_top100-list text-white"} key={uuidv4()} title={`MV Của ${item.name} `}>
+      <PlayListSelector classAdd2={"container_top100-list "} key={uuidv4()} title={`MV Của ${item.name} `}>
          {datas?.slice(0, 8).map((e) => {
             return <MvItem isMvFull key={uuidv4()} data={e}></MvItem>
          })}

@@ -59,7 +59,7 @@ const ArtistPage = () => {
    if (datas?.length === 0) return <LoadingSvg></LoadingSvg>
 
    return (
-      <ArtistPageStyles className="text-white mt-5 ">
+      <ArtistPageStyles className=" mt-5 ">
          <ArtistInfoTop data={datas}></ArtistInfoTop>
 
          <div className="flex items-center min-h-[52px] mb-[30px]">

@@ -89,7 +89,7 @@ const ViewPlayMusicMain = () => {
                      <div className="logo">
                         <img src="/pabicon.webp" alt="" />
                      </div>
-                     <div className="info-text !text-white">
+                     <div className="info-text !">
                         <p>Từ PlayLits</p>
                         <p id="titleList">{infoCurrenAlbum.title}</p>
                      </div>

@@ -1,8 +1,7 @@
-import React, { memo, useEffect, useRef, useState } from "react"
+import React, { memo, useRef } from "react"
 import { useSelector } from "react-redux"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Lazy } from "swiper"
-import { v4 as uuidv4 } from "uuid"
 import ItemSong from "./itemSong"
 import { useLayoutEffect } from "react"
 

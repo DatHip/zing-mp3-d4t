@@ -159,7 +159,7 @@ const Siderleft = () => {
             </ul>
          </div>
          {!activeUser && (
-            <div className="sider_vip !pt-0 !pb-0 text-white">
+            <div className="sider_vip !pt-0 !pb-0 ">
                <div className="sider_vip-main">
                   <p>Đăng nhập để khám phá playlist dành riêng cho bạn</p>
                   <button

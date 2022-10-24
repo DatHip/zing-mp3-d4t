@@ -3,7 +3,7 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import React, { memo, useEffect, useState } from "react"
 import { Navigation, Pagination } from "swiper"
-import { v4 as uuidv4 } from "uuid"
+
 import { Swiper, SwiperSlide } from "swiper/react"
 import { useGetHomePage } from "../../api/getHomePage"
 import EventHomeItem from "../Selection/EventHomeItem"

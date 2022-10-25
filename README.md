@@ -80,7 +80,7 @@
 
    -  Click vào nút play khi hover vào 1 list nhạc sẽ xuất ra danh sách nhạc bên tab Danh sách phát (bên phải)
 
-          <img src='./public/demo1.PNG'>
+       <img src='./public/demo1.PNG'>
 
    -  Bài hát đầu tiên của list sẽ được play()
    -  Tại tab Danh sách phát bạn có thể hover vào item vào click btn Play để chay bản nhạc đó
@@ -88,7 +88,7 @@
 
        <img src='./public/demo2.PNG'>
 
-          <br />
+        
 
    -  Danh sách các phím tắt
       -  next: Mũi tên phải ->

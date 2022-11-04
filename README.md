@@ -80,13 +80,15 @@
 
    -  Click vào nút play khi hover vào 1 list nhạc sẽ xuất ra danh sách nhạc bên tab Danh sách phát (bên phải)
 
-       <img src='./public/demo1.PNG'>
+          <img src='./public/demo1.PNG'>
 
    -  Bài hát đầu tiên của list sẽ được play()
    -  Tại tab Danh sách phát bạn có thể hover vào item vào click btn Play để chay bản nhạc đó
    -  Đến trình phát nhạc tập trung hover vào ảnh thanh bottom và click
 
        <img src='./public/demo2.PNG'>
+
+          <br />
 
    -  Danh sách các phím tắt
       -  next: Mũi tên phải ->
@@ -102,21 +104,20 @@
 
 ---
 
+## demo:
+
+   <img  width="auto" src='./public/1.PNG'>
+   <img  width="auto" src='./public/1-2.PNG'>
+   <img  width="auto" src='./public/2.PNG'>
+   <img  width="auto" src='./public/3.PNG'>
+   <img  width="auto" src='./public/3-1.PNG'>
+   <img  width="auto" src='./public/5.PNG'>
+   <img  width="auto" src='./public/6.PNG'>
+   <img  width="auto" src='./public/7.PNG'>
+   <img  width="auto" src='./public/Capture.PNG'>
+
 <br />
 
 ## Cảm ơn đã đọc. rất mong nhận được sự góp ý của bạn
 
 ### Liên hệ với tôi: **huynhtiiendat99@gmail.com**
-
-## demo:
-
-   <img  width="300px" src='./public/1.PNG'>
-   <img  width="300px" src='./public/1-2.PNG'>
-   <img  width="300px" src='./public/2.PNG'>
-   <img  width="300px" src='./public/3.PNG'>
-   <img  width="300px" src='./public/3-1.PNG'>
-   <img  width="300px" src='./public/5.PNG'>
-   <img  width="300px" src='./public/6.PNG'>
-   <img  width="300px" src='./public/7.PNG'>
-   <img  width="300px" src='./public/Capture.PNG'>
-

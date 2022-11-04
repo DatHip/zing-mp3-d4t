@@ -3,8 +3,8 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import React, { memo, useEffect, useState } from "react"
 import { Navigation, Pagination } from "swiper"
-
 import { Swiper, SwiperSlide } from "swiper/react"
+
 import { useGetHomePage } from "../../api/getHomePage"
 import EventHomeItem from "../Selection/EventHomeItem"
 import PlayListSelector from "../Selection/PlayListSelector"

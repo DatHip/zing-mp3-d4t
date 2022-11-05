@@ -36,13 +36,14 @@ const NewReleaseHomePage = memo(() => {
 
    useEffect(() => {
       if (dataSelector) {
-         setData(dataSelector?.items[0])
+         setData(dataSelector?.items)
       }
    }, [status])
 
    const SongList = memo(() => {
       if (!datas) return
-      const dataSong = datas?.song
+      const dataSong = datas?.vPop
+
       const colSong1 = dataSong?.slice(0, 4)
       const colSong2 = dataSong?.slice(4, 8)
       const colSong3 = dataSong?.slice(8, 12)
@@ -63,22 +64,29 @@ const NewReleaseHomePage = memo(() => {
    })
 
    const AlbumList = memo(() => {
+      // if (!datas) return
+      // const dataAlbum = datas?.album
+      // const colSong1 = dataAlbum?.slice(0, 3)
+      // const colSong2 = dataAlbum?.slice(3, 6)
+      // const colSong3 = dataAlbum?.slice(6, 9)
+
       if (!datas) return
-      const dataAlbum = datas?.album
-      const colSong1 = dataAlbum?.slice(0, 3)
-      const colSong2 = dataAlbum?.slice(3, 6)
-      const colSong3 = dataAlbum?.slice(6, 9)
+      const dataSong = datas?.others
+
+      const colSong1 = dataSong?.slice(0, 4)
+      const colSong2 = dataSong?.slice(4, 8)
+      const colSong3 = dataSong?.slice(8, 12)
 
       return (
          <>
             <div className="col l-4 m-6 c-9">
-               {colSong1 && colSong1.map((e) => <NewReleaseitem isDisk key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong1 && colSong1.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
             </div>
             <div className="col l-4 m-6 c-9">
-               {colSong2 && colSong2.map((e) => <NewReleaseitem isDisk key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong2 && colSong2.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
             </div>
             <div className="col l-4 m-0 c-9">
-               {colSong3 && colSong3.map((e) => <NewReleaseitem isDisk key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong3 && colSong3.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
             </div>
          </>
       )
@@ -91,10 +99,10 @@ const NewReleaseHomePage = memo(() => {
             childrenOption={
                <div className="genre-select mb-[20px]">
                   <button onClick={() => setSelectList(false)} className={`zm-btn  button ${selectList ? "" : "active"}`}>
-                     Bài hát
+                     VIỆT NAM
                   </button>
                   <button onClick={() => setSelectList(true)} className={`zm-btn button ${selectList ? "active" : ""}`}>
-                     Album
+                     QUỐC TẾ
                   </button>
                </div>
             }

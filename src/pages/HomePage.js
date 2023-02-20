@@ -51,7 +51,7 @@ const HomePage = () => {
       {/* New Music */}
       <NewMusicHomePage></NewMusicHomePage>
       <NewMusicHomePage2></NewMusicHomePage2>
-      {/* XONE's CORNER */}
+
       {/* <XoneCornerHomePage></XoneCornerHomePage> */}
       {/* Radio Nổi Bật */}
       <RadioHomePage></RadioHomePage>

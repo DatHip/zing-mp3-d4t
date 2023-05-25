@@ -39,7 +39,7 @@ const HomePage = () => {
       {/* Nghệ Sĩ Yêu Thích  */}
       {/* <FavoriteArtistHomePapge></FavoriteArtistHomePapge> */}
       {/* Nhạc Mới Mỗi Ngày  */}
-      <NewMusicEveryDayHomePage></NewMusicEveryDayHomePage>
+      {/* <NewMusicEveryDayHomePage></NewMusicEveryDayHomePage> */}
       {/* Chart  */}
       <ChartHomePage></ChartHomePage>
       {/* weekChart */}
@@ -49,14 +49,14 @@ const HomePage = () => {
       {/* Top100 */}
       <Top100HomePage></Top100HomePage>
       {/* New Music */}
-      <NewMusicHomePage></NewMusicHomePage>
+      {/* <NewMusicHomePage></NewMusicHomePage> */}
       <NewMusicHomePage2></NewMusicHomePage2>
 
       {/* <XoneCornerHomePage></XoneCornerHomePage> */}
       {/* Radio Nổi Bật */}
       <RadioHomePage></RadioHomePage>
       {/* Event */}
-      <EventHomePage></EventHomePage>
+      {/* <EventHomePage></EventHomePage> */}
     </div>
   );
 };

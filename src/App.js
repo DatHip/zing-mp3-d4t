@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useEffect, useLayoutEffect } from "react"
+import React, { memo, useEffect, useLayoutEffect } from "react"
 import BottomPlay from "./layout/Bottom/BottomPlay"
 import Header from "./layout/Header"
 import Siderleft from "./layout/Siderleft"
@@ -76,7 +76,7 @@ function App() {
       return () => document.removeEventListener("keydown", keyboardShortcuts)
    }, [])
 
-   useMemo(() => {
+   useLayoutEffect(() => {
       document.documentElement.setAttribute("data-theme", theme.dataTheme)
       if (theme.bgImg) {
          document.documentElement.classList.add("theme-bg-image")
@@ -101,7 +101,7 @@ function App() {
    }, [])
 
    // set localStorage
-   useMemo(() => {
+   useLayoutEffect(() => {
       const queueNowPlay = JSON.parse(localStorage.getItem("queue_nowplay"))
       const logged = JSON.parse(localStorage.getItem("d4tmp3_logged"))
       const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
@@ -125,25 +125,8 @@ function App() {
       }
    }, [])
 
-   useEffect(() => {
-      window.addEventListener("load", () => {
-         document.querySelector(".loadings")?.remove()
-      })
-   }, [])
-
    return (
       <>
-         <div className="loadings">
-            <div className="loader">
-               <div className="bar1"></div>
-               <div className="bar2"></div>
-               <div className="bar3"></div>
-               <div className="bar4"></div>
-               <div className="bar5"></div>
-               <div className="bar6"></div>
-            </div>
-         </div>
-
          <div
             className={`main ${queueNowPlaySelector.currentEncodeId ? "" : "hide-bottom"}`}
             style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}

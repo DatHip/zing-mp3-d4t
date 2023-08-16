@@ -1,43 +1,119 @@
 import React, { memo, useEffect, useRef } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
-import AlbumPage from "../pages/AlbumPage"
-import ArtistPage from "../pages/ArtistPage"
-import HomePage from "../pages/HomePage"
-import HubPage from "../pages/HubPage"
-import MvPage from "../pages/MvPage"
-import MyMusicPage from "../pages/MyMusicPage"
-import NewFeedPage from "../pages/NewFeedPage"
-import NotFound from "../pages/NotFound"
-import RadioPage from "../pages/RadioPage"
-import SearchPage from "../pages/SearchPage"
-import Top100Page from "../pages/Top100Page"
-import ZingChartPage from "../pages/ZingChartPage"
+import Loading from "../components/loading/Loadng"
 
-import NewMusicPage from "../pages/NewMusicPage"
-import MvPageList from "../components/MVpage/MvPageList"
-import NewFeedPageChidlen from "../components/Followpage/NewFeedPageChidlen"
-import MyMusicAll from "../components/MyMusicPage/MyMusicAll"
-import MyMusicSong from "../components/MyMusicPage/MyMusicSong"
-import MyMusicPlayList from "../components/MyMusicPage/MyMusicPlayList"
-import MyMusicArtis from "../components/MyMusicPage/MyMusicArtis"
-import ArtistALl from "../components/ArtistPage/ArtistALl"
-import ArtistSong from "../components/ArtistPage/ArtistSong"
-import ArtistAlbum from "../components/ArtistPage/ArtistAlbum"
-import ArtistMv from "../components/ArtistPage/ArtistMv"
-import ArtistSingle from "../components/ArtistPage/ArtistSingle"
-import HubDetailPage from "../components/HubPage/HubDetailPage"
-import SearchPageAll from "../components/SearchPage/SearchPageAll"
-import SearchPageArtist from "../components/SearchPage/SearchPageArtist"
-import SearchPageMv from "../components/SearchPage/SearchPageMv"
-import SearchPageSong from "../components/SearchPage/SearchPageSong"
-import SearchPagePlaylist from "../components/SearchPage/SearchPagePlaylist"
-import VideoPopUp from "../pages/VideoPopUp"
-import HistoryPage from "../pages/HistoryPage"
-import HistroryPlayList from "../components/HistoryPage/HistroryPlayList"
-import HistoryVideo from "../components/HistoryPage/HistoryVideo"
-import HistorySong from "../components/HistoryPage/HistorySong"
-import AuthenticationPage from "../pages/AuthenticationPage"
-import MyInfoPage from "../components/MyMusicPage/MyInfoPage"
+const MyInfoPage = React.lazy(
+   () => import('../components/MyMusicPage/MyInfoPage'),
+ )
+const HistorySong = React.lazy(
+   () => import('../components/HistoryPage/HistorySong'),
+ )
+const HistoryVideo = React.lazy(
+   () => import('../components/HistoryPage/HistoryVideo'),
+ )
+const HistroryPlayList = React.lazy(
+   () => import('../components/HistoryPage/HistroryPlayList'),
+ )
+const SearchPagePlaylist = React.lazy(
+   () => import('../components/SearchPage/SearchPagePlaylist'),
+ )
+const SearchPageSong = React.lazy(
+   () => import('../components/SearchPage/SearchPageSong'),
+ )
+const SearchPageMv = React.lazy(
+   () => import('../components/SearchPage/SearchPageMv'),
+ )
+const SearchPageArtist = React.lazy(
+   () => import('../components/SearchPage/SearchPageArtist'),
+ )
+const SearchPageAll = React.lazy(
+   () => import('../components/SearchPage/SearchPageAll'),
+ )
+const HubDetailPage = React.lazy(
+   () => import('../components/HubPage/HubDetailPage'),
+ )
+const ArtistSingle = React.lazy(
+   () => import('../components/ArtistPage/ArtistSingle'),
+ )
+const ArtistMv = React.lazy(
+   () => import('../components/ArtistPage/ArtistMv'),
+ )
+const ArtistAlbum = React.lazy(
+   () => import('../components/ArtistPage/ArtistAlbum'),
+ )
+const ArtistSong = React.lazy(
+   () => import('../components/ArtistPage/ArtistSong'),
+ )
+const ArtistALl = React.lazy(
+   () => import('../components/ArtistPage/ArtistALl'),
+ )
+const MyMusicArtis = React.lazy(
+   () => import('../components/MyMusicPage/MyMusicArtis'),
+ )
+const MyMusicPlayList = React.lazy(
+   () => import('../components/MyMusicPage/MyMusicPlayList'),
+ )
+const MyMusicSong = React.lazy(
+   () => import('../components/MyMusicPage/MyMusicSong'),
+ )
+const MyMusicAll = React.lazy(
+   () => import('../components/MyMusicPage/MyMusicAll'),
+ )
+const NewFeedPageChidlen = React.lazy(
+   () => import('../components/Followpage/NewFeedPageChidlen'),
+ )
+const MvPageList = React.lazy(
+   () => import('../components/MVpage/MvPageList'),
+ )
+const AuthenticationPage = React.lazy(
+   () => import('../pages/AuthenticationPage'),
+ )
+const NewMusicPage = React.lazy(
+   () => import('../pages/NewMusicPage'),
+ )
+const VideoPopUp = React.lazy(
+   () => import('../pages/VideoPopUp'),
+ )
+const HistoryPage = React.lazy(
+   () => import('../pages/HistoryPage'),
+ )
+const ZingChartPage = React.lazy(
+   () => import('../pages/ZingChartPage'),
+ )
+const Top100Page = React.lazy(
+   () => import('../pages/Top100Page'),
+ )
+const SearchPage = React.lazy(
+   () => import('../pages/SearchPage'),
+ )
+const RadioPage = React.lazy(
+   () => import('../pages/RadioPage'),
+ )
+const NotFound = React.lazy(
+   () => import('../pages/NotFound'),
+ )
+const NewFeedPage = React.lazy(
+   () => import('../pages/NewFeedPage'),
+ )
+const MyMusicPage = React.lazy(
+   () => import('../pages/MyMusicPage'),
+ )
+const MvPage = React.lazy(
+   () => import('../pages/MvPage'),
+ )
+const HubPage = React.lazy(
+   () => import('../pages/HubPage'),
+ )
+const HomePage = React.lazy(
+   () => import('../pages/HomePage'),
+ )
+const AlbumPage = React.lazy(
+   () => import('../pages/AlbumPage'),
+ )
+const ArtistPage = React.lazy(
+   () => import('../pages/ArtistPage'),
+ )
+
 
 const RouterPage = () => {
    const mainPageRef = useRef()
@@ -60,6 +136,7 @@ const RouterPage = () => {
       <div ref={mainPageRef} id="scrollableDiv" className="main-page">
          <div className="container">
             <Routes location={location} key={location.pathname}>
+               <Route element={<Loading></Loading>}>
                {/*  */}
                <Route path="/video-clip/:id" element={<VideoPopUp></VideoPopUp>}></Route>
                <Route path="/mymusic/" element={<MyMusicPage></MyMusicPage>}>
@@ -70,9 +147,7 @@ const RouterPage = () => {
                   <Route path="info" element={<MyInfoPage></MyInfoPage>}></Route>
                </Route>
                {/*  */}
-
                <Route path="/auth" element={<AuthenticationPage></AuthenticationPage>}></Route>
-               <Route index element={<HomePage></HomePage>}></Route>
                <Route path="/" element={<HomePage></HomePage>}></Route>
                <Route path="/zing-chart" element={<ZingChartPage></ZingChartPage>}></Route>
                <Route path="/radio" element={<RadioPage></RadioPage>}></Route>
@@ -114,6 +189,8 @@ const RouterPage = () => {
                <Route path="/album/:id" element={<AlbumPage></AlbumPage>}></Route>
                {/*  */}
                <Route path="*" element={<NotFound></NotFound>}></Route>
+             </Route>
+
             </Routes>
          </div>
       </div>

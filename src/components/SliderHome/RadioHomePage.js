@@ -10,11 +10,13 @@ const RadioHomePage = memo(({ isNotAll }) => {
    const dataSelector = data?.data.items.find((e) => e.title === "Radio Nổi bật")
 
    useEffect(() => {
-      if (data) {
+      if (data && dataSelector?.items) {
          setData(dataSelector.items)
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [status])
+
+   if (!dataSelector) return null
 
    return (
       <PlayListSelector to="radio" classAdd={`container_radio`} title={dataSelector?.title} all={!isNotAll}>

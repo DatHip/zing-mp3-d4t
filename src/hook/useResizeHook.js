@@ -16,7 +16,7 @@ export default function useWindowSize() {
       width: undefined,
       height: undefined,
    })
-   useMemo(() => {
+   useEffect(() => {
       function handleResize() {
          setWindowSize({
             width: window.innerWidth,

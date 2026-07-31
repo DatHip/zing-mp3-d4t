@@ -57,7 +57,7 @@ const VideoPlayItems = memo(({ classGird, data }) => {
                </div>
                <div className="subtitle ">
                   {data.artists.map((e, index) => {
-                     if (index > 2) return
+                     if (index > 2) return null
 
                      let prara = ", "
 

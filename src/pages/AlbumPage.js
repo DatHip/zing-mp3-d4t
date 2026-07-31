@@ -116,13 +116,13 @@ const AlbumPage = () => {
 
             <div>
                {dataSuggested?.map((e) => {
-                  if (e.sectionType === "adBanner") return
+                  if (e.sectionType === "adBanner") return null
 
                   if (e.sectionType === "artist") {
                      return (
                         <PlayListSelector key={uuidv4()} title={e.title}>
                            {e?.items?.map((item, index) => {
-                              if (index > 4) return
+                              if (index > 4) return null
                               let classGird = "col l-2-4 m-3 c-5"
                               if (index === 4) {
                                  classGird = "col l-2-4 m-0 c-5"
@@ -138,7 +138,7 @@ const AlbumPage = () => {
                      return (
                         <PlayListSelector key={uuidv4()} title={e.title}>
                            {e?.items?.map((item, index) => {
-                              if (index > 4) return
+                              if (index > 4) return null
                               let classGird = "col l-2-4 m-3 c-5"
                               if (index === 4) {
                                  classGird = "col l-2-4 m-0 c-5"

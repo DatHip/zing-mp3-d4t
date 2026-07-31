@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useState, useEffect, useRef, memo, useLayoutEffect } from "react"
+import React, { useCallback, useState, useRef, memo, useLayoutEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setOffClass, setOffMain } from "../../features/openMainFull/openMainFullFeatures"
 import BgFullKaroke from "./BgFullKaroke"

@@ -10,7 +10,7 @@ import { fetchPlayList } from "../features/QueueFeatures/QueueFeatures"
 
 const ZingChartPage = () => {
    const [datas, setData] = useState([])
-   const { data, status, error: err, isLoading } = useGetHomeChart()
+   const { data, status } = useGetHomeChart()
    const dispatch = useDispatch()
    useEffect(() => {
       if (data) {

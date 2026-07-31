@@ -113,8 +113,6 @@ const BgFullKaroke = memo(() => {
    const lyricByLine = useSelector((state) => state.lyrics.lyricByLine)
    const loading = useSelector((state) => state.lyrics.loading)
    const current = useSelector((state) => state.queueNowPlay.currentTime)
-   const isReady = useSelector((state) => state.setting.isReady)
-
    const ref0 = useRef(0)
    const ref1 = useRef(1)
    useLayoutEffect(() => {

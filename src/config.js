@@ -1,4 +1,4 @@
-const tmdbEndpoint = "https://api-zingmp3.vercel.app/api"
+const tmdbEndpoint = process.env.REACT_APP_API_URL || "http://localhost:5000/api"
 
 export const tmdAPI = {
    //  getMovieDetails: (movieId) => `${tmdbEndpoint}/${movieId}?api_ey=${apiKey}`,

@@ -16,10 +16,13 @@ const EventHomePage = memo(() => {
    const dataSelector = data?.data.items.find((e) => e.title === "Sự kiện")
 
    useEffect(() => {
-      if (data) {
+      if (data && dataSelector?.items) {
          setData(dataSelector.items)
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [status])
+
+   if (!dataSelector) return null
 
    const navigationPrevRef = React.useRef(null)
    const navigationNextRef = React.useRef(null)

@@ -27,13 +27,16 @@ const NewMusicHomePage = memo(() => {
    const dataSelector = data?.data.items.find((e) => e.title === "Nhạc mới")
 
    useEffect(() => {
-      if (data) {
+      if (data && dataSelector?.items) {
          setData(dataSelector.items)
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [status])
 
    const navigationPrevRef = React.useRef(null)
    const navigationNextRef = React.useRef(null)
+
+   if (!dataSelector) return null
 
    try {
       return (

@@ -13,10 +13,13 @@ const NewMusicEveryDayHomePage = () => {
    //  const dataSelector = data?.data.items[4]
 
    useEffect(() => {
-      if (data) {
-         setData(dataSelector?.items)
+      if (data && dataSelector?.items) {
+         setData(dataSelector.items)
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [status])
+
+   if (!dataSelector) return null
 
    return (
       <PlayListSelector title={dataSelector?.title}>

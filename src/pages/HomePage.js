@@ -13,6 +13,8 @@ import ChartHomePage from "../components/SliderHome/ChartHomePage";
 import ButtonIconHomePage from "../components/SliderHome/ButtonIconHomePage";
 import scrollTop from "../utils/scrollToTop";
 import { useEffect } from "react";
+import FavoriteArtistHomePapge from "../components/SliderHome/FavoriteArtistHomePapge";
+import NewMusicEveryDayHomePage from "../components/SliderHome/NewMusicEveryDayHomePage";
 
 const HomePage = () => {
   useEffect(() => {
@@ -32,9 +34,9 @@ const HomePage = () => {
       {/* New release  */}
       <NewReleaseHomePage></NewReleaseHomePage>
       {/* Nghệ Sĩ Yêu Thích  */}
-      {/* <FavoriteArtistHomePapge></FavoriteArtistHomePapge> */}
+      <FavoriteArtistHomePapge></FavoriteArtistHomePapge>
       {/* Nhạc Mới Mỗi Ngày  */}
-      {/* <NewMusicEveryDayHomePage></NewMusicEveryDayHomePage> */}
+      <NewMusicEveryDayHomePage></NewMusicEveryDayHomePage>
       {/* Chart  */}
       <ChartHomePage></ChartHomePage>
       {/* weekChart */}

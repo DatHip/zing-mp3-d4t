@@ -17,6 +17,8 @@ const FavoriteArtistHomePapge = () => {
     }
   }, [status]);
 
+  if (!dataSelector) return null;
+
   return (
     <PlayListSelector title={dataSelector?.title}>
       {datas?.length > 0 &&

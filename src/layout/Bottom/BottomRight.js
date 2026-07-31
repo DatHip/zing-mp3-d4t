@@ -13,7 +13,7 @@ import {
    setNextSongShuffle,
    fetchPlayList,
 } from "../../features/QueueFeatures/QueueFeatures"
-import lodash from "lodash"
+import shuffle from "lodash/shuffle"
 
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
 import { useLayoutEffect } from "react"
@@ -52,7 +52,7 @@ const BottomRight = () => {
    useLayoutEffect(() => {
       if (isRandom && listSong.length > 0) {
          let arrNext = listSong.filter((e) => e.encodeId !== infoSongCurrent.encodeId)
-         let arrShuffle = [infoSongCurrent, ...lodash.shuffle(arrNext)]
+         let arrShuffle = [infoSongCurrent, ...shuffle(arrNext)]
          dispatch(setListSongShuffle(arrShuffle))
          setItems(arrShuffle)
       }

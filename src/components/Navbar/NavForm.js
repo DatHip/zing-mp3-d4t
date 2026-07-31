@@ -5,7 +5,7 @@ import Tippy from "@tippyjs/react"
 import { useDispatch } from "react-redux"
 import { fetchDataSearch, fetchHotKey, setName, setValueNew } from "../../features/formSearch/formSearch"
 import { useEffect } from "react"
-import lodash from "lodash"
+import debounce from "lodash/debounce"
 import { useNavigate } from "react-router-dom"
 
 const NavForm = () => {
@@ -29,7 +29,7 @@ const NavForm = () => {
       dispatch(fetchHotKey())
    }
 
-   const handleUpdateQuery = lodash.debounce((e) => {
+   const handleUpdateQuery = debounce((e) => {
       if (e.target.value === "") {
          dispatch(setValueNew())
       }

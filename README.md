@@ -80,13 +80,13 @@
 
    -  Click vào nút play khi hover vào 1 list nhạc sẽ xuất ra danh sách nhạc bên tab Danh sách phát (bên phải)
 
-          <img src='./public/demo1.PNG'>
+          <img src='./docs/screenshots/demo1.PNG'>
 
    -  Bài hát đầu tiên của list sẽ được play()
    -  Tại tab Danh sách phát bạn có thể hover vào item vào click btn Play để chay bản nhạc đó
    -  Đến trình phát nhạc tập trung hover vào ảnh thanh bottom và click
 
-       <img src='./public/demo2.PNG'>
+       <img src='./docs/screenshots/demo2.PNG'>
 
           <br />
 
@@ -106,15 +106,15 @@
 
 ## demo:
 
-   <img  width="auto" src='./public/1.PNG'>
+   <img  width="auto" src='./docs/screenshots/1.PNG'>
    <img  width="auto" src='./public/1-2.PNG'>
-   <img  width="auto" src='./public/2.PNG'>
-   <img  width="auto" src='./public/3.PNG'>
-   <img  width="auto" src='./public/3-1.PNG'>
-   <img  width="auto" src='./public/5.PNG'>
-   <img  width="auto" src='./public/6.PNG'>
-   <img  width="auto" src='./public/7.PNG'>
-   <img  width="auto" src='./public/Capture.PNG'>
+   <img  width="auto" src='./docs/screenshots/2.PNG'>
+   <img  width="auto" src='./docs/screenshots/3.PNG'>
+   <img  width="auto" src='./docs/screenshots/3-1.PNG'>
+   <img  width="auto" src='./docs/screenshots/5.PNG'>
+   <img  width="auto" src='./docs/screenshots/6.PNG'>
+   <img  width="auto" src='./docs/screenshots/7.PNG'>
+   <img  width="auto" src='./docs/screenshots/Capture.PNG'>
 
 <br />
 

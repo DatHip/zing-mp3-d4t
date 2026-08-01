@@ -23,7 +23,7 @@ function App() {
    const dispatch = useDispatch()
 
    useLayoutEffect(() => {
-      onAuthStateChanged(auth, (user) => {
+      const unsub = onAuthStateChanged(auth, (user) => {
          if (!activeUser && user) {
             dispatch(
                setUser({
@@ -35,6 +35,7 @@ function App() {
             )
          }
       })
+      return () => unsub()
    }, [dispatch, activeUser])
 
    useEffect(() => {

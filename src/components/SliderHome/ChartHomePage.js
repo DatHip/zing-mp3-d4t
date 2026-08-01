@@ -2,12 +2,13 @@ import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Link } from "react-router-dom"
 import { byType, useHomeSection } from "../../hook/useHomeSection"
-import CharHomeItem from "../Selection/CharHomeItem"
 import { useDispatch, useSelector } from "react-redux"
 import { setPlay, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
 import { fetchPlayList, setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 import { toast } from "react-toastify"
+
+const CharHomeItem = React.lazy(() => import("../Selection/CharHomeItem"))
 
 const ChartHomePage = memo(() => {
    const { section, isLoading } = useHomeSection(byType("RTChart"))
@@ -218,7 +219,9 @@ const ChartHomePage = memo(() => {
                            <p>{rank3?.title}</p>
                         </div>
                      </div>
-                     <CharHomeItem id="myChart"></CharHomeItem>
+                     <React.Suspense fallback={<div className="h-[250px] flex items-center justify-center">Loading chart...</div>}>
+                        <CharHomeItem id="myChart"></CharHomeItem>
+                     </React.Suspense>
                   </div>
                </div>
             </div>

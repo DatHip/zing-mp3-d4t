@@ -3,29 +3,29 @@ import BottomPlay from "./layout/Bottom/BottomPlay"
 import Header from "./layout/Header"
 import Siderleft from "./layout/Siderleft"
 import RouterPage from "./router/RouterPage"
-import { useSelector } from "react-redux"
-import { ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch, useStore } from "react-redux"
 import { setPlaying } from "./features/SettingPlay/settingPlay"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./firebase/firebase-config"
 import { setUser } from "./features/User/userFeatures"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
-   const theme = useSelector((state) => state.themetoggle)
-   const queueNowPlaySelector = useSelector((state) => state.queueNowPlay)
-   const loggedSelector = useSelector((state) => state.logged)
-   const settingSelector = useSelector((state) => state.setting)
-   const lyricsSelector = useSelector((state) => state.lyrics)
-   const timeSelector = useSelector((state) => state.currentTimes)
-   const usersSelcetor = useSelector((state) => state.users)
+   const themeDataTheme = useSelector((state) => state.themetoggle.dataTheme)
+   const themeBgImg = useSelector((state) => state.themetoggle.bgImg)
+   const themeBgPlaying = useSelector((state) => state.themetoggle.bgPlaying)
+   const themeDataStyle = useSelector((state) => state.themetoggle.dataStyle)
+
+   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const activeUser = useSelector((state) => state.users.activeUser)
 
    const dispatch = useDispatch()
+   const store = useStore()
 
    useLayoutEffect(() => {
       onAuthStateChanged(auth, (user) => {
-         if (!usersSelcetor.activeUser && user) {
+         if (!activeUser && user) {
             dispatch(
                setUser({
                   displayName: user.displayName,
@@ -36,7 +36,7 @@ function App() {
             )
          }
       })
-   }, [])
+   }, [dispatch, activeUser])
 
    useEffect(() => {
       const keyboardShortcuts = (e) => {
@@ -74,34 +74,35 @@ function App() {
       document.addEventListener("keydown", keyboardShortcuts)
 
       return () => document.removeEventListener("keydown", keyboardShortcuts)
-   }, [])
+   }, [dispatch])
 
    useLayoutEffect(() => {
-      document.documentElement.setAttribute("data-theme", theme.dataTheme)
-      if (theme.bgImg) {
+      document.documentElement.setAttribute("data-theme", themeDataTheme)
+      if (themeBgImg) {
          document.documentElement.classList.add("theme-bg-image")
       } else {
          document.documentElement.classList.remove("theme-bg-image")
       }
 
-      if (theme.bgPlaying) {
+      if (themeBgPlaying) {
          document.documentElement.classList.add("zma")
       } else {
          document.documentElement.classList.remove("zma")
       }
 
-      if (theme.dataStyle) {
-         const param = theme.dataStyle.map((e) => {
+      if (themeDataStyle) {
+         const param = themeDataStyle.map((e) => {
             return e
          })
          document.documentElement.setAttribute("style", param.join(" ; "))
       } else {
          document.documentElement.removeAttribute("style")
       }
-   }, [])
+   }, [themeDataTheme, themeBgImg, themeBgPlaying, themeDataStyle])
 
    // set localStorage
    useLayoutEffect(() => {
+      const state = store.getState()
       const queueNowPlay = JSON.parse(localStorage.getItem("queue_nowplay"))
       const logged = JSON.parse(localStorage.getItem("d4tmp3_logged"))
       const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
@@ -109,27 +110,27 @@ function App() {
       const time = JSON.parse(localStorage.getItem("d4tmp3_timeCurrent"))
 
       if (!queueNowPlay) {
-         localStorage.setItem("queue_nowplay", JSON.stringify(queueNowPlaySelector))
+         localStorage.setItem("queue_nowplay", JSON.stringify(state.queueNowPlay))
       }
       if (!logged) {
-         localStorage.setItem("d4tmp3_logged", JSON.stringify(loggedSelector))
+         localStorage.setItem("d4tmp3_logged", JSON.stringify(state.logged))
       }
       if (!setting) {
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(settingSelector))
+         localStorage.setItem("d4tmp3_setting", JSON.stringify(state.setting))
       }
       if (!lyrics) {
-         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(lyricsSelector))
+         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(state.lyrics))
       }
       if (!time) {
-         localStorage.setItem("d4tmp3_timeCurrent", JSON.stringify(timeSelector))
+         localStorage.setItem("d4tmp3_timeCurrent", JSON.stringify(state.currentTimes))
       }
-   }, [])
+   }, [store])
 
    return (
       <>
          <div
-            className={`main ${queueNowPlaySelector.currentEncodeId ? "" : "hide-bottom"}`}
-            style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}
+            className={`main ${currentEncodeId ? "" : "hide-bottom"}`}
+            style={themeBgImg ? { backgroundImage: `url('${themeBgImg}')` } : {}}
          >
             <Header></Header>
             <Siderleft></Siderleft>

@@ -1,11 +1,12 @@
 import React from "react"
 
-import CharHomeItem from "../../components/Selection/CharHomeItem"
 import ChartList from "../../components/TopChartPage/ChartList"
 import WeekList from "../../components/TopChartPage/WeekList"
 import LoadingSvg from "../../components/loading/LoadingSvg"
 
 import { useZingChartPage } from "./useZingChartPage"
+
+const CharHomeItem = React.lazy(() => import("../../components/Selection/CharHomeItem"))
 
 const ZingChartPage = () => {
    const { data, isLoading, handlePlayAll, ranks } = useZingChartPage()
@@ -36,7 +37,9 @@ const ZingChartPage = () => {
                               </div>
                            ))}
                         </div>
-                        <CharHomeItem id="myChart2" />
+                        <React.Suspense fallback={<div className="h-[250px] flex items-center justify-center">Loading chart...</div>}>
+                           <CharHomeItem id="myChart2" />
+                        </React.Suspense>
                      </div>
                   </div>
                   <ChartList data={data} />

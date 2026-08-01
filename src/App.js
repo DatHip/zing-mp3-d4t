@@ -3,7 +3,7 @@ import BottomPlay from "./layout/Bottom/BottomPlay"
 import Header from "./layout/Header"
 import Siderleft from "./layout/Siderleft"
 import RouterPage from "./router/RouterPage"
-import { useSelector, useDispatch, useStore } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { setPlaying } from "./features/SettingPlay/settingPlay"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./firebase/firebase-config"
@@ -21,7 +21,6 @@ function App() {
    const activeUser = useSelector((state) => state.users.activeUser)
 
    const dispatch = useDispatch()
-   const store = useStore()
 
    useLayoutEffect(() => {
       onAuthStateChanged(auth, (user) => {
@@ -99,32 +98,6 @@ function App() {
          document.documentElement.removeAttribute("style")
       }
    }, [themeDataTheme, themeBgImg, themeBgPlaying, themeDataStyle])
-
-   // set localStorage
-   useLayoutEffect(() => {
-      const state = store.getState()
-      const queueNowPlay = JSON.parse(localStorage.getItem("queue_nowplay"))
-      const logged = JSON.parse(localStorage.getItem("d4tmp3_logged"))
-      const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
-      const lyrics = JSON.parse(localStorage.getItem("d4tmp3_lyrics"))
-      const time = JSON.parse(localStorage.getItem("d4tmp3_timeCurrent"))
-
-      if (!queueNowPlay) {
-         localStorage.setItem("queue_nowplay", JSON.stringify(state.queueNowPlay))
-      }
-      if (!logged) {
-         localStorage.setItem("d4tmp3_logged", JSON.stringify(state.logged))
-      }
-      if (!setting) {
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state.setting))
-      }
-      if (!lyrics) {
-         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(state.lyrics))
-      }
-      if (!time) {
-         localStorage.setItem("d4tmp3_timeCurrent", JSON.stringify(state.currentTimes))
-      }
-   }, [store])
 
    return (
       <>

@@ -6,7 +6,7 @@ import RaidoItem from "../Selection/RaidoItem"
 const matchRadio = (s) =>
    s?.sectionType === "livestream" ||
    s?.sectionId === "radHot" ||
-   /radio/i.test(s?.title || "")
+   /^radio( nổi bật)?$/i.test((s?.title || "").trim())
 
 const RadioHomePage = memo(({ isNotAll }) => {
    const { section, isLoading } = useHomeSection(matchRadio)

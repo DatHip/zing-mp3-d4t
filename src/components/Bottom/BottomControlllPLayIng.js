@@ -41,9 +41,9 @@ const BottomControlllPLayIng = memo(() => {
       const setOff = () => {
          dispatch(setPlay(false))
       }
-      window.addEventListener("beforeunload", setOff())
+      window.addEventListener("beforeunload", setOff)
       return () => {
-         window.removeEventListener("beforeunload", setOff())
+         window.removeEventListener("beforeunload", setOff)
       }
    }, [])
 

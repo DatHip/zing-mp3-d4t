@@ -15,7 +15,7 @@ import ActionIcon from "../Icon/ActionIcon"
 import { playSongNotAlbum } from "../../features/QueueFeatures/QueueFeatures"
 import LoadingIcon from "../Icon/LoadingIcon"
 
-const matchNewMusic = (s) => /nhạc mới/i.test(s?.title || "") || s?.sectionId === "hNewrelease"
+const matchNewMusic = (s) => s?.sectionId === "hNewrelease" || /^nhạc mới$/i.test((s?.title || "").trim())
 
 const NewMusicHomePage = memo(() => {
    const { section, isLoading } = useHomeSection(matchNewMusic)

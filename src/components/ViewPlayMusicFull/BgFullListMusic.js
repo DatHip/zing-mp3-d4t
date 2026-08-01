@@ -12,7 +12,7 @@ const BgFullListMusic = memo(({ isScroll }) => {
    const listSong = useSelector((state) => state.queueNowPlay.listSong)
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
-   const { isRandom } = useSelector((state) => state.setting)
+   const isRandom = useSelector((state) => state.setting.isRandom)
 
    useLayoutEffect(() => {
       swiperERFf.current.swiper.slideTo(currentIndexSong)

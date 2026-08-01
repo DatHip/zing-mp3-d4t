@@ -10,7 +10,7 @@ const FavoriteArtisItem = memo(({ item, clasName, isHub, isCenter }) => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-   const { playing } = useSelector((state) => state.setting)
+   const playing = useSelector((state) => state.setting.playing)
 
    let active = playlistEncodeId === encodeId
 

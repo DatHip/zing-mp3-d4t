@@ -23,7 +23,12 @@ const BottomControlllPLayIng = memo(() => {
    const currentTime = useSelector((state) => state.queueNowPlay.currentTime)
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
 
-   const { isLoop, volume, playing, muted, isRandom, progressInterval } = useSelector((state) => state.setting)
+   const isLoop = useSelector((state) => state.setting.isLoop)
+   const volume = useSelector((state) => state.setting.volume)
+   const playing = useSelector((state) => state.setting.playing)
+   const muted = useSelector((state) => state.setting.muted)
+   const isRandom = useSelector((state) => state.setting.isRandom)
+   const progressInterval = useSelector((state) => state.setting.progressInterval)
 
    const setTimeSong1 = useCallback(
       (e) => {

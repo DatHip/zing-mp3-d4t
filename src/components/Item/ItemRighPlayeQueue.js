@@ -17,7 +17,9 @@ import useLikeHook from "../../hook/useLikeHook"
 
 const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastIndex }) => {
    const dispatch = useDispatch()
-   const { playing, isReady, isRandom } = useSelector((state) => state.setting)
+   const playing = useSelector((state) => state.setting.playing)
+   const isReady = useSelector((state) => state.setting.isReady)
+   const isRandom = useSelector((state) => state.setting.isRandom)
    const { isLike, handleLike } = useLikeHook(data, 2)
 
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)

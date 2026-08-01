@@ -9,7 +9,10 @@ import scrollToActive from "../../utils/scrollToView"
 
 const BottomControlsCenter = () => {
    const dispatch = useDispatch()
-   const { playing, isLoop, isRandom, isReady } = useSelector((state) => state.setting)
+   const playing = useSelector((state) => state.setting.playing)
+   const isLoop = useSelector((state) => state.setting.isLoop)
+   const isRandom = useSelector((state) => state.setting.isRandom)
+   const isReady = useSelector((state) => state.setting.isReady)
 
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const infoSongNext = useSelector((state) => state.queueNowPlay.infoSongNext)

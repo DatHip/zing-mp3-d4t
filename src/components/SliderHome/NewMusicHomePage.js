@@ -24,7 +24,8 @@ const NewMusicHomePage = memo(() => {
    const navigate = useNavigate()
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const { playing, isReady } = useSelector((state) => state.setting)
+   const playing = useSelector((state) => state.setting.playing)
+   const isReady = useSelector((state) => state.setting.isReady)
 
    const navigationPrevRef = React.useRef(null)
    const navigationNextRef = React.useRef(null)

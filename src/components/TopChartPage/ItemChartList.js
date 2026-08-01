@@ -29,7 +29,9 @@ const ItemChartList = memo(
       const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
       const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
 
-      const { playing, isReady, isRandom } = useSelector((state) => state.setting)
+      const playing = useSelector((state) => state.setting.playing)
+      const isReady = useSelector((state) => state.setting.isReady)
+      const isRandom = useSelector((state) => state.setting.isRandom)
 
       const getRankStatus = useCallback((startus) => {
          if (startus === 0) {

@@ -74,7 +74,7 @@ const CarouselItem = memo(
       const dispatch = useDispatch()
       const navigate = useNavigate()
       const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-      const { playing } = useSelector((state) => state.setting)
+      const playing = useSelector((state) => state.setting.playing)
       let active = playlistEncodeId === encodeId
 
       const { isLike, handleLike } = useLikeHook(item, 1)

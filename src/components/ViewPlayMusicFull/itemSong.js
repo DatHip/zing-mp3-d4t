@@ -11,7 +11,9 @@ const ItemSong = memo(({ data, index }) => {
    const dispatch = useDispatch()
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const { playing, isRandom, isReady } = useSelector((state) => state.setting)
+   const playing = useSelector((state) => state.setting.playing)
+   const isRandom = useSelector((state) => state.setting.isRandom)
+   const isReady = useSelector((state) => state.setting.isReady)
    let active = currentEncodeId === data?.encodeId
 
    return (

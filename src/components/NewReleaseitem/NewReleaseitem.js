@@ -185,7 +185,8 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
     (state) => state.queueNowPlay.playlistEncodeId
   );
 
-  const { playing, isReady } = useSelector((state) => state.setting);
+  const playing = useSelector((state) => state.setting.playing);
+  const isReady = useSelector((state) => state.setting.isReady);
   let active = item?.encodeId === currentEncodeId;
   let activeAlbum = playlistEncodeId === item?.encodeId;
 

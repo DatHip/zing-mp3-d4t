@@ -166,3 +166,4 @@ curl -s http://localhost:5000/api/playlist/ZWZB969E | node -e "let d='';process.
 - Use `key={uuidv4()}` inside `.map()` — kills memoization. Use `item.encodeId` / `item.id` / index.
 - Use `if (datas?.length === 0)` when `datas` is an object (not array). Use `isLoading || !datas`.
 - Reintroduce npm `zingmp3-api-next` — BE is self-signed now.
+- Name files and variables with correct spelling (e.g. avoid spelling errors like "Chidlen", "RadReplayRadio", "SidleRadio" in future refactors/files. A dedicated naming correction task will standardise the existing typos later).

@@ -8,7 +8,9 @@ import { setToggle } from "../../features/toggleRight/toggleRight"
 const BottomControlsRight = () => {
    const isToggle = useSelector((state) => state.toggleright)
    const infoSong = useSelector((state) => state.queueNowPlay.infoSongCurrent)
-   const setting = useSelector((state) => state.setting)
+   const volume = useSelector((state) => state.setting.volume)
+   const isVolume = useSelector((state) => state.setting.isVolume)
+   const muted = useSelector((state) => state.setting.muted)
    const volumeRef = useRef()
    const dispatch = useDispatch()
 
@@ -17,10 +19,10 @@ const BottomControlsRight = () => {
    let idMv = alo?.slice(0, -5)
 
    useEffect(() => {
-      let x = setting.volume * 100
+      let x = volume * 100
       let color = `linear-gradient(90deg, var(--progressbar-active-bg) ${x}%, var(--progressbar-player-bg) ${x}%)`
       volumeRef.current.style.background = color
-   }, [setting.volume, setting.isVolume])
+   }, [volume, isVolume])
 
    useEffect(() => {
       const playbar = document.querySelector(".playing-bar")
@@ -60,9 +62,9 @@ const BottomControlsRight = () => {
          <div className="player_volume playing_volume">
             <div
                onClick={() => {
-                  if (setting.muted) {
+                  if (muted) {
                      dispatch(toogleMuted())
-                     dispatch(setVolume(setting.isVolume))
+                     dispatch(setVolume(isVolume))
                   } else {
                      dispatch(toogleMuted())
                      dispatch(setVolume(0))
@@ -70,7 +72,7 @@ const BottomControlsRight = () => {
                }}
                className="player_btn"
             >
-               <i className={`icon ${setting?.muted ? "ic-volume-mute" : "ic-volume"} `}></i>
+               <i className={`icon ${muted ? "ic-volume-mute" : "ic-volume"} `}></i>
             </div>
             <div className="playing_volume-input">
                <input
@@ -80,7 +82,7 @@ const BottomControlsRight = () => {
                   type="range"
                   min={0}
                   max={100}
-                  value={setting.volume * 100}
+                  value={volume * 100}
                   onChange={(e) => {
                      dispatch(setVolume(e.target.value / 100))
                      dispatch(setIsVolume(e.target.value / 100))

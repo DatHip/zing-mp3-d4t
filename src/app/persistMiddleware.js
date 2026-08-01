@@ -22,6 +22,7 @@ function stripped(slice, sliceKey) {
 
 export function createPersistMiddleware() {
    const timers = {}
+   const lastSliceRef = {}
    const lastWritten = {}
    return (store) => (next) => (action) => {
       const result = next(action)
@@ -29,6 +30,10 @@ export function createPersistMiddleware() {
       for (const [sliceKey, storageKey] of Object.entries(PERSIST_KEYS)) {
          const slice = state[sliceKey]
          if (!slice) continue
+         // Ref-equality shortcut: redux immutability guarantees same ref = same content.
+         // Skips JSON.stringify entirely for high-frequency no-op dispatches.
+         if (slice === lastSliceRef[sliceKey]) continue
+         lastSliceRef[sliceKey] = slice
          const toPersist = stripped(slice, sliceKey)
          const serialized = JSON.stringify(toPersist)
          if (serialized === lastWritten[sliceKey]) continue

@@ -11,6 +11,7 @@ import setting from "../features/SettingPlay/settingPlay"
 import setOpenMainMv from "../features/ToggleMainMv/toggleMainMv"
 import toggleRight from "../features/toggleRight/toggleRight"
 import users from "../features/User/userFeatures"
+import { createPersistMiddleware, flushPersistOnUnload } from "./persistMiddleware"
 
 export const store = configureStore({
    reducer: {
@@ -27,4 +28,7 @@ export const store = configureStore({
       currentTimes: currentTimes,
       users: users,
    },
+   middleware: (getDefault) => getDefault().concat(createPersistMiddleware()),
 })
+
+flushPersistOnUnload(store)

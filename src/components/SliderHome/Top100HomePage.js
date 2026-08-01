@@ -1,26 +1,20 @@
-import React, { memo, useEffect, useState } from "react"
-import { useGetHomePage } from "../../api/getHomePage"
+import React, { memo } from "react"
+import { byId, useHomeSection } from "../../hook/useHomeSection"
 import CarouselItem from "../Selection/CarouselItem"
 import PlayListSelector from "../Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 
-const NewMusicEveryDayHomePage = () => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
+const Top100HomePage = () => {
+   const { section, isLoading } = useHomeSection(byId("h100"))
+   const datas = section?.items
 
-   const dataSelector = data?.data.items.find((e) => e.title === "Top 100")
-
-   useEffect(() => {
-      if (data) {
-         setData(dataSelector.items)
-      }
-   }, [status])
+   if (!section && !isLoading) return null
 
    return (
-      <PlayListSelector to="/top100" title={dataSelector?.title} all={true}>
+      <PlayListSelector to="/top100" title={section?.title} all={true}>
          {datas?.length > 0 &&
             datas.map((e, index) => {
-               if (index > 4) return
+               if (index > 4) return null
                let classGird = "col l-2-4 m-3 c-5"
                if (index === 4) {
                   classGird = "col l-2-4 m-0 c-5"
@@ -60,4 +54,4 @@ const NewMusicEveryDayHomePage = () => {
    )
 }
 
-export default memo(NewMusicEveryDayHomePage)
+export default memo(Top100HomePage)

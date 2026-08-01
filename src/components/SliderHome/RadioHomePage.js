@@ -1,32 +1,26 @@
-import React, { memo, useEffect, useState } from "react"
-import { useGetHomePage } from "../../api/getHomePage"
+import React, { memo } from "react"
+import { useHomeSection } from "../../hook/useHomeSection"
 import PlayListSelector from "../Selection/PlayListSelector"
 import RaidoItem from "../Selection/RaidoItem"
 
+const matchRadio = (s) =>
+   s?.sectionType === "livestream" ||
+   s?.sectionId === "radHot" ||
+   /radio/i.test(s?.title || "")
+
 const RadioHomePage = memo(({ isNotAll }) => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
+   const { section, isLoading } = useHomeSection(matchRadio)
+   const datas = section?.items
 
-   const dataSelector = data?.data.items.find((e) => e.title === "Radio Nổi bật")
-
-   useEffect(() => {
-      if (data && dataSelector?.items) {
-         setData(dataSelector.items)
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [status])
-
-   if (!dataSelector) return null
+   if (!section && !isLoading) return null
+   if (!section) return null
 
    return (
-      <PlayListSelector to="radio" classAdd={`container_radio`} title={dataSelector?.title} all={!isNotAll}>
+      <PlayListSelector to="radio" classAdd={`container_radio`} title={section?.title} all={!isNotAll}>
          {datas &&
             datas.length > 0 &&
             datas.map((e, index) => {
-               if (index > 6) {
-                  // eslint-disable-next-line array-callback-return
-                  return
-               }
+               if (index > 6) return null
                let classGird = "col l-1-4 m-2 c-5 m2-6 m2-5"
                if (index === 5) {
                   classGird = "col l-1-4 m-2 c-5 m2-6 m2-none"

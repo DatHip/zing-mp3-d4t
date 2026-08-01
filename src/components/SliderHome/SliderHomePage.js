@@ -1,23 +1,18 @@
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo } from "react"
 import styled from "styled-components"
 import { Navigation, Autoplay, Pagination, Lazy } from "swiper"
-import { v4 as uuidv4 } from "uuid"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useGetHomePage } from "../../api/getHomePage"
+import { byType, useHomeSection } from "../../hook/useHomeSection"
 import LoadingSkeleton from "../loading/LoadingSkeleton"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { useLayoutEffect } from "react"
 
 const SliderHomePage = memo(() => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
-
-   const dataNice = data?.data?.items.filter((e) => {
-      return e.sectionType === "banner"
-   })
+   const { section, isLoading } = useHomeSection(byType("banner"))
+   const datas = section?.items
+   const status = isLoading ? "loading" : "success"
 
    const SlideStyle = styled.div`
       flex-grow: 1;
@@ -78,12 +73,6 @@ const SliderHomePage = memo(() => {
          flex-shrink: 0;
       }
    `
-
-   useLayoutEffect(() => {
-      if (data) {
-         setData(dataNice[0].items)
-      }
-   }, [status])
 
    const navigationPrevRef = React.useRef(null)
    const navigationNextRef = React.useRef(null)

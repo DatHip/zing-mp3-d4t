@@ -1,28 +1,22 @@
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo } from "react"
 import { Navigation, Pagination } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 
-import { useGetHomePage } from "../../api/getHomePage"
+import { useHomeSection } from "../../hook/useHomeSection"
 import EventHomeItem from "../Selection/EventHomeItem"
 import PlayListSelector from "../Selection/PlayListSelector"
 
+const matchEvent = (s) => s?.sectionType === "event" || /sự kiện/i.test(s?.title || "")
+
 const EventHomePage = memo(() => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
+   const { section, isLoading } = useHomeSection(matchEvent)
+   const datas = section?.items
 
-   const dataSelector = data?.data.items.find((e) => e.title === "Sự kiện")
-
-   useEffect(() => {
-      if (data && dataSelector?.items) {
-         setData(dataSelector.items)
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [status])
-
-   if (!dataSelector) return null
+   if (!section && !isLoading) return null
+   if (!section) return null
 
    const navigationPrevRef = React.useRef(null)
    const navigationNextRef = React.useRef(null)
@@ -41,7 +35,7 @@ const EventHomePage = memo(() => {
                </div>
             }
             classAdd={"container-event"}
-            title={dataSelector?.title}
+            title={section?.title}
          >
             {datas && datas.length > 0 && (
                <Swiper

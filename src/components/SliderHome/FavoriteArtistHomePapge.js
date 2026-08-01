@@ -1,30 +1,25 @@
-import React, { memo, useEffect, useState } from "react";
-import { useGetHomePage } from "../../api/getHomePage";
+import React, { memo } from "react";
+import { useHomeSection } from "../../hook/useHomeSection";
 import PlayListSelector from "../Selection/PlayListSelector";
 import FavoriteArtisItem from "../Selection/FavoriteArtisItem";
 
+const matchFavoriteArtist = (s) =>
+  s?.sectionType === "artistSpotlight" ||
+  /nghệ sĩ yêu thích/i.test(s?.title || "");
+
 const FavoriteArtistHomePapge = () => {
-  const [datas, setData] = useState(null);
-  const { data, status } = useGetHomePage();
+  const { section, isLoading } = useHomeSection(matchFavoriteArtist);
+  const datas = section?.items;
 
-  const dataSelector = data?.data.items.find(
-    (e) => e.title === "Nghệ Sĩ Yêu Thích"
-  );
-
-  useEffect(() => {
-    if (data && dataSelector) {
-      setData(dataSelector?.items);
-    }
-  }, [status]);
-
-  if (!dataSelector) return null;
+  if (!section && !isLoading) return null;
+  if (!section) return null;
 
   return (
-    <PlayListSelector title={dataSelector?.title}>
+    <PlayListSelector title={section?.title}>
       {datas?.length > 0 &&
         datas.map((e, index) => {
           let classGird = "col l-2-4 m-3 c-5";
-          if (index > 4) return;
+          if (index > 4) return null;
           if (index === 4) {
             classGird = "col l-2-4 m-0 c-5";
           }

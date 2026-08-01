@@ -1,19 +1,17 @@
-import React, { memo, useState } from "react"
+import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Link } from "react-router-dom"
-import { useGetHomePage } from "../../api/getHomePage"
+import { byType, useHomeSection } from "../../hook/useHomeSection"
 import CharHomeItem from "../Selection/CharHomeItem"
 import { useDispatch, useSelector } from "react-redux"
 import { setPlay, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
 import { fetchPlayList, setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
 import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
 import { toast } from "react-toastify"
-import { useLayoutEffect } from "react"
 
 const ChartHomePage = memo(() => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
-   const dataSelector = data?.data.items.find((e) => e.sectionType === "RTChart")
+   const { section, isLoading } = useHomeSection(byType("RTChart"))
+   const datas = section
 
    const dispatch = useDispatch()
 
@@ -23,11 +21,7 @@ const ChartHomePage = memo(() => {
 
    const isRandom = useSelector((state) => state.setting.isRandom)
 
-   useLayoutEffect(() => {
-      if (data) {
-         setData(dataSelector)
-      }
-   }, [status])
+   if (!section && !isLoading) return null
 
    const rank1 = datas?.items[0]
    const rank2 = datas?.items[1]

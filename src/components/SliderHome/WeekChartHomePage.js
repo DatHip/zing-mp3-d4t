@@ -1,18 +1,12 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { useGetHomePage } from "../../api/getHomePage"
+import { byType, useHomeSection } from "../../hook/useHomeSection"
 
 const WeekChartHomePage = memo(() => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
+   const { section, isLoading } = useHomeSection(byType("weekChart"))
+   const datas = section?.items
 
-   const dataSelector = data?.data.items.find((e) => e.sectionType === "weekChart")
-
-   useEffect(() => {
-      if (data) {
-         setData(dataSelector.items)
-      }
-   }, [status])
+   if (!section && !isLoading) return null
 
    return (
       <div className="container_chart-weekend">

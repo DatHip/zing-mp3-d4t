@@ -1,10 +1,10 @@
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo } from "react"
 import { Navigation, Autoplay, Pagination } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useGetHomePage } from "../../api/getHomePage"
+import { useHomeSection } from "../../hook/useHomeSection"
 import PlayListSelector from "../Selection/PlayListSelector"
 
 import { Link, useNavigate } from "react-router-dom"
@@ -15,32 +15,26 @@ import ActionIcon from "../Icon/ActionIcon"
 import { playSongNotAlbum } from "../../features/QueueFeatures/QueueFeatures"
 import LoadingIcon from "../Icon/LoadingIcon"
 
+const matchNewMusic = (s) => /nhạc mới/i.test(s?.title || "") || s?.sectionId === "hNewrelease"
+
 const NewMusicHomePage = memo(() => {
-   const { data, status } = useGetHomePage()
-   const [datas, setData] = useState(null)
+   const { section, isLoading } = useHomeSection(matchNewMusic)
+   const datas = section?.items
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const { playing, isReady } = useSelector((state) => state.setting)
 
-   const dataSelector = data?.data.items.find((e) => e.title === "Nhạc mới")
-
-   useEffect(() => {
-      if (data && dataSelector?.items) {
-         setData(dataSelector.items)
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [status])
-
    const navigationPrevRef = React.useRef(null)
    const navigationNextRef = React.useRef(null)
 
-   if (!dataSelector) return null
+   if (!section && !isLoading) return null
+   if (!section) return null
 
    try {
       return (
-         <PlayListSelector to="moi-phat-hanh" classAdd={`container_release`} title={dataSelector?.title} all={true}>
+         <PlayListSelector to="moi-phat-hanh" classAdd={`container_release`} title={section?.title} all={true}>
             <div className="release_list">
                {datas && datas.length > 0 && (
                   <Swiper

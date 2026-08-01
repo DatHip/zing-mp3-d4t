@@ -1,22 +1,16 @@
 import "swiper/css"
 
-import React, { memo, useEffect, useState } from "react"
+import React, { memo } from "react"
 import { Autoplay } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useGetHomePage } from "../../api/getHomePage"
+import { byId, useHomeSection } from "../../hook/useHomeSection"
 import CarouselItem from "../Selection/CarouselItem"
 
 const NewMusicHomePage2 = memo(() => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
+   const { section, isLoading } = useHomeSection(byId("hAlbum"))
+   const datas = section?.items
 
-   const dataSelector = data?.data.items.find((e) => e.sectionId === "hAlbum")
-
-   useEffect(() => {
-      if (data) {
-         setData(dataSelector.items)
-      }
-   }, [status])
+   if (!section && !isLoading) return null
 
    try {
       return (

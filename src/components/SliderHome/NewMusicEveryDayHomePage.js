@@ -1,28 +1,18 @@
-import React, { memo, useEffect, useState } from "react"
-import { useGetHomePage } from "../../api/getHomePage"
+import React, { memo } from "react"
+import { byId, useHomeSection } from "../../hook/useHomeSection"
 import CarouselItem from "../Selection/CarouselItem"
 import PlayListSelector from "../Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 
 const NewMusicEveryDayHomePage = () => {
-   const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
+   const { section, isLoading } = useHomeSection(byId("hAutoTheme2"))
+   const datas = section?.items
 
-   const dataSelector = data?.data.items.find((e) => e.sectionId === "hAutoTheme2")
-
-   //  const dataSelector = data?.data.items[4]
-
-   useEffect(() => {
-      if (data && dataSelector?.items) {
-         setData(dataSelector.items)
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [status])
-
-   if (!dataSelector) return null
+   if (!section && !isLoading) return null
+   if (!section) return null
 
    return (
-      <PlayListSelector title={dataSelector?.title}>
+      <PlayListSelector title={section?.title}>
          {datas?.length > 0 &&
             datas.map((e, index) => {
                let classGird = "col l-2-4 m-3 c-5"

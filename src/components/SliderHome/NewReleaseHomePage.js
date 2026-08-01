@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import styled from "styled-components"
-import { useGetHomePage } from "../../api/getHomePage"
+import { byType, useHomeSection } from "../../hook/useHomeSection"
 import NewReleaseitem from "../NewReleaseitem/NewReleaseitem"
 import PlayListSelector from "../Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
@@ -29,19 +29,14 @@ const NewReleaseStyle = styled.div`
    }
 `
 const NewReleaseHomePage = memo(() => {
-   const [datas, setData] = useState(null)
    const [selectList, setSelectList] = useState(false)
-   const { data, status } = useGetHomePage()
-   const dataSelector = data?.data.items.find((e) => e.sectionType === "new-release")
+   const { section, isLoading } = useHomeSection(byType("new-release"))
+   const datas = section?.items
 
-   useEffect(() => {
-      if (dataSelector) {
-         setData(dataSelector?.items)
-      }
-   }, [status])
+   if (!section && !isLoading) return null
 
    const SongList = memo(() => {
-      if (!datas) return
+      if (!datas) return null
       const dataSong = datas?.vPop
 
       const colSong1 = dataSong?.slice(0, 4)
@@ -70,7 +65,7 @@ const NewReleaseHomePage = memo(() => {
       // const colSong2 = dataAlbum?.slice(3, 6)
       // const colSong3 = dataAlbum?.slice(6, 9)
 
-      if (!datas) return
+      if (!datas) return null
       const dataSong = datas?.others
 
       const colSong1 = dataSong?.slice(0, 4)
@@ -106,7 +101,7 @@ const NewReleaseHomePage = memo(() => {
                   </button>
                </div>
             }
-            title={dataSelector?.title}
+            title={section?.title}
             all={true}
             className2="h-[320px]"
          >

@@ -49,6 +49,20 @@ const BottomControlllPLayIng = memo(() => {
       progressBar.current.style.width = (currentTime / infoSongCurrent?.duration) * 100 + "%"
    }, [currentTime])
 
+   useEffect(() => {
+      if (!currentEncodeId || !infoSongCurrent) return
+      if (infoSongCurrent?.streamingStatus === 2) {
+         toast("Bài này chỉ dành cho tài khoản VIP — chuyển bài tiếp theo", { type: "info" })
+         dispatch(setReady(false))
+         if (isRandom) {
+            dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
+         } else {
+            dispatch(setCurrentIndexSong(currentIndexSong + 1))
+         }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [currentEncodeId])
+
    return (
       <div className="player_bottom">
          <p className="playing_time-left">{fancyTimeFormat(currentTime)}</p>

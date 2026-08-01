@@ -3,34 +3,34 @@ import { Route, Routes, useLocation } from "react-router-dom"
 import Loading from "../components/loading/Loadng"
 
 const MyInfoPage = React.lazy(
-   () => import('../components/MyMusicPage/MyInfoPage'),
+   () => import('../pages/MyMusicPage/components/MyInfoPage'),
  )
 const HistorySong = React.lazy(
-   () => import('../components/HistoryPage/HistorySong'),
+   () => import('../pages/HistoryPage/components/HistorySong'),
  )
 const HistoryVideo = React.lazy(
-   () => import('../components/HistoryPage/HistoryVideo'),
+   () => import('../pages/HistoryPage/components/HistoryVideo'),
  )
 const HistroryPlayList = React.lazy(
-   () => import('../components/HistoryPage/HistroryPlayList'),
+   () => import('../pages/HistoryPage/components/HistroryPlayList'),
  )
 const SearchPagePlaylist = React.lazy(
-   () => import('../components/SearchPage/SearchPagePlaylist'),
+   () => import('../pages/SearchPage/components/SearchPagePlaylist'),
  )
 const SearchPageSong = React.lazy(
-   () => import('../components/SearchPage/SearchPageSong'),
+   () => import('../pages/SearchPage/components/SearchPageSong'),
  )
 const SearchPageMv = React.lazy(
-   () => import('../components/SearchPage/SearchPageMv'),
+   () => import('../pages/SearchPage/components/SearchPageMv'),
  )
 const SearchPageArtist = React.lazy(
-   () => import('../components/SearchPage/SearchPageArtist'),
+   () => import('../pages/SearchPage/components/SearchPageArtist'),
  )
 const SearchPageAll = React.lazy(
-   () => import('../components/SearchPage/SearchPageAll'),
+   () => import('../pages/SearchPage/components/SearchPageAll'),
  )
 const HubDetailPage = React.lazy(
-   () => import('../components/HubPage/HubDetailPage'),
+   () => import('../pages/HubPage/components/HubDetailPage'),
  )
 const ArtistSingle = React.lazy(
    () => import('../pages/ArtistPage/components/ArtistSingle'),
@@ -48,22 +48,22 @@ const ArtistALl = React.lazy(
    () => import('../pages/ArtistPage/components/ArtistALl'),
  )
 const MyMusicArtis = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicArtis'),
+   () => import('../pages/MyMusicPage/components/MyMusicArtis'),
  )
 const MyMusicPlayList = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicPlayList'),
+   () => import('../pages/MyMusicPage/components/MyMusicPlayList'),
  )
 const MyMusicSong = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicSong'),
+   () => import('../pages/MyMusicPage/components/MyMusicSong'),
  )
 const MyMusicAll = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicAll'),
+   () => import('../pages/MyMusicPage/components/MyMusicAll'),
  )
 const NewFeedPageChidlen = React.lazy(
-   () => import('../components/Followpage/NewFeedPageChidlen'),
+   () => import('../pages/NewFeedPage/components/NewFeedPageChidlen'),
  )
 const MvPageList = React.lazy(
-   () => import('../components/MVpage/MvPageList'),
+   () => import('../pages/MvPage/components/MvPageList'),
  )
 const AuthenticationPage = React.lazy(
    () => import('../pages/AuthenticationPage'),

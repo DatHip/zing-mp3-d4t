@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setName } from "../../features/formSearch/formSearch"
 import { memo } from "react"
-import OutstandingItems from "../SearchPage/OutstandingItems"
+import OutstandingItems from "pages/SearchPage/components/OutstandingItems"
 import LoadingSvg from "../loading/LoadingSvg"
 
 const SuggestListStyles = styled.ul`

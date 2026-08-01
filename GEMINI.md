@@ -167,3 +167,26 @@ curl -s http://localhost:5000/api/playlist/ZWZB969E | node -e "let d='';process.
 - Use `if (datas?.length === 0)` when `datas` is an object (not array). Use `isLoading || !datas`.
 - Reintroduce npm `zingmp3-api-next` — BE is self-signed now.
 - Name files and variables with correct spelling (e.g. avoid spelling errors like "Chidlen", "RadReplayRadio", "SidleRadio" in future refactors/files. A dedicated naming correction task will standardise the existing typos later).
+
+---
+
+## Latest state (2026-08-01)
+
+Branch `perf/revive-optimize` head: `770534b`. Both FE + BE pushed. FE 16+ Gemini/Claude commits ahead of squashed `main`.
+
+**Bundle** after all optimization passes:
+- main.js **364 KB gzipped** (down from initial ~470 KB via lazy ThemePortal + Gemini's lazy CharHomeItem + dead App.js effect removal)
+- main.css **52 KB gzipped** (Tailwind + legacy SCSS 246 KB raw → ~5x compression)
+- Chart.js, framer-motion, `@mui/lab/Masonry` all in lazy chunks now
+
+**Firebase-auth is still eager** because `components/Navbar/ItemLogin.js` (in Header, always mounted) imports `signOut` + `auth`. If bundle needs further trimming, lazy-load ItemLogin behind Suspense.
+
+**Play flow persist** owned by `app/persistMiddleware.js` (debounced 800ms, ref-equality shortcut). Do NOT reintroduce `localStorage.setItem` in reducers or effects.
+
+**Remaining pending work** (deploy pipeline):
+1. Deploy BE to Vercel (repo has `vercel.json`). Set env vars in dashboard: `ZING_API_KEY`, `ZING_SECRET_KEY`, `ZING_VERSION`, `CORS_ORIGINS` (prod FE domain).
+2. Deploy FE. Set `REACT_APP_API_URL` + `REACT_APP_FIREBASE_*` env vars. CRA build → static hosting.
+3. (Optional) Style: `main.css` 52KB gzipped is fine; big SCSS split by page would need cascade audit. Skip unless perf-critical.
+4. (Optional) `firebase-auth` eager — see note above. Lazy-load ItemLogin if trimming main.js further.
+
+**Prior sessions removed HANDOFF.md** — consult `git log main..HEAD --oneline` for full history.

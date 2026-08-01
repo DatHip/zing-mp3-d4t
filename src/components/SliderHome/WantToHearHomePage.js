@@ -2,7 +2,6 @@ import React, { memo } from "react"
 import { byId, useHomeSection } from "../../hook/useHomeSection"
 import CarouselItem from "../Selection/CarouselItem"
 import PlayListSelector from "../Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
 
 const WantToHearHomePage = () => {
    const { section, isLoading } = useHomeSection(byId("hEditorTheme"))
@@ -19,7 +18,7 @@ const WantToHearHomePage = () => {
                   classGird = "col l-2-4 m-0 c-5"
                }
 
-               return <CarouselItem key={e.encodeId} artis={false} desc={true} class1={classGird} item={e}></CarouselItem>
+               return <CarouselItem key={e.encodeId || e.id || index} artis={false} desc={true} class1={classGird} item={e}></CarouselItem>
             })}
          {!datas &&
             Array(5)
@@ -32,7 +31,7 @@ const WantToHearHomePage = () => {
 
                   return (
                      <CarouselItem.Loading
-                        key={uuidv4()}
+                        key={index}
                         artis={false}
                         desc={false}
                         class1={classGird}

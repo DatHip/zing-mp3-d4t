@@ -1,7 +1,6 @@
 import React, { memo } from "react"
 import FavoriteArtisItem from "../../../components/Selection/FavoriteArtisItem"
 import PlayListSelector from "../../../components/Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
 
 const NationsHub = memo((data) => {
    return (
@@ -11,7 +10,7 @@ const NationsHub = memo((data) => {
             data?.data?.map((e, index) => {
                let classGird = "col l-3 m-6 !mb-6 c-6"
 
-               return <FavoriteArtisItem isCenter key={uuidv4()} clasName={classGird} isHub item={e}></FavoriteArtisItem>
+               return <FavoriteArtisItem isCenter key={e.encodeId || e.id || index} clasName={classGird} isHub item={e}></FavoriteArtisItem>
             })}
       </PlayListSelector>
    )

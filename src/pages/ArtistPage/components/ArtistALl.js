@@ -3,7 +3,6 @@ import SliderShow from "../../../components/MyMusicPage/SliderShow"
 import PlayListSelector from "../../../components/Selection/PlayListSelector"
 import ItemChartList from "../../../components/TopChartPage/ItemChartList"
 import { useOutletContext } from "react-router-dom"
-import { v4 as uuidv4 } from "uuid"
 import CarouselItem from "../../../components/Selection/CarouselItem"
 import ItemArits from "../../../components/MyMusicPage/ItemArits"
 import MvItem from "../../../components/MVpage/MvItem"
@@ -15,7 +14,7 @@ const ArtistALl = () => {
    const dataSelector = datas?.sections?.find((e) => e.sectionType === "song")
    const dataSelector2 = datas?.sections?.filter((e) => e.sectionType !== "song")
 
-   if (datas?.length === 0 || !datas) return <LoadingSvg></LoadingSvg>
+   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
 
    return (
       <div>
@@ -32,7 +31,7 @@ const ArtistALl = () => {
                            {dataSelector?.items &&
                               dataSelector?.items.length > 0 &&
                               dataSelector?.items.map((e, index) => {
-                                 return <ItemChartList key={uuidv4()} isNoneRank item={e} index={index}></ItemChartList>
+                                 return <ItemChartList key={e.encodeId || e.id || index} isNoneRank item={e} index={index}></ItemChartList>
                               })}
                         </div>
                      </div>
@@ -40,16 +39,16 @@ const ArtistALl = () => {
                </div>
             </PlayListSelector>
             {dataSelector2 &&
-               dataSelector2.map((e) => {
+               dataSelector2.map((e, idx) => {
+                  const sectionKey = e.sectionId || `${e.sectionType}-${idx}`
+
                   if (e.sectionType === "video") {
-                     if (!e.items) return
+                     if (!e.items) return null
 
                      return (
-                        <PlayListSelector classAdd="artist-mv" key={uuidv4()} title={e.title}>
-                           {e?.items?.map((item, index) => {
-                              if (index > 2) return
-
-                              return <MvItem key={uuidv4()} data={item} isAritst></MvItem>
+                        <PlayListSelector classAdd="artist-mv" key={sectionKey} title={e.title}>
+                           {e?.items?.slice(0, 3).map((item, index) => {
+                              return <MvItem key={item.encodeId || item.id || index} data={item} isAritst></MvItem>
                            })}
                         </PlayListSelector>
                      )
@@ -57,33 +56,25 @@ const ArtistALl = () => {
 
                   if (e.sectionType === "artist") {
                      return (
-                        <PlayListSelector key={uuidv4()} title={e.title}>
-                           {e?.items?.map((item, index) => {
-                              if (index > 4) return
-                              let classGird = "col l-2-4 m-3 c-5"
-                              if (index === 4) {
-                                 classGird = "col l-2-4 m-0 c-5"
-                              }
+                        <PlayListSelector key={sectionKey} title={e.title}>
+                           {e?.items?.slice(0, 5).map((item, index) => {
+                              let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
 
-                              return <ItemArits key={uuidv4()} classGird={classGird} data={item}></ItemArits>
+                              return <ItemArits key={item.id || item.encodeId || index} classGird={classGird} data={item}></ItemArits>
                            })}
                         </PlayListSelector>
                      )
                   }
 
                   return (
-                     <PlayListSelector key={uuidv4()} title={e.title}>
-                        {e?.items?.map((item, index) => {
-                           if (index > 4) return
-                           let classGird = "col l-2-4 m-3 c-5"
-                           if (index === 4) {
-                              classGird = "col l-2-4 m-0 c-5"
-                           }
+                     <PlayListSelector key={sectionKey} title={e.title}>
+                        {e?.items?.slice(0, 5).map((item, index) => {
+                           let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
 
                            return (
                               <CarouselItem
                                  isSwiper={true}
-                                 key={uuidv4()}
+                                 key={item.encodeId || item.id || index}
                                  artis={true}
                                  desc={false}
                                  class1={classGird}

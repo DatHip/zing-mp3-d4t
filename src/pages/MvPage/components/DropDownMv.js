@@ -1,5 +1,4 @@
 import React, { memo, useState } from "react"
-import { v4 as uuidv4 } from "uuid"
 import { useNavigate, useParams } from "react-router-dom"
 import Tippy from "@tippyjs/react"
 import { useDispatch, useSelector } from "react-redux"
@@ -21,22 +20,22 @@ const DropDownMv = memo(() => {
       const data = await axios.get(tmdAPI.getCategoryMv(id))
       const dataSelector = data.data.data
       setData(dataSelector)
-   }, [])
+   }, [id])
 
    useLayoutEffect(() => {
       fetchData()
-   }, [])
+   }, [fetchData])
 
    useLayoutEffect(() => {
       if (id === "IWZ9Z08I" || id === "IWZ9Z08O" || id === "IWZ9Z08W" || id === "IWZ9Z086") {
          dispatch(setText("Tất Cả"))
       }
-   }, [id])
+   }, [id, dispatch])
 
    const handleClick = useCallback((e) => {
       dispatch(setText(e.title))
       navigate(`/mv/${e.id}`, { state: true })
-   }, [])
+   }, [dispatch, navigate])
 
    return (
       <div className="main_mv-search-dropdown">
@@ -47,7 +46,7 @@ const DropDownMv = memo(() => {
             content={
                <div id="mainMvList" className="main_mv-dropdown-list">
                   {datas?.childs?.map((e) => (
-                     <div onClick={() => handleClick(e)} key={uuidv4()} className="main_mv-dropdown-item">
+                     <div onClick={() => handleClick(e)} key={e.id || e.encodeId} className="main_mv-dropdown-item">
                         {e.title || e.name}
                      </div>
                   ))}

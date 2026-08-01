@@ -2,7 +2,6 @@ import React, { memo } from "react"
 import { byId, useHomeSection } from "../../hook/useHomeSection"
 import CarouselItem from "../Selection/CarouselItem"
 import PlayListSelector from "../Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
 
 const NewMusicEveryDayHomePage = () => {
    const { section, isLoading } = useHomeSection(byId("hAutoTheme2"))
@@ -23,7 +22,7 @@ const NewMusicEveryDayHomePage = () => {
                return (
                   <CarouselItem
                      isSwiper={true}
-                     key={e.encodeId}
+                     key={e.encodeId || e.id || index}
                      artis={true}
                      desc={false}
                      class1={classGird}
@@ -42,7 +41,7 @@ const NewMusicEveryDayHomePage = () => {
 
                   return (
                      <CarouselItem.Loading
-                        key={uuidv4()}
+                        key={index}
                         artis={false}
                         desc={false}
                         class1={classGird}

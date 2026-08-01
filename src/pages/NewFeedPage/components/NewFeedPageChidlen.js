@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from "react"
 import ArtistSpotlight from "components/SliderHome/ArtistSpotlight"
 import FollowItems from "./FollowItems"
 import axios from "axios"
 import { tmdAPI } from "config"
 import { useParams } from "react-router-dom"
 import LoadingSvg from "components/loading/LoadingSvg"
-import { v4 as uuidv4 } from "uuid"
 import Masonry from "@mui/lab/Masonry"
 import useWindowSize from "hook/useResizeHook"
-import { useLayoutEffect } from "react"
 
 const NewFeedPageChidlen = () => {
    const { nation, id } = useParams()
@@ -25,24 +23,8 @@ const NewFeedPageChidlen = () => {
    if (width <= 600) {
       col = 1
    }
-   useLayoutEffect(() => {
-      fetchData()
-   }, [])
 
-   useEffect(() => {
-      if (!loading) return
-      const observer = new IntersectionObserver(
-         (e) => {
-            if (e[0].isIntersecting) {
-               fetchData()
-            }
-         },
-         { threshold: 1 }
-      )
-      observer?.observe(pageEnd.current)
-   }, [loading])
-
-   const fetchData = async () => {
+   const fetchData = useCallback(async () => {
       const data = await axios.get(tmdAPI.getNewFeed(id, numer.current))
       const dataSelector = data.data.data.items
       const totalitems = data.data.data.total
@@ -59,7 +41,32 @@ const NewFeedPageChidlen = () => {
       setTimeout(() => {
          setLoading(true)
       }, 3000)
-   }
+   }, [id, datas.length])
+
+   useLayoutEffect(() => {
+      fetchData()
+   }, [fetchData])
+
+   useEffect(() => {
+      if (!loading) return
+      const currentPageEnd = pageEnd.current
+      const observer = new IntersectionObserver(
+         (e) => {
+            if (e[0].isIntersecting) {
+               fetchData()
+            }
+         },
+         { threshold: 1 }
+      )
+      if (currentPageEnd) {
+         observer?.observe(currentPageEnd)
+      }
+      return () => {
+         if (currentPageEnd) {
+            observer?.unobserve(currentPageEnd)
+         }
+      }
+   }, [loading, fetchData])
 
    const pageEnd = useRef()
 
@@ -76,7 +83,7 @@ const NewFeedPageChidlen = () => {
          <div className="relative ">
             <Masonry columns={col} spacing={0}>
                {datas.map((e) => (
-                  <FollowItems key={uuidv4()} data={e}></FollowItems>
+                  <FollowItems key={e.id || e.encodeId} data={e}></FollowItems>
                ))}
             </Masonry>
             <div ref={pageEnd}></div>

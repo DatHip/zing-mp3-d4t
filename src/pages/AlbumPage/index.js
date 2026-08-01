@@ -1,5 +1,4 @@
 import React from "react"
-import { v4 as uuidv4 } from "uuid"
 
 import CarouselItem from "../../components/Selection/CarouselItem"
 import PlayListSelector from "../../components/Selection/PlayListSelector"
@@ -21,7 +20,7 @@ const SuggestedSection = ({ section, ItemComponent, isCarousel }) => (
             return (
                <CarouselItem
                   isSwiper={true}
-                  key={uuidv4()}
+                  key={item.encodeId || item.id || index}
                   artis={true}
                   desc={false}
                   class1={classGird}
@@ -29,7 +28,7 @@ const SuggestedSection = ({ section, ItemComponent, isCarousel }) => (
                ></CarouselItem>
             )
          }
-         return <ItemComponent key={uuidv4()} classGird={classGird} data={item}></ItemComponent>
+         return <ItemComponent key={item.id || item.encodeId || index} classGird={classGird} data={item}></ItemComponent>
       })}
    </PlayListSelector>
 )
@@ -80,7 +79,7 @@ const AlbumPage = () => {
                                     item={e}
                                     index={index}
                                     indexNotVip={indexItem}
-                                    key={e.encodeId}
+                                    key={e.encodeId || index}
                                  />
                               )
                            })}
@@ -96,13 +95,14 @@ const AlbumPage = () => {
             </div>
 
             <div>
-               {suggested?.map((e) => {
+               {suggested?.map((e, index) => {
                   if (e.sectionType === "adBanner") return null
+                  const sectionKey = e.sectionId || `${e.sectionType}-${index}`
                   if (e.sectionType === "artist") {
-                     return <SuggestedSection key={uuidv4()} section={e} ItemComponent={ItemArits} />
+                     return <SuggestedSection key={sectionKey} section={e} ItemComponent={ItemArits} />
                   }
                   if (e.sectionType === "playlist") {
-                     return <SuggestedSection key={uuidv4()} section={e} isCarousel />
+                     return <SuggestedSection key={sectionKey} section={e} isCarousel />
                   }
                   return null
                })}

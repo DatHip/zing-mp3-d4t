@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useRef, useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import { v4 as uuidv4 } from "uuid"
 import getFormartTimeDDYY from "../../../utils/getFormartTimeDDYY"
 import { setPlay, setReady } from "../../../features/SettingPlay/settingPlay"
 import { fetchPlayList } from "../../../features/QueueFeatures/QueueFeatures"
@@ -93,7 +92,7 @@ const AlbumPageInfo = memo(({ datas }) => {
                         }
 
                         return (
-                           <span key={uuidv4()}>
+                           <span key={e.id || e.alias || index}>
                               <Link className="is-ghost" to={`/nghe-si/${e.alias}/`}>
                                  {e.name}
                               </Link>

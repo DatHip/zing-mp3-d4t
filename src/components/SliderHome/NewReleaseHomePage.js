@@ -3,7 +3,6 @@ import styled from "styled-components"
 import { byType, useHomeSection } from "../../hook/useHomeSection"
 import NewReleaseitem from "../NewReleaseitem/NewReleaseitem"
 import PlayListSelector from "../Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
 
 const NewReleaseStyle = styled.div`
    .m-6 {
@@ -46,25 +45,19 @@ const NewReleaseHomePage = memo(() => {
       return (
          <>
             <div className="col l-4 m-6 c-9">
-               {colSong1 && colSong1.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong1 && colSong1.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
             </div>
             <div className="col l-4 m-6 c-9">
-               {colSong2 && colSong2.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong2 && colSong2.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
             </div>
             <div className="col l-4 m-0 c-9">
-               {colSong3 && colSong3.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong3 && colSong3.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
             </div>
          </>
       )
    })
 
    const AlbumList = memo(() => {
-      // if (!datas) return
-      // const dataAlbum = datas?.album
-      // const colSong1 = dataAlbum?.slice(0, 3)
-      // const colSong2 = dataAlbum?.slice(3, 6)
-      // const colSong3 = dataAlbum?.slice(6, 9)
-
       if (!datas) return null
       const dataSong = datas?.others
 
@@ -75,13 +68,13 @@ const NewReleaseHomePage = memo(() => {
       return (
          <>
             <div className="col l-4 m-6 c-9">
-               {colSong1 && colSong1.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong1 && colSong1.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
             </div>
             <div className="col l-4 m-6 c-9">
-               {colSong2 && colSong2.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong2 && colSong2.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
             </div>
             <div className="col l-4 m-0 c-9">
-               {colSong3 && colSong3.map((e) => <NewReleaseitem key={uuidv4()} item={e}></NewReleaseitem>)}
+               {colSong3 && colSong3.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
             </div>
          </>
       )

@@ -8,7 +8,7 @@ const ArtistMv = () => {
    const datas = useOutletContext()
    const dataSelector = datas?.sections?.find((e) => e.sectionType === "video")
 
-   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
+   if (!datas || !datas.sections) return <LoadingSvg></LoadingSvg>
 
    return (
       <div className="main_mv main-page-item active">

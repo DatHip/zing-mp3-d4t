@@ -8,7 +8,7 @@ const ArtistSingle = () => {
    const datas = useOutletContext()
    const dataSelector = datas?.sections?.find((e) => e.title === "Single & EP")
 
-   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
+   if (!datas || !datas.sections) return <LoadingSvg></LoadingSvg>
 
    return (
       <PlayListSelector classAdd2={"!flex-wrap"} key={dataSelector?.title} title={dataSelector?.title}>

@@ -58,7 +58,7 @@ const HubDetailPage = () => {
       fetchData()
    }, [fetchData])
 
-   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
+   if (!datas || !datas.sections) return <LoadingSvg></LoadingSvg>
 
    return (
       <HubDetailPageStyles>

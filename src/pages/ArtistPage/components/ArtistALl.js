@@ -14,7 +14,7 @@ const ArtistALl = () => {
    const dataSelector = datas?.sections?.find((e) => e.sectionType === "song")
    const dataSelector2 = datas?.sections?.filter((e) => e.sectionType !== "song")
 
-   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
+   if (!datas || !datas.sections) return <LoadingSvg></LoadingSvg>
 
    return (
       <div>

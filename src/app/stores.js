@@ -15,7 +15,7 @@ import { createPersistMiddleware, flushPersistOnUnload } from "./persistMiddlewa
 
 export const store = configureStore({
    reducer: {
-      formsearch: formSearch,
+      formSearch: formSearch,
       themetoggle: themeToggle,
       toggleright: toggleRight,
       setTextBtn: setTextBtn,

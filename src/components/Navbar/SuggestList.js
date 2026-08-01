@@ -68,7 +68,7 @@ const SuggestListStyles = styled.ul`
 `
 
 const SuggestList = ({ setOpen, setValue, value, refinput }) => {
-   const { entities, loading, entitiesNew, names } = useSelector((state) => state.formsearch)
+   const { entities, loading, entitiesNew, names } = useSelector((state) => state.formSearch)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 

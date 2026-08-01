@@ -23,6 +23,7 @@ function App() {
    const dispatch = useDispatch()
 
    useLayoutEffect(() => {
+      if (!auth) return
       const unsub = onAuthStateChanged(auth, (user) => {
          if (!activeUser && user) {
             dispatch(

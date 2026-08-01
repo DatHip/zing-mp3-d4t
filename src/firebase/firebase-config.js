@@ -11,7 +11,24 @@ const firebaseConfig = {
    appId: process.env.REACT_APP_FIREBASE_APP_ID,
 }
 
-const app = initializeApp(firebaseConfig)
+// Guard: if env vars are missing (e.g. Vercel deploy without env set),
+// don't blow up the whole React tree — degrade to a no-op auth/db so the
+// app still renders (login/like features become inert, but user can browse).
+let database = null
+let auth = null
 
-export const database = getFirestore(app)
-export const auth = getAuth(app)
+if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId) {
+   try {
+      const app = initializeApp(firebaseConfig)
+      database = getFirestore(app)
+      auth = getAuth(app)
+   } catch (err) {
+      console.error("[firebase] initialize failed:", err?.message || err)
+   }
+} else {
+   console.warn(
+      "[firebase] missing REACT_APP_FIREBASE_* env vars — auth and Firestore disabled. Set them in Vercel Project Settings → Environment Variables, then redeploy."
+   )
+}
+
+export { database, auth }

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { tmdAPI } from "../../config"
+import { tmdAPI } from "../config"
 
 const fetchAlbum = async (id) => {
    const { data } = await axios.get(tmdAPI.getAlbumPage(id))

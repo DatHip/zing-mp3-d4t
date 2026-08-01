@@ -1,8 +1,8 @@
 import React from "react"
 import { useOutletContext } from "react-router"
-import LoadingSvg from "../loading/LoadingSvg"
-import PlayListSelector from "../Selection/PlayListSelector"
-import ItemChartList from "../TopChartPage/ItemChartList"
+import LoadingSvg from "../../../components/loading/LoadingSvg"
+import PlayListSelector from "../../../components/Selection/PlayListSelector"
+import ItemChartList from "../../../components/TopChartPage/ItemChartList"
 
 const ArtistSong = () => {
    const datas = useOutletContext()

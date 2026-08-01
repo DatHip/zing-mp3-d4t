@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { tmdAPI } from "../../config"
+import { tmdAPI } from "../config"
 
-export function useRadioData() {
+export function useTop100Data() {
    return useQuery(
-      ["radio"],
+      ["top100"],
       async () => {
-         const { data } = await axios.get(tmdAPI.getRadioPage())
+         const { data } = await axios.get(tmdAPI.getTop100Page())
          return data.data
       },
       { staleTime: 15 * 60 * 1000, keepPreviousData: true }

@@ -1,8 +1,5 @@
-import React, { useEffect } from "react"
-import { useParams } from "react-router"
+import React from "react"
 import { v4 as uuidv4 } from "uuid"
-import { useSelector } from "react-redux"
-import scrollIntoView from "smooth-scroll-into-view-if-needed"
 
 import CarouselItem from "../../components/Selection/CarouselItem"
 import PlayListSelector from "../../components/Selection/PlayListSelector"
@@ -10,11 +7,10 @@ import LoadingSvg from "../../components/loading/LoadingSvg"
 import ItemChartList from "../../components/TopChartPage/ItemChartList"
 import ItemArits from "../../components/MyMusicPage/ItemArits"
 import fancyTimeFormat from "../../utils/fancyTimeFormat"
-import scrollTop from "../../utils/scrollToTop"
 
 import AlbumPageInfo from "./components/AlbumPageInfo"
 import { AlbumPageStyles } from "./styles"
-import { useAlbumData } from "./useAlbumData"
+import { useAlbumPage } from "./useAlbumPage"
 
 const SuggestedSection = ({ section, ItemComponent, isCarousel }) => (
    <PlayListSelector title={section.title}>
@@ -39,22 +35,7 @@ const SuggestedSection = ({ section, ItemComponent, isCarousel }) => (
 )
 
 const AlbumPage = () => {
-   const { id } = useParams()
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const { album, suggested, isLoading } = useAlbumData(id)
-
-   useEffect(() => {
-      scrollTop()
-   }, [id])
-
-   useEffect(() => {
-      const node = document.querySelector(`.main_topchart .zing-chart_item.main_page-hover.active`)
-      if (!node) return
-      const t = setTimeout(() => {
-         scrollIntoView(node, { block: "center", behavior: "smooth", scrollMode: "if-needed" })
-      }, 200)
-      return () => clearTimeout(t)
-   }, [currentEncodeId, album])
+   const { album, suggested, isLoading } = useAlbumPage()
 
    if (isLoading || !album || !suggested) return <LoadingSvg />
 

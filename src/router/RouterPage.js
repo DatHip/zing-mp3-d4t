@@ -33,19 +33,19 @@ const HubDetailPage = React.lazy(
    () => import('../components/HubPage/HubDetailPage'),
  )
 const ArtistSingle = React.lazy(
-   () => import('../components/ArtistPage/ArtistSingle'),
+   () => import('../pages/ArtistPage/components/ArtistSingle'),
  )
 const ArtistMv = React.lazy(
-   () => import('../components/ArtistPage/ArtistMv'),
+   () => import('../pages/ArtistPage/components/ArtistMv'),
  )
 const ArtistAlbum = React.lazy(
-   () => import('../components/ArtistPage/ArtistAlbum'),
+   () => import('../pages/ArtistPage/components/ArtistAlbum'),
  )
 const ArtistSong = React.lazy(
-   () => import('../components/ArtistPage/ArtistSong'),
+   () => import('../pages/ArtistPage/components/ArtistSong'),
  )
 const ArtistALl = React.lazy(
-   () => import('../components/ArtistPage/ArtistALl'),
+   () => import('../pages/ArtistPage/components/ArtistALl'),
  )
 const MyMusicArtis = React.lazy(
    () => import('../components/MyMusicPage/MyMusicArtis'),

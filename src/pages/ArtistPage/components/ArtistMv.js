@@ -1,9 +1,9 @@
 import React from "react"
-import PlayListSelector from "../Selection/PlayListSelector"
+import PlayListSelector from "../../../components/Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 import { useOutletContext } from "react-router"
-import MvItem from "../MVpage/MvItem"
-import LoadingSvg from "../loading/LoadingSvg"
+import MvItem from "../../../components/MVpage/MvItem"
+import LoadingSvg from "../../../components/loading/LoadingSvg"
 
 const ArtistMv = () => {
    const datas = useOutletContext()

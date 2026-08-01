@@ -1,26 +1,10 @@
-import React, { useCallback } from "react"
-import { useDispatch } from "react-redux"
-
+import React from "react"
 import ItemChartList from "../../components/TopChartPage/ItemChartList"
 import LoadingSvg from "../../components/loading/LoadingSvg"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
-
-import { useNewMusicData } from "./useNewMusicData"
-
-const NEW_RELEASE_PLAYLIST_ID = "ZDB6EB9C"
+import { useNewMusicPage } from "./useNewMusicPage"
 
 const NewMusicPage = () => {
-   const { data, isLoading } = useNewMusicData()
-   const items = data?.items
-   const dispatch = useDispatch()
-
-   const handlePlayAll = useCallback(async () => {
-      dispatch(setReady(false))
-      dispatch(setPlay(false))
-      await dispatch(fetchPlayList(NEW_RELEASE_PLAYLIST_ID))
-      dispatch(setPlay(true))
-   }, [dispatch])
+   const { items, isLoading, handlePlayAll, playlistId } = useNewMusicPage()
 
    if (isLoading || !items) return <LoadingSvg />
 
@@ -44,7 +28,7 @@ const NewMusicPage = () => {
                      return (
                         <ItemChartList
                            indexNotVip={indexItem}
-                           idAlbum={NEW_RELEASE_PLAYLIST_ID}
+                           idAlbum={playlistId}
                            index={index}
                            item={e}
                            key={e.encodeId}

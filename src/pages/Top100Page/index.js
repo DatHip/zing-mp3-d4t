@@ -3,12 +3,12 @@ import CarouselItem from "../../components/Selection/CarouselItem"
 import PlayListSelector from "../../components/Selection/PlayListSelector"
 import LoadingSvg from "../../components/loading/LoadingSvg"
 import Top100HeaderSvg from "./components/Top100HeaderSvg"
-import { useTop100Data } from "./useTop100Data"
+import { useTop100Page } from "./useTop100Page"
 
 const Top100Page = () => {
-   const { data, isLoading } = useTop100Data()
+   const { sections, isLoading } = useTop100Page()
 
-   if (isLoading || !data) return <LoadingSvg />
+   if (isLoading || !sections) return <LoadingSvg />
 
    return (
       <div className="main_songnew main-page-item active">
@@ -16,7 +16,7 @@ const Top100Page = () => {
             <Top100HeaderSvg />
          </div>
          <div>
-            {data.map((section) => (
+            {sections.map((section) => (
                <PlayListSelector key={section.sectionId || section.title} title={section?.title}>
                   {section.items?.map((item) => (
                      <CarouselItem

@@ -1,9 +1,9 @@
 import React from "react"
-import PlayListSelector from "../Selection/PlayListSelector"
+import PlayListSelector from "../../../components/Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 import { useOutletContext } from "react-router"
-import CarouselItem from "../Selection/CarouselItem"
-import LoadingSvg from "../loading/LoadingSvg"
+import CarouselItem from "../../../components/Selection/CarouselItem"
+import LoadingSvg from "../../../components/loading/LoadingSvg"
 
 const ArtistAlbum = () => {
    const datas = useOutletContext()

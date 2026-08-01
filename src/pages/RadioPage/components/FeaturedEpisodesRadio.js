@@ -1,6 +1,6 @@
 import React, { memo } from "react"
-import NewReleaseitem from "../NewReleaseitem/NewReleaseitem"
-import PlayListSelector from "../Selection/PlayListSelector"
+import NewReleaseitem from "../../../components/NewReleaseitem/NewReleaseitem"
+import PlayListSelector from "../../../components/Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 
 const FeaturedEpisodesRadio = memo(({ data }) => {

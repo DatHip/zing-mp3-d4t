@@ -1,11 +1,11 @@
-import React, { memo } from "react"
-import CarouselItem from "../Selection/CarouselItem"
-import PlayListSelector from "../Selection/PlayListSelector"
+import React from "react"
+import CarouselItem from "../../../components/Selection/CarouselItem"
+import PlayListSelector from "../../../components/Selection/PlayListSelector"
 import { v4 as uuidv4 } from "uuid"
 
-const CategoryRadio = ({ data }) => {
+const NewProgramRaido = ({ data }) => {
    return (
-      <PlayListSelector title={data?.title} all={false}>
+      <PlayListSelector title={data?.title}>
          {data?.items?.length > 0 &&
             data?.items.map((e, index) => {
                if (index > 4) return
@@ -16,10 +16,9 @@ const CategoryRadio = ({ data }) => {
 
                return (
                   <CarouselItem
-                     hiddenTitle
                      isHiddenButton={true}
                      isSwiper={true}
-                     key={uuidv4()}
+                     key={e.encodeId}
                      artis={false}
                      desc={false}
                      class1={classGird}
@@ -50,4 +49,4 @@ const CategoryRadio = ({ data }) => {
    )
 }
 
-export default memo(CategoryRadio)
+export default NewProgramRaido

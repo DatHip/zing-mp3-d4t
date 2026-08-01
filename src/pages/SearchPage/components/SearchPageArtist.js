@@ -1,12 +1,10 @@
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { useParams } from "react-router"
 import { tmdAPI } from "config"
 import scrollTop from "utils/scrollToTop"
 import LoadingSvg from "components/loading/LoadingSvg"
 import PlayListSelector from "components/Selection/PlayListSelector"
-import { v4 as uuidv4 } from "uuid"
-
 import ItemArits from "components/MyMusicPage/ItemArits"
 
 const SearchPageArtist = () => {
@@ -14,29 +12,28 @@ const SearchPageArtist = () => {
 
    const [datas, setData] = useState([])
 
-   const fetchData = async () => {
+   const fetchData = useCallback(async () => {
       const data = await axios.get(tmdAPI.getSearchByType(id, "artist"))
       setData(data.data.data)
-      console.log(data.data.data)
-   }
+   }, [id])
 
    useEffect(() => {
       scrollTop()
       fetchData()
-   }, [id])
+   }, [id, fetchData])
 
-   if (datas?.length === 0) return <LoadingSvg></LoadingSvg>
+   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
 
    return (
       <div className="main_mv main-page-item active">
          <div className="main_mv-container ">
-            <PlayListSelector classAdd2={"container_top100-list "} title={"MV"}>
+            <PlayListSelector classAdd2={"container_top100-list "} title={"Nghệ Sĩ"}>
                {datas &&
                   datas?.items?.length > 0 &&
-                  datas?.items?.map((e, index) => {
+                  datas?.items?.map((e) => {
                      let classGird = "col l-2-4 m-3 c-5 !mb-[30px]"
 
-                     return <ItemArits classGird={classGird} key={uuidv4()} data={e}></ItemArits>
+                     return <ItemArits classGird={classGird} key={e.id || e.encodeId} data={e}></ItemArits>
                   })}
             </PlayListSelector>
          </div>

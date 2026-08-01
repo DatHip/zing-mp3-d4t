@@ -3,7 +3,6 @@ import React, { memo, useState } from "react"
 import { tmdAPI } from "config"
 import PlayListSelector from "components/Selection/PlayListSelector"
 import MvItem from "components/MVpage/MvItem"
-import { v4 as uuidv4 } from "uuid"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
 
@@ -14,18 +13,18 @@ const MvDataList = memo(({ item }) => {
       const data = await axios.get(tmdAPI.getArtistPage(item.alias))
       const res = data.data.data.sections?.find((e) => e.sectionType === "video")
       setData(res.items)
-   }, [])
+   }, [item.alias])
 
    useLayoutEffect(() => {
       fetchData()
-   }, [])
+   }, [fetchData])
 
-   if (datas.length === 0) return
+   if (!datas || datas.length === 0) return null
 
    return (
-      <PlayListSelector classAdd2={"container_top100-list "} key={uuidv4()} title={`MV Của ${item.name} `}>
+      <PlayListSelector classAdd2={"container_top100-list "} key={item.alias} title={`MV Của ${item.name} `}>
          {datas?.slice(0, 8).map((e) => {
-            return <MvItem isMvFull key={uuidv4()} data={e}></MvItem>
+            return <MvItem isMvFull key={e.encodeId || e.id} data={e}></MvItem>
          })}
       </PlayListSelector>
    )

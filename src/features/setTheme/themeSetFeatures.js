@@ -20,7 +20,7 @@ let initialState = JSON.parse(localStorage.getItem("data-theme")) || {
 }
 
 export const themeToggle = createSlice({
-   name: "themetoggle",
+   name: "themeToggle",
    initialState,
    reducers: {
       setThemes: (state, action) => {

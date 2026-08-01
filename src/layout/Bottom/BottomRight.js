@@ -30,7 +30,7 @@ const reorder = (list, startIndex, endIndex) => {
 }
 
 const BottomRight = () => {
-   const isToggle = useSelector((state) => state.toggleright)
+   const isToggle = useSelector((state) => state.toggleRight)
 
    const listSong = useSelector((state) => state.queueNowPlay.listSong)
    const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)

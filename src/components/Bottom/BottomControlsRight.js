@@ -6,7 +6,7 @@ import { setIsVolume, setVolume, toogleMuted } from "../../features/SettingPlay/
 import { setToggle } from "../../features/toggleRight/toggleRight"
 
 const BottomControlsRight = () => {
-   const isToggle = useSelector((state) => state.toggleright)
+   const isToggle = useSelector((state) => state.toggleRight)
    const infoSong = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const volume = useSelector((state) => state.setting.volume)
    const isVolume = useSelector((state) => state.setting.isVolume)

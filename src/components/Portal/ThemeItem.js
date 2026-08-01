@@ -8,7 +8,7 @@ const Items = memo(({ item }) => {
    const { name, itemS } = item
    const dispatch = useDispatch()
 
-   const dataTheme = useSelector((state) => state.themetoggle)
+   const dataTheme = useSelector((state) => state.themeToggle)
    const handleClickApply = () => {
       dispatch(setThemes(item))
    }

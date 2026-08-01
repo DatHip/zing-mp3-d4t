@@ -12,10 +12,10 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 function App() {
-   const themeDataTheme = useSelector((state) => state.themetoggle.dataTheme)
-   const themeBgImg = useSelector((state) => state.themetoggle.bgImg)
-   const themeBgPlaying = useSelector((state) => state.themetoggle.bgPlaying)
-   const themeDataStyle = useSelector((state) => state.themetoggle.dataStyle)
+   const themeDataTheme = useSelector((state) => state.themeToggle.dataTheme)
+   const themeBgImg = useSelector((state) => state.themeToggle.bgImg)
+   const themeBgPlaying = useSelector((state) => state.themeToggle.bgPlaying)
+   const themeDataStyle = useSelector((state) => state.themeToggle.dataStyle)
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const activeUser = useSelector((state) => state.users.activeUser)

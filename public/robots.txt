@@ -1,0 +1,14 @@
+# Deep content pages (/album, /nghe-si, /video-clip, ...) are intentionally NOT
+# disallowed here: they get <meta name="robots" content="noindex,follow"> from
+# the edge middleware instead. A disallowed URL can never be read, so its
+# noindex would never be seen — and social crawlers could not build previews.
+# Only routes that are private or worthless to any crawler are blocked.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth
+Disallow: /mymusic/
+Disallow: /history/
+
+Sitemap: https://zing-mp3-d4t.vercel.app/sitemap.xml

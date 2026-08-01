@@ -183,9 +183,33 @@ Branch `perf/revive-optimize` head: `770534b`. Both FE + BE pushed. FE 16+ Gemin
 
 **Play flow persist** owned by `app/persistMiddleware.js` (debounced 800ms, ref-equality shortcut). Do NOT reintroduce `localStorage.setItem` in reducers or effects.
 
+### SEO layer (added 2026-08-01)
+
+Static shell meta lives in `public/index.html` (title/description/canonical/OG/Twitter/JSON-LD).
+Absolute URLs default to `https://zing-mp3-d4t.vercel.app` — **change that domain in
+`public/robots.txt` and `public/sitemap.xml` if the real domain differs**; the HTML's
+absolute URLs are rewritten at runtime by the middleware, so only those two files are
+hardcoded.
+
+`middleware.js` (root, Vercel Edge, needs `@vercel/edge`) does crawler-only dynamic head
+rendering for `/album/:id`, `/nghe-si/:name`, `/video-clip/:id`, `/hub/detail/:id`,
+`/tim-kiem/*`, `/newfeed/*`. Humans hit `next()` immediately — zero added latency. It reads
+`REACT_APP_API_URL` at the edge (same var as the FE build).
+
+Deep pages get `noindex,follow` — they mirror zingmp3.vn, so indexing them is duplicate
+content. They are deliberately NOT disallowed in `robots.txt`: a blocked URL can't be read
+for its noindex, and social crawlers could not build link previews.
+
+Font loading: 9 render-blocking Google Fonts stylesheets → 1 blocking (Inter + Patrick
+Hand SC) + 1 async (`media="print"` swap) for Material Icons/Symbols with `display=block`.
+Dropped as unused: Alfa Slab One, Material Icons Sharp, Material Icons Two Tone, and the
+`fonts.sandbox.google.com` Symbols copy (internal Google host, not a production endpoint).
+
 **Remaining pending work** (deploy pipeline):
 1. Deploy BE to Vercel (repo has `vercel.json`). Set env vars in dashboard: `ZING_API_KEY`, `ZING_SECRET_KEY`, `ZING_VERSION`, `CORS_ORIGINS` (prod FE domain).
 2. Deploy FE. Set `REACT_APP_API_URL` + `REACT_APP_FIREBASE_*` env vars. CRA build → static hosting.
+   `REACT_APP_API_URL` must also be readable by Edge Middleware — a normal Vercel project
+   env var covers both.
 3. (Optional) Style: `main.css` 52KB gzipped is fine; big SCSS split by page would need cascade audit. Skip unless perf-critical.
 4. (Optional) `firebase-auth` eager — see note above. Lazy-load ItemLogin if trimming main.js further.
 

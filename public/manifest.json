@@ -1,0 +1,21 @@
+{
+   "name": "D4T MP3 — Nghe nhạc chất lượng cao",
+   "short_name": "D4T MP3",
+   "description": "Nghe nhạc trực tuyến miễn phí: Zing Chart, Top 100, MV, radio và playlist theo chủ đề.",
+   "lang": "vi",
+   "start_url": "/",
+   "scope": "/",
+   "display": "standalone",
+   "orientation": "portrait-primary",
+   "background_color": "#170f23",
+   "theme_color": "#170f23",
+   "categories": ["music", "entertainment"],
+   "icons": [
+      {
+         "src": "/pabicon.webp",
+         "type": "image/webp",
+         "sizes": "any",
+         "purpose": "any"
+      }
+   ]
+}

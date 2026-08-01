@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react"
-import ThemePortal from "../Portal/ThemePortal"
+import React, { useCallback, useEffect, useState, Suspense } from "react"
 import { AnimatePresence } from "framer-motion"
+
+const ThemePortal = React.lazy(() => import("../Portal/ThemePortal"))
 
 const ItemThemes = () => {
    const [modalOpen, setModalOpen] = useState(false)
@@ -130,8 +131,12 @@ const ItemThemes = () => {
             <span className="setting_item-title">Chủ đề</span>
          </div>
 
-         <AnimatePresence initial={false} exitBeforeEnter={true} onExitComplete={() => null}>
-            {modalOpen && <ThemePortal modalOpen={modalOpen} handleClose={close}></ThemePortal>}
+         <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
+            {modalOpen && (
+               <Suspense fallback={null}>
+                  <ThemePortal modalOpen={modalOpen} handleClose={close}></ThemePortal>
+               </Suspense>
+            )}
          </AnimatePresence>
       </>
    )

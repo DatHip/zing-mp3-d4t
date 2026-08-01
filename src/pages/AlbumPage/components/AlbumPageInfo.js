@@ -2,12 +2,12 @@ import React, { memo, useEffect, useRef, useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import { v4 as uuidv4 } from "uuid"
-import getFormartTimeDDYY from "../../utils/getFormartTimeDDYY"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
-import ActionIcon from "../Icon/ActionIcon"
-import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
-import useLikeHook from "../../hook/useLikeHook"
+import getFormartTimeDDYY from "../../../utils/getFormartTimeDDYY"
+import { setPlay, setReady } from "../../../features/SettingPlay/settingPlay"
+import { fetchPlayList } from "../../../features/QueueFeatures/QueueFeatures"
+import ActionIcon from "../../../components/Icon/ActionIcon"
+import { pushPlayListsLogged } from "../../../features/Logged/loggedFeatures"
+import useLikeHook from "../../../hook/useLikeHook"
 
 const AlbumPageInfo = memo(({ datas }) => {
    const dispatch = useDispatch()
@@ -27,6 +27,7 @@ const AlbumPageInfo = memo(({ datas }) => {
             refDiv.current.classList.remove("rotatePause")
          }, 500)
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [playing])
 
    const onClickBtn = useCallback(async () => {
@@ -37,6 +38,7 @@ const AlbumPageInfo = memo(({ datas }) => {
          dispatch(pushPlayListsLogged(datas))
       }
       dispatch(setPlay(true))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
    const { isLike, handleLike } = useLikeHook(datas, 1)

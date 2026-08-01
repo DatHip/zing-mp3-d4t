@@ -4,7 +4,6 @@ import "swiper/css/pagination"
 import React, { memo, useRef } from "react"
 import PlayListSelector from "../../../components/Selection/PlayListSelector"
 import { Navigation, Pagination } from "swiper"
-import { v4 as uuidv4 } from "uuid"
 import { Swiper, SwiperSlide } from "swiper/react"
 import styled from "styled-components"
 
@@ -144,7 +143,7 @@ const SidleRadio = ({ data, isFeatured }) => {
                   data.items.length > 0 &&
                   data?.items?.map((e, index) => {
                      return (
-                        <SwiperSlide key={uuidv4()}>
+                        <SwiperSlide key={e.id || e.encodeId || index}>
                            {!isFeatured ? (
                               <div className="col want_list-item-link cursor-pointer main-page_list-item main_page-hover">
                                  <div className="want_list-item-link main-page_list-item_img">

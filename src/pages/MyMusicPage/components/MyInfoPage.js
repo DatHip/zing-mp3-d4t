@@ -232,7 +232,7 @@ const MyInfoPage = memo(() => {
       const storageRef = ref(storage, "images/" + file.name)
       const uploadTask = uploadBytesResumable(storageRef, file)
       uploadTask.on(
-         "state_changed",
+         "state_changed",     
          (snapshot) => {
             const progressPercent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
 

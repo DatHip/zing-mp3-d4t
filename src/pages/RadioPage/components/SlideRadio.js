@@ -88,7 +88,7 @@ const ItemStyles = styled.div`
    }
 `
 
-const SidleRadio = ({ data, isFeatured }) => {
+const SlideRadio = ({ data, isFeatured }) => {
    const navigationPrevRef = useRef(null)
    const navigationNextRef = useRef(null)
 
@@ -181,4 +181,4 @@ const SidleRadio = ({ data, isFeatured }) => {
    )
 }
 
-export default memo(SidleRadio)
+export default memo(SlideRadio)

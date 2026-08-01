@@ -7,8 +7,8 @@ import CategoryRadio from "./components/CategoryRadio"
 import DiscoverPoscast from "./components/DiscoverPoscast"
 import FeaturedEpisodesRadio from "./components/FeaturedEpisodesRadio"
 import NewProgramRaido from "./components/NewProgramRaido"
-import RadReplayRadio from "./components/RadReplayRadio"
-import SidleRadio from "./components/SidleRadio"
+import RadioReplay from "./components/RadioReplay"
+import SlideRadio from "./components/SlideRadio"
 import { useRadioPage } from "./useRadioPage"
 
 const RadioPage = () => {
@@ -22,8 +22,8 @@ const RadioPage = () => {
          <DiscoverPoscast data={sections.discoverPoscast} />
          <CategoryRadio data={sections.categoryRadio} />
          <FeaturedEpisodesRadio data={sections.featuredEpisodes} />
-         <SidleRadio isFeatured data={sections.featuredPrograms} />
-         <RadReplayRadio data={sections.replay} />
+         <SlideRadio isFeatured data={sections.featuredPrograms} />
+         <RadioReplay data={sections.replay} />
          <NewProgramRaido data={sections.newShow} />
       </div>
    )

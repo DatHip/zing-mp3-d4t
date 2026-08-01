@@ -59,8 +59,8 @@ const MyMusicSong = React.lazy(
 const MyMusicAll = React.lazy(
    () => import('../pages/MyMusicPage/components/MyMusicAll'),
  )
-const NewFeedPageChidlen = React.lazy(
-   () => import('../pages/NewFeedPage/components/NewFeedPageChidlen'),
+const NewFeedPageChildren = React.lazy(
+   () => import('../pages/NewFeedPage/components/NewFeedPageChildren'),
  )
 const MvPageList = React.lazy(
    () => import('../pages/MvPage/components/MvPageList'),
@@ -153,7 +153,7 @@ const RouterPage = () => {
                <Route path="/radio" element={<RadioPage></RadioPage>}></Route>
                <Route path="newfeed/:nation" element={<NewFeedPage></NewFeedPage>}>
                   {/*  */}
-                  <Route path=":id" element={<NewFeedPageChidlen></NewFeedPageChidlen>}></Route>
+                  <Route path=":id" element={<NewFeedPageChildren></NewFeedPageChildren>}></Route>
                </Route>
                {/*  */}
                <Route path="/moi-phat-hanh" element={<NewMusicPage></NewMusicPage>}></Route>

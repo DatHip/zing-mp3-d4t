@@ -1,7 +1,7 @@
 import React from "react"
 import PodcastRadio from "./PodcastRadio"
 
-const RadReplayRadio = ({ data }) => {
+const RadioReplay = ({ data }) => {
    return (
       <>
          {data?.map((e) => {
@@ -11,4 +11,4 @@ const RadReplayRadio = ({ data }) => {
    )
 }
 
-export default RadReplayRadio
+export default RadioReplay

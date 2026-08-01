@@ -8,7 +8,7 @@ import LoadingSvg from "components/loading/LoadingSvg"
 import Masonry from "@mui/lab/Masonry"
 import useWindowSize from "hook/useResizeHook"
 
-const NewFeedPageChidlen = () => {
+const NewFeedPageChildren = () => {
    const { nation, id } = useParams()
 
    const [datas, setData] = useState([])
@@ -94,4 +94,4 @@ const NewFeedPageChidlen = () => {
    )
 }
 
-export default NewFeedPageChidlen
+export default NewFeedPageChildren

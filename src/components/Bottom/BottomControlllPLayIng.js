@@ -8,6 +8,7 @@ import { pushSongsLogged } from "../../features/Logged/loggedFeatures"
 import { useCallback } from "react"
 import { useLayoutEffect } from "react"
 import { toast } from "react-toastify"
+import { getStreamUrl } from "../../api/getStreamSong"
 
 const BottomControlllPLayIng = memo(() => {
    const progressBar = useRef()
@@ -15,6 +16,7 @@ const BottomControlllPLayIng = memo(() => {
    const progresArea = useRef()
    const dispatch = useDispatch()
    const [oke, setOke] = useState(false)
+   const [streamUrl, setStreamUrl] = useState("")
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
@@ -50,15 +52,39 @@ const BottomControlllPLayIng = memo(() => {
    }, [currentTime])
 
    useEffect(() => {
-      if (!currentEncodeId || !infoSongCurrent) return
+      if (!currentEncodeId) {
+         setStreamUrl("")
+         return
+      }
       if (infoSongCurrent?.streamingStatus === 2) {
          toast("Bài này chỉ dành cho tài khoản VIP — chuyển bài tiếp theo", { type: "info" })
+         setStreamUrl("")
          dispatch(setReady(false))
          if (isRandom) {
             dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
          } else {
             dispatch(setCurrentIndexSong(currentIndexSong + 1))
          }
+         return
+      }
+      let cancelled = false
+      dispatch(setReady(false))
+      setStreamUrl("")
+      getStreamUrl(currentEncodeId).then((url) => {
+         if (cancelled) return
+         if (!url) {
+            toast("Không lấy được stream bài này — chuyển bài tiếp theo", { type: "error" })
+            if (isRandom) {
+               dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
+            } else {
+               dispatch(setCurrentIndexSong(currentIndexSong + 1))
+            }
+            return
+         }
+         setStreamUrl(url)
+      })
+      return () => {
+         cancelled = true
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [currentEncodeId])
@@ -109,7 +135,7 @@ const BottomControlllPLayIng = memo(() => {
                loop={isLoop}
                volume={volume}
                muted={muted}
-               url={currentEncodeId ? `http://api.mp3.zing.vn/api/streaming/audio/${currentEncodeId}/320` : ""}
+               url={streamUrl || ""}
             ></ReactPlayer>
          </div>
          <p className="playing_time-right">{fancyTimeFormat(infoSongCurrent?.duration)}</p>

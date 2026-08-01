@@ -54,4 +54,7 @@ export const tmdAPI = {
 
    // Lyrics :
    getLyrics: (id) => `${tmdbEndpoint}/songlyrics/${id}`,
+
+   // Song streaming URLs (128kbps free, 320kbps VIP)
+   getSongStream: (id) => `${tmdbEndpoint}/song/${id}`,
 }

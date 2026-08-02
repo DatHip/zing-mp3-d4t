@@ -42,7 +42,9 @@ const BottomRight = () => {
 
    const recentSongs = useSelector((state) => state.logged.recentSongs)
 
-   const { isRandom } = useSelector((state) => state.setting)
+   // Narrow read: subscribing to the whole setting slice re-rendered the entire
+   // queue list on every volume drag, play/pause and isReady flip.
+   const isRandom = useSelector((state) => state.setting.isRandom)
    const [toggleSilde, setToggleSilde] = useState(false)
    const [items, setItems] = useState([])
    const dispatch = useDispatch()

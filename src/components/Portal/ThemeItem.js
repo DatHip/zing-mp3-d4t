@@ -8,7 +8,8 @@ const Items = memo(({ item }) => {
    const { name, itemS } = item
    const dispatch = useDispatch()
 
-   const dataTheme = useSelector((state) => state.themeToggle)
+   const themeName = useSelector((state) => state.themeToggle.name)
+   const themeItemS = useSelector((state) => state.themeToggle.itemS)
    const handleClickApply = () => {
       dispatch(setThemes(item))
    }
@@ -21,7 +22,7 @@ const Items = memo(({ item }) => {
                <figure className="image image is-48x48">
                   <LazyLoadImage visibleByDefault={itemS === img} effect={"blur"} src={itemS} alt={name} />
                </figure>
-               {dataTheme.name === name && dataTheme.itemS === itemS && <i className="icon ic-check" />}
+               {themeName === name && themeItemS === itemS && <i className="icon ic-check" />}
                <div className="opacity" />
                <div className="zm-box zm-actions theme-actions">
                   <div className="zm-btn mar-b-10">

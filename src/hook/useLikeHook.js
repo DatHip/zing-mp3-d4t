@@ -17,7 +17,10 @@ const FAVOURITE_FIELD = {
 }
 
 const useLikeHook = (item, type) => {
-   const { id, activeUser } = useSelector((state) => state.users)
+   // This hook runs once per row in every song/album/artist list, so it reads the
+   // two primitives it needs rather than subscribing to the whole users slice.
+   const id = useSelector((state) => state.users.id)
+   const activeUser = useSelector((state) => state.users.activeUser)
 
    const [isLike, setLike] = useState(false)
    const [docs, setDocs] = useState([])

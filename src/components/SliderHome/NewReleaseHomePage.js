@@ -27,58 +27,37 @@ const NewReleaseStyle = styled.div`
       }
    }
 `
+// Module scope on purpose: defining this inside NewReleaseHomePage made it a new
+// component type on every render, so toggling VIỆT NAM/QUỐC TẾ remounted all 12
+// rows instead of re-rendering them.
+const NewReleaseColumns = memo(({ items }) => {
+   if (!items) return null
+
+   const colSong1 = items?.slice(0, 4)
+   const colSong2 = items?.slice(4, 8)
+   const colSong3 = items?.slice(8, 12)
+
+   return (
+      <>
+         <div className="col l-4 m-6 c-9">
+            {colSong1 && colSong1.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
+         </div>
+         <div className="col l-4 m-6 c-9">
+            {colSong2 && colSong2.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
+         </div>
+         <div className="col l-4 m-0 c-9">
+            {colSong3 && colSong3.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
+         </div>
+      </>
+   )
+})
+
 const NewReleaseHomePage = memo(() => {
    const [selectList, setSelectList] = useState(false)
    const { section, isLoading } = useHomeSection(byType("new-release"))
    const datas = section?.items
 
    if (!section && !isLoading) return null
-
-   const SongList = memo(() => {
-      if (!datas) return null
-      const dataSong = datas?.vPop
-
-      const colSong1 = dataSong?.slice(0, 4)
-      const colSong2 = dataSong?.slice(4, 8)
-      const colSong3 = dataSong?.slice(8, 12)
-
-      return (
-         <>
-            <div className="col l-4 m-6 c-9">
-               {colSong1 && colSong1.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
-            </div>
-            <div className="col l-4 m-6 c-9">
-               {colSong2 && colSong2.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
-            </div>
-            <div className="col l-4 m-0 c-9">
-               {colSong3 && colSong3.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
-            </div>
-         </>
-      )
-   })
-
-   const AlbumList = memo(() => {
-      if (!datas) return null
-      const dataSong = datas?.others
-
-      const colSong1 = dataSong?.slice(0, 4)
-      const colSong2 = dataSong?.slice(4, 8)
-      const colSong3 = dataSong?.slice(8, 12)
-
-      return (
-         <>
-            <div className="col l-4 m-6 c-9">
-               {colSong1 && colSong1.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
-            </div>
-            <div className="col l-4 m-6 c-9">
-               {colSong2 && colSong2.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
-            </div>
-            <div className="col l-4 m-0 c-9">
-               {colSong3 && colSong3.map((e, index) => <NewReleaseitem key={e.encodeId || e.id || index} item={e}></NewReleaseitem>)}
-            </div>
-         </>
-      )
-   })
 
    return (
       <NewReleaseStyle>
@@ -98,7 +77,7 @@ const NewReleaseHomePage = memo(() => {
             all={true}
             className2="h-[320px]"
          >
-            {!selectList ? <SongList></SongList> : <AlbumList></AlbumList>}
+            <NewReleaseColumns items={selectList ? datas?.others : datas?.vPop}></NewReleaseColumns>
          </PlayListSelector>
       </NewReleaseStyle>
    )

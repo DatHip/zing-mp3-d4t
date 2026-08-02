@@ -142,7 +142,7 @@ const LoginPortal = ({ setOpen }) => {
 
 const ItemLogin = ({ isTitle = true, width = 38, height = 38 }) => {
    const [open, setOpen] = useState(false)
-   const users = useSelector((state) => state.users)
+   const imgUrl = useSelector((state) => state.users.imgUrl)
 
    return (
       <Tippy
@@ -160,7 +160,7 @@ const ItemLogin = ({ isTitle = true, width = 38, height = 38 }) => {
                <figure>
                   <img
                      className={`object-cover h-[40px] w-[40px]`}
-                     src={users.imgUrl ? users.imgUrl : "https://avatar.talk.zdn.vn/default"}
+                     src={imgUrl ? imgUrl : "https://avatar.talk.zdn.vn/default"}
                      alt=""
                   />
                </figure>

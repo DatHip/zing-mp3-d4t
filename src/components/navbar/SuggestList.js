@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setName } from "features/search/searchSlice"
 import { memo } from "react"
-import OutstandingItems from "pages/SearchPage/components/OutstandingItems"
+import SearchSuggestionItem from "components/search/SearchSuggestionItem"
 import LoadingSvg from "components/ui/LoadingSvg"
 import { selectSearch } from "features/search/searchSelectors"
 
@@ -149,7 +149,7 @@ const SuggestList = ({ setOpen, setValue, value, refinput }) => {
                   {entitiesNew[1]?.suggestions?.map((e, index) => {
                      if (index > 5) return
 
-                     return <OutstandingItems setOpen={setOpen} isSearch key={index} data={e}></OutstandingItems>
+                     return <SearchSuggestionItem setOpen={setOpen} key={index} data={e} />
                   })}
                </>
             )}

@@ -5,7 +5,6 @@ import LoadingIcon from "../Icon/LoadingIcon"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import { Draggable } from "react-beautiful-dnd"
 import {
    pushSongHistoryPlayList,
    setCurrentIndexSongShuffle,
@@ -15,7 +14,10 @@ import {
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import useLikeHook from "../../hook/useLikeHook"
 
-const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastIndex }) => {
+// DragWrapper is react-beautiful-dnd's Draggable, injected by QueueDragList. It is
+// a prop rather than an import so this row — which the history tab renders without
+// any drag behaviour — does not pull the DnD library into main.js.
+const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastIndex, DragWrapper }) => {
    const dispatch = useDispatch()
    const playing = useSelector((state) => state.setting.playing)
    const isReady = useSelector((state) => state.setting.isReady)
@@ -131,8 +133,10 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
       )
    }
 
+   if (!DragWrapper) return null
+
    return (
-      <Draggable key={data.encodeId || data.id} draggableId={data.encodeId || data.id} index={index}>
+      <DragWrapper key={data.encodeId || data.id} draggableId={data.encodeId || data.id} index={index}>
          {(provoied, snapshot) => (
             <div draggable ref={provoied.innerRef} {...provoied.dragHandleProps} {...provoied.draggableProps}>
                <li
@@ -247,7 +251,7 @@ const ItemRighPlayer = ({ data, index, items, isHistory, setToggleSilde, lastInd
                )}
             </div>
          )}
-      </Draggable>
+      </DragWrapper>
    )
 }
 

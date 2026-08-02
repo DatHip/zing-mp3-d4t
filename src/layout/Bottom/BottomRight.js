@@ -1,7 +1,6 @@
-import React, { memo, useState } from "react"
+import React, { memo, useState, Suspense } from "react"
 import ItemRighPlayer from "../../components/Item/ItemRighPlayeQueue"
 import { useSelector, useDispatch } from "react-redux"
-import { DragDropContext, Droppable } from "react-beautiful-dnd"
 import { useEffect } from "react"
 import {
    setDraggItemActive,
@@ -21,6 +20,9 @@ import { useCallback } from "react"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import RemoveList from "../../components/ClockAndRemove/RemoveList"
 import CloclAlarm from "../../components/ClockAndRemove/CloclAlarm"
+
+const importQueueDragList = () => import("./QueueDragList")
+const QueueDragList = React.lazy(importQueueDragList)
 
 const reorder = (list, startIndex, endIndex) => {
    const result = Array.from(list)
@@ -63,6 +65,18 @@ const BottomRight = () => {
          dispatch(setNextSong(indexCurrentSongActive))
       }
    }, [isRandom, playlistEncodeId])
+
+   // Warm the drag list during idle time once there is a queue, so opening the
+   // panel never waits on the chunk.
+   useEffect(() => {
+      if (!currentEncodeId) return
+      if (typeof window.requestIdleCallback === "function") {
+         const handle = window.requestIdleCallback(importQueueDragList, { timeout: 3000 })
+         return () => window.cancelIdleCallback(handle)
+      }
+      const handle = setTimeout(importQueueDragList, 2000)
+      return () => clearTimeout(handle)
+   }, [currentEncodeId])
 
    useEffect(() => {
       let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
@@ -127,34 +141,9 @@ const BottomRight = () => {
             </div>
             <div className="player_queue-container  ">
                {!toggleSilde && currentEncodeId && (
-                  <DragDropContext onDragEnd={onDragEnd}>
-                     <Droppable droppableId="droppable">
-                        {(provoied, snapshot) => {
-                           return (
-                              <ul className="player_queue-listmusic" {...provoied.droppableProps} ref={provoied.innerRef}>
-                                 {items &&
-                                    items?.length > 0 &&
-                                    items?.map((e, index) => {
-                                       let lastIndex = false
-
-                                       if (index + 1 === items.length) {
-                                          lastIndex = true
-                                       }
-
-                                       return (
-                                          <ItemRighPlayer
-                                             lastIndex={lastIndex}
-                                             key={e.encodeId || e.id}
-                                             index={index}
-                                             data={e}
-                                          ></ItemRighPlayer>
-                                       )
-                                    })}
-                              </ul>
-                           )
-                        }}
-                     </Droppable>
-                  </DragDropContext>
+                  <Suspense fallback={<ul className="player_queue-listmusic" />}>
+                     <QueueDragList items={items} onDragEnd={onDragEnd}></QueueDragList>
+                  </Suspense>
                )}
 
                {toggleSilde && currentEncodeId && (

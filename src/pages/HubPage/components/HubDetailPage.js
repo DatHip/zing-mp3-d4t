@@ -8,8 +8,7 @@ import SongRow from "components/song/SongRow"
 import MvCard from "components/card/MvCard"
 import ArtistCard from "components/card/ArtistCard"
 import { useCallback } from "react"
-import axios from "axios"
-import { zingApi } from "config"
+import { useHubDetailData } from "api/useHubDetailData"
 import { useLayoutEffect } from "react"
 
 const HubDetailPageStyles = styled.div`
@@ -47,18 +46,9 @@ const HubDetailPageStyles = styled.div`
 
 const HubDetailPage = () => {
    const { id } = useParams()
-   const [datas, setData] = useState([])
+   const { data: datas, isLoading } = useHubDetailData(id)
 
-   const fetchData = useCallback(async () => {
-      const data = await axios.get(zingApi.getHubDetail(id))
-      setData(data.data.data)
-   }, [id])
-
-   useLayoutEffect(() => {
-      fetchData()
-   }, [fetchData])
-
-   if (!datas || !datas.sections) return <LoadingSvg></LoadingSvg>
+   if (isLoading || !datas?.sections) return <LoadingSvg />
 
    return (
       <HubDetailPageStyles>

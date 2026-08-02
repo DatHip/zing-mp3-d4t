@@ -1,40 +1,29 @@
-import axios from "axios"
-import React, { useEffect, useState, useCallback } from "react"
+import React from "react"
 import { useParams } from "react-router"
-import { zingApi } from "config"
-import scrollTop from "utils/scrollToTop"
+import { useSearchByType } from "api/useSearchData"
+import { useScrollTop } from "hook/useScrollTop"
 import LoadingSvg from "components/ui/LoadingSvg"
 import Section from "components/ui/Section"
 import ArtistCard from "components/card/ArtistCard"
 
+const GRID_CLASS = "col l-2-4 m-3 c-5 !mb-[30px]"
+
 const SearchPageArtist = () => {
    const { id } = useParams()
+   const { data, isLoading } = useSearchByType(id, "artist")
+   useScrollTop(id)
 
-   const [datas, setData] = useState([])
+   if (isLoading || !data) return <LoadingSvg />
 
-   const fetchData = useCallback(async () => {
-      const data = await axios.get(zingApi.getSearchByType(id, "artist"))
-      setData(data.data.data)
-   }, [id])
-
-   useEffect(() => {
-      scrollTop()
-      fetchData()
-   }, [id, fetchData])
-
-   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
+   const artists = data.items || []
 
    return (
       <div className="main_mv main-page-item active">
          <div className="main_mv-container ">
-            <Section classAdd2={"container_top100-list "} title={"Nghệ Sĩ"}>
-               {datas &&
-                  datas?.items?.length > 0 &&
-                  datas?.items?.map((e) => {
-                     let classGird = "col l-2-4 m-3 c-5 !mb-[30px]"
-
-                     return <ArtistCard classGird={classGird} key={e.id || e.encodeId} data={e}></ArtistCard>
-                  })}
+            <Section classAdd2="container_top100-list " title="Nghệ Sĩ">
+               {artists.map((artist) => (
+                  <ArtistCard classGird={GRID_CLASS} key={artist.id || artist.encodeId} data={artist} />
+               ))}
             </Section>
          </div>
       </div>

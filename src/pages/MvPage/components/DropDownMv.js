@@ -3,29 +3,18 @@ import { useNavigate, useParams } from "react-router-dom"
 import Tippy from "@tippyjs/react"
 import { useDispatch, useSelector } from "react-redux"
 import { setText } from "features/mvState/mvStateSlice"
-import axios from "axios"
-import { zingApi } from "config"
+import { useCategoryMvData } from "api/useMvData"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
 import { selectMvButtonText } from "features/mvState/mvStateSelectors"
 
 const DropDownMv = memo(() => {
    const { id } = useParams()
-   const [datas, setData] = useState([])
+   const { data: datas } = useCategoryMvData(id)
    const count = useSelector(selectMvButtonText)
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [open, setOpen] = useState(false)
-
-   const fetchData = useCallback(async () => {
-      const data = await axios.get(zingApi.getCategoryMv(id))
-      const dataSelector = data.data.data
-      setData(dataSelector)
-   }, [id])
-
-   useLayoutEffect(() => {
-      fetchData()
-   }, [fetchData])
 
    useLayoutEffect(() => {
       if (id === "IWZ9Z08I" || id === "IWZ9Z08O" || id === "IWZ9Z08W" || id === "IWZ9Z086") {

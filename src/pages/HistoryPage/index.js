@@ -1,6 +1,6 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { NavLink, Outlet } from "react-router-dom"
-import scrollTop from "utils/scrollToTop"
+import { useScrollTop } from "hook/useScrollTop"
 
 const TABS = [
    { to: "/history/song", label: "Bài Hát" },
@@ -11,9 +11,7 @@ const TABS = [
 const tabClass = ({ isActive }) => (isActive ? "main_mv-header-item active" : "main_mv-header-item")
 
 const HistoryPage = () => {
-   useEffect(() => {
-      scrollTop()
-   }, [])
+   useScrollTop()
 
    return (
       <div className="main_mv main-page-item active">

@@ -1,8 +1,7 @@
-import axios from "axios"
-import React, { useEffect, useState, useCallback } from "react"
+import React from "react"
 import { useParams } from "react-router"
-import { zingApi } from "config"
-import scrollTop from "utils/scrollToTop"
+import { useSearchAll } from "api/useSearchData"
+import { useScrollTop } from "hook/useScrollTop"
 import LoadingSvg from "components/ui/LoadingSvg"
 import MvCard from "components/card/MvCard"
 import ArtistCard from "components/card/ArtistCard"
@@ -13,20 +12,10 @@ import OutstandingItems from "./OutstandingItems"
 
 const SearchPageAll = () => {
    const { id } = useParams()
+   const { data: datas, isLoading } = useSearchAll(id)
+   useScrollTop(id)
 
-   const [datas, setData] = useState([])
-
-   const fetchData = useCallback(async () => {
-      const data = await axios.get(zingApi.getSearchAllKeyApi(id))
-      setData(data.data.data)
-   }, [id])
-
-   useEffect(() => {
-      scrollTop()
-      fetchData()
-   }, [id, fetchData])
-
-   if (!datas || datas.length === 0) return <LoadingSvg></LoadingSvg>
+   if (isLoading || !datas) return <LoadingSvg />
 
    let classGrid = "col l-4 m-4 c-8"
 

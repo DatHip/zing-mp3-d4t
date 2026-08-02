@@ -48,8 +48,10 @@ function usePlayerController() {
    const handleReady = useCallback(() => {
       dispatch(setReady(true))
       // Read via store to avoid subscribing to a value that changes every ~100ms.
+      // `> 0` rather than `!== 0`: a localStorage blob written before currentTime
+      // was persisted hydrates as undefined, which would seekTo(undefined).
       const savedTime = store.getState().queueNowPlay.currentTime
-      if (!hasRestoredTime.current && savedTime !== 0) {
+      if (!hasRestoredTime.current && savedTime > 0) {
          audioRef.current?.seekTo(savedTime)
          hasRestoredTime.current = true
       }
@@ -71,11 +73,17 @@ function usePlayerController() {
       toast("Có lỗi xảy ra, vui lòng thử lại", { type: "error" })
    }, [])
 
-   // Pause on tab close so a ghost audio element doesn't survive F5.
+   // Pause on tab close so a ghost audio element doesn't survive F5. pagehide
+   // instead of beforeunload: beforeunload blocks the back/forward cache. The
+   // persisted-flag check skips the bfcache case, where the page is frozen
+   // rather than torn down and playback should resume on restore.
    useEffect(() => {
-      const setOff = () => dispatch(setPlay(false))
-      window.addEventListener("beforeunload", setOff)
-      return () => window.removeEventListener("beforeunload", setOff)
+      const setOff = (e) => {
+         if (e.persisted) return
+         dispatch(setPlay(false))
+      }
+      window.addEventListener("pagehide", setOff)
+      return () => window.removeEventListener("pagehide", setOff)
    }, [dispatch])
 
    // Fetch signed stream URL on song change; VIP + fetch-fail both auto-skip.

@@ -14,18 +14,22 @@ const BgFullLyrics = memo(() => {
    // re-render on a tick — the rest bail out on identical props.
    const lines = useMemo(
       () =>
-         (lyricByLine || []).map((line) => {
-            const words = line.words
+         (lyricByLine || []).flatMap((line) => {
+            const words = line?.words
+            // A line with no words carries no timing, and words[0] would throw.
+            if (!Array.isArray(words) || words.length === 0) return []
             let text = ""
             words.forEach((w) => {
                text += w.data + " "
             })
-            return {
-               text,
-               // Second granularity: matches the original MM:SS string compare.
-               start: Math.floor(words[0].startTime / 1000),
-               end: Math.floor(words[words.length - 1].endTime / 1000),
-            }
+            return [
+               {
+                  text,
+                  // Second granularity: matches the original MM:SS string compare.
+                  start: Math.floor(words[0].startTime / 1000),
+                  end: Math.floor(words[words.length - 1].endTime / 1000),
+               },
+            ]
          }),
       [lyricByLine]
    )

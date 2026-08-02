@@ -30,6 +30,9 @@ const QueueDragList = ({ items, onDragEnd }) => {
                               ></ItemRighPlayer>
                            )
                         })}
+                     {/* Required by react-beautiful-dnd: without it the list
+                         collapses to zero height while an item is lifted. */}
+                     {provoied.placeholder}
                   </ul>
                )
             }}

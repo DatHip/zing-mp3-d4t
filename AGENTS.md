@@ -50,26 +50,70 @@ const AlbumPage = () => {
 ```
 
 ### Shared vs page-scoped components
-- Used by 2+ pages → `src/components/[Domain]/`
+- Used by 2+ pages → `src/components/[domain]/`
 - Used only by one page → `src/pages/[Page]/components/`
 
-Currently shared:
-- `components/MyMusicPage/ItemArits`, `SliderShow` — 4+ consumers
-- `components/MVpage/MvItem` — 6+ consumers
-- `components/Selection/*` — universal
-- `components/TopChartPage/ItemChartList` — 5+ consumers
-- `components/NewReleaseitem/NewReleaseitem` — multiple
+`components/` is grouped by **what a component is**, never by the page it was
+first written for:
+```
+components/
+  player/       bottom bar, queue rows, sleep timer   (player/full/ = full-screen view)
+  song/         SongRow, ChartSongRow, ChartSongList, ArtistLinks
+  card/         AlbumCard, ArtistCard, MvCard, RadioCard, EventCard, …
+  home/         one file per home-page section
+  navbar/       header, search box, user and theme menus
+  search/       search rows shared between the navbar and the search page
+  form/  portal/  ui/
+```
+
+Dependency direction is one-way. `components/` must never import from `pages/`.
+
+### One concern per file
+- Component > 150 lines, hook > 100, slice > 200 → split it.
+- `styled.div` blocks live in a sibling `X.styles.js`, **never inside a component
+  body** — styled-components returns a new type on every render, so React
+  unmounts and remounts the whole subtree.
+- Handlers belong in a hook (`useXxx.js` beside the component), not inline in
+  JSX. A component that reads `dispatch` directly is usually missing a hook.
+- If a component starts with `if (someFlag) return (<entirely different markup>)`,
+  it is two components — split it.
 
 ### Path aliases — `jsconfig.json baseUrl="src"`
 Use bare imports:
 ```js
 import X from "components/X"    // ✓
 import Y from "utils/scrollTop" // ✓
-import Z from "features/User/userFeatures" // ✓
+import Z from "features/user/userSlice" // ✓
 ```
 NOT `../../../components/X`. React Router / Firebase are npm packages — those still bare npm import.
 
-**Exception**: `firebase/firebase-config` (our local file) — collides with npm `firebase` bare import. Use relative `../../firebase/firebase-config` OR `pages/../firebase/firebase-config`.
+Local Firebase setup lives in `lib/firebase/{app,auth,firestore}.js`, so there
+is no longer a collision with the npm `firebase` package.
+
+### State: Redux vs React Query
+- **React Query** owns server state — anything re-fetchable from the BE.
+- **Redux** owns client state — the queue, theme, settings, UI toggles, auth.
+
+Test: *"after a reload, can this be re-fetched?"* Yes → React Query. No → Redux.
+
+Slices must not fetch. `api/zingClient.js` is the only module importing `axios`;
+`api/queryKeys.js` holds every cache key; `lib/queryClient.js` exports the single
+QueryClient so thunks can read the same cache the pages fill.
+
+### Selectors — never read the store shape from a component
+Every slice owns `features/[domain]/[domain]Selectors.js`, and that file is the
+only code that knows its field names. Components import selectors:
+```js
+const song = useSelector(selectCurrentSong)     // ✓
+const song = useSelector(s => s.queueNowPlay.infoSongCurrent)  // ✗
+```
+Store keys are persisted in localStorage — renaming one drops a user's saved
+queue. Rename through the selector instead.
+
+### Playback — always through `hook/usePlayback`
+`playSong`, `playSongById`, `playAlbum`, `playQueueIndex`, `resume`, `pause`,
+plus the `rejectIfVip` / `rejectIfRadio` guards. `setPlay` and `setReady` should
+appear only in `usePlayback`, `useQueueControls` and `PlayerEngine`.
 
 ### Section rendering (HomePage)
 Sections are **data-driven** via `useHomeSection(matcher)` hook. Match by `sectionType` or `sectionId` (stable). Regex on `title` only as tight fallback (Zing rewords titles).
@@ -89,8 +133,9 @@ if (!section && !isLoading) return null  // gracefully hide when upstream drops 
 
 ### VIP song handling
 Zing returns `streamingStatus: 2` for VIP-only songs.
-- List consumers filter: `.filter(e => e.streamingStatus === 1)` (see `QueueFeatures.js:fulfilled`)
-- Player proactive skip: `BottomControlllPLayIng.js` checks on `currentEncodeId` change
+- List consumers filter: `.filter(e => e.streamingStatus === 1)` (see `features/queue/queueSlice.js:fulfilled`)
+- Entry-point guard: `usePlayback().rejectIfVip`
+- Player proactive skip: `components/player/PlayerEngine.js` checks on `currentEncodeId` change
 - `/api/song/:id` returns `{data: {128: "signed URL", 320: "VIP"}}`. Free tier gets 128kbps only.
 
 ### Audio stream URL — NEVER hardcode legacy endpoint
@@ -167,13 +212,25 @@ curl -s http://localhost:5000/api/playlist/ZWZB969E | node -e "let d='';process.
 - Use `key={uuidv4()}` inside `.map()` — kills memoization. Use `item.encodeId` / `item.id` / index.
 - Use `if (datas?.length === 0)` when `datas` is an object (not array). Use `isLoading || !datas`.
 - Reintroduce npm `zingmp3-api-next` — BE is self-signed now.
-- Name files and variables with correct spelling (e.g. avoid spelling errors like "Chidlen", "RadReplayRadio", "SidleRadio" in future refactors/files. A dedicated naming correction task will standardise the existing typos later).
+- Import from `pages/` inside `components/`. Dependency direction is one-way.
+- Declare a `styled.x` inside a component body.
+- Read `state.x.y` inside `useSelector`. Use the slice's selector file.
+- Write a play sequence by hand. Use `usePlayback`.
+- Call `axios` outside `api/zingClient.js`.
 
 
 # Workspace Rules & Instructions
 
 ## Naming & Spelling Standards
-- **Correct Spelling**: Ensure all newly created files and variable names are spelled correctly.
-- **Spelling Typo Warnings**: Avoid spelling errors like "Chidlen", "RadReplayRadio", "SidleRadio" in future refactors/files. A dedicated naming correction task will standardise the existing typos later.
+The existing typos have been corrected repo-wide; keep it that way.
+
+- Component file → `PascalCase.js`, filename matches its default export.
+- Hook → `useXxx.js`. Slice → `features/<domain>/<domain>Slice.js`.
+- Selectors → `<domain>Selectors.js`, each export named `selectXxx`.
+- Styles → `<Component>.styles.js`.
+- Booleans read `isX` / `hasX` / `canX`; handlers are `handleX`, and the prop
+  that receives one is `onX`.
+- Shared payload shapes are typedef'd in `src/types.js` — annotate new shared
+  hooks and transport functions against them.
 
 

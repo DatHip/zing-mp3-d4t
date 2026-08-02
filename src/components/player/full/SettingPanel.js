@@ -1,11 +1,12 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { setAciteTheme, setSizeText } from "features/setting/settingSlice"
+import { selectIsBgFull, selectLyricTextSize } from "features/setting/settingSelectors"
 
 const SettingPanel = () => {
    const dispatch = useDispatch()
-   const isBgFull = useSelector((state) => state.setting.isBgFull)
-   const textSize = useSelector((state) => state.setting.text)
+   const isBgFull = useSelector(selectIsBgFull)
+   const textSize = useSelector(selectLyricTextSize)
 
    const handleChangeInput = (e) => {
       dispatch(setAciteTheme(e.target.checked))

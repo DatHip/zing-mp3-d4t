@@ -7,11 +7,12 @@ import axios from "axios"
 import { zingApi } from "config"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
+import { selectMvButtonText } from "features/mvState/mvStateSelectors"
 
 const DropDownMv = memo(() => {
    const { id } = useParams()
    const [datas, setData] = useState([])
-   const count = useSelector((state) => state.setTextBtn)
+   const count = useSelector(selectMvButtonText)
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [open, setOpen] = useState(false)

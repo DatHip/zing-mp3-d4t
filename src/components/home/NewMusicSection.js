@@ -15,6 +15,8 @@ import ActionIcon from "components/ui/ActionIcon"
 import { playSongNotAlbum } from "features/queue/queueSlice"
 import LoadingIcon from "components/ui/LoadingIcon"
 import { logError } from "utils/logger"
+import { selectCurrentEncodeId } from "features/queue/queueSelectors"
+import { selectIsReady, selectPlaying } from "features/setting/settingSelectors"
 
 const matchNewMusic = (s) => s?.sectionId === "hNewrelease" || /^nhạc mới$/i.test((s?.title || "").trim())
 
@@ -24,9 +26,9 @@ const NewMusicSection = memo(() => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const playing = useSelector((state) => state.setting.playing)
-   const isReady = useSelector((state) => state.setting.isReady)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
+   const playing = useSelector(selectPlaying)
+   const isReady = useSelector(selectIsReady)
 
    const navigationPrevRef = React.useRef(null)
    const navigationNextRef = React.useRef(null)

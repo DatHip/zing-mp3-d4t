@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useLayoutEffect, useRef } from "react"
 import { useSelector } from "react-redux"
 import fancyTimeFormat from "utils/fancyTimeFormat"
+import { selectCurrentTime } from "features/queue/queueSelectors"
 
 /**
  * Owns the only subscription to currentTime in the player.
@@ -14,7 +15,7 @@ import fancyTimeFormat from "utils/fancyTimeFormat"
 const PlayerProgress = memo(({ duration, onSeek, children }) => {
    const progressBar = useRef()
    const progressArea = useRef()
-   const currentTime = useSelector((state) => state.queueNowPlay.currentTime)
+   const currentTime = useSelector(selectCurrentTime)
 
    useLayoutEffect(() => {
       if (!progressBar.current) return

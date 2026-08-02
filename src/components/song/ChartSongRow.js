@@ -17,6 +17,8 @@ import {
 import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import { useCallback } from "react"
 import useLike from "hook/useLike"
+import { selectCurrentAlbum, selectCurrentEncodeId, selectListSongShuffle, selectPlaylistEncodeId } from "features/queue/queueSelectors"
+import { selectIsRandom, selectIsReady, selectPlaying } from "features/setting/settingSelectors"
 
 const ChartSongRow = memo(
    ({ isNotList, indexNotVip, idAlbum, item, index, isChildren = false, isNoneRank, onFavourite, notAlbum }) => {
@@ -24,14 +26,14 @@ const ChartSongRow = memo(
       const [toggleBtn, setToggleBtn] = useState(false)
       const { isLike, handleLike } = useLike(item, 2)
 
-      const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-      const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-      const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
-      const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
+      const currentEncodeId = useSelector(selectCurrentEncodeId)
+      const playlistEncodeId = useSelector(selectPlaylistEncodeId)
+      const listSongShuffle = useSelector(selectListSongShuffle)
+      const infoCurrenAlbum = useSelector(selectCurrentAlbum)
 
-      const playing = useSelector((state) => state.setting.playing)
-      const isReady = useSelector((state) => state.setting.isReady)
-      const isRandom = useSelector((state) => state.setting.isRandom)
+      const playing = useSelector(selectPlaying)
+      const isReady = useSelector(selectIsReady)
+      const isRandom = useSelector(selectIsRandom)
 
       const getRankStatus = useCallback((startus) => {
          if (startus === 0) {

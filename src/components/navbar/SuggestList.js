@@ -7,6 +7,7 @@ import { setName } from "features/search/searchSlice"
 import { memo } from "react"
 import OutstandingItems from "pages/SearchPage/components/OutstandingItems"
 import LoadingSvg from "components/ui/LoadingSvg"
+import { selectSearch } from "features/search/searchSelectors"
 
 const SuggestListStyles = styled.ul`
    position: absolute;
@@ -68,7 +69,7 @@ const SuggestListStyles = styled.ul`
 `
 
 const SuggestList = ({ setOpen, setValue, value, refinput }) => {
-   const { entities, loading, entitiesNew, names } = useSelector((state) => state.formSearch)
+   const { entities, loading, entitiesNew, names } = useSelector(selectSearch)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 

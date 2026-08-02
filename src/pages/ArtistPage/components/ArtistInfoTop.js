@@ -8,6 +8,8 @@ import { setPlay, setReady } from "features/setting/settingSlice"
 import { fetchPlayList } from "features/queue/queueSlice"
 import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import useLike from "hook/useLike"
+import { selectPlaylistEncodeId, selectQueueLoading } from "features/queue/queueSelectors"
+import { selectPlaying } from "features/setting/settingSelectors"
 
 const InfoTopStyles = styled.div`
    .read-more {
@@ -114,9 +116,9 @@ const PortalStyle = styled.div`
 
 const ArtistInfoTop = memo(({ data }) => {
    const dispatch = useDispatch()
-   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-   const loading = useSelector((state) => state.queueNowPlay.loading)
-   const playing = useSelector((state) => state.setting.playing)
+   const playlistEncodeId = useSelector(selectPlaylistEncodeId)
+   const loading = useSelector(selectQueueLoading)
+   const playing = useSelector(selectPlaying)
 
    let active = playlistEncodeId === data?.playlistId
 

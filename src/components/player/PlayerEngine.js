@@ -11,6 +11,8 @@ import { getStreamUrl } from "api/getStreamSong"
 import { useQueueControls } from "hook/useQueueControls"
 
 import PlayerProgress from "components/player/PlayerProgress"
+import { selectCurrentEncodeId, selectCurrentSong } from "features/queue/queueSelectors"
+import { selectIsLoop, selectMuted, selectProgressInterval, selectVolume } from "features/setting/settingSelectors"
 
 /**
  * Container hook: encapsulates all side effects + queue integration so the
@@ -25,13 +27,13 @@ function usePlayerController() {
    const hasRestoredTime = useRef(false)
    const [streamUrl, setStreamUrl] = useState("")
 
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
+   const infoSongCurrent = useSelector(selectCurrentSong)
 
-   const isLoop = useSelector((state) => state.setting.isLoop)
-   const volume = useSelector((state) => state.setting.volume)
-   const muted = useSelector((state) => state.setting.muted)
-   const progressInterval = useSelector((state) => state.setting.progressInterval)
+   const isLoop = useSelector(selectIsLoop)
+   const volume = useSelector(selectVolume)
+   const muted = useSelector(selectMuted)
+   const progressInterval = useSelector(selectProgressInterval)
 
    const { playNext, skipToNext, playing } = useQueueControls()
 

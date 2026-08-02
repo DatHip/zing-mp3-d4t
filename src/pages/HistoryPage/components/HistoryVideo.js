@@ -1,9 +1,10 @@
 import React, { memo } from "react"
 import { useSelector } from "react-redux"
 import MvCard from "components/card/MvCard"
+import { selectRecentMvs } from "features/logged/loggedSelectors"
 
 const HistoryVideo = memo(() => {
-   const recentMvs = useSelector((state) => state.logged.recentMvs)
+   const recentMvs = useSelector(selectRecentMvs)
 
    return (
       <div className="container_top100-list row    transition-all">

@@ -4,13 +4,15 @@ import { useNavigate } from "react-router"
 import { fetchPlayList } from "features/queue/queueSlice"
 import { setPlay, setReady } from "features/setting/settingSlice"
 import ActionIcon from "components/ui/ActionIcon"
+import { selectPlaylistEncodeId } from "features/queue/queueSelectors"
+import { selectPlaying } from "features/setting/settingSelectors"
 
 const FavoriteArtistCard = memo(({ item, clasName, isHub, isCenter }) => {
    const { encodeId, thumbnailM, song, artistsNames, title } = item
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-   const playing = useSelector((state) => state.setting.playing)
+   const playlistEncodeId = useSelector(selectPlaylistEncodeId)
+   const playing = useSelector(selectPlaying)
 
    let active = playlistEncodeId === encodeId
 

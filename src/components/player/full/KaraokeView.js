@@ -5,6 +5,9 @@ import styled from "styled-components"
 import { setIsSeek } from "features/lyrics/lyricsSlice"
 import { setPlaying, setProgressInterval } from "features/setting/settingSlice"
 import LoadingSvg from "components/ui/LoadingSvg"
+import { selectIsSeek, selectLyricByLine, selectLyricsLoading } from "features/lyrics/lyricsSelectors"
+import { selectCurrentTime } from "features/queue/queueSelectors"
+import { selectLyricTextSize } from "features/setting/settingSelectors"
 
 const LyricStyleds = styled.li`
    animation: opactiy 0.5s linear forwards;
@@ -54,8 +57,8 @@ const LyricStyleds = styled.li`
 const Word = memo(({ data, index }) => {
    const liRef = useRef()
    const progressBar = useRef()
-   const current = useSelector((state) => state.queueNowPlay.currentTime)
-   const isSeek = useSelector((state) => state.lyrics.isSeek)
+   const current = useSelector(selectCurrentTime)
+   const isSeek = useSelector(selectIsSeek)
    const isUp = useRef(false)
 
    let text = data?.text
@@ -109,10 +112,10 @@ const Word = memo(({ data, index }) => {
 const KaraokeView = memo(() => {
    const dispatch = useDispatch()
    const [state, setState] = useState([])
-   const textSize = useSelector((state) => state.setting.text)
-   const lyricByLine = useSelector((state) => state.lyrics.lyricByLine)
-   const loading = useSelector((state) => state.lyrics.loading)
-   const current = useSelector((state) => state.queueNowPlay.currentTime)
+   const textSize = useSelector(selectLyricTextSize)
+   const lyricByLine = useSelector(selectLyricByLine)
+   const loading = useSelector(selectLyricsLoading)
+   const current = useSelector(selectCurrentTime)
    const ref0 = useRef(0)
    const ref1 = useRef(1)
    useLayoutEffect(() => {

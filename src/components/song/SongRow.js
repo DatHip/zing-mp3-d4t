@@ -17,6 +17,8 @@ import {
 } from "features/queue/queueSlice";
 import { pushPlayListsLogged } from "features/logged/loggedSlice";
 import useLike from "hook/useLike";
+import { selectCurrentEncodeId, selectPlaylistEncodeId } from "features/queue/queueSelectors"
+import { selectIsReady, selectPlaying } from "features/setting/settingSelectors"
 
 const NewReleaseItemStyle = styled.div`
    &.active {
@@ -177,15 +179,11 @@ const SongRow = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
   const img = item?.thumbnailM?.slice(item?.thumbnailM.lastIndexOf("/"));
   const timeRelease = getReleaseCountdown(item?.releaseDate);
 
-  const currentEncodeId = useSelector(
-    (state) => state.queueNowPlay.currentEncodeId
-  );
-  const playlistEncodeId = useSelector(
-    (state) => state.queueNowPlay.playlistEncodeId
-  );
+  const currentEncodeId = useSelector(selectCurrentEncodeId);
+  const playlistEncodeId = useSelector(selectPlaylistEncodeId);
 
-  const playing = useSelector((state) => state.setting.playing);
-  const isReady = useSelector((state) => state.setting.isReady);
+  const playing = useSelector(selectPlaying);
+  const isReady = useSelector(selectIsReady);
   let active = item?.encodeId === currentEncodeId;
   let activeAlbum = playlistEncodeId === item?.encodeId;
 

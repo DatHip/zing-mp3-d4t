@@ -2,6 +2,8 @@ import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "features/queue/queueSlice"
 import { setPlay, setReady } from "features/setting/settingSlice"
+import { selectCurrentIndex } from "features/queue/queueSelectors"
+import { selectIsRandom, selectPlaying } from "features/setting/settingSelectors"
 
 /**
  * Queue navigation. The shuffle-vs-sequential branch below was copy-pasted at
@@ -13,9 +15,9 @@ import { setPlay, setReady } from "features/setting/settingSlice"
  */
 export function useQueueControls() {
    const dispatch = useDispatch()
-   const isRandom = useSelector((state) => state.setting.isRandom)
-   const playing = useSelector((state) => state.setting.playing)
-   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
+   const isRandom = useSelector(selectIsRandom)
+   const playing = useSelector(selectPlaying)
+   const currentIndexSong = useSelector(selectCurrentIndex)
 
    /** Move the queue pointer only — no playback side effects. */
    const goToIndex = useCallback(

@@ -2,6 +2,7 @@ import React, { memo, Suspense, useEffect } from "react"
 import PlayerBarInner from "layout/PlayerBarInner"
 import QueuePanel from "layout/QueuePanel"
 import { useSelector } from "react-redux"
+import { selectFullPlayerOpen, selectFullPlayerOpenClass } from "features/fullPlayer/fullPlayerSelectors"
 
 // The full-screen player owns every Swiper carousel in the app (~215KB of source
 // with dom7). It only mounts once the user expands the bar, so it is split out
@@ -10,8 +11,8 @@ const importViewPlayMusicMain = () => import("components/player/full/FullPlayer"
 const FullPlayer = React.lazy(importViewPlayMusicMain)
 
 const PlayerBar = () => {
-   const isOpen = useSelector((state) => state.toggleOpenMain.isOpen)
-   const isOpenClass = useSelector((state) => state.toggleOpenMain.isOpenClass)
+   const isOpen = useSelector(selectFullPlayerOpen)
+   const isOpenClass = useSelector(selectFullPlayerOpenClass)
 
    useEffect(() => {
       const warm = () => importViewPlayMusicMain()

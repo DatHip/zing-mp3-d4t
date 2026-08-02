@@ -3,13 +3,14 @@ import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector, useDispatch } from "react-redux"
 import { setThemes } from "features/theme/themeSlice"
+import { selectThemeItem, selectThemeName } from "features/theme/themeSelectors"
 
 const Items = memo(({ item }) => {
    const { name, itemS } = item
    const dispatch = useDispatch()
 
-   const themeName = useSelector((state) => state.themeToggle.name)
-   const themeItemS = useSelector((state) => state.themeToggle.itemS)
+   const themeName = useSelector(selectThemeName)
+   const themeItemS = useSelector(selectThemeItem)
    const handleClickApply = () => {
       dispatch(setThemes(item))
    }

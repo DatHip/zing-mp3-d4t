@@ -2,9 +2,10 @@ import React from "react"
 import { useSelector } from "react-redux"
 import AlbumCard from "components/card/AlbumCard"
 import Section from "components/ui/Section"
+import { selectRecentPlaylists } from "features/logged/loggedSelectors"
 
 const HistoryPlayList = () => {
-   const recentPlaylist = useSelector((state) => state.logged.recentPlaylist)
+   const recentPlaylist = useSelector(selectRecentPlaylists)
 
    return (
       <div className="main_songnew main-page-item active">

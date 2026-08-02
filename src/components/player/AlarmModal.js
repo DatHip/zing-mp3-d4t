@@ -7,6 +7,7 @@ import usePortal from "react-cool-portal"
 import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { selectClockOff } from "features/setting/settingSelectors"
 
 const PortalStyle = styled.div`
    .confirm-modal {
@@ -137,7 +138,7 @@ const schema = yup.object({
 // react-hook-form (~137KB of source) out of main.js.
 const AlarmModal = ({ onClose }) => {
    const dispatch = useDispatch()
-   const clockOff = useSelector((state) => state.setting.clockOff)
+   const clockOff = useSelector(selectClockOff)
 
    const { Portal, hide } = usePortal({ defaultShow: true, onHide: onClose })
 

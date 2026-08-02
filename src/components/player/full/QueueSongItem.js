@@ -6,14 +6,16 @@ import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "features/queue/
 import { setPlay, setReady } from "features/setting/settingSlice"
 import ActionIcon from "components/ui/ActionIcon"
 import LoadingIcon from "components/ui/LoadingIcon"
+import { selectCurrentEncodeId } from "features/queue/queueSelectors"
+import { selectIsRandom, selectIsReady, selectPlaying } from "features/setting/settingSelectors"
 
 const QueueSongItem = memo(({ data, index }) => {
    const dispatch = useDispatch()
 
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const playing = useSelector((state) => state.setting.playing)
-   const isRandom = useSelector((state) => state.setting.isRandom)
-   const isReady = useSelector((state) => state.setting.isReady)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
+   const playing = useSelector(selectPlaying)
+   const isRandom = useSelector(selectIsRandom)
+   const isReady = useSelector(selectIsReady)
    let active = currentEncodeId === data?.encodeId
 
    return (

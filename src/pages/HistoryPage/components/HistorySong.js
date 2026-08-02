@@ -1,9 +1,10 @@
 import React from "react"
 import { useSelector } from "react-redux"
 import ChartSongRow from "components/song/ChartSongRow"
+import { selectRecentSongs } from "features/logged/loggedSelectors"
 
 const HistorySong = () => {
-   const recentSongs = useSelector((state) => state.logged.recentSongs)
+   const recentSongs = useSelector(selectRecentSongs)
 
    return (
       <div className="main_topchart mt-2">

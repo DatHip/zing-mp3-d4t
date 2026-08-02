@@ -7,12 +7,14 @@ import { fetchPlayList } from "features/queue/queueSlice"
 import ActionIcon from "components/ui/ActionIcon"
 import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import useLike from "hook/useLike"
+import { selectPlaylistEncodeId, selectQueueLoading } from "features/queue/queueSelectors"
+import { selectPlaying } from "features/setting/settingSelectors"
 
 const AlbumPageInfo = memo(({ datas }) => {
    const dispatch = useDispatch()
-   const playing = useSelector((state) => state.setting.playing)
-   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-   const loading = useSelector((state) => state.queueNowPlay.loading)
+   const playing = useSelector(selectPlaying)
+   const playlistEncodeId = useSelector(selectPlaylistEncodeId)
+   const loading = useSelector(selectQueueLoading)
    const refDiv = useRef()
    const refNum = useRef(0)
    let activeAlbum = datas?.encodeId === playlistEncodeId

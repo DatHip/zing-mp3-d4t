@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom"
 import useMediaQuery from "hook/useMediaQuery"
 import useToggle from "hook/useToggle"
+import { selectIsLoggedIn } from "features/user/userSelectors"
 
 const Sidebar = () => {
    const isNarrow = useMediaQuery("(max-width: 1225px)")
@@ -12,7 +13,7 @@ const Sidebar = () => {
    let pathMyMusic = pathname.indexOf("mymusic")
 
    const [isToggle, setIsToggle] = useToggle(false)
-   const activeUser = useSelector((state) => state.users.activeUser)
+   const activeUser = useSelector(selectIsLoggedIn)
 
    return (
       <aside

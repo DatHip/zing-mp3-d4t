@@ -9,16 +9,18 @@ import DiscSwiper from "components/player/full/DiscSwiper"
 import SettingButton from "components/player/full/SettingButton"
 import Blur from "react-blur"
 import { fetchDataLyrics } from "features/lyrics/lyricsSlice"
+import { selectCurrentAlbum, selectCurrentEncodeId, selectCurrentSong } from "features/queue/queueSelectors"
+import { selectIsBgFull } from "features/setting/settingSelectors"
 
 const FullPlayer = () => {
    const dispatch = useDispatch()
    const [open, setOpen] = useState(1)
    const [isScroll, setIsScroll] = useState(false)
    const bottomRef = useRef()
-   const isBgFull = useSelector((state) => state.setting.isBgFull)
-   const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
+   const isBgFull = useSelector(selectIsBgFull)
+   const infoSongCurrent = useSelector(selectCurrentSong)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
+   const infoCurrenAlbum = useSelector(selectCurrentAlbum)
    const img = infoSongCurrent.thumbnailM
 
    // fetch lyric

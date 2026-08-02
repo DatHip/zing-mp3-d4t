@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux"
 import { logOut } from "features/user/userSlice"
 import { useSelector } from "react-redux"
 import { logError } from "utils/logger"
+import { selectIsLoggedIn, selectUserImgUrl } from "features/user/userSelectors"
 
 const LoginPortalStyyles = styled.div`
    background-color: var(--primary-bg);
@@ -64,7 +65,7 @@ const LoginPortal = ({ setOpen }) => {
    const { pathname } = useLocation()
    const navigate = useNavigate()
    const dispatch = useDispatch()
-   const activeUser = useSelector((state) => state.users.activeUser)
+   const activeUser = useSelector(selectIsLoggedIn)
 
    const handleSignOut = async () => {
       signOut(auth)
@@ -143,7 +144,7 @@ const LoginPortal = ({ setOpen }) => {
 
 const UserMenu = ({ isTitle = true, width = 38, height = 38 }) => {
    const [open, setOpen] = useState(false)
-   const imgUrl = useSelector((state) => state.users.imgUrl)
+   const imgUrl = useSelector(selectUserImgUrl)
 
    return (
       <Tippy

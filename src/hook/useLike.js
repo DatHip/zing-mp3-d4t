@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
 import { logError } from "utils/logger"
+import { selectIsLoggedIn, selectUserId } from "features/user/userSelectors"
 
 // Firestore drags in google-closure-library — together ~1.7MB of source. Only a
 // signed-in user can read or write likes, so the SDK is fetched on demand rather
@@ -50,8 +51,8 @@ function favouritesOf(data, type) {
 const useLike = (item, type) => {
    // This hook runs once per row in every song/album/artist list, so it reads the
    // two primitives it needs rather than subscribing to the whole users slice.
-   const id = useSelector((state) => state.users.id)
-   const activeUser = useSelector((state) => state.users.activeUser)
+   const id = useSelector(selectUserId)
+   const activeUser = useSelector(selectIsLoggedIn)
 
    const [isLike, setLike] = useState(false)
    const [docs, setDocs] = useState([])

@@ -15,6 +15,7 @@ import { updatePassword } from "firebase/auth"
 import { database } from "lib/firebase/firestore"
 import { auth } from "lib/firebase/auth"
 import { logError } from "utils/logger"
+import { selectUser } from "features/user/userSelectors"
 
 const UpdateProfileStyled = styled.div`
    max-width: 500px;
@@ -72,7 +73,7 @@ const schema2 = yup.object({
 
 const MyInfoPage = memo(() => {
    const dispatch = useDispatch()
-   const users = useSelector((state) => state.users)
+   const users = useSelector(selectUser)
    const storage = getStorage()
 
    const [nameImg, setNameImg] = useState("")

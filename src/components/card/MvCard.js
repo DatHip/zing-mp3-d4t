@@ -4,10 +4,11 @@ import fancyTimeFormat from "utils/fancyTimeFormat"
 import { useDispatch, useSelector } from "react-redux"
 import { setLocationOpen, setOpenOn } from "features/mvToggle/mvToggleSlice"
 import { setInfoCurrentMv } from "features/queue/queueSlice"
+import { selectMvOpen } from "features/mvToggle/mvToggleSelectors"
 
 const MvCard = memo(({ data, isMvFull }) => {
    const { artists, duration, encodeId, title, thumbnailM, artist, thumbnail } = data
-   const stateOpen = useSelector((state) => state.setOpenMainMv.isOpen)
+   const stateOpen = useSelector(selectMvOpen)
 
    const dispatch = useDispatch()
 

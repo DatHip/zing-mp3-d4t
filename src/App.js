@@ -8,14 +8,16 @@ import { setPlaying } from "features/setting/settingSlice"
 import { setUser } from "features/user/userSlice"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { selectCurrentEncodeId } from "features/queue/queueSelectors"
+import { selectBgImg, selectBgPlaying, selectDataStyle, selectDataTheme } from "features/theme/themeSelectors"
 
 function App() {
-   const themeDataTheme = useSelector((state) => state.themeToggle.dataTheme)
-   const themeBgImg = useSelector((state) => state.themeToggle.bgImg)
-   const themeBgPlaying = useSelector((state) => state.themeToggle.bgPlaying)
-   const themeDataStyle = useSelector((state) => state.themeToggle.dataStyle)
+   const themeDataTheme = useSelector(selectDataTheme)
+   const themeBgImg = useSelector(selectBgImg)
+   const themeBgPlaying = useSelector(selectBgPlaying)
+   const themeDataStyle = useSelector(selectDataStyle)
 
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
 
    const dispatch = useDispatch()
    const store = useStore()

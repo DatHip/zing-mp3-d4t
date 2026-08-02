@@ -20,6 +20,10 @@ import { useCallback } from "react"
 import { setPlay, setReady } from "features/setting/settingSlice"
 import ClearQueueButton from "components/player/ClearQueueButton"
 import AlarmButton from "components/player/AlarmButton"
+import { selectRecentSongs } from "features/logged/loggedSelectors"
+import { selectCurrentEncodeId, selectCurrentIndex, selectCurrentSong, selectListSong, selectPlaylistEncodeId } from "features/queue/queueSelectors"
+import { selectQueuePanel } from "features/queuePanel/queuePanelSelectors"
+import { selectIsRandom } from "features/setting/settingSelectors"
 
 const importQueueDragList = () => import("./QueueDragList")
 const QueueDragList = React.lazy(importQueueDragList)
@@ -32,19 +36,19 @@ const reorder = (list, startIndex, endIndex) => {
 }
 
 const QueuePanel = () => {
-   const isToggle = useSelector((state) => state.toggleRight)
+   const isToggle = useSelector(selectQueuePanel)
 
-   const listSong = useSelector((state) => state.queueNowPlay.listSong)
-   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
-   const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
+   const listSong = useSelector(selectListSong)
+   const currentIndexSong = useSelector(selectCurrentIndex)
+   const infoSongCurrent = useSelector(selectCurrentSong)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
+   const playlistEncodeId = useSelector(selectPlaylistEncodeId)
 
-   const recentSongs = useSelector((state) => state.logged.recentSongs)
+   const recentSongs = useSelector(selectRecentSongs)
 
    // Narrow read: subscribing to the whole setting slice re-rendered the entire
    // queue list on every volume drag, play/pause and isReady flip.
-   const isRandom = useSelector((state) => state.setting.isRandom)
+   const isRandom = useSelector(selectIsRandom)
    const [toggleSilde, setToggleSilde] = useState(false)
    const [items, setItems] = useState([])
    const dispatch = useDispatch()

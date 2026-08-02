@@ -9,6 +9,8 @@ import ActionIcon from "components/ui/ActionIcon"
 import { setPlay } from "features/setting/settingSlice"
 import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import useLike from "hook/useLike"
+import { selectPlaylistEncodeId } from "features/queue/queueSelectors"
+import { selectPlaying } from "features/setting/settingSelectors"
 
 const StyleDiv = styled.div`
    &.active {
@@ -73,8 +75,8 @@ const AlbumCard = memo(
       const { title, encodeId, artists, sortDescription, thumbnailM } = item
       const dispatch = useDispatch()
       const navigate = useNavigate()
-      const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-      const playing = useSelector((state) => state.setting.playing)
+      const playlistEncodeId = useSelector(selectPlaylistEncodeId)
+      const playing = useSelector(selectPlaying)
       let active = playlistEncodeId === encodeId
 
       const { isLike, handleLike } = useLike(item, 1)

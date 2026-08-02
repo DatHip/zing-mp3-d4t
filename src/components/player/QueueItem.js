@@ -13,21 +13,23 @@ import {
 } from "features/queue/queueSlice"
 import { setPlay, setReady } from "features/setting/settingSlice"
 import useLike from "hook/useLike"
+import { selectCurrentAlbum, selectCurrentEncodeId, selectCurrentIndex, selectPlaylistEncodeId } from "features/queue/queueSelectors"
+import { selectIsRandom, selectIsReady, selectPlaying } from "features/setting/settingSelectors"
 
 // DragWrapper is react-beautiful-dnd's Draggable, injected by QueueDragList. It is
 // a prop rather than an import so this row — which the history tab renders without
 // any drag behaviour — does not pull the DnD library into main.js.
 const QueueItem = ({ data, index, items, isHistory, setToggleSilde, lastIndex, DragWrapper }) => {
    const dispatch = useDispatch()
-   const playing = useSelector((state) => state.setting.playing)
-   const isReady = useSelector((state) => state.setting.isReady)
-   const isRandom = useSelector((state) => state.setting.isRandom)
+   const playing = useSelector(selectPlaying)
+   const isReady = useSelector(selectIsReady)
+   const isRandom = useSelector(selectIsRandom)
    const { isLike, handleLike } = useLike(data, 2)
 
-   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
-   const playlistEncodeId = useSelector((state) => state.queueNowPlay.playlistEncodeId)
-   const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const currentIndexSong = useSelector(selectCurrentIndex)
+   const playlistEncodeId = useSelector(selectPlaylistEncodeId)
+   const infoCurrenAlbum = useSelector(selectCurrentAlbum)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
 
    let active = data?.encodeId === currentEncodeId || data?.id === currentEncodeId
    let isPre = index < currentIndexSong

@@ -6,14 +6,16 @@ import { setLoopSongs, setPlaying, setRandomSongs } from "features/setting/setti
 import LoadingIcon from "components/ui/LoadingIcon"
 import scrollToActive from "utils/scrollToActive"
 import { useQueueControls } from "hook/useQueueControls"
+import { selectCurrentEncodeId, selectNextSong } from "features/queue/queueSelectors"
+import { selectIsLoop, selectIsReady } from "features/setting/settingSelectors"
 
 const PlayerControls = () => {
    const dispatch = useDispatch()
-   const isLoop = useSelector((state) => state.setting.isLoop)
-   const isReady = useSelector((state) => state.setting.isReady)
+   const isLoop = useSelector(selectIsLoop)
+   const isReady = useSelector(selectIsReady)
 
-   const infoSongNext = useSelector((state) => state.queueNowPlay.infoSongNext)
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const infoSongNext = useSelector(selectNextSong)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
 
    const { playNext, playPrev, currentIndexSong, isRandom, playing } = useQueueControls()
 

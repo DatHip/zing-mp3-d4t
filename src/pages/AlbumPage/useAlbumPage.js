@@ -4,10 +4,11 @@ import { useSelector } from "react-redux"
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
 import scrollTop from "utils/scrollToTop"
 import { useAlbumData } from "api/useAlbumData"
+import { selectCurrentEncodeId } from "features/queue/queueSelectors"
 
 export function useAlbumPage() {
    const { id } = useParams()
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
    const { album, suggested, isLoading } = useAlbumData(id)
 
    useEffect(() => {

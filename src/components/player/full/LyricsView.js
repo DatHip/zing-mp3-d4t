@@ -2,12 +2,15 @@ import React, { memo, useMemo } from "react"
 import { useSelector } from "react-redux"
 import LoadingSvg from "components/ui/LoadingSvg"
 import LyricLine from "components/player/full/LyricLine"
+import { selectLyricByLine, selectLyricsLoading } from "features/lyrics/lyricsSelectors"
+import { selectCurrentSong, selectCurrentTime } from "features/queue/queueSelectors"
+import { selectLyricTextSize } from "features/setting/settingSelectors"
 const LyricsView = memo(() => {
-   const textSize = useSelector((state) => state.setting.text)
-   const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
-   const lyricByLine = useSelector((state) => state.lyrics.lyricByLine)
-   const isLoading = useSelector((state) => state.lyrics.isLoading)
-   const currentTime = useSelector((state) => state.queueNowPlay.currentTime)
+   const textSize = useSelector(selectLyricTextSize)
+   const infoSongCurrent = useSelector(selectCurrentSong)
+   const lyricByLine = useSelector(selectLyricByLine)
+   const isLoading = useSelector(selectLyricsLoading)
+   const currentTime = useSelector(selectCurrentTime)
 
    // One subscription for the whole list instead of one per line. Lines are
    // memoized because only the two whose active/over flags flip need to

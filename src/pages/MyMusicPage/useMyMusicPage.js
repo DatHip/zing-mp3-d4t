@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { doc, getDoc } from "firebase/firestore"
 import { database } from "lib/firebase/firestore"
+import { selectUser } from "features/user/userSelectors"
 
 const TABS = [
    { path: "/mymusic/", label: "TỔNG QUAN" },
@@ -15,7 +16,7 @@ const TABS = [
 export function useMyMusicPage() {
    const { pathname } = useLocation()
    const navigate = useNavigate()
-   const users = useSelector((state) => state.users)
+   const users = useSelector(selectUser)
    const { activeUser, name, id: userId } = users
    const [docs, setDocs] = useState()
 

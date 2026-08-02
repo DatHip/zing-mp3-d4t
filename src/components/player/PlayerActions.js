@@ -4,13 +4,16 @@ import { Link } from "react-router-dom"
 import { setOpenClass, setOpenMain } from "features/fullPlayer/fullPlayerSlice"
 import { setIsVolume, setVolume, toogleMuted } from "features/setting/settingSlice"
 import { setToggle } from "features/queuePanel/queuePanelSlice"
+import { selectCurrentSong } from "features/queue/queueSelectors"
+import { selectQueuePanel } from "features/queuePanel/queuePanelSelectors"
+import { selectIsVolume, selectMuted, selectVolume } from "features/setting/settingSelectors"
 
 const PlayerActions = () => {
-   const isToggle = useSelector((state) => state.toggleRight)
-   const infoSong = useSelector((state) => state.queueNowPlay.infoSongCurrent)
-   const volume = useSelector((state) => state.setting.volume)
-   const isVolume = useSelector((state) => state.setting.isVolume)
-   const muted = useSelector((state) => state.setting.muted)
+   const isToggle = useSelector(selectQueuePanel)
+   const infoSong = useSelector(selectCurrentSong)
+   const volume = useSelector(selectVolume)
+   const isVolume = useSelector(selectIsVolume)
+   const muted = useSelector(selectMuted)
    const volumeRef = useRef()
    const dispatch = useDispatch()
 

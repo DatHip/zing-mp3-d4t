@@ -7,6 +7,8 @@ import { setPlay, setRandomSongs, setReady } from "features/setting/settingSlice
 import { fetchPlayList, setCurrentIndexSong } from "features/queue/queueSlice"
 import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import { toast } from "react-toastify"
+import { selectCurrentAlbum, selectCurrentEncodeId } from "features/queue/queueSelectors"
+import { selectIsRandom } from "features/setting/settingSelectors"
 
 const ChartCard = React.lazy(() => import("components/card/ChartCard"))
 
@@ -16,11 +18,11 @@ const ChartSection = memo(() => {
 
    const dispatch = useDispatch()
 
-   const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
 
-   const infoCurrenAlbum = useSelector((state) => state.queueNowPlay.infoCurrenAlbum)
+   const infoCurrenAlbum = useSelector(selectCurrentAlbum)
 
-   const isRandom = useSelector((state) => state.setting.isRandom)
+   const isRandom = useSelector(selectIsRandom)
 
    if (!section && !isLoading) return null
 

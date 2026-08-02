@@ -4,15 +4,17 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Lazy } from "swiper"
 import QueueSongItem from "components/player/full/QueueSongItem"
 import { useLayoutEffect } from "react"
+import { selectCurrentIndex, selectListSong, selectListSongShuffle } from "features/queue/queueSelectors"
+import { selectIsRandom } from "features/setting/settingSelectors"
 
 const QueueView = memo(({ isScroll }) => {
    const navigationPrevRef = useRef(null)
    const navigationNextRef = useRef(null)
    const swiperERFf = useRef(null)
-   const listSong = useSelector((state) => state.queueNowPlay.listSong)
-   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
-   const listSongShuffle = useSelector((state) => state.queueNowPlay.listSongShuffle)
-   const isRandom = useSelector((state) => state.setting.isRandom)
+   const listSong = useSelector(selectListSong)
+   const currentIndexSong = useSelector(selectCurrentIndex)
+   const listSongShuffle = useSelector(selectListSongShuffle)
+   const isRandom = useSelector(selectIsRandom)
 
    useLayoutEffect(() => {
       swiperERFf.current.swiper.slideTo(currentIndexSong)

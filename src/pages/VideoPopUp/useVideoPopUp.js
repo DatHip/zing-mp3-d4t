@@ -7,14 +7,16 @@ import { setOpenOff } from "features/mvToggle/mvToggleSlice"
 import { setPlayingAction } from "features/setting/settingSlice"
 import { pushMvsLogged } from "features/logged/loggedSlice"
 import scrollTop from "utils/scrollToTop"
+import { selectMvHistoryOpen } from "features/mvToggle/mvToggleSelectors"
+import { selectCurrentMv } from "features/queue/queueSelectors"
 
 export function useVideoPopUp() {
    const { id } = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
-   const idOpen = useSelector((s) => s.setOpenMainMv.historyOpen)
-   const infoCurrentMv = useSelector((s) => s.queueNowPlay.infoCurrentMv)
+   const idOpen = useSelector(selectMvHistoryOpen)
+   const infoCurrentMv = useSelector(selectCurrentMv)
 
    const { data, isLoading } = useVideoMvData(id)
 

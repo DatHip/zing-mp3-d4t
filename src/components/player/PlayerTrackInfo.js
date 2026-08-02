@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { setOpenClass, setOpenMain } from "features/fullPlayer/fullPlayerSlice"
 import useLike from "hook/useLike"
+import { selectCurrentSong } from "features/queue/queueSelectors"
 
 const PlayerTrackInfo = () => {
    const dispatch = useDispatch()
-   const infoSong = useSelector((state) => state.queueNowPlay.infoSongCurrent)
+   const infoSong = useSelector(selectCurrentSong)
    const { isLike, handleLike } = useLike(infoSong, 2)
 
    return (

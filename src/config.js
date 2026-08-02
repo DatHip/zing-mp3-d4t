@@ -1,4 +1,7 @@
-const tmdbEndpoint = process.env.REACT_APP_API_URL || "http://localhost:5000/api"
+// Fallback is the deployed API, not localhost: a production build with the env
+// var unset would otherwise ship "http://localhost:5000" and be blocked as
+// mixed content on HTTPS, breaking every request with no visible error.
+const tmdbEndpoint = process.env.REACT_APP_API_URL || "https://api-zingmp3.vercel.app/api"
 
 export const tmdAPI = {
    //  getMovieDetails: (movieId) => `${tmdbEndpoint}/${movieId}?api_ey=${apiKey}`,

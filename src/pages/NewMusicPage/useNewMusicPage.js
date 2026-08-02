@@ -1,8 +1,8 @@
 import { useCallback } from "react"
 import { useDispatch } from "react-redux"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
-import { useNewMusicData } from "../../api/useNewMusicData"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import { fetchPlayList } from "features/QueueFeatures/QueueFeatures"
+import { useNewMusicData } from "api/useNewMusicData"
 
 export const NEW_RELEASE_PLAYLIST_ID = "ZDB6EB9C"
 

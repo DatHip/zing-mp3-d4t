@@ -11,7 +11,7 @@ import {
    Legend,
    Tooltip,
 } from "chart.js"
-import { useGetHomePage } from "../../api/getHomePage"
+import { useGetHomePage } from "api/getHomePage"
 
 ChartJS.register(CategoryScale, LineController, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 

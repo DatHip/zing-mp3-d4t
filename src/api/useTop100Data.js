@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { tmdAPI } from "../config"
+import { tmdAPI } from "config"
 
 export function useTop100Data() {
    return useQuery(

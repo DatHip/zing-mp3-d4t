@@ -5,9 +5,10 @@ import React, { memo } from "react"
 import { Navigation, Pagination } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 
-import { useHomeSection } from "../../hook/useHomeSection"
-import EventHomeItem from "../Selection/EventHomeItem"
-import PlayListSelector from "../Selection/PlayListSelector"
+import { useHomeSection } from "hook/useHomeSection"
+import EventHomeItem from "components/Selection/EventHomeItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
+import { logError } from "utils/logger"
 
 const matchEvent = (s) => s?.sectionType === "event" || /sự kiện/i.test(s?.title || "")
 
@@ -88,7 +89,7 @@ const EventHomePage = memo(() => {
          </PlayListSelector>
       )
    } catch (error) {
-      console.log(error)
+      logError("EventHomePage", error)
    }
 })
 

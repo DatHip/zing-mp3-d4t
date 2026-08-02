@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import axios from "axios"
-import { tmdAPI } from "../config"
+import { tmdAPI } from "config"
 
 // function useGetHotKey() {
 //    return useQuery(["getHotKey"], async () => {

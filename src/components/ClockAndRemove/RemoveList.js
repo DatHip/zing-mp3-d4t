@@ -3,8 +3,8 @@ import React, { memo } from "react"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { removeList } from "../../features/QueueFeatures/QueueFeatures"
-import { setPlay } from "../../features/SettingPlay/settingPlay"
+import { removeList } from "features/QueueFeatures/QueueFeatures"
+import { setPlay } from "features/SettingPlay/settingPlay"
 
 const LoginPortalStyyles = styled.div`
    background-color: var(--primary-bg);

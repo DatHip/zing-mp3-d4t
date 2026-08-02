@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-import { tmdAPI } from "../../config"
+import { tmdAPI } from "config"
 
 let initialState = JSON.parse(localStorage.getItem("d4tmp3_lyrics")) || {
    defaultIBGUrls: [],

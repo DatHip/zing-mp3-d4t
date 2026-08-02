@@ -1,13 +1,13 @@
 import React, { memo } from "react"
 import styled from "styled-components"
-import NewReleaseitem from "../../../components/NewReleaseitem/NewReleaseitem"
+import NewReleaseitem from "components/NewReleaseitem/NewReleaseitem"
 import usePortal from "react-cool-portal"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { setPlay, setReady } from "../../../features/SettingPlay/settingPlay"
-import { fetchPlayList } from "../../../features/QueueFeatures/QueueFeatures"
-import { pushPlayListsLogged } from "../../../features/Logged/loggedFeatures"
-import useLikeHook from "../../../hook/useLikeHook"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import { fetchPlayList } from "features/QueueFeatures/QueueFeatures"
+import { pushPlayListsLogged } from "features/Logged/loggedFeatures"
+import useLikeHook from "hook/useLikeHook"
 
 const InfoTopStyles = styled.div`
    .read-more {

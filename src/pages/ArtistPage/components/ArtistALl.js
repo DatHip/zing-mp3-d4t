@@ -1,12 +1,12 @@
 import React, { memo } from "react"
-import SliderShow from "../../../components/MyMusicPage/SliderShow"
-import PlayListSelector from "../../../components/Selection/PlayListSelector"
-import ItemChartList from "../../../components/TopChartPage/ItemChartList"
+import SliderShow from "components/MyMusicPage/SliderShow"
+import PlayListSelector from "components/Selection/PlayListSelector"
+import ItemChartList from "components/TopChartPage/ItemChartList"
 import { useOutletContext } from "react-router-dom"
-import CarouselItem from "../../../components/Selection/CarouselItem"
-import ItemArits from "../../../components/MyMusicPage/ItemArits"
-import MvItem from "../../../components/MVpage/MvItem"
-import LoadingSvg from "../../../components/loading/LoadingSvg"
+import CarouselItem from "components/Selection/CarouselItem"
+import ItemArits from "components/MyMusicPage/ItemArits"
+import MvItem from "components/MVpage/MvItem"
+import LoadingSvg from "components/loading/LoadingSvg"
 
 const ArtistALl = () => {
    const datas = useOutletContext()

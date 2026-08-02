@@ -1,7 +1,7 @@
 import React, { memo } from "react";
-import { useHomeSection } from "../../hook/useHomeSection";
-import PlayListSelector from "../Selection/PlayListSelector";
-import FavoriteArtisItem from "../Selection/FavoriteArtisItem";
+import { useHomeSection } from "hook/useHomeSection";
+import PlayListSelector from "components/Selection/PlayListSelector";
+import FavoriteArtisItem from "components/Selection/FavoriteArtisItem";
 
 const matchFavoriteArtist = (s) =>
   s?.sectionType === "artistSpotlight" ||

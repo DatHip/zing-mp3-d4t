@@ -1,9 +1,9 @@
 import React, { memo } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
+import fancyTimeFormat from "utils/fancyTimeFormat"
 import { useDispatch, useSelector } from "react-redux"
-import { setLocationOpen, setOpenOn } from "../../features/ToggleMainMv/toggleMainMv"
-import { setInfoCurrentMv } from "../../features/QueueFeatures/QueueFeatures"
+import { setLocationOpen, setOpenOn } from "features/ToggleMainMv/toggleMainMv"
+import { setInfoCurrentMv } from "features/QueueFeatures/QueueFeatures"
 
 const MvItem = memo(({ data, isMvFull }) => {
    const { artists, duration, encodeId, title, thumbnailM, artist, thumbnail } = data

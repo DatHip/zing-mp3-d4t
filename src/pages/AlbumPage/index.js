@@ -1,11 +1,11 @@
 import React from "react"
 
-import CarouselItem from "../../components/Selection/CarouselItem"
-import PlayListSelector from "../../components/Selection/PlayListSelector"
-import LoadingSvg from "../../components/loading/LoadingSvg"
-import ItemChartList from "../../components/TopChartPage/ItemChartList"
-import ItemArits from "../../components/MyMusicPage/ItemArits"
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
+import CarouselItem from "components/Selection/CarouselItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
+import LoadingSvg from "components/loading/LoadingSvg"
+import ItemChartList from "components/TopChartPage/ItemChartList"
+import ItemArits from "components/MyMusicPage/ItemArits"
+import fancyTimeFormat from "utils/fancyTimeFormat"
 
 import AlbumPageInfo from "./components/AlbumPageInfo"
 import { AlbumPageStyles } from "./styles"

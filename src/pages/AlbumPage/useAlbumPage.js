@@ -2,8 +2,8 @@ import { useEffect } from "react"
 import { useParams } from "react-router"
 import { useSelector } from "react-redux"
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
-import scrollTop from "../../utils/scrollToTop"
-import { useAlbumData } from "../../api/useAlbumData"
+import scrollTop from "utils/scrollToTop"
+import { useAlbumData } from "api/useAlbumData"
 
 export function useAlbumPage() {
    const { id } = useParams()

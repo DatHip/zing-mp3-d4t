@@ -1,12 +1,12 @@
 import React from "react"
 
-import ChartList from "../../components/TopChartPage/ChartList"
-import WeekList from "../../components/TopChartPage/WeekList"
-import LoadingSvg from "../../components/loading/LoadingSvg"
+import ChartList from "components/TopChartPage/ChartList"
+import WeekList from "components/TopChartPage/WeekList"
+import LoadingSvg from "components/loading/LoadingSvg"
 
 import { useZingChartPage } from "./useZingChartPage"
 
-const CharHomeItem = React.lazy(() => import("../../components/Selection/CharHomeItem"))
+const CharHomeItem = React.lazy(() => import("components/Selection/CharHomeItem"))
 
 const ZingChartPage = () => {
    const { data, isLoading, handlePlayAll, ranks } = useZingChartPage()

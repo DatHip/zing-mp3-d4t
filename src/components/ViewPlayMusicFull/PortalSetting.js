@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { setAciteTheme, setSizeText } from "../../features/SettingPlay/settingPlay"
+import { setAciteTheme, setSizeText } from "features/SettingPlay/settingPlay"
 
 const PortalSetting = () => {
    const dispatch = useDispatch()

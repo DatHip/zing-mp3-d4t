@@ -3,20 +3,20 @@ import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
-import ActionPlay from "../Icon/ActionPlay"
-import LoadingIcon from "../Icon/LoadingIcon"
-import ActionIcon from "../Icon/ActionIcon"
-import { setPlay, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
+import fancyTimeFormat from "utils/fancyTimeFormat"
+import ActionPlay from "components/Icon/ActionPlay"
+import LoadingIcon from "components/Icon/LoadingIcon"
+import ActionIcon from "components/Icon/ActionIcon"
+import { setPlay, setRandomSongs, setReady } from "features/SettingPlay/settingPlay"
 import {
    fetchPlayList,
    playSongNotAlbum,
    setCurrentIndexSong,
    setCurrentIndexSongShuffle,
-} from "../../features/QueueFeatures/QueueFeatures"
-import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+} from "features/QueueFeatures/QueueFeatures"
+import { pushPlayListsLogged } from "features/Logged/loggedFeatures"
 import { useCallback } from "react"
-import useLikeHook from "../../hook/useLikeHook"
+import useLikeHook from "hook/useLikeHook"
 
 const ItemChartList = memo(
    ({ isNotList, indexNotVip, idAlbum, item, index, isChildren = false, isNoneRank, onFavourite, notAlbum }) => {

@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState, useRef, memo, useLayoutEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setOffClass, setOffMain } from "../../features/openMainFull/openMainFullFeatures"
+import { setOffClass, setOffMain } from "features/openMainFull/openMainFullFeatures"
 import BgFullKaroke from "./BgFullKaroke"
 import BgFullListMusic from "./BgFullListMusic"
 import BgFullLyrics from "./BgFullLyrics"
 import BgSwiperFull from "./BgSwiperFull"
 import BtnSetting from "./BtnSetting"
 import Blur from "react-blur"
-import { fetchDataLyrics } from "../../features/Lyrics/Lyrics"
+import { fetchDataLyrics } from "features/Lyrics/Lyrics"
 
 const ViewPlayMusicMain = () => {
    const dispatch = useDispatch()

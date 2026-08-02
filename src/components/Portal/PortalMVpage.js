@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react"
 import styled from "styled-components"
-import formartTimeNewFeed from "../../utils/formartTimeNewFeed"
+import formartTimeNewFeed from "utils/formartTimeNewFeed"
 import ReactPlayer from "react-player"
 
 const PortalStyle = styled.div`

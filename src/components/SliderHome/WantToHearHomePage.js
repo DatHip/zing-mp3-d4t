@@ -1,7 +1,7 @@
 import React, { memo } from "react"
-import { byId, useHomeSection } from "../../hook/useHomeSection"
-import CarouselItem from "../Selection/CarouselItem"
-import PlayListSelector from "../Selection/PlayListSelector"
+import { byId, useHomeSection } from "hook/useHomeSection"
+import CarouselItem from "components/Selection/CarouselItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const WantToHearHomePage = () => {
    const { section, isLoading } = useHomeSection(byId("hEditorTheme"))

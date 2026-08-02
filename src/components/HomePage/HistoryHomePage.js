@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import CarouselItem from "../Selection/CarouselItem"
-import PlayListSelector from "../Selection/PlayListSelector"
+import CarouselItem from "components/Selection/CarouselItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const HistoryHomePage = () => {
    const recentPlaylist = useSelector((state) => state.logged.recentPlaylist)

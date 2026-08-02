@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, Suspense } from "react"
 import { AnimatePresence } from "framer-motion"
 
-const ThemePortal = React.lazy(() => import("../Portal/ThemePortal"))
+const ThemePortal = React.lazy(() => import("components/Portal/ThemePortal"))
 
 const ItemThemes = () => {
    const [modalOpen, setModalOpen] = useState(false)

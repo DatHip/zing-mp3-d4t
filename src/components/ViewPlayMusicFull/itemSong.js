@@ -2,10 +2,10 @@ import React, { memo } from "react"
 import { useDispatch } from "react-redux"
 
 import { useSelector } from "react-redux"
-import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import ActionIcon from "../Icon/ActionIcon"
-import LoadingIcon from "../Icon/LoadingIcon"
+import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import ActionIcon from "components/Icon/ActionIcon"
+import LoadingIcon from "components/Icon/LoadingIcon"
 
 const ItemSong = memo(({ data, index }) => {
    const dispatch = useDispatch()

@@ -9,7 +9,8 @@ import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux"
 import { auth } from "lib/firebase/auth"
 import { database } from "lib/firebase/firestore"
-import { setUser } from "../../features/User/userFeatures"
+import { setUser } from "features/User/userFeatures"
+import { logError } from "utils/logger"
 
 const schema = yup.object({
    email: yup.string().required("Vui lòng nhập trường này").max(40).email(),
@@ -83,7 +84,7 @@ const SignUpForm = ({ setSign }) => {
          })
 
          .catch((error) => {
-            console.log(error)
+            logError("SignUpForm.signUp", error)
             return toast("Đăng ký Không Thành Công ", {
                type: "error",
             })
@@ -152,18 +153,3 @@ const SignUpForm = ({ setSign }) => {
 }
 
 export default SignUpForm
-
-// remove, addDoc ,getDoc , update,
-// const removeDoc = async () => {
-//    const colRefDel = doc(database, "posts", "YDfp0gR3yeci2n6jra6g")
-//    await deleteDoc(colRefDel)
-//    console.log("oke")
-// }
-
-// const handleUpadatePost = async () => {
-//    const colRefUpdate = doc(database, "posts", "oq9bUMZkdGNDjDNzFnyu")
-//    await updateDoc(colRefUpdate, {
-//       name: "ahihiihhii",
-//    })
-//    console.log("oke")
-// }

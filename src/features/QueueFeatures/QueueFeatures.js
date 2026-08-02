@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-import { tmdAPI } from "../../config"
+import { tmdAPI } from "config"
 
 const initialState = (() => {
    try {

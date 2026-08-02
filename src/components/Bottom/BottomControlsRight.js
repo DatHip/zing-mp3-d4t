@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import { setOpenClass, setOpenMain } from "../../features/openMainFull/openMainFullFeatures"
-import { setIsVolume, setVolume, toogleMuted } from "../../features/SettingPlay/settingPlay"
-import { setToggle } from "../../features/toggleRight/toggleRight"
+import { setOpenClass, setOpenMain } from "features/openMainFull/openMainFullFeatures"
+import { setIsVolume, setVolume, toogleMuted } from "features/SettingPlay/settingPlay"
+import { setToggle } from "features/toggleRight/toggleRight"
 
 const BottomControlsRight = () => {
    const isToggle = useSelector((state) => state.toggleRight)

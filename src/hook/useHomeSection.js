@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { useGetHomePage } from "../api/getHomePage"
+import { useGetHomePage } from "api/getHomePage"
 
 /**
  * Locate a section in the /home response using a stable matcher.

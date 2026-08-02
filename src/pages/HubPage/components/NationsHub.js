@@ -1,6 +1,6 @@
 import React, { memo } from "react"
-import FavoriteArtisItem from "../../../components/Selection/FavoriteArtisItem"
-import PlayListSelector from "../../../components/Selection/PlayListSelector"
+import FavoriteArtisItem from "components/Selection/FavoriteArtisItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const NationsHub = memo((data) => {
    return (

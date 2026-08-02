@@ -7,7 +7,8 @@ import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux"
-import { setUser } from "../../features/User/userFeatures"
+import { setUser } from "features/User/userFeatures"
+import { logError } from "utils/logger"
 
 const schema = yup.object({
    email: yup.string().required("Vui lòng nhập trường này").max(40).email(),
@@ -28,12 +29,6 @@ const SignInForm = memo(({ setSign }) => {
    useEffect(() => {
       setFocus("email")
    }, [setFocus])
-
-   // useEffect(() => {
-   //    onAuthStateChanged(auth, (user) => {
-   //       console.log(user)
-   //    })
-   // }, [])
 
    const onSubmitLogin = (data) => {
       signInWithEmailAndPassword(auth, data.email, data.password)
@@ -64,7 +59,7 @@ const SignInForm = memo(({ setSign }) => {
             }, 700)
          })
          .catch((error) => {
-            console.log(error)
+            logError("SignInForm.signIn", error)
 
             toast("Đăng Nhập không thành công , Tài Khoản hoặc Mật Khẩu không chính xác", {
                type: "error",

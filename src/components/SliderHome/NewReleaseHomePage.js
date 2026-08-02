@@ -1,8 +1,8 @@
 import React, { memo, useState } from "react"
 import styled from "styled-components"
-import { byType, useHomeSection } from "../../hook/useHomeSection"
-import NewReleaseitem from "../NewReleaseitem/NewReleaseitem"
-import PlayListSelector from "../Selection/PlayListSelector"
+import { byType, useHomeSection } from "hook/useHomeSection"
+import NewReleaseitem from "components/NewReleaseitem/NewReleaseitem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const NewReleaseStyle = styled.div`
    .m-6 {

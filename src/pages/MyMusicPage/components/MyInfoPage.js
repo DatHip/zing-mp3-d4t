@@ -14,6 +14,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { updatePassword } from "firebase/auth"
 import { database } from "lib/firebase/firestore"
 import { auth } from "lib/firebase/auth"
+import { logError } from "utils/logger"
 
 const UpdateProfileStyled = styled.div`
    max-width: 500px;
@@ -130,7 +131,7 @@ const MyInfoPage = memo(() => {
                })
             )
          } catch (err) {
-            console.log(err)
+            logError("MyInfoPage.updateProfile", err)
          }
       }
 
@@ -150,7 +151,7 @@ const MyInfoPage = memo(() => {
                })
             )
          } catch (err) {
-            console.log(err)
+            logError("MyInfoPage.updateProfile", err)
          }
       }
 
@@ -176,7 +177,7 @@ const MyInfoPage = memo(() => {
          })
       } catch (err) {
          toast("Có Lỗi", { type: "error" })
-         console.log(err)
+         logError("MyInfoPage.updateProfile", err)
       }
    }
 
@@ -228,34 +229,19 @@ const MyInfoPage = memo(() => {
       const file = e.target.files[0]
       if (!file) return
 
-      console.log()
-
       const storageRef = ref(storage, "images/" + file.name)
       const uploadTask = uploadBytesResumable(storageRef, file)
       uploadTask.on(
-         "state_changed",     
-         (snapshot) => {
-            const progressPercent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-
-            // eslint-disable-next-line default-case
-            switch (snapshot.state) {
-               case "paused":
-                  console.log("Upload is paused")
-                  break
-               case "running":
-                  console.log("Upload is running")
-                  break
-            }
-         },
+         "state_changed",
+         null,
          (error) => {
             toast("Lỗi", {
                type: "error",
             })
-            console.log(error)
+            logError("MyInfoPage.uploadAvatar", error)
          },
          () => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-               console.log("File available at", downloadURL)
                setImage(downloadURL)
                setValue("fileImg", downloadURL)
 

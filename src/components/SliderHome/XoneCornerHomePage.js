@@ -1,7 +1,7 @@
 import React, { memo } from "react"
-import { useHomeSection } from "../../hook/useHomeSection"
-import CarouselItem from "../Selection/CarouselItem"
-import PlayListSelector from "../Selection/PlayListSelector"
+import { useHomeSection } from "hook/useHomeSection"
+import CarouselItem from "components/Selection/CarouselItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const matchXone = (s) => /xone/i.test(s?.title || "") || s?.sectionId === "hXoneCorner"
 

@@ -1,6 +1,6 @@
 import React, { memo } from "react"
-import NewReleaseitem from "../../../components/NewReleaseitem/NewReleaseitem"
-import PlayListSelector from "../../../components/Selection/PlayListSelector"
+import NewReleaseitem from "components/NewReleaseitem/NewReleaseitem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const FeaturedEpisodesRadio = memo(({ data }) => {
    const colSong1 = data?.items?.slice(0, 3)

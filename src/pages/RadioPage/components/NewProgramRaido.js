@@ -1,6 +1,6 @@
 import React from "react"
-import CarouselItem from "../../../components/Selection/CarouselItem"
-import PlayListSelector from "../../../components/Selection/PlayListSelector"
+import CarouselItem from "components/Selection/CarouselItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const NewProgramRaido = ({ data }) => {
    return (

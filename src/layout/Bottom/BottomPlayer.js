@@ -1,7 +1,7 @@
 import React, { memo } from "react"
-import BottomControlLeft from "../../components/Bottom/BottomControlLeft"
-import BottomControlsCenter from "../../components/Bottom/BottomControlsCenter"
-import BottomControlsRight from "../../components/Bottom/BottomControlsRight"
+import BottomControlLeft from "components/Bottom/BottomControlLeft"
+import BottomControlsCenter from "components/Bottom/BottomControlsCenter"
+import BottomControlsRight from "components/Bottom/BottomControlsRight"
 
 const BottomPlayer = () => {
    return (

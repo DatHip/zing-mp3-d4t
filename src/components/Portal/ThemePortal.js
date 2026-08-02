@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 
 import ThemeItem from "./ThemeItem"
 
-import { themes } from "../../data/dataThemes"
+import { themes } from "data/dataThemes"
 
 const ThemePortal = (props) => {
    const PortalStyle = styled.div`

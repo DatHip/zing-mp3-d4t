@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-import getHotKey from "../../api/getHotKey"
-import { tmdAPI } from "../../config"
+import getHotKey from "api/getHotKey"
+import { tmdAPI } from "config"
 
 const initialState = {
    entities: "",

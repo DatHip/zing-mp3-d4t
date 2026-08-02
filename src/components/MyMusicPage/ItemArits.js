@@ -2,9 +2,9 @@ import React, { memo } from "react"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import useLikeHook from "../../hook/useLikeHook"
+import { fetchPlayList } from "features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import useLikeHook from "hook/useLikeHook"
 
 const ItemAritsStyles = styled.div`
    .main-page_list-item_img {

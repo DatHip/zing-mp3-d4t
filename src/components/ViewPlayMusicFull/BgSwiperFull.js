@@ -1,7 +1,7 @@
 import React from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { EffectFade, Navigation, Pagination, Autoplay } from "swiper"
-import { imgBgViewFull } from "../../data/dataBgImgFull"
+import { imgBgViewFull } from "data/dataBgImgFull"
 
 // Import Swiper styles
 import "swiper/css"

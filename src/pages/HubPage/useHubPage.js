@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react"
 import { useNavigate } from "react-router"
-import { useHubHomeData } from "../../api/useHubHomeData"
+import { useHubHomeData } from "api/useHubHomeData"
 
 export function useHubPage() {
    const { data, isLoading } = useHubHomeData()

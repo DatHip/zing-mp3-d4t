@@ -3,8 +3,9 @@ import "swiper/css"
 import React, { memo } from "react"
 import { Autoplay } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { byId, useHomeSection } from "../../hook/useHomeSection"
-import CarouselItem from "../Selection/CarouselItem"
+import { byId, useHomeSection } from "hook/useHomeSection"
+import CarouselItem from "components/Selection/CarouselItem"
+import { logError } from "utils/logger"
 
 const NewMusicHomePage2 = memo(() => {
    const { section, isLoading } = useHomeSection(byId("hAlbum"))
@@ -57,7 +58,7 @@ const NewMusicHomePage2 = memo(() => {
          </div>
       )
    } catch (error) {
-      console.log(error)
+      logError("NewMusicHomePage2", error)
    }
 })
 

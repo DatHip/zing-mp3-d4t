@@ -1,5 +1,5 @@
 import React, { memo, useState, Suspense } from "react"
-import ItemRighPlayer from "../../components/Item/ItemRighPlayeQueue"
+import ItemRighPlayer from "components/Item/ItemRighPlayeQueue"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
 import {
@@ -11,15 +11,15 @@ import {
    setDraggUpdateListShuffle,
    setNextSongShuffle,
    fetchPlayList,
-} from "../../features/QueueFeatures/QueueFeatures"
+} from "features/QueueFeatures/QueueFeatures"
 import shuffle from "lodash/shuffle"
 
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import RemoveList from "../../components/ClockAndRemove/RemoveList"
-import CloclAlarm from "../../components/ClockAndRemove/CloclAlarm"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import RemoveList from "components/ClockAndRemove/RemoveList"
+import CloclAlarm from "components/ClockAndRemove/CloclAlarm"
 
 const importQueueDragList = () => import("./QueueDragList")
 const QueueDragList = React.lazy(importQueueDragList)

@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from "react"
 import { useSelector } from "react-redux"
-import LoadingSvg from "../loading/LoadingSvg"
+import LoadingSvg from "components/loading/LoadingSvg"
 import ItemLyric from "./ItemLyric"
 const BgFullLyrics = memo(() => {
    const textSize = useSelector((state) => state.setting.text)

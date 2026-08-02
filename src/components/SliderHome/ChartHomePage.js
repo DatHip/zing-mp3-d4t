@@ -1,14 +1,14 @@
 import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Link } from "react-router-dom"
-import { byType, useHomeSection } from "../../hook/useHomeSection"
+import { byType, useHomeSection } from "hook/useHomeSection"
 import { useDispatch, useSelector } from "react-redux"
-import { setPlay, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
-import { fetchPlayList, setCurrentIndexSong } from "../../features/QueueFeatures/QueueFeatures"
-import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
+import { setPlay, setRandomSongs, setReady } from "features/SettingPlay/settingPlay"
+import { fetchPlayList, setCurrentIndexSong } from "features/QueueFeatures/QueueFeatures"
+import { pushPlayListsLogged } from "features/Logged/loggedFeatures"
 import { toast } from "react-toastify"
 
-const CharHomeItem = React.lazy(() => import("../Selection/CharHomeItem"))
+const CharHomeItem = React.lazy(() => import("components/Selection/CharHomeItem"))
 
 const ChartHomePage = memo(() => {
    const { section, isLoading } = useHomeSection(byType("RTChart"))

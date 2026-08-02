@@ -1,14 +1,14 @@
 import React, { memo } from "react"
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
-import LoadingSkeleton from "../loading/LoadingSkeleton"
+import LoadingSkeleton from "components/loading/LoadingSkeleton"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
-import { setReady } from "../../features/SettingPlay/settingPlay"
-import ActionIcon from "../Icon/ActionIcon"
-import { setPlay } from "../../features/SettingPlay/settingPlay"
-import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures"
-import useLikeHook from "../../hook/useLikeHook"
+import { fetchPlayList } from "features/QueueFeatures/QueueFeatures"
+import { setReady } from "features/SettingPlay/settingPlay"
+import ActionIcon from "components/Icon/ActionIcon"
+import { setPlay } from "features/SettingPlay/settingPlay"
+import { pushPlayListsLogged } from "features/Logged/loggedFeatures"
+import useLikeHook from "hook/useLikeHook"
 
 const StyleDiv = styled.div`
    &.active {

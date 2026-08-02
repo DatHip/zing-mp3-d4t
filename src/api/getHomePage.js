@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { tmdAPI } from "../config"
+import { tmdAPI } from "config"
 
 export function useGetHomePage() {
    return useQuery(

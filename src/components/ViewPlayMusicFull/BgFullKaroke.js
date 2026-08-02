@@ -2,9 +2,9 @@ import React, { memo, useLayoutEffect, useRef, useEffect, useState } from "react
 import { toast } from "react-toastify"
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components"
-import { setIsSeek } from "../../features/Lyrics/Lyrics"
-import { setPlaying, setProgressInterval } from "../../features/SettingPlay/settingPlay"
-import LoadingSvg from "../loading/LoadingSvg"
+import { setIsSeek } from "features/Lyrics/Lyrics"
+import { setPlaying, setProgressInterval } from "features/SettingPlay/settingPlay"
+import LoadingSvg from "components/loading/LoadingSvg"
 
 const LyricStyleds = styled.li`
    animation: opactiy 0.5s linear forwards;

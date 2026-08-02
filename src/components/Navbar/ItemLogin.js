@@ -7,8 +7,9 @@ import { signOut } from "firebase/auth"
 import { auth } from "lib/firebase/auth"
 import { toast } from "react-toastify"
 import { useDispatch } from "react-redux"
-import { logOut } from "../../features/User/userFeatures"
+import { logOut } from "features/User/userFeatures"
 import { useSelector } from "react-redux"
+import { logError } from "utils/logger"
 
 const LoginPortalStyyles = styled.div`
    background-color: var(--primary-bg);
@@ -78,7 +79,7 @@ const LoginPortal = ({ setOpen }) => {
 
             toast("Đã đăng xuất")
          })
-         .catch((err) => console.log(err))
+         .catch((err) => logError("ItemLogin.signOut", err))
    }
 
    return (

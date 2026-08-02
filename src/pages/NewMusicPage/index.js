@@ -1,6 +1,6 @@
 import React from "react"
-import ItemChartList from "../../components/TopChartPage/ItemChartList"
-import LoadingSvg from "../../components/loading/LoadingSvg"
+import ItemChartList from "components/TopChartPage/ItemChartList"
+import LoadingSvg from "components/loading/LoadingSvg"
 import { useNewMusicPage } from "./useNewMusicPage"
 
 const NewMusicPage = () => {

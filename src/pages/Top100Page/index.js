@@ -1,7 +1,7 @@
 import React from "react"
-import CarouselItem from "../../components/Selection/CarouselItem"
-import PlayListSelector from "../../components/Selection/PlayListSelector"
-import LoadingSvg from "../../components/loading/LoadingSvg"
+import CarouselItem from "components/Selection/CarouselItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
+import LoadingSvg from "components/loading/LoadingSvg"
 import Top100HeaderSvg from "./components/Top100HeaderSvg"
 import { useTop100Page } from "./useTop100Page"
 

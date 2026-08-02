@@ -1,117 +1,117 @@
 import React, { memo, useEffect, useRef } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
-import Loading from "../components/loading/Loadng"
+import Loading from "components/loading/Loadng"
 
 const MyInfoPage = React.lazy(
-   () => import('../pages/MyMusicPage/components/MyInfoPage'),
+   () => import('pages/MyMusicPage/components/MyInfoPage'),
  )
 const HistorySong = React.lazy(
-   () => import('../pages/HistoryPage/components/HistorySong'),
+   () => import('pages/HistoryPage/components/HistorySong'),
  )
 const HistoryVideo = React.lazy(
-   () => import('../pages/HistoryPage/components/HistoryVideo'),
+   () => import('pages/HistoryPage/components/HistoryVideo'),
  )
 const HistroryPlayList = React.lazy(
-   () => import('../pages/HistoryPage/components/HistroryPlayList'),
+   () => import('pages/HistoryPage/components/HistroryPlayList'),
  )
 const SearchPagePlaylist = React.lazy(
-   () => import('../pages/SearchPage/components/SearchPagePlaylist'),
+   () => import('pages/SearchPage/components/SearchPagePlaylist'),
  )
 const SearchPageSong = React.lazy(
-   () => import('../pages/SearchPage/components/SearchPageSong'),
+   () => import('pages/SearchPage/components/SearchPageSong'),
  )
 const SearchPageMv = React.lazy(
-   () => import('../pages/SearchPage/components/SearchPageMv'),
+   () => import('pages/SearchPage/components/SearchPageMv'),
  )
 const SearchPageArtist = React.lazy(
-   () => import('../pages/SearchPage/components/SearchPageArtist'),
+   () => import('pages/SearchPage/components/SearchPageArtist'),
  )
 const SearchPageAll = React.lazy(
-   () => import('../pages/SearchPage/components/SearchPageAll'),
+   () => import('pages/SearchPage/components/SearchPageAll'),
  )
 const HubDetailPage = React.lazy(
-   () => import('../pages/HubPage/components/HubDetailPage'),
+   () => import('pages/HubPage/components/HubDetailPage'),
  )
 const ArtistSingle = React.lazy(
-   () => import('../pages/ArtistPage/components/ArtistSingle'),
+   () => import('pages/ArtistPage/components/ArtistSingle'),
  )
 const ArtistMv = React.lazy(
-   () => import('../pages/ArtistPage/components/ArtistMv'),
+   () => import('pages/ArtistPage/components/ArtistMv'),
  )
 const ArtistAlbum = React.lazy(
-   () => import('../pages/ArtistPage/components/ArtistAlbum'),
+   () => import('pages/ArtistPage/components/ArtistAlbum'),
  )
 const ArtistSong = React.lazy(
-   () => import('../pages/ArtistPage/components/ArtistSong'),
+   () => import('pages/ArtistPage/components/ArtistSong'),
  )
 const ArtistALl = React.lazy(
-   () => import('../pages/ArtistPage/components/ArtistALl'),
+   () => import('pages/ArtistPage/components/ArtistALl'),
  )
 const MyMusicArtis = React.lazy(
-   () => import('../pages/MyMusicPage/components/MyMusicArtis'),
+   () => import('pages/MyMusicPage/components/MyMusicArtis'),
  )
 const MyMusicPlayList = React.lazy(
-   () => import('../pages/MyMusicPage/components/MyMusicPlayList'),
+   () => import('pages/MyMusicPage/components/MyMusicPlayList'),
  )
 const MyMusicSong = React.lazy(
-   () => import('../pages/MyMusicPage/components/MyMusicSong'),
+   () => import('pages/MyMusicPage/components/MyMusicSong'),
  )
 const MyMusicAll = React.lazy(
-   () => import('../pages/MyMusicPage/components/MyMusicAll'),
+   () => import('pages/MyMusicPage/components/MyMusicAll'),
  )
 const NewFeedPageChildren = React.lazy(
-   () => import('../pages/NewFeedPage/components/NewFeedPageChildren'),
+   () => import('pages/NewFeedPage/components/NewFeedPageChildren'),
  )
 const MvPageList = React.lazy(
-   () => import('../pages/MvPage/components/MvPageList'),
+   () => import('pages/MvPage/components/MvPageList'),
  )
 const AuthenticationPage = React.lazy(
-   () => import('../pages/AuthenticationPage'),
+   () => import('pages/AuthenticationPage'),
  )
 const NewMusicPage = React.lazy(
-   () => import('../pages/NewMusicPage'),
+   () => import('pages/NewMusicPage'),
  )
 const VideoPopUp = React.lazy(
-   () => import('../pages/VideoPopUp'),
+   () => import('pages/VideoPopUp'),
  )
 const HistoryPage = React.lazy(
-   () => import('../pages/HistoryPage'),
+   () => import('pages/HistoryPage'),
  )
 const ZingChartPage = React.lazy(
-   () => import('../pages/ZingChartPage'),
+   () => import('pages/ZingChartPage'),
  )
 const Top100Page = React.lazy(
-   () => import('../pages/Top100Page'),
+   () => import('pages/Top100Page'),
  )
 const SearchPage = React.lazy(
-   () => import('../pages/SearchPage'),
+   () => import('pages/SearchPage'),
  )
 const RadioPage = React.lazy(
-   () => import('../pages/RadioPage'),
+   () => import('pages/RadioPage'),
  )
 const NotFound = React.lazy(
-   () => import('../pages/NotFound'),
+   () => import('pages/NotFound'),
  )
 const NewFeedPage = React.lazy(
-   () => import('../pages/NewFeedPage'),
+   () => import('pages/NewFeedPage'),
  )
 const MyMusicPage = React.lazy(
-   () => import('../pages/MyMusicPage'),
+   () => import('pages/MyMusicPage'),
  )
 const MvPage = React.lazy(
-   () => import('../pages/MvPage'),
+   () => import('pages/MvPage'),
  )
 const HubPage = React.lazy(
-   () => import('../pages/HubPage'),
+   () => import('pages/HubPage'),
  )
 const HomePage = React.lazy(
-   () => import('../pages/HomePage'),
+   () => import('pages/HomePage'),
  )
 const AlbumPage = React.lazy(
-   () => import('../pages/AlbumPage'),
+   () => import('pages/AlbumPage'),
  )
 const ArtistPage = React.lazy(
-   () => import('../pages/ArtistPage'),
+   () => import('pages/ArtistPage'),
  )
 
 

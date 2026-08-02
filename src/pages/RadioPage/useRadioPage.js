@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react"
 import { toast } from "react-toastify"
-import { useRadioData } from "../../api/useRadioData"
+import { useRadioData } from "api/useRadioData"
 
 export function useRadioPage() {
    const { data, isLoading } = useRadioData()

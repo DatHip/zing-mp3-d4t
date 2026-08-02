@@ -2,21 +2,21 @@ import React, { memo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import getConterTimeRelese from "../../utils/getConterTimeRelese";
-import getFormartMiute from "../../utils/getFormartMiute";
-import getFormartTimeDDYY from "../../utils/getFormartTimeDDYY";
+import getConterTimeRelese from "utils/getConterTimeRelese";
+import getFormartMiute from "utils/getFormartMiute";
+import getFormartTimeDDYY from "utils/getFormartTimeDDYY";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import ActionPlay from "../Icon/ActionPlay";
-import ActionIcon from "../Icon/ActionIcon";
-import LoadingIcon from "../Icon/LoadingIcon";
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay";
+import ActionPlay from "components/Icon/ActionPlay";
+import ActionIcon from "components/Icon/ActionIcon";
+import LoadingIcon from "components/Icon/LoadingIcon";
+import { setPlay, setReady } from "features/SettingPlay/settingPlay";
 import {
   fetchPlayList,
   playSongNotAlbum,
-} from "../../features/QueueFeatures/QueueFeatures";
-import { pushPlayListsLogged } from "../../features/Logged/loggedFeatures";
-import useLikeHook from "../../hook/useLikeHook";
+} from "features/QueueFeatures/QueueFeatures";
+import { pushPlayListsLogged } from "features/Logged/loggedFeatures";
+import useLikeHook from "hook/useLikeHook";
 
 const NewReleaseItemStyle = styled.div`
    &.active {
@@ -175,8 +175,7 @@ const NewReleaseitem = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
   let { isLike, handleLike } = useLikeHook(item, isDisk ? 1 : 2);
 
   const img = item?.thumbnailM?.slice(item?.thumbnailM.lastIndexOf("/"));
-  console.log(item?.releaseDate);
-  const timeRelease = getConterTimeRelese(item?.releaseDate, item?.isAlbum);
+  const timeRelease = getConterTimeRelese(item?.releaseDate);
 
   const currentEncodeId = useSelector(
     (state) => state.queueNowPlay.currentEncodeId

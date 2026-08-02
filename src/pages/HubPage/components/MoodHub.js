@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { memo } from "react"
-import FavoriteArtisItem from "../../../components/Selection/FavoriteArtisItem"
-import PlayListSelector from "../../../components/Selection/PlayListSelector"
+import FavoriteArtisItem from "components/Selection/FavoriteArtisItem"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 const MoodHub = ({ data }) => {
    const [numRender, setNumRender] = useState(8)

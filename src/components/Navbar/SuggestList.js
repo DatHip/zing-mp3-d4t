@@ -3,10 +3,10 @@ import React from "react"
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setName } from "../../features/formSearch/formSearch"
+import { setName } from "features/formSearch/formSearch"
 import { memo } from "react"
 import OutstandingItems from "pages/SearchPage/components/OutstandingItems"
-import LoadingSvg from "../loading/LoadingSvg"
+import LoadingSvg from "components/loading/LoadingSvg"
 
 const SuggestListStyles = styled.ul`
    position: absolute;

@@ -1,7 +1,7 @@
 import React, { memo } from "react"
-import ActionIcon from "../Icon/ActionIcon"
-import ActionPlay from "../Icon/ActionPlay"
-import LoadingIcon from "../Icon/LoadingIcon"
+import ActionIcon from "components/Icon/ActionIcon"
+import ActionPlay from "components/Icon/ActionPlay"
+import LoadingIcon from "components/Icon/LoadingIcon"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
@@ -10,9 +10,9 @@ import {
    setCurrentIndexSongShuffle,
    setCurrentIndexSong,
    pushSongHistoryPlayListShuffle,
-} from "../../features/QueueFeatures/QueueFeatures"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import useLikeHook from "../../hook/useLikeHook"
+} from "features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import useLikeHook from "hook/useLikeHook"
 
 // DragWrapper is react-beautiful-dnd's Draggable, injected by QueueDragList. It is
 // a prop rather than an import so this row — which the history tab renders without

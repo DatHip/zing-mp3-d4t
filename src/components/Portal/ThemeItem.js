@@ -2,7 +2,7 @@ import "react-lazy-load-image-component/src/effects/blur.css"
 import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector, useDispatch } from "react-redux"
-import { setThemes } from "../../features/setTheme/themeSetFeatures"
+import { setThemes } from "features/setTheme/themeSetFeatures"
 
 const Items = memo(({ item }) => {
    const { name, itemS } = item

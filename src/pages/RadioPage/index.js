@@ -1,7 +1,7 @@
 import React from "react"
 
-import LoadingSvg from "../../components/loading/LoadingSvg"
-import RadioHomePage from "../../components/SliderHome/RadioHomePage"
+import LoadingSvg from "components/loading/LoadingSvg"
+import RadioHomePage from "components/SliderHome/RadioHomePage"
 
 import CategoryRadio from "./components/CategoryRadio"
 import DiscoverPoscast from "./components/DiscoverPoscast"

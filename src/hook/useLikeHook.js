@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
+import { logError } from "utils/logger"
 
 // Firestore drags in google-closure-library — together ~1.7MB of source. Only a
 // signed-in user can read or write likes, so the SDK is fetched on demand rather
@@ -102,7 +103,7 @@ const useLikeHook = (item, type) => {
             toast("Thêm vào thư viện thành công", { type: "success" })
             setLike(true)
          } catch (error) {
-            console.log(error)
+            logError("useLikeHook", error)
             toast("Lỗi thêm vào thư viện", { type: "error" })
          }
          return
@@ -118,7 +119,7 @@ const useLikeHook = (item, type) => {
          toast("Xóa khỏi thư viện thành công", { type: "info" })
          setLike(false)
       } catch (error) {
-         console.log(error)
+         logError("useLikeHook", error)
          toast("Lỗi xóa khỏi thư viện", { type: "error" })
       }
    }

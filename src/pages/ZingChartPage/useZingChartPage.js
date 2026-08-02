@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react"
 import { useDispatch } from "react-redux"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import { fetchPlayList } from "../../features/QueueFeatures/QueueFeatures"
-import { useZingChartData } from "../../api/useZingChartData"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import { fetchPlayList } from "features/QueueFeatures/QueueFeatures"
+import { useZingChartData } from "api/useZingChartData"
 
 export const TOP_CHART_PLAYLIST_ID = "ZO68OC68"
 

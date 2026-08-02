@@ -5,7 +5,7 @@ import axios from "axios"
 import { tmdAPI } from "config"
 import { useParams } from "react-router-dom"
 import LoadingSvg from "components/loading/LoadingSvg"
-import Masonry from "@mui/lab/Masonry"
+import Masonry from "react-masonry-css"
 import useMediaQuery from "hook/useMediaQuery"
 
 const NewFeedPageChildren = () => {
@@ -76,7 +76,7 @@ const NewFeedPageChildren = () => {
             </>
          )}
          <div className="relative ">
-            <Masonry columns={col} spacing={0}>
+            <Masonry breakpointCols={col} className="flex w-auto" columnClassName="min-w-0 flex-1 bg-clip-padding">
                {datas.map((e) => (
                   <FollowItems key={e.id || e.encodeId} data={e}></FollowItems>
                ))}

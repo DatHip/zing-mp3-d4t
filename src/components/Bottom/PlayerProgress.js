@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useLayoutEffect, useRef } from "react"
 import { useSelector } from "react-redux"
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
+import fancyTimeFormat from "utils/fancyTimeFormat"
 
 /**
  * Owns the only subscription to currentTime in the player.

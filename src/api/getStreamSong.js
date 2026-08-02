@@ -1,5 +1,5 @@
 import axios from "axios"
-import { tmdAPI } from "../config"
+import { tmdAPI } from "config"
 
 const streamCache = new Map()
 

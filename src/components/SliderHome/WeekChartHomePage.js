@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { byType, useHomeSection } from "../../hook/useHomeSection"
+import { byType, useHomeSection } from "hook/useHomeSection"
 
 const WeekChartHomePage = memo(() => {
    const { section, isLoading } = useHomeSection(byType("weekChart"))

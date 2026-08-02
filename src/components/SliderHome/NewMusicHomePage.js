@@ -4,16 +4,17 @@ import "swiper/css/pagination"
 import React, { memo } from "react"
 import { Navigation, Autoplay, Pagination } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useHomeSection } from "../../hook/useHomeSection"
-import PlayListSelector from "../Selection/PlayListSelector"
+import { useHomeSection } from "hook/useHomeSection"
+import PlayListSelector from "components/Selection/PlayListSelector"
 
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import ActionIcon from "../Icon/ActionIcon"
-import { playSongNotAlbum } from "../../features/QueueFeatures/QueueFeatures"
-import LoadingIcon from "../Icon/LoadingIcon"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import ActionIcon from "components/Icon/ActionIcon"
+import { playSongNotAlbum } from "features/QueueFeatures/QueueFeatures"
+import LoadingIcon from "components/Icon/LoadingIcon"
+import { logError } from "utils/logger"
 
 const matchNewMusic = (s) => s?.sectionId === "hNewrelease" || /^nhạc mới$/i.test((s?.title || "").trim())
 
@@ -196,7 +197,7 @@ const NewMusicHomePage = memo(() => {
          </PlayListSelector>
       )
    } catch (error) {
-      console.log(error)
+      logError("NewMusicHomePage", error)
    }
 })
 

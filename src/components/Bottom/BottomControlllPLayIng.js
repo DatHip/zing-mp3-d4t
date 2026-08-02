@@ -3,12 +3,12 @@ import { useDispatch, useSelector, useStore } from "react-redux"
 import ReactPlayer from "react-player/lazy"
 import { toast } from "react-toastify"
 
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
-import { setCurrentTime } from "../../features/QueueFeatures/QueueFeatures"
-import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
-import { pushSongsLogged } from "../../features/Logged/loggedFeatures"
-import { getStreamUrl } from "../../api/getStreamSong"
-import { useQueueControls } from "../../hook/useQueueControls"
+import fancyTimeFormat from "utils/fancyTimeFormat"
+import { setCurrentTime } from "features/QueueFeatures/QueueFeatures"
+import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import { pushSongsLogged } from "features/Logged/loggedFeatures"
+import { getStreamUrl } from "api/getStreamSong"
+import { useQueueControls } from "hook/useQueueControls"
 
 import PlayerProgress from "./PlayerProgress"
 

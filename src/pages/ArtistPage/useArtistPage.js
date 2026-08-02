@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useParams } from "react-router"
-import scrollTop from "../../utils/scrollToTop"
-import { useArtistData } from "../../api/useArtistData"
+import scrollTop from "utils/scrollToTop"
+import { useArtistData } from "api/useArtistData"
 
 /**
  * Container hook: wires router param + data fetch + side effects.

@@ -5,8 +5,9 @@ import React, { memo, useEffect, useState } from "react"
 import { Navigation, Autoplay, Pagination, Lazy } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { dataAritsHomePage } from "../../data/dataArtisHomePage"
+import { dataAritsHomePage } from "data/dataArtisHomePage"
 import { useNavigate } from "react-router"
+import { logError } from "utils/logger"
 
 const ArtistSpotlight = memo(() => {
    const [datas, setData] = useState(null)
@@ -122,7 +123,7 @@ const ArtistSpotlight = memo(() => {
          </div>
       )
    } catch (error) {
-      console.log(error)
+      logError("ArtistSpotlight", error)
    }
 })
 

@@ -5,9 +5,10 @@ import React, { memo } from "react"
 import styled from "styled-components"
 import { Navigation, Autoplay, Pagination, Lazy } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { byType, useHomeSection } from "../../hook/useHomeSection"
-import LoadingSkeleton from "../loading/LoadingSkeleton"
+import { byType, useHomeSection } from "hook/useHomeSection"
+import LoadingSkeleton from "components/loading/LoadingSkeleton"
 import { LazyLoadImage } from "react-lazy-load-image-component"
+import { logError } from "utils/logger"
 
 const SliderHomePage = memo(() => {
    const { section, isLoading } = useHomeSection(byType("banner"))
@@ -170,7 +171,7 @@ const SliderHomePage = memo(() => {
          </SlideStyle>
       )
    } catch (error) {
-      console.log(error)
+      logError("SliderHomePage", error)
    }
 })
 

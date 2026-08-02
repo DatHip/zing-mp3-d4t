@@ -1,7 +1,7 @@
 import React, { memo } from "react"
-import { useHomeSection } from "../../hook/useHomeSection"
-import PlayListSelector from "../Selection/PlayListSelector"
-import RaidoItem from "../Selection/RaidoItem"
+import { useHomeSection } from "hook/useHomeSection"
+import PlayListSelector from "components/Selection/PlayListSelector"
+import RaidoItem from "components/Selection/RaidoItem"
 
 const matchRadio = (s) =>
    s?.sectionType === "livestream" ||

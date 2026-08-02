@@ -2,10 +2,10 @@ import React from "react"
 import Tippy from "@tippyjs/react"
 import { useDispatch, useSelector } from "react-redux"
 import BottomControlllPLayIng from "./BottomControlllPLayIng"
-import { setLoopSongs, setPlaying, setRandomSongs } from "../../features/SettingPlay/settingPlay"
-import LoadingIcon from "../Icon/LoadingIcon"
-import scrollToActive from "../../utils/scrollToView"
-import { useQueueControls } from "../../hook/useQueueControls"
+import { setLoopSongs, setPlaying, setRandomSongs } from "features/SettingPlay/settingPlay"
+import LoadingIcon from "components/Icon/LoadingIcon"
+import scrollToActive from "utils/scrollToView"
+import { useQueueControls } from "hook/useQueueControls"
 
 const BottomControlsCenter = () => {
    const dispatch = useDispatch()

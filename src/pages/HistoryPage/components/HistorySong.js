@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import ItemChartList from "components/TopChartPage/ItemChartList"
+import ChartSongRow from "components/song/ChartSongRow"
 
 const HistorySong = () => {
    const recentSongs = useSelector((state) => state.logged.recentSongs)
@@ -12,7 +12,7 @@ const HistorySong = () => {
                {recentSongs &&
                   recentSongs.length > 0 &&
                   recentSongs.map((e, index) => {
-                     return <ItemChartList isNotList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
+                     return <ChartSongRow isNotList isNoneRank item={e} index={index} key={e.encodeId}></ChartSongRow>
                   })}
 
                {recentSongs && recentSongs.length === 0 && (

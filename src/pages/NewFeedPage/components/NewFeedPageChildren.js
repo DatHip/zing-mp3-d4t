@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from "react"
-import ArtistSpotlight from "components/SliderHome/ArtistSpotlight"
+import ArtistSpotlight from "components/home/ArtistSpotlight"
 import FollowItems from "./FollowItems"
 import axios from "axios"
-import { tmdAPI } from "config"
+import { zingApi } from "config"
 import { useParams } from "react-router-dom"
-import LoadingSvg from "components/loading/LoadingSvg"
+import LoadingSvg from "components/ui/LoadingSvg"
 import Masonry from "react-masonry-css"
 import useMediaQuery from "hook/useMediaQuery"
 
@@ -20,7 +20,7 @@ const NewFeedPageChildren = () => {
    const col = isMobile ? 1 : isTablet ? 2 : 3
 
    const fetchData = useCallback(async () => {
-      const data = await axios.get(tmdAPI.getNewFeed(id, numer.current))
+      const data = await axios.get(zingApi.getNewFeed(id, numer.current))
       const dataSelector = data.data.data.items
       const totalitems = data.data.data.total
       numer.current += 1

@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "features/QueueFeatures/QueueFeatures"
-import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "features/queue/queueSlice"
+import { setPlay, setReady } from "features/setting/settingSlice"
 
 /**
  * Queue navigation. The shuffle-vs-sequential branch below was copy-pasted at

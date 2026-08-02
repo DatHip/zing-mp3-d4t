@@ -1,15 +1,15 @@
 import React, { useState } from "react"
 import { useParams } from "react-router"
 import styled from "styled-components"
-import LoadingSvg from "components/loading/LoadingSvg"
-import PlayListSelector from "components/Selection/PlayListSelector"
-import CarouselItem from "components/Selection/CarouselItem"
-import NewReleaseitem from "components/NewReleaseitem/NewReleaseitem"
-import MvItem from "components/MVpage/MvItem"
-import ItemArits from "components/MyMusicPage/ItemArits"
+import LoadingSvg from "components/ui/LoadingSvg"
+import Section from "components/ui/Section"
+import AlbumCard from "components/card/AlbumCard"
+import SongRow from "components/song/SongRow"
+import MvCard from "components/card/MvCard"
+import ArtistCard from "components/card/ArtistCard"
 import { useCallback } from "react"
 import axios from "axios"
-import { tmdAPI } from "config"
+import { zingApi } from "config"
 import { useLayoutEffect } from "react"
 
 const HubDetailPageStyles = styled.div`
@@ -50,7 +50,7 @@ const HubDetailPage = () => {
    const [datas, setData] = useState([])
 
    const fetchData = useCallback(async () => {
-      const data = await axios.get(tmdAPI.getHubDetail(id))
+      const data = await axios.get(zingApi.getHubDetail(id))
       setData(data.data.data)
    }, [id])
 
@@ -77,22 +77,22 @@ const HubDetailPage = () => {
                   let mt = index === 0 ? "!mt-0" : ""
 
                   return (
-                     <PlayListSelector classAdd={mt} key={e.sectionId || index} title={e?.title}>
+                     <Section classAdd={mt} key={e.sectionId || index} title={e?.title}>
                         {e.items.map((item, idx) => {
                            let classGird = "col l-2-4 m-3 c-5 !mb-[30px]"
 
                            return (
-                              <CarouselItem
+                              <AlbumCard
                                  isSwiper={true}
                                  key={item.encodeId || item.id || idx}
                                  artis={true}
                                  desc={false}
                                  class1={classGird}
                                  item={item}
-                              ></CarouselItem>
+                              ></AlbumCard>
                            )
                         })}
-                     </PlayListSelector>
+                     </Section>
                   )
                })}
 
@@ -107,23 +107,23 @@ const HubDetailPage = () => {
                      const colSong3 = e.items?.slice(9, 14)
 
                      return (
-                        <PlayListSelector key={sectionKey} title={e?.title}>
+                        <Section key={sectionKey} title={e?.title}>
                            <div className="col l-4 m-6 c-9">
-                              {colSong1 && colSong1.map((item, idx) => <NewReleaseitem key={item.encodeId || idx} item={item}></NewReleaseitem>)}
+                              {colSong1 && colSong1.map((item, idx) => <SongRow key={item.encodeId || idx} item={item}></SongRow>)}
                            </div>
                            <div className="col l-4 m-6 c-9">
-                              {colSong2 && colSong2.map((item, idx) => <NewReleaseitem key={item.encodeId || idx} item={item}></NewReleaseitem>)}
+                              {colSong2 && colSong2.map((item, idx) => <SongRow key={item.encodeId || idx} item={item}></SongRow>)}
                            </div>
                            <div className="col l-4 m-0 c-9">
-                              {colSong3 && colSong3.map((item, idx) => <NewReleaseitem key={item.encodeId || idx} item={item}></NewReleaseitem>)}
+                              {colSong3 && colSong3.map((item, idx) => <SongRow key={item.encodeId || idx} item={item}></SongRow>)}
                            </div>
-                        </PlayListSelector>
+                        </Section>
                      )
                   }
 
                   if (e.sectionType === "artist") {
                      return (
-                        <PlayListSelector
+                        <Section
                            key={sectionKey}
                            all={false}
                            classAdd={"container_radio "}
@@ -134,40 +134,40 @@ const HubDetailPage = () => {
                               if (idx > 4) return null
                               let classGird = idx === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
 
-                              return <ItemArits classGird={classGird} key={item.id || item.encodeId || idx} data={item}></ItemArits>
+                              return <ArtistCard classGird={classGird} key={item.id || item.encodeId || idx} data={item}></ArtistCard>
                            })}
-                        </PlayListSelector>
+                        </Section>
                      )
                   }
                   if (e.sectionType === "video") {
                      return (
-                        <PlayListSelector classAdd="artist-mv " key={sectionKey} title={e.title}>
+                        <Section classAdd="artist-mv " key={sectionKey} title={e.title}>
                            {e?.items?.map((item, idx) => {
                               if (idx > 2) return null
 
-                              return <MvItem key={item.encodeId || item.id || idx} data={item} isAritst></MvItem>
+                              return <MvCard key={item.encodeId || item.id || idx} data={item} isAritst></MvCard>
                            })}
-                        </PlayListSelector>
+                        </Section>
                      )
                   }
                   return (
-                     <PlayListSelector classAdd={mt} key={sectionKey} title={e?.title}>
+                     <Section classAdd={mt} key={sectionKey} title={e?.title}>
                         {e.items.map((item, idx) => {
                            if (idx > 4) return null
                            let classGird = idx === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
 
                            return (
-                              <CarouselItem
+                              <AlbumCard
                                  isSwiper={true}
                                  key={item.encodeId || item.id || idx}
                                  artis={true}
                                  desc={false}
                                  class1={classGird}
                                  item={item}
-                              ></CarouselItem>
+                              ></AlbumCard>
                            )
                         })}
-                     </PlayListSelector>
+                     </Section>
                   )
                })}
          </div>

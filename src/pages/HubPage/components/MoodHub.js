@@ -1,19 +1,19 @@
 import React, { useState } from "react"
 import { memo } from "react"
-import FavoriteArtisItem from "components/Selection/FavoriteArtisItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import FavoriteArtistCard from "components/card/FavoriteArtistCard"
+import Section from "components/ui/Section"
 
 const MoodHub = ({ data }) => {
    const [numRender, setNumRender] = useState(8)
 
    return (
-      <PlayListSelector classAdd2={"!flex-wrap transition-all"} title={"Tâm Trạng Và Hoạt Động"}>
+      <Section classAdd2={"!flex-wrap transition-all"} title={"Tâm Trạng Và Hoạt Động"}>
          {data &&
             data.length > 0 &&
             data
                .slice(0, numRender)
                .map((e, index) => (
-                  <FavoriteArtisItem key={index} clasName="col l-3 !mb-6 m-4 c-6" isHub item={e}></FavoriteArtisItem>
+                  <FavoriteArtistCard key={index} clasName="col l-3 !mb-6 m-4 c-6" isHub item={e}></FavoriteArtistCard>
                ))}
          {numRender === 8 && (
             <div className="flex items-center justify-center w-full mt-2">
@@ -22,7 +22,7 @@ const MoodHub = ({ data }) => {
                </button>
             </div>
          )}
-      </PlayListSelector>
+      </Section>
    )
 }
 

@@ -1,17 +1,17 @@
 import React, { memo } from "react"
-import SliderHomePage from "components/SliderHome/SliderHomePage"
-import HistoryHomePage from "components/HomePage/HistoryHomePage"
-import WantToHearHomePage from "components/SliderHome/WantToHearHomePage"
-import NewReleaseHomePage from "components/SliderHome/NewReleaseHomePage"
-import FavoriteArtistHomePapge from "components/SliderHome/FavoriteArtistHomePapge"
-import NewMusicEveryDayHomePage from "components/SliderHome/NewMusicEveryDayHomePage"
-import ChartHomePage from "components/SliderHome/ChartHomePage"
-import WeekChartHomePage from "components/SliderHome/WeekChartHomePage"
-import ArtistSpotlight from "components/SliderHome/ArtistSpotlight"
-import Top100HomePage from "components/SliderHome/Top100HomePage"
-import NewMusicHomePage2 from "components/SliderHome/NewMusicHomePage2"
-import RadioHomePage from "components/SliderHome/RadioHomePage"
-import ButtonIconHomePage from "components/SliderHome/ButtonIconHomePage"
+import HeroSlider from "components/home/HeroSlider"
+import HistorySection from "components/home/HistorySection"
+import WantToHearSection from "components/home/WantToHearSection"
+import NewReleaseSection from "components/home/NewReleaseSection"
+import FavoriteArtistSection from "components/home/FavoriteArtistSection"
+import DailyMixSection from "components/home/DailyMixSection"
+import ChartSection from "components/home/ChartSection"
+import WeekChartSection from "components/home/WeekChartSection"
+import ArtistSpotlight from "components/home/ArtistSpotlight"
+import Top100Section from "components/home/Top100Section"
+import NewMusicGridSection from "components/home/NewMusicGridSection"
+import RadioSection from "components/home/RadioSection"
+import SectionIconButton from "components/home/SectionIconButton"
 import { useHomePage } from "./useHomePage"
 
 const HomePage = () => {
@@ -20,31 +20,31 @@ const HomePage = () => {
    return (
       <div>
          {/* Thanh Slider */}
-         <SliderHomePage />
+         <HeroSlider />
          {/* Icon Mobile */}
-         <ButtonIconHomePage />
+         <SectionIconButton />
          {/* History */}
-         <HistoryHomePage />
+         <HistorySection />
          {/* Because You Want To Hear || Lựa Chọn Hôm Nay */}
-         <WantToHearHomePage />
+         <WantToHearSection />
          {/* New release  */}
-         <NewReleaseHomePage />
+         <NewReleaseSection />
          {/* Nghệ Sĩ Yêu Thích  */}
-         <FavoriteArtistHomePapge />
+         <FavoriteArtistSection />
          {/* Nhạc Mới Mỗi Ngày  */}
-         <NewMusicEveryDayHomePage />
+         <DailyMixSection />
          {/* Chart  */}
-         <ChartHomePage />
+         <ChartSection />
          {/* weekChart */}
-         <WeekChartHomePage />
+         <WeekChartSection />
          {/* ArtistSpotlight */}
          <ArtistSpotlight />
          {/* Top100 */}
-         <Top100HomePage />
+         <Top100Section />
          {/* New Music */}
-         <NewMusicHomePage2 />
+         <NewMusicGridSection />
          {/* Radio Nổi Bật */}
-         <RadioHomePage />
+         <RadioSection />
       </div>
    )
 }

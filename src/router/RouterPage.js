@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
-import Loading from "components/loading/Loadng"
+import Loading from "components/ui/Loading"
 
 const MyInfoPage = React.lazy(
    () => import('pages/MyMusicPage/components/MyInfoPage'),
@@ -11,8 +11,8 @@ const HistorySong = React.lazy(
 const HistoryVideo = React.lazy(
    () => import('pages/HistoryPage/components/HistoryVideo'),
  )
-const HistroryPlayList = React.lazy(
-   () => import('pages/HistoryPage/components/HistroryPlayList'),
+const HistoryPlayList = React.lazy(
+   () => import('pages/HistoryPage/components/HistoryPlayList'),
  )
 const SearchPagePlaylist = React.lazy(
    () => import('pages/SearchPage/components/SearchPagePlaylist'),
@@ -44,11 +44,11 @@ const ArtistAlbum = React.lazy(
 const ArtistSong = React.lazy(
    () => import('pages/ArtistPage/components/ArtistSong'),
  )
-const ArtistALl = React.lazy(
-   () => import('pages/ArtistPage/components/ArtistALl'),
+const ArtistAll = React.lazy(
+   () => import('pages/ArtistPage/components/ArtistAll'),
  )
-const MyMusicArtis = React.lazy(
-   () => import('pages/MyMusicPage/components/MyMusicArtis'),
+const MyMusicArtist = React.lazy(
+   () => import('pages/MyMusicPage/components/MyMusicArtist'),
  )
 const MyMusicPlayList = React.lazy(
    () => import('pages/MyMusicPage/components/MyMusicPlayList'),
@@ -149,7 +149,7 @@ const RouterPage = () => {
                   <Route index element={<MyMusicAll></MyMusicAll>}></Route>
                   <Route path="song" element={<MyMusicSong></MyMusicSong>}></Route>
                   <Route path="playlist" element={<MyMusicPlayList></MyMusicPlayList>}></Route>
-                  <Route path="nghe-si" element={<MyMusicArtis></MyMusicArtis>}></Route>
+                  <Route path="nghe-si" element={<MyMusicArtist></MyMusicArtist>}></Route>
                   <Route path="info" element={<MyInfoPage></MyInfoPage>}></Route>
                </Route>
                {/*  */}
@@ -180,14 +180,14 @@ const RouterPage = () => {
                </Route>
                {/*  */}
                <Route path="/nghe-si/:name" element={<ArtistPage></ArtistPage>}>
-                  <Route index element={<ArtistALl></ArtistALl>}></Route>
+                  <Route index element={<ArtistAll></ArtistAll>}></Route>
                   <Route path="song" element={<ArtistSong></ArtistSong>}></Route>
                   <Route path="album" element={<ArtistAlbum></ArtistAlbum>}></Route>
                   <Route path="mv" element={<ArtistMv></ArtistMv>}></Route>
                   <Route path="single" element={<ArtistSingle></ArtistSingle>}></Route>
                </Route>
                <Route path="/history/" element={<HistoryPage></HistoryPage>}>
-                  <Route index path="playlist" element={<HistroryPlayList></HistroryPlayList>}></Route>
+                  <Route index path="playlist" element={<HistoryPlayList></HistoryPlayList>}></Route>
                   <Route path="song" element={<HistorySong></HistorySong>}></Route>
                   <Route path="video" element={<HistoryVideo></HistoryVideo>}></Route>
                </Route>

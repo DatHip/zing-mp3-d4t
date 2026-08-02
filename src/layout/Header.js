@@ -1,19 +1,19 @@
 import React, { memo } from "react"
-import HeaderRight from "components/Navbar/HeaderRight"
-import ItemLogin from "components/Navbar/ItemLoginLazy"
-import NavForm from "components/Navbar/NavForm"
-import NavLinkArow from "components/Navbar/NavLinkArow"
+import HeaderRight from "components/navbar/HeaderRight"
+import UserMenu from "components/navbar/UserMenuLazy"
+import SearchForm from "components/navbar/SearchForm"
+import HistoryNav from "components/navbar/HistoryNav"
 
 const Header = () => {
    return (
       <header className="header">
          <div className="header_content">
             <div className="header_content-btn-user-c">
-               <ItemLogin isTitle={false}></ItemLogin>
+               <UserMenu isTitle={false}></UserMenu>
             </div>
             <div className="header_content-left">
-               <NavLinkArow></NavLinkArow>
-               <NavForm></NavForm>
+               <HistoryNav></HistoryNav>
+               <SearchForm></SearchForm>
             </div>
             <HeaderRight></HeaderRight>
          </div>

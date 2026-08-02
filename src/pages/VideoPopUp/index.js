@@ -2,8 +2,8 @@ import React, { useRef } from "react"
 import ReactPlayer from "react-player"
 import { Link } from "react-router-dom"
 
-import LoadingSvg from "components/loading/LoadingSvg"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import LoadingSvg from "components/ui/LoadingSvg"
+import Section from "components/ui/Section"
 
 import MvDataList from "./components/MvDataList"
 import VideoPlayItems from "./components/VideoPlayItems"
@@ -104,11 +104,11 @@ const VideoPopUp = () => {
                               <div className="video-queuer">
                                  <div className="video-queue rounded-xl h-full overflow-auto max-h-full">
                                     <div className="video-queue-list p-[1.6rem]">
-                                       <PlayListSelector classAdd={"!mt-0"} title="Danh Sách Phát">
+                                       <Section classAdd={"!mt-0"} title="Danh Sách Phát">
                                           {data.recommends?.map((e) => (
                                              <VideoPlayItems key={e.encodeId} data={e} />
                                           ))}
-                                       </PlayListSelector>
+                                       </Section>
                                     </div>
                                  </div>
                               </div>

@@ -1,14 +1,14 @@
 import axios from "axios"
 import React, { useEffect, useState, useCallback } from "react"
 import { useParams } from "react-router"
-import { tmdAPI } from "config"
+import { zingApi } from "config"
 import scrollTop from "utils/scrollToTop"
-import LoadingSvg from "components/loading/LoadingSvg"
-import MvItem from "components/MVpage/MvItem"
-import ItemArits from "components/MyMusicPage/ItemArits"
-import CarouselItem from "components/Selection/CarouselItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
-import ItemChartList from "components/TopChartPage/ItemChartList"
+import LoadingSvg from "components/ui/LoadingSvg"
+import MvCard from "components/card/MvCard"
+import ArtistCard from "components/card/ArtistCard"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
+import ChartSongRow from "components/song/ChartSongRow"
 import OutstandingItems from "./OutstandingItems"
 
 const SearchPageAll = () => {
@@ -17,7 +17,7 @@ const SearchPageAll = () => {
    const [datas, setData] = useState([])
 
    const fetchData = useCallback(async () => {
-      const data = await axios.get(tmdAPI.getSearchAllKeyApi(id))
+      const data = await axios.get(zingApi.getSearchAllKeyApi(id))
       setData(data.data.data)
    }, [id])
 
@@ -36,7 +36,7 @@ const SearchPageAll = () => {
    return (
       <div>
          {/* Nổi Bật */}
-         <PlayListSelector title={"Nổi bật"}>
+         <Section title={"Nổi bật"}>
             {datas?.artists?.[0] && (
                <OutstandingItems type="Nghệ sĩ" classGrid={classGrid} data={datas?.artists[0]}></OutstandingItems>
             )}
@@ -46,57 +46,57 @@ const SearchPageAll = () => {
             )}
 
             {datas?.songs?.[0] && <OutstandingItems type="Bài Hát" classGrid={classGrid} data={datas?.songs[0]}></OutstandingItems>}
-         </PlayListSelector>
+         </Section>
 
          {/* Song */}
          {datas.songs && (
-            <PlayListSelector classAdd2="w-full" title={"Bài Hát"}>
+            <Section classAdd2="w-full" title={"Bài Hát"}>
                <div className="main_topchart w-full ">
                   <div className="container_zing-chart">
                      <div className="zing-chart_list !flex-row ">
                         <div className="col l-6 m-6 c-9">
                            {colSong1 &&
                               colSong1.map((e) => (
-                                 <ItemChartList isNotList isNoneRank isChildren item={e} key={e.encodeId}></ItemChartList>
+                                 <ChartSongRow isNotList isNoneRank isChildren item={e} key={e.encodeId}></ChartSongRow>
                               ))}
                         </div>
                         <div className="col l-6 m-6 c-9">
                            {colSong2 &&
                               colSong2.map((e) => (
-                                 <ItemChartList isNotList isNoneRank isChildren item={e} key={e.encodeId}></ItemChartList>
+                                 <ChartSongRow isNotList isNoneRank isChildren item={e} key={e.encodeId}></ChartSongRow>
                               ))}
                         </div>
                      </div>
                   </div>
                </div>
-            </PlayListSelector>
+            </Section>
          )}
 
          {/* Album  */}
          {datas.playlists && (
-            <PlayListSelector title={"Playlist/Album"}>
+            <Section title={"Playlist/Album"}>
                {datas.playlists.slice(0, 5).map((e, index) => {
                   let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
-                  return <CarouselItem key={e.encodeId || e.id} artis={true} desc={false} class1={classGird} item={e}></CarouselItem>
+                  return <AlbumCard key={e.encodeId || e.id} artis={true} desc={false} class1={classGird} item={e}></AlbumCard>
                })}
-            </PlayListSelector>
+            </Section>
          )}
          {datas.videos && (
-            <PlayListSelector classAdd="artist-mv" title={"MV"}>
+            <Section classAdd="artist-mv" title={"MV"}>
                {datas.videos.slice(0, 3).map((e) => {
-                  return <MvItem key={e.encodeId || e.id} data={e} isAritst></MvItem>
+                  return <MvCard key={e.encodeId || e.id} data={e} isAritst></MvCard>
                })}
-            </PlayListSelector>
+            </Section>
          )}
 
          {/* Artist  */}
          {datas.artists && (
-            <PlayListSelector title={"Nghệ Sĩ/OA"}>
+            <Section title={"Nghệ Sĩ/OA"}>
                {datas.artists.slice(0, 5).map((e, index) => {
                   let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
-                  return <ItemArits key={e.id || e.encodeId} classGird={classGird} data={e}></ItemArits>
+                  return <ArtistCard key={e.id || e.encodeId} classGird={classGird} data={e}></ArtistCard>
                })}
-            </PlayListSelector>
+            </Section>
          )}
       </div>
    )

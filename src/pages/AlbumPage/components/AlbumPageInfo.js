@@ -1,12 +1,12 @@
 import React, { memo, useEffect, useRef, useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import getFormartTimeDDYY from "utils/getFormartTimeDDYY"
-import { setPlay, setReady } from "features/SettingPlay/settingPlay"
-import { fetchPlayList } from "features/QueueFeatures/QueueFeatures"
-import ActionIcon from "components/Icon/ActionIcon"
-import { pushPlayListsLogged } from "features/Logged/loggedFeatures"
-import useLikeHook from "hook/useLikeHook"
+import formatDateDDMMYY from "utils/formatDateDDMMYY"
+import { setPlay, setReady } from "features/setting/settingSlice"
+import { fetchPlayList } from "features/queue/queueSlice"
+import ActionIcon from "components/ui/ActionIcon"
+import { pushPlayListsLogged } from "features/logged/loggedSlice"
+import useLike from "hook/useLike"
 
 const AlbumPageInfo = memo(({ datas }) => {
    const dispatch = useDispatch()
@@ -40,7 +40,7 @@ const AlbumPageInfo = memo(({ datas }) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
-   const { isLike, handleLike } = useLikeHook(datas, 1)
+   const { isLike, handleLike } = useLike(datas, 1)
 
    return (
       <div className="media playlist-header sticky">
@@ -81,7 +81,7 @@ const AlbumPageInfo = memo(({ datas }) => {
          <div className="media-content">
             <div className="content-top">
                <h3 className="title">{datas?.title}</h3>
-               <div className="release">Cập nhật: {getFormartTimeDDYY(datas?.contentLastUpdate)}</div>
+               <div className="release">Cập nhật: {formatDateDDMMYY(datas?.contentLastUpdate)}</div>
                <div className="artists">
                   {datas?.artists &&
                      datas.artists?.map((e, index) => {

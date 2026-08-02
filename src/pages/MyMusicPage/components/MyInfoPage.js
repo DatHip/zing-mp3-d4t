@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useDispatch, useSelector } from "react-redux"
-import ImageUpload from "components/Form/ImageUpload"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import ImageUpload from "components/form/ImageUpload"
+import Section from "components/ui/Section"
 import { updateProfile } from "firebase/auth"
 import styled from "styled-components"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage"
-import { setImgUrl, updateUser } from "features/User/userFeatures"
+import { setImgUrl, updateUser } from "features/user/userSlice"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { updatePassword } from "firebase/auth"
 import { database } from "lib/firebase/firestore"
@@ -272,7 +272,7 @@ const MyInfoPage = memo(() => {
 
    return (
       <>
-         <PlayListSelector
+         <Section
             isMyPage={
                <button
                   onClick={() => {
@@ -286,7 +286,7 @@ const MyInfoPage = memo(() => {
                </button>
             }
             title={!changePasswordPage ? "Chỉnh Sửa Thông Tin" : "Đổi Mật Khẩu"}
-         ></PlayListSelector>
+         ></Section>
          <UpdateProfileStyled>
             {!changePasswordPage && (
                <div>

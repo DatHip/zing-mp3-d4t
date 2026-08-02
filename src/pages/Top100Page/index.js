@@ -1,7 +1,7 @@
 import React from "react"
-import CarouselItem from "components/Selection/CarouselItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
-import LoadingSvg from "components/loading/LoadingSvg"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
+import LoadingSvg from "components/ui/LoadingSvg"
 import Top100HeaderSvg from "./components/Top100HeaderSvg"
 import { useTop100Page } from "./useTop100Page"
 
@@ -17,9 +17,9 @@ const Top100Page = () => {
          </div>
          <div>
             {sections.map((section) => (
-               <PlayListSelector key={section.sectionId || section.title} title={section?.title}>
+               <Section key={section.sectionId || section.title} title={section?.title}>
                   {section.items?.map((item) => (
-                     <CarouselItem
+                     <AlbumCard
                         key={item.encodeId}
                         artis={true}
                         desc={false}
@@ -27,7 +27,7 @@ const Top100Page = () => {
                         item={item}
                      />
                   ))}
-               </PlayListSelector>
+               </Section>
             ))}
          </div>
       </div>

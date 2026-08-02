@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { tmdAPI } from "config"
+import { zingApi } from "config"
 
 const fetchAlbum = async (id) => {
-   const { data } = await axios.get(tmdAPI.getAlbumPage(id))
+   const { data } = await axios.get(zingApi.getAlbumPage(id))
    return data.data
 }
 
 const fetchSuggested = async (id) => {
-   const { data } = await axios.get(tmdAPI.getSuggestedAlbum(id))
+   const { data } = await axios.get(zingApi.getSuggestedAlbum(id))
    return data.data
 }
 

@@ -1,11 +1,11 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
-import { tmdAPI } from "config"
+import { zingApi } from "config"
 import scrollTop from "utils/scrollToTop"
-import LoadingSvg from "components/loading/LoadingSvg"
-import PlayListSelector from "components/Selection/PlayListSelector"
-import ItemChartList from "components/TopChartPage/ItemChartList"
+import LoadingSvg from "components/ui/LoadingSvg"
+import Section from "components/ui/Section"
+import ChartSongRow from "components/song/ChartSongRow"
 
 const SearchPageSong = () => {
    const { id } = useParams()
@@ -13,7 +13,7 @@ const SearchPageSong = () => {
    const [datas, setData] = useState([])
 
    const fetchData = async () => {
-      const data = await axios.get(tmdAPI.getSearchByType(id, "song"))
+      const data = await axios.get(zingApi.getSearchByType(id, "song"))
       setData(data.data.data)
    }
 
@@ -26,19 +26,19 @@ const SearchPageSong = () => {
 
    return (
       <div>
-         <PlayListSelector classAdd="mb-[36px]" notRow classAdd2="w-full" title={"Bài Hát"}>
+         <Section classAdd="mb-[36px]" notRow classAdd2="w-full" title={"Bài Hát"}>
             <div className="main_topchart mt-2">
                <div className="container_zing-chart">
                   <div className="zing-chart_list pt-2">
                      {datas &&
                         datas?.items?.length > 0 &&
                         datas?.items?.map((e, index) => {
-                           return <ItemChartList isNotList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
+                           return <ChartSongRow isNotList isNoneRank item={e} index={index} key={e.encodeId}></ChartSongRow>
                         })}
                   </div>
                </div>
             </div>
-         </PlayListSelector>
+         </Section>
       </div>
    )
 }

@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useState, useCallback } from "react"
 import { useParams } from "react-router-dom"
-import MvItem from "components/MVpage/MvItem"
+import MvCard from "components/card/MvCard"
 import axios from "axios"
 import { useRef } from "react"
-import { tmdAPI } from "config"
+import { zingApi } from "config"
 import DropDownMv from "./DropDownMv"
-import LoadingSvg from "components/loading/LoadingSvg"
+import LoadingSvg from "components/ui/LoadingSvg"
 
 const MvPageList = () => {
    const { id } = useParams()
@@ -14,7 +14,7 @@ const MvPageList = () => {
    const [loading, setLoading] = useState(false)
 
    const fetchData = useCallback(async () => {
-      const data = await axios.get(tmdAPI.getListMv(id, page.current))
+      const data = await axios.get(zingApi.getListMv(id, page.current))
       const dataSelector = data.data.data.items
       const tolal = data.data.data.toltal
       const more = data.data.data.hasMore
@@ -70,7 +70,7 @@ const MvPageList = () => {
 
          <div className="container_top100-list row transition-all">
             {datas?.map((e) => (
-               <MvItem key={e.encodeId || e.id} data={e}></MvItem>
+               <MvCard key={e.encodeId || e.id} data={e}></MvCard>
             ))}
          </div>
          <div ref={pageEnd} className="mt-[30px] "></div>

@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useLayoutEffect } from "react"
-import BottomPlay from "./layout/Bottom/BottomPlay"
-import Header from "./layout/Header"
-import Siderleft from "./layout/Siderleft"
-import RouterPage from "./router/RouterPage"
+import PlayerBar from "layout/PlayerBar"
+import Header from "layout/Header"
+import Sidebar from "layout/Sidebar"
+import RouterPage from "router/RouterPage"
 import { useSelector, useDispatch, useStore } from "react-redux"
-import { setPlaying } from "./features/SettingPlay/settingPlay"
-import { setUser } from "./features/User/userFeatures"
+import { setPlaying } from "features/setting/settingSlice"
+import { setUser } from "features/user/userSlice"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -120,8 +120,8 @@ function App() {
             style={themeBgImg ? { backgroundImage: `url('${themeBgImg}')` } : {}}
          >
             <Header></Header>
-            <Siderleft></Siderleft>
-            <BottomPlay></BottomPlay>
+            <Sidebar></Sidebar>
+            <PlayerBar></PlayerBar>
             <RouterPage></RouterPage>
             <ToastContainer
                position="top-center"

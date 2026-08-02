@@ -1,8 +1,8 @@
 import React from "react"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import Section from "components/ui/Section"
 import { useOutletContext } from "react-router"
-import MvItem from "components/MVpage/MvItem"
-import LoadingSvg from "components/loading/LoadingSvg"
+import MvCard from "components/card/MvCard"
+import LoadingSvg from "components/ui/LoadingSvg"
 
 const ArtistMv = () => {
    const datas = useOutletContext()
@@ -13,13 +13,13 @@ const ArtistMv = () => {
    return (
       <div className="main_mv main-page-item active">
          <div className="main_mv-container ">
-            <PlayListSelector classAdd2={"container_top100-list "} key={dataSelector?.title} title={dataSelector?.title}>
+            <Section classAdd2={"container_top100-list "} key={dataSelector?.title} title={dataSelector?.title}>
                {dataSelector &&
                   dataSelector?.items?.length > 0 &&
                   dataSelector?.items?.map((e) => {
-                     return <MvItem key={e.encodeId || e.id} data={e}></MvItem>
+                     return <MvCard key={e.encodeId || e.id} data={e}></MvCard>
                   })}
-            </PlayListSelector>
+            </Section>
          </div>
       </div>
    )

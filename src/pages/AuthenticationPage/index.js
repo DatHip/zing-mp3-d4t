@@ -1,6 +1,6 @@
 import React from "react"
-import SignInForm from "components/Form/SignInForm"
-import SignUpForm from "components/Form/SignUpForm"
+import SignInForm from "components/form/SignInForm"
+import SignUpForm from "components/form/SignUpForm"
 import { useAuthenticationPage } from "./useAuthenticationPage"
 import { SignUpStyles } from "./styles"
 

@@ -1,10 +1,10 @@
 import React from "react"
 
-import CarouselItem from "components/Selection/CarouselItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
-import LoadingSvg from "components/loading/LoadingSvg"
-import ItemChartList from "components/TopChartPage/ItemChartList"
-import ItemArits from "components/MyMusicPage/ItemArits"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
+import LoadingSvg from "components/ui/LoadingSvg"
+import ChartSongRow from "components/song/ChartSongRow"
+import ArtistCard from "components/card/ArtistCard"
 import fancyTimeFormat from "utils/fancyTimeFormat"
 
 import AlbumPageInfo from "./components/AlbumPageInfo"
@@ -12,25 +12,25 @@ import { AlbumPageStyles } from "./styles"
 import { useAlbumPage } from "./useAlbumPage"
 
 const SuggestedSection = ({ section, ItemComponent, isCarousel }) => (
-   <PlayListSelector title={section.title}>
+   <Section title={section.title}>
       {section?.items?.map((item, index) => {
          if (index > 4) return null
          const classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
          if (isCarousel) {
             return (
-               <CarouselItem
+               <AlbumCard
                   isSwiper={true}
                   key={item.encodeId || item.id || index}
                   artis={true}
                   desc={false}
                   class1={classGird}
                   item={item}
-               ></CarouselItem>
+               ></AlbumCard>
             )
          }
          return <ItemComponent key={item.id || item.encodeId || index} classGird={classGird} data={item}></ItemComponent>
       })}
-   </PlayListSelector>
+   </Section>
 )
 
 const AlbumPage = () => {
@@ -73,7 +73,7 @@ const AlbumPage = () => {
                            {album?.song?.items.map((e, index) => {
                               if (e.streamingStatus === 1) indexItem++
                               return (
-                                 <ItemChartList
+                                 <ChartSongRow
                                     idAlbum={idAlbum}
                                     isNoneRank
                                     item={e}
@@ -99,7 +99,7 @@ const AlbumPage = () => {
                   if (e.sectionType === "adBanner") return null
                   const sectionKey = e.sectionId || `${e.sectionType}-${index}`
                   if (e.sectionType === "artist") {
-                     return <SuggestedSection key={sectionKey} section={e} ItemComponent={ItemArits} />
+                     return <SuggestedSection key={sectionKey} section={e} ItemComponent={ArtistCard} />
                   }
                   if (e.sectionType === "playlist") {
                      return <SuggestedSection key={sectionKey} section={e} isCarousel />

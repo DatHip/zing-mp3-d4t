@@ -1,7 +1,7 @@
 import React, { memo } from "react"
 
-import CarouselItem from "components/Selection/CarouselItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
 
 const GenreHub = memo(({ data }) => {
    return (
@@ -10,7 +10,7 @@ const GenreHub = memo(({ data }) => {
             data.length > 0 &&
             data.slice(0, 18).map((e, index) => {
                return (
-                  <PlayListSelector key={index} to={`/hub/detail/${e?.encodeId}`} title={e?.title} all={true}>
+                  <Section key={index} to={`/hub/detail/${e?.encodeId}`} title={e?.title} all={true}>
                      {e?.playlists?.length > 0 &&
                         e?.playlists.map((e, index) => {
                            if (index > 4) return
@@ -20,17 +20,17 @@ const GenreHub = memo(({ data }) => {
                            }
 
                            return (
-                              <CarouselItem
+                              <AlbumCard
                                  isSwiper={true}
                                  key={e.encodeId}
                                  artis={true}
                                  desc={false}
                                  class1={classGird}
                                  item={e}
-                              ></CarouselItem>
+                              ></AlbumCard>
                            )
                         })}
-                  </PlayListSelector>
+                  </Section>
                )
             })}
       </>

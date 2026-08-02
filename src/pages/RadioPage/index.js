@@ -1,12 +1,12 @@
 import React from "react"
 
-import LoadingSvg from "components/loading/LoadingSvg"
-import RadioHomePage from "components/SliderHome/RadioHomePage"
+import LoadingSvg from "components/ui/LoadingSvg"
+import RadioSection from "components/home/RadioSection"
 
 import CategoryRadio from "./components/CategoryRadio"
-import DiscoverPoscast from "./components/DiscoverPoscast"
+import DiscoverPodcast from "./components/DiscoverPodcast"
 import FeaturedEpisodesRadio from "./components/FeaturedEpisodesRadio"
-import NewProgramRaido from "./components/NewProgramRaido"
+import NewProgramRadio from "./components/NewProgramRadio"
 import RadioReplay from "./components/RadioReplay"
 import SlideRadio from "./components/SlideRadio"
 import { useRadioPage } from "./useRadioPage"
@@ -18,13 +18,13 @@ const RadioPage = () => {
 
    return (
       <div className="mt-1">
-         <RadioHomePage isNotAll />
-         <DiscoverPoscast data={sections.discoverPoscast} />
+         <RadioSection isNotAll />
+         <DiscoverPodcast data={sections.discoverPodcast} />
          <CategoryRadio data={sections.categoryRadio} />
          <FeaturedEpisodesRadio data={sections.featuredEpisodes} />
          <SlideRadio isFeatured data={sections.featuredPrograms} />
          <RadioReplay data={sections.replay} />
-         <NewProgramRaido data={sections.newShow} />
+         <NewProgramRadio data={sections.newShow} />
       </div>
    )
 }

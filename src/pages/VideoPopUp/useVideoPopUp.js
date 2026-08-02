@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router"
 import { useNavigate } from "react-router-dom"
 import { useVideoMvData } from "api/useVideoMvData"
-import { setOpenOff } from "features/ToggleMainMv/toggleMainMv"
-import { setPlayingAction } from "features/SettingPlay/settingPlay"
-import { pushMvsLogged } from "features/Logged/loggedFeatures"
+import { setOpenOff } from "features/mvToggle/mvToggleSlice"
+import { setPlayingAction } from "features/setting/settingSlice"
+import { pushMvsLogged } from "features/logged/loggedSlice"
 import scrollTop from "utils/scrollToTop"
 
 export function useVideoPopUp() {

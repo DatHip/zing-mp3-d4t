@@ -1,6 +1,6 @@
 import React from "react"
 
-import LoadingSvg from "components/loading/LoadingSvg"
+import LoadingSvg from "components/ui/LoadingSvg"
 
 import GenreHub from "./components/GenreHub"
 import MoodHub from "./components/MoodHub"

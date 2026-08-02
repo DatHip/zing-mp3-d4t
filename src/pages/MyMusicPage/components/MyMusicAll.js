@@ -1,12 +1,12 @@
 import React from "react"
 import { Link, useOutletContext } from "react-router-dom"
-import EmptyContent from "components/Bottom/EmptyContent"
-import LoadingSvg from "components/loading/LoadingSvg"
-import CarouselItem from "components/Selection/CarouselItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
-import ItemChartList from "components/TopChartPage/ItemChartList"
-import ItemArits from "components/MyMusicPage/ItemArits"
-import SliderShow from "components/MyMusicPage/SliderShow"
+import EmptyContent from "components/ui/EmptyContent"
+import LoadingSvg from "components/ui/LoadingSvg"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
+import ChartSongRow from "components/song/ChartSongRow"
+import ArtistCard from "components/card/ArtistCard"
+import CardSlider from "components/card/CardSlider"
 
 const MyMusicAll = () => {
    const { docs } = useOutletContext()
@@ -20,7 +20,7 @@ const MyMusicAll = () => {
          )}
 
          {docs.favouriteSongs.length > 3 && (
-            <PlayListSelector
+            <Section
                classAdd="mb-[36px]"
                notRow
                classAdd2="w-full"
@@ -36,21 +36,21 @@ const MyMusicAll = () => {
                {docs.favouriteSongs && docs.favouriteSongs.length > 3 && (
                   <div className="flex items-center justify-between">
                      <div>
-                        <SliderShow data={docs.favouriteSongs}></SliderShow>
+                        <CardSlider data={docs.favouriteSongs}></CardSlider>
                      </div>
                      <div className="main_topchart mt-2 flex-1">
                         <div className="container_zing-chart">
                            <div className="max-h-[280px] overflow-y-auto zing-chart_list pt-2">
                               {docs.favouriteSongs.map((e, index) => {
                                  return (
-                                    <ItemChartList
+                                    <ChartSongRow
                                        notAlbum
                                        onFavourite
                                        isNoneRank
                                        item={e}
                                        index={index}
                                        key={e.encodeId}
-                                    ></ItemChartList>
+                                    ></ChartSongRow>
                                  )
                               })}
                            </div>
@@ -58,10 +58,10 @@ const MyMusicAll = () => {
                      </div>
                   </div>
                )}
-            </PlayListSelector>
+            </Section>
          )}
          {docs.favouritePlaylist.length > 0 && (
-            <PlayListSelector
+            <Section
                isMyPage={
                   <div className="flex items-center justify-center gap-[10px]">
                      <Link to="/mymusic/playlist" className="personal_play-all">
@@ -79,20 +79,20 @@ const MyMusicAll = () => {
                   }
 
                   return (
-                     <CarouselItem
+                     <AlbumCard
                         isSwiper={true}
                         key={e.encodeId}
                         artis={true}
                         desc={false}
                         class1={classGird}
                         item={e}
-                     ></CarouselItem>
+                     ></AlbumCard>
                   )
                })}
-            </PlayListSelector>
+            </Section>
          )}
          {docs.favouriteArtist.length > 0 && (
-            <PlayListSelector all={false} classAdd={"container_radio "} classAdd2={"mb-[10px]"} title={"Nghệ Sĩ"}>
+            <Section all={false} classAdd={"container_radio "} classAdd2={"mb-[10px]"} title={"Nghệ Sĩ"}>
                {docs.favouriteArtist.map((e, index) => {
                   if (index > 6) return
 
@@ -109,9 +109,9 @@ const MyMusicAll = () => {
                      isLinkToAll = true
                   }
 
-                  return <ItemArits isLinkToAll={isLinkToAll} noneFooter classGird={classGird} key={e.id} data={e}></ItemArits>
+                  return <ArtistCard isLinkToAll={isLinkToAll} noneFooter classGird={classGird} key={e.id} data={e}></ArtistCard>
                })}
-            </PlayListSelector>
+            </Section>
          )}
       </>
    )

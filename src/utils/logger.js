@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV === "development"
  * in development. Always pass the call site as `context` so the log says which
  * feature broke.
  *
- * @param {string} context - Call site, e.g. "SignInForm" or "useLikeHook.like".
+ * @param {string} context - Call site, e.g. "SignInForm" or "useLike.like".
  * @param {unknown} error
  */
 export const logError = (context, error) => {

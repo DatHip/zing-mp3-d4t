@@ -1,8 +1,8 @@
 import React from "react"
 import { useOutletContext } from "react-router"
-import LoadingSvg from "components/loading/LoadingSvg"
-import PlayListSelector from "components/Selection/PlayListSelector"
-import ItemChartList from "components/TopChartPage/ItemChartList"
+import LoadingSvg from "components/ui/LoadingSvg"
+import Section from "components/ui/Section"
+import ChartSongRow from "components/song/ChartSongRow"
 
 const ArtistSong = () => {
    const datas = useOutletContext()
@@ -13,7 +13,7 @@ const ArtistSong = () => {
    return (
       <div>
          {" "}
-         <PlayListSelector
+         <Section
             classAdd="mb-[36px]"
             notRow
             classAdd2="w-full"
@@ -33,12 +33,12 @@ const ArtistSong = () => {
                      {dataSelector &&
                         dataSelector?.items?.length > 0 &&
                         dataSelector?.items?.map((e, index) => {
-                           return <ItemChartList isNoneRank item={e} index={index} key={e.encodeId}></ItemChartList>
+                           return <ChartSongRow isNoneRank item={e} index={index} key={e.encodeId}></ChartSongRow>
                         })}
                   </div>
                </div>
             </div>
-         </PlayListSelector>
+         </Section>
       </div>
    )
 }

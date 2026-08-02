@@ -2,7 +2,7 @@ import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import React, { memo, useRef } from "react"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import Section from "components/ui/Section"
 import { Navigation, Pagination } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import styled from "styled-components"
@@ -93,7 +93,7 @@ const SlideRadio = ({ data, isFeatured }) => {
    const navigationNextRef = useRef(null)
 
    return (
-      <PlayListSelector
+      <Section
          title={data?.title}
          childrenOption={
             <div className="absolute mt-2  top-0 event-btn-arrow flex justify-center items-center gap-[10px]">
@@ -177,7 +177,7 @@ const SlideRadio = ({ data, isFeatured }) => {
                   })}
             </Swiper>
          )}
-      </PlayListSelector>
+      </Section>
    )
 }
 

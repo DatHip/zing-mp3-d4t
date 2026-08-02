@@ -3,7 +3,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { setInfoCurrentMv } from "features/QueueFeatures/QueueFeatures"
+import { setInfoCurrentMv } from "features/queue/queueSlice"
 
 const VideoPlayItemsStyles = styled.div`
    .title {

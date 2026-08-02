@@ -15,7 +15,7 @@ export function useRadioPage() {
    const sections = useMemo(() => {
       if (!items) return null
       return {
-         discoverPoscast: items.find((e) => e.sectionId === "radPromoteProgram"),
+         discoverPodcast: items.find((e) => e.sectionId === "radPromoteProgram"),
          categoryRadio: items.find((e) => e.sectionId === "radPromoteCategory"),
          featuredPrograms: items.find((e) => e.sectionId === "radSponsoredProgram"),
          featuredEpisodes: items.find((e) => e.sectionId === "radPromoteEpisode"),

@@ -1,16 +1,16 @@
 import React, { memo } from "react"
-import CarouselItem from "components/Selection/CarouselItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
 
 const CategoryRadio = ({ data }) => {
    return (
-      <PlayListSelector title={data?.title} all={false}>
+      <Section title={data?.title} all={false}>
          {data?.items?.length > 0 &&
             data?.items.slice(0, 5).map((e, index) => {
                let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
 
                return (
-                  <CarouselItem
+                  <AlbumCard
                      hiddenTitle
                      isHiddenButton={true}
                      isSwiper={true}
@@ -19,7 +19,7 @@ const CategoryRadio = ({ data }) => {
                      desc={false}
                      class1={classGird}
                      item={e}
-                  ></CarouselItem>
+                  ></AlbumCard>
                )
             })}
          {!data &&
@@ -29,16 +29,16 @@ const CategoryRadio = ({ data }) => {
                   let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
 
                   return (
-                     <CarouselItem.Loading
+                     <AlbumCard.Loading
                         key={index}
                         artis={false}
                         desc={false}
                         class1={classGird}
                         item={e}
-                     ></CarouselItem.Loading>
+                     ></AlbumCard.Loading>
                   )
                })}
-      </PlayListSelector>
+      </Section>
    )
 }
 

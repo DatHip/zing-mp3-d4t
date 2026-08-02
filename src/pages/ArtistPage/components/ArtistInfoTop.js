@@ -1,13 +1,13 @@
 import React, { memo } from "react"
 import styled from "styled-components"
-import NewReleaseitem from "components/NewReleaseitem/NewReleaseitem"
+import SongRow from "components/song/SongRow"
 import usePortal from "react-cool-portal"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { setPlay, setReady } from "features/SettingPlay/settingPlay"
-import { fetchPlayList } from "features/QueueFeatures/QueueFeatures"
-import { pushPlayListsLogged } from "features/Logged/loggedFeatures"
-import useLikeHook from "hook/useLikeHook"
+import { setPlay, setReady } from "features/setting/settingSlice"
+import { fetchPlayList } from "features/queue/queueSlice"
+import { pushPlayListsLogged } from "features/logged/loggedSlice"
+import useLike from "hook/useLike"
 
 const InfoTopStyles = styled.div`
    .read-more {
@@ -120,7 +120,7 @@ const ArtistInfoTop = memo(({ data }) => {
 
    let active = playlistEncodeId === data?.playlistId
 
-   const { isLike, handleLike } = useLikeHook(data, 3)
+   const { isLike, handleLike } = useLike(data, 3)
 
    const { Portal, show, hide } = usePortal({ defaultShow: false })
 
@@ -226,7 +226,7 @@ const ArtistInfoTop = memo(({ data }) => {
                      </span>
                   </button>
                </div>
-               <NewReleaseitem item={data?.topAlbum} isArtist></NewReleaseitem>
+               <SongRow item={data?.topAlbum} isArtist></SongRow>
             </div>
          </div>
          <div className="col l-5 m-5 c-12 ">

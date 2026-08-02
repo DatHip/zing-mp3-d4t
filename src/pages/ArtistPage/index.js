@@ -2,7 +2,7 @@ import React from "react"
 import { Outlet } from "react-router"
 import { NavLink } from "react-router-dom"
 
-import LoadingSvg from "components/loading/LoadingSvg"
+import LoadingSvg from "components/ui/LoadingSvg"
 import ArtistInfoTop from "./components/ArtistInfoTop"
 import { ArtistPageStyles } from "./styles"
 import { useArtistPage } from "./useArtistPage"

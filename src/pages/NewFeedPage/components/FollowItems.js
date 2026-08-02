@@ -1,8 +1,8 @@
 import React, { memo, useState } from "react"
 import usePortal from "react-cool-portal"
 import styled from "styled-components"
-import formartTimeNewFeed from "utils/formartTimeNewFeed"
-import PortalMVpage from "components/Portal/PortalMVpage"
+import formatFeedTime from "utils/formatFeedTime"
+import MvPortal from "components/portal/MvPortal"
 
 const ItemStyles = styled.div`
    border-radius: 8px;
@@ -92,7 +92,7 @@ const FollowItems = memo(({ data }) => {
                            {care ? "Đã quan tâm" : "Quan Tâm"}
                         </button>
                      </h3>
-                     <p className="subtitle">{formartTimeNewFeed(createdTime)}</p>
+                     <p className="subtitle">{formatFeedTime(createdTime)}</p>
                   </div>
                </div>
                <div className="title mt-[10px]">{title || ""}</div>
@@ -130,7 +130,7 @@ const FollowItems = memo(({ data }) => {
                   </button>
                </div>
             </div>
-            <PortalMVpage Portal={Portal} hide={hide} data={data}></PortalMVpage>
+            <MvPortal Portal={Portal} hide={hide} data={data}></MvPortal>
          </ItemStyles>
       </div>
    )

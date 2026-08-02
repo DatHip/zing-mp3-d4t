@@ -1,6 +1,6 @@
 import React from "react"
-import ItemChartList from "components/TopChartPage/ItemChartList"
-import LoadingSvg from "components/loading/LoadingSvg"
+import ChartSongRow from "components/song/ChartSongRow"
+import LoadingSvg from "components/ui/LoadingSvg"
 import { useNewMusicPage } from "./useNewMusicPage"
 
 const NewMusicPage = () => {
@@ -26,7 +26,7 @@ const NewMusicPage = () => {
                   {items.map((e, index) => {
                      if (e.streamingStatus === 1) indexItem++
                      return (
-                        <ItemChartList
+                        <ChartSongRow
                            indexNotVip={indexItem}
                            idAlbum={playlistId}
                            index={index}

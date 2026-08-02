@@ -2,9 +2,9 @@ import React, { memo, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Tippy from "@tippyjs/react"
 import { useDispatch, useSelector } from "react-redux"
-import { setText } from "features/MvState/MvStateFeatures"
+import { setText } from "features/mvState/mvStateSlice"
 import axios from "axios"
-import { tmdAPI } from "config"
+import { zingApi } from "config"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
 
@@ -17,7 +17,7 @@ const DropDownMv = memo(() => {
    const [open, setOpen] = useState(false)
 
    const fetchData = useCallback(async () => {
-      const data = await axios.get(tmdAPI.getCategoryMv(id))
+      const data = await axios.get(zingApi.getCategoryMv(id))
       const dataSelector = data.data.data
       setData(dataSelector)
    }, [id])

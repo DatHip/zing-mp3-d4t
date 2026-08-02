@@ -2,9 +2,9 @@ import React, { memo } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { pushPlayListsLogged } from "features/Logged/loggedFeatures"
-import { fetchPlayList, playSongNotAlbum, playSongNotAlbumById } from "features/QueueFeatures/QueueFeatures"
-import { setPlay, setReady } from "features/SettingPlay/settingPlay"
+import { pushPlayListsLogged } from "features/logged/loggedSlice"
+import { fetchPlayList, playSongNotAlbum, playSongNotAlbumById } from "features/queue/queueSlice"
+import { setPlay, setReady } from "features/setting/settingSlice"
 
 const OutstandingItemsStyles = styled.div`
    &.is-item-search {

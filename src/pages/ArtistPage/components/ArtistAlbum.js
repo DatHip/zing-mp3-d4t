@@ -1,8 +1,8 @@
 import React from "react"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import Section from "components/ui/Section"
 import { useOutletContext } from "react-router"
-import CarouselItem from "components/Selection/CarouselItem"
-import LoadingSvg from "components/loading/LoadingSvg"
+import AlbumCard from "components/card/AlbumCard"
+import LoadingSvg from "components/ui/LoadingSvg"
 
 const ArtistAlbum = () => {
    const datas = useOutletContext()
@@ -11,15 +11,15 @@ const ArtistAlbum = () => {
    if (!datas || !datas.sections) return <LoadingSvg></LoadingSvg>
 
    return (
-      <PlayListSelector classAdd2={"!flex-wrap"} key={dataSelector?.title} title={dataSelector?.title}>
+      <Section classAdd2={"!flex-wrap"} key={dataSelector?.title} title={dataSelector?.title}>
          {dataSelector &&
             dataSelector?.items?.length > 0 &&
             dataSelector?.items?.map((e) => {
                let classGird = "col l-2-4 m-3 c-6 !mb-[30px]"
 
-               return <CarouselItem key={e.encodeId || e.id} artis={true} desc={false} class1={classGird} item={e}></CarouselItem>
+               return <AlbumCard key={e.encodeId || e.id} artis={true} desc={false} class1={classGird} item={e}></AlbumCard>
             })}
-      </PlayListSelector>
+      </Section>
    )
 }
 

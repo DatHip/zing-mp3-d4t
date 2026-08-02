@@ -1,9 +1,9 @@
 import React, { memo } from "react"
 import { useOutletContext } from "react-router"
-import EmptyContent from "components/Bottom/EmptyContent"
-import LoadingSvg from "components/loading/LoadingSvg"
-import CarouselItem from "components/Selection/CarouselItem"
-import PlayListSelector from "components/Selection/PlayListSelector"
+import EmptyContent from "components/ui/EmptyContent"
+import LoadingSvg from "components/ui/LoadingSvg"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
 
 const MyMusicPlayList = memo(() => {
    const { docs } = useOutletContext()
@@ -17,12 +17,12 @@ const MyMusicPlayList = memo(() => {
          )}
          {docs.favouritePlaylist.length > 0 && (
             <div className="main_songnew main-page-item active">
-               <PlayListSelector title={"PlayList"}>
+               <Section title={"PlayList"}>
                   {docs.favouritePlaylist.slice(0, 30).map((e, index) => {
                      let classGird = "col l-2-4 m-3 c-5"
-                     return <CarouselItem key={index} artis={true} desc={false} class1={classGird} item={e}></CarouselItem>
+                     return <AlbumCard key={index} artis={true} desc={false} class1={classGird} item={e}></AlbumCard>
                   })}
-               </PlayListSelector>
+               </Section>
             </div>
          )}
       </>

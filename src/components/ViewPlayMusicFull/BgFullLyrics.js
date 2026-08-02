@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React, { memo, useMemo } from "react"
 import { useSelector } from "react-redux"
 import LoadingSvg from "../loading/LoadingSvg"
 import ItemLyric from "./ItemLyric"
@@ -7,6 +7,30 @@ const BgFullLyrics = memo(() => {
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
    const lyricByLine = useSelector((state) => state.lyrics.lyricByLine)
    const isLoading = useSelector((state) => state.lyrics.isLoading)
+   const currentTime = useSelector((state) => state.queueNowPlay.currentTime)
+
+   // One subscription for the whole list instead of one per line. Lines are
+   // memoized because only the two whose active/over flags flip need to
+   // re-render on a tick — the rest bail out on identical props.
+   const lines = useMemo(
+      () =>
+         (lyricByLine || []).map((line) => {
+            const words = line.words
+            let text = ""
+            words.forEach((w) => {
+               text += w.data + " "
+            })
+            return {
+               text,
+               // Second granularity: matches the original MM:SS string compare.
+               start: Math.floor(words[0].startTime / 1000),
+               end: Math.floor(words[words.length - 1].endTime / 1000),
+            }
+         }),
+      [lyricByLine]
+   )
+
+   const currentSecond = Math.floor(currentTime || 0)
 
    let isTextSize
    if (textSize === 1) {
@@ -41,10 +65,16 @@ const BgFullLyrics = memo(() => {
                      <>
                         {!lyricByLine && <li className="item ">Lời bài hát đang được cập nhật</li>}
 
-                        {lyricByLine &&
-                           lyricByLine.length > 0 &&
-                           lyricByLine.map((e, index) => {
-                              return <ItemLyric data={e} key={index}></ItemLyric>
+                        {lines.length > 0 &&
+                           lines.map((line, index) => {
+                              return (
+                                 <ItemLyric
+                                    key={index}
+                                    text={line.text}
+                                    active={currentSecond >= line.start && currentSecond < line.end}
+                                    over={currentSecond > line.end}
+                                 ></ItemLyric>
+                              )
                            })}
                      </>
                   )}

@@ -17,13 +17,13 @@ const fetchDataLyrics = createAsyncThunk("lyrics/fetchDataLyrics", async (id) =>
    return res.data.data
 })
 
+// Persisted by app/persistMiddleware.js — see the note in SettingPlay/settingPlay.js.
 export const lyrics = createSlice({
    name: "lyrics",
    initialState,
    reducers: {
       setIsSeek: (state, action) => {
          state.isSeek = action.payload
-         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(state))
       },
    },
    extraReducers: (builer) => {
@@ -42,7 +42,6 @@ export const lyrics = createSlice({
             state.lyricByLine = false
          }
          state.isLoading = false
-         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(state))
       })
    },
 })

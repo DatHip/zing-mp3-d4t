@@ -2,31 +2,26 @@ import React from "react"
 import Tippy from "@tippyjs/react"
 import { useDispatch, useSelector } from "react-redux"
 import BottomControlllPLayIng from "./BottomControlllPLayIng"
-import { setLoopSongs, setPlay, setPlaying, setRandomSongs, setReady } from "../../features/SettingPlay/settingPlay"
+import { setLoopSongs, setPlaying, setRandomSongs } from "../../features/SettingPlay/settingPlay"
 import LoadingIcon from "../Icon/LoadingIcon"
-import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "../../features/QueueFeatures/QueueFeatures"
 import scrollToActive from "../../utils/scrollToView"
+import { useQueueControls } from "../../hook/useQueueControls"
 
 const BottomControlsCenter = () => {
    const dispatch = useDispatch()
-   const playing = useSelector((state) => state.setting.playing)
    const isLoop = useSelector((state) => state.setting.isLoop)
-   const isRandom = useSelector((state) => state.setting.isRandom)
    const isReady = useSelector((state) => state.setting.isReady)
 
-   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
    const infoSongNext = useSelector((state) => state.queueNowPlay.infoSongNext)
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
+
+   const { playNext, playPrev, currentIndexSong, isRandom, playing } = useQueueControls()
 
    return (
       <div className="player_controls-center">
          <div className="player_top">
             <div
-               onClick={() => {
-                  dispatch(setRandomSongs())
-                  if (!isRandom) {
-                  }
-               }}
+               onClick={() => dispatch(setRandomSongs())}
                id="randomMusic"
                className={`player_btn playing_random  ${isRandom ? "active" : ""}`}
             >
@@ -34,20 +29,7 @@ const BottomControlsCenter = () => {
                <div className="playing_title-hover">{isRandom ? "Tắt" : "Bật"} phát ngẫu nhiên</div>
             </div>
             <div
-               onClick={() => {
-                  if (isRandom) {
-                     dispatch(setCurrentIndexSongShuffle(currentIndexSong - 1))
-                  }
-                  if (!isRandom) {
-                     dispatch(setCurrentIndexSong(currentIndexSong - 1))
-                  }
-
-                  dispatch(setReady(false))
-
-                  if (!playing) {
-                     dispatch(setPlay(true))
-                  }
-               }}
+               onClick={playPrev}
                id="prevMusic"
                className={`player_btn playing_back ${currentIndexSong === 0 ? "disabled" : ""}`}
             >
@@ -112,18 +94,7 @@ const BottomControlsCenter = () => {
                <div
                   onClick={() => {
                      let node = document.querySelector(`div[data-rbd-draggable-id='${currentEncodeId}']`)
-
-                     if (isRandom) {
-                        dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
-                     }
-                     if (!isRandom) {
-                        dispatch(setCurrentIndexSong(currentIndexSong + 1))
-                     }
-                     dispatch(setReady(false))
-                     if (!playing) {
-                        dispatch(setPlay(true))
-                     }
-
+                     playNext()
                      scrollToActive(node)
                   }}
                   id="nextMusic"

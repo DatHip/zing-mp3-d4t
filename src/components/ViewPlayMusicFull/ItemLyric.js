@@ -1,39 +1,26 @@
-import React, { memo, useRef } from "react"
-import { useCallback } from "react"
-import { useSelector } from "react-redux"
+import React, { memo, useEffect, useRef } from "react"
 import smoothScrollIntoView from "smooth-scroll-into-view-if-needed"
-import formatTime from "../../utils/formatTimeLyric"
 
-const ItemLyric = memo(({ data, index }) => {
-   const current = useSelector((state) => state.queueNowPlay.currentTime)
-   const currentTime = formatTime(current)
+/**
+ * Presentational only. `active` / `over` are computed once by BgFullLyrics —
+ * subscribing to currentTime here meant every line in the song re-rendered on
+ * each progress tick (2/s), and the scroll below ran on every one of those
+ * renders instead of once per line.
+ */
+const ItemLyric = memo(({ text, active, over }) => {
    const liRef = useRef(null)
 
-   const scrollActive = useCallback(() => {
-      setTimeout(() => {
+   useEffect(() => {
+      if (!active || !liRef.current) return
+      const id = setTimeout(() => {
          if (!liRef.current) return
          smoothScrollIntoView(liRef.current, {
             block: "center",
             behavior: "smooth",
          })
       }, 50)
-   }, [])
-
-   let text = ""
-   let e = data.words
-   let startTime = formatTime(e[0].startTime / 1000)
-   let endTime = formatTime(e[e.length - 1].endTime / 1000)
-
-   let active = currentTime >= startTime && currentTime < endTime
-   let over = currentTime > endTime
-
-   data.words.forEach((e) => {
-      text += e.data + " "
-   })
-
-   if (active) {
-      scrollActive()
-   }
+      return () => clearTimeout(id)
+   }, [active])
 
    return (
       <li ref={liRef} className={`item ${active ? "is-active" : ""} ${over ? "is-over" : ""}`}>

@@ -6,6 +6,7 @@ let initialState = JSON.parse(localStorage.getItem("d4tmp3_logged")) || {
    recentMvs: [],
 }
 
+// Persisted by app/persistMiddleware.js — see the note in SettingPlay/settingPlay.js.
 export const logged = createSlice({
    name: "logged",
    initialState,
@@ -23,7 +24,6 @@ export const logged = createSlice({
          }
 
          state.recentPlaylist.unshift(action.payload)
-         localStorage.setItem("d4tmp3_logged", JSON.stringify(state))
       },
       pushSongsLogged: (state, action) => {
          let isExists = state.recentSongs.find((e) => action.payload.encodeId === e.encodeId)
@@ -38,7 +38,6 @@ export const logged = createSlice({
          }
 
          state.recentSongs.unshift(action.payload)
-         localStorage.setItem("d4tmp3_logged", JSON.stringify(state))
       },
       pushMvsLogged: (state, action) => {
          let isExists = state.recentMvs.find((e) => action.payload.encodeId === e.encodeId)
@@ -53,7 +52,6 @@ export const logged = createSlice({
          }
 
          state.recentMvs.unshift(action.payload)
-         localStorage.setItem("d4tmp3_logged", JSON.stringify(state))
       },
    },
 })

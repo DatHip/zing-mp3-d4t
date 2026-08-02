@@ -1,45 +1,42 @@
-import React, { memo, useRef, useEffect, useState } from "react"
-import fancyTimeFormat from "../../utils/fancyTimeFormat"
-import { useDispatch, useSelector } from "react-redux"
+import React, { memo, useRef, useEffect, useState, useCallback } from "react"
+import { useDispatch, useSelector, useStore } from "react-redux"
 import ReactPlayer from "react-player/lazy"
-import { setCurrentIndexSong, setCurrentIndexSongShuffle, setCurrentTime } from "../../features/QueueFeatures/QueueFeatures"
+import fancyTimeFormat from "../../utils/fancyTimeFormat"
+import { setCurrentTime } from "../../features/QueueFeatures/QueueFeatures"
 import { setPlay, setReady } from "../../features/SettingPlay/settingPlay"
 import { pushSongsLogged } from "../../features/Logged/loggedFeatures"
-import { useCallback } from "react"
-import { useLayoutEffect } from "react"
 import { toast } from "react-toastify"
 import { getStreamUrl } from "../../api/getStreamSong"
+import { useQueueControls } from "../../hook/useQueueControls"
+import PlayerProgress from "./PlayerProgress"
 
 const BottomControlllPLayIng = memo(() => {
-   const progressBar = useRef()
    const audioRef = useRef()
-   const progresArea = useRef()
    const dispatch = useDispatch()
-   const [oke, setOke] = useState(false)
+   const store = useStore()
+   // A ref, not state: restoring the persisted position is a one-shot side
+   // effect and has no business triggering a render of the player.
+   const hasRestoredTime = useRef(false)
    const [streamUrl, setStreamUrl] = useState("")
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
    const infoSongCurrent = useSelector((state) => state.queueNowPlay.infoSongCurrent)
-   const currentTime = useSelector((state) => state.queueNowPlay.currentTime)
-   const currentIndexSong = useSelector((state) => state.queueNowPlay.currentIndexSong)
 
    const isLoop = useSelector((state) => state.setting.isLoop)
    const volume = useSelector((state) => state.setting.volume)
-   const playing = useSelector((state) => state.setting.playing)
    const muted = useSelector((state) => state.setting.muted)
-   const isRandom = useSelector((state) => state.setting.isRandom)
    const progressInterval = useSelector((state) => state.setting.progressInterval)
 
-   const setTimeSong1 = useCallback(
-      (e) => {
-         let progressWidhtVal = progresArea.current.clientWidth // Lấy chiều x
-         let clickedOffSetX = e.nativeEvent.offsetX // lấy value chiều x khi click
-         let res = (clickedOffSetX / progressWidhtVal) * infoSongCurrent?.duration
-         progressBar.current.style.width = (res / infoSongCurrent?.duration) * 100 + "%"
-         dispatch(setCurrentTime(res))
-         audioRef.current.seekTo(res)
+   const { playNext, skipToNext, playing } = useQueueControls()
+
+   const duration = infoSongCurrent?.duration
+
+   const handleSeek = useCallback(
+      (seconds) => {
+         dispatch(setCurrentTime(seconds))
+         audioRef.current?.seekTo(seconds)
       },
-      [progresArea, infoSongCurrent, progressBar]
+      [dispatch]
    )
 
    useEffect(() => {
@@ -50,11 +47,7 @@ const BottomControlllPLayIng = memo(() => {
       return () => {
          window.removeEventListener("beforeunload", setOff)
       }
-   }, [])
-
-   useLayoutEffect(() => {
-      progressBar.current.style.width = (currentTime / infoSongCurrent?.duration) * 100 + "%"
-   }, [currentTime])
+   }, [dispatch])
 
    useEffect(() => {
       if (!currentEncodeId) {
@@ -65,11 +58,7 @@ const BottomControlllPLayIng = memo(() => {
          toast("Bài này chỉ dành cho tài khoản VIP — chuyển bài tiếp theo", { type: "info" })
          setStreamUrl("")
          dispatch(setReady(false))
-         if (isRandom) {
-            dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
-         } else {
-            dispatch(setCurrentIndexSong(currentIndexSong + 1))
-         }
+         skipToNext()
          return
       }
       let cancelled = false
@@ -79,11 +68,7 @@ const BottomControlllPLayIng = memo(() => {
          if (cancelled) return
          if (!url) {
             toast("Không lấy được stream bài này — chuyển bài tiếp theo", { type: "error" })
-            if (isRandom) {
-               dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
-            } else {
-               dispatch(setCurrentIndexSong(currentIndexSong + 1))
-            }
+            skipToNext()
             return
          }
          setStreamUrl(url)
@@ -96,21 +81,21 @@ const BottomControlllPLayIng = memo(() => {
 
    return (
       <div className="player_bottom">
-         <p className="playing_time-left">{fancyTimeFormat(currentTime)}</p>
-         <div onClick={setTimeSong1} ref={progresArea} className="playing_time-up2 progress-area">
-            <div ref={progressBar} className="progress-bar" />
+         <PlayerProgress duration={duration} onSeek={handleSeek}>
             <ReactPlayer
                width={0}
                height={0}
                ref={audioRef}
                progressInterval={progressInterval}
                config={{ file: { forceAudio: true } }}
-               onReady={(e) => {
+               onReady={() => {
                   dispatch(setReady(true))
-                  // save local
-                  if (!oke && currentTime !== 0) {
-                     audioRef.current.seekTo(currentTime)
-                     setOke(true)
+                  // Read through the store rather than subscribing: this
+                  // component must not re-render on every progress tick.
+                  const savedTime = store.getState().queueNowPlay.currentTime
+                  if (!hasRestoredTime.current && savedTime !== 0) {
+                     audioRef.current.seekTo(savedTime)
+                     hasRestoredTime.current = true
                   }
                   dispatch(pushSongsLogged(infoSongCurrent))
                }}
@@ -118,18 +103,7 @@ const BottomControlllPLayIng = memo(() => {
                   dispatch(setCurrentTime(e.playedSeconds))
                }}
                onEnded={() => {
-                  if (!isLoop) {
-                     if (isRandom) {
-                        dispatch(setCurrentIndexSongShuffle(currentIndexSong + 1))
-                     }
-                     if (!isRandom) {
-                        dispatch(setCurrentIndexSong(currentIndexSong + 1))
-                     }
-                     dispatch(setReady(false))
-                     if (!playing) {
-                        dispatch(setPlay(true))
-                     }
-                  }
+                  if (!isLoop) playNext()
                }}
                onError={() => {
                   return toast("Có lỗi xảy ra, vui lòng thử lại", {
@@ -142,8 +116,8 @@ const BottomControlllPLayIng = memo(() => {
                muted={muted}
                url={streamUrl || ""}
             ></ReactPlayer>
-         </div>
-         <p className="playing_time-right">{fancyTimeFormat(infoSongCurrent?.duration)}</p>
+         </PlayerProgress>
+         <p className="playing_time-right">{fancyTimeFormat(duration)}</p>
       </div>
    )
 })

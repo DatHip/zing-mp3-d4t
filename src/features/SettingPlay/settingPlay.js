@@ -18,69 +18,58 @@ let initialState = JSON.parse(localStorage.getItem("d4tmp3_setting")) || {
    clockOff: false,
 }
 
+// Persistence is owned by app/persistMiddleware.js (debounced, ref-equality
+// short-circuited). The reducers below used to each call localStorage.setItem
+// on an Immer draft — a synchronous JSON.stringify through a proxy on every
+// dispatch, on top of the write the middleware was already doing.
 export const setting = createSlice({
    name: "setting",
    initialState,
    reducers: {
       setClockOff: (state, action) => {
          state.clockOff = action.payload
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
       setProgressInterval: (state, action) => {
          state.progressInterval = action.payload
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
       setIsVolume: (state, action) => {
          state.isVolume = action.payload
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
       toogleMuted: (state) => {
          state.muted = !state.muted
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
       setReady: (state, action) => {
          state.isReady = action.payload
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
       setPlay: (state, action) => {
          state.playing = action.payload
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
 
       setVolume: (state, action) => {
          state.volume = action.payload
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
 
       setRandomSongs: (state, action) => {
          state.isRandom = !state.isRandom
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
 
       setLoopSongs: (state, action) => {
          state.isLoop = !state.isLoop
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
 
       setPlaying: (state) => {
          state.playing = !state.playing
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
 
       setPlayingAction: (state, action) => {
          state.playing = action.payload
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
 
       setAciteTheme: (state, action) => {
          state.isBgFull = action.payload
-
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
       setSizeText: (state, action) => {
          state.text = action.payload
-
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(state))
       },
    },
 

@@ -2,13 +2,10 @@ import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Link } from "react-router-dom"
 import { byType, useHomeSection } from "hook/useHomeSection"
-import { useDispatch, useSelector } from "react-redux"
-import { setPlay, setRandomSongs, setReady } from "features/setting/settingSlice"
-import { fetchPlayList, setCurrentIndexSong } from "features/queue/queueSlice"
-import { pushPlayListsLogged } from "features/logged/loggedSlice"
-import { toast } from "react-toastify"
-import { selectCurrentAlbum } from "features/queue/queueSelectors"
+import { useSelector } from "react-redux"
 import { selectIsRandom } from "features/setting/settingSelectors"
+import { TOP_CHART_PLAYLIST_ID } from "data/playlistIds"
+import { usePlayback } from "hook/usePlayback"
 
 const ChartCard = React.lazy(() => import("components/card/ChartCard"))
 
@@ -16,10 +13,9 @@ const ChartSection = memo(() => {
    const { section, isLoading } = useHomeSection(byType("RTChart"))
    const datas = section
 
-   const dispatch = useDispatch()
+   const { playAlbum, rejectIfVip } = usePlayback()
 
 
-   const infoCurrenAlbum = useSelector(selectCurrentAlbum)
 
    const isRandom = useSelector(selectIsRandom)
 
@@ -55,12 +51,7 @@ const ChartSection = memo(() => {
                   <div className="cursor-pointer zing-chartBtn">
                      <Link to={"zing-chart"}>Top Chart</Link>
                      <span
-                        onClick={async () => {
-                           dispatch(setReady(false))
-                           dispatch(setPlay(false))
-                           await dispatch(fetchPlayList("ZO68OC68"))
-                           dispatch(setPlay(true))
-                        }}
+                        onClick={() => playAlbum(TOP_CHART_PLAYLIST_ID)}
                         className="material-icons-round"
                      >
                         {" "}
@@ -73,9 +64,7 @@ const ChartSection = memo(() => {
                <div className="col l-4 m-12 c-12 order2">
                   <div className="zing-chart_list">
                      {datas &&
-                        datas?.items?.map((e, index) => {
-                           if (index > 2) return
-
+                        datas?.items?.slice(0, 3).map((e, index) => {
                            let datasCalc
 
                            if (index === 0) {
@@ -91,39 +80,13 @@ const ChartSection = memo(() => {
 
                            const img = e.thumbnail?.slice(e.thumbnail?.lastIndexOf("/"))
 
-                           const fetchSongs = async (e) => {
-                              // check active album && not vip
-                              if (e?.streamingStatus === 2) {
-                                 return toast("Dành Cho Tài Khoản VIP", {
-                                    type: "info",
-                                 })
-                              }
-
-                              if (!isRandom) {
-                                 const hi = async () => {
-                                    dispatch(setReady(false))
-                                    dispatch(setPlay(false))
-                                    await dispatch(fetchPlayList("ZO68OC68"))
-                                    await dispatch(setCurrentIndexSong(index))
-                                    await dispatch(setPlay(true))
-                                    await dispatch(pushPlayListsLogged(infoCurrenAlbum))
-                                 }
-                                 hi()
-                              }
-
-                              if (isRandom) {
-                                 const hi = async () => {
-                                    dispatch(setReady(false))
-                                    dispatch(setPlay(false))
-                                    await dispatch(fetchPlayList("ZO68OC68"))
-                                    await dispatch(setCurrentIndexSong(index))
-                                    await dispatch(setPlay(true))
-                                    await dispatch(pushPlayListsLogged(infoCurrenAlbum))
-                                    await dispatch(setRandomSongs())
-                                    await dispatch(setRandomSongs())
-                                 }
-                                 hi()
-                              }
+                           const fetchSongs = (song) => {
+                              if (rejectIfVip(song)) return
+                              return playAlbum(TOP_CHART_PLAYLIST_ID, {
+                                 startIndex: index,
+                                 logLoaded: true,
+                                 reshuffle: isRandom,
+                              })
                            }
 
                            return (

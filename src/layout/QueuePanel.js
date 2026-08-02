@@ -10,20 +10,20 @@ import {
    setDraggItemActiveShuffle,
    setDraggUpdateListShuffle,
    setNextSongShuffle,
-   fetchPlayList,
 } from "features/queue/queueSlice"
 import shuffle from "lodash/shuffle"
 
 import scrollIntoView from "smooth-scroll-into-view-if-needed"
 import { useLayoutEffect } from "react"
 import { useCallback } from "react"
-import { setPlay, setReady } from "features/setting/settingSlice"
 import ClearQueueButton from "components/player/ClearQueueButton"
 import AlarmButton from "components/player/AlarmButton"
 import { selectRecentSongs } from "features/logged/loggedSelectors"
 import { selectCurrentEncodeId, selectCurrentIndex, selectCurrentSong, selectListSong, selectPlaylistEncodeId } from "features/queue/queueSelectors"
 import { selectQueuePanel } from "features/queuePanel/queuePanelSelectors"
 import { selectIsRandom } from "features/setting/settingSelectors"
+import { TOP_CHART_PLAYLIST_ID } from "data/playlistIds"
+import { usePlayback } from "hook/usePlayback"
 
 const importQueueDragList = () => import("./QueueDragList")
 const QueueDragList = React.lazy(importQueueDragList)
@@ -52,6 +52,7 @@ const QueuePanel = () => {
    const [toggleSilde, setToggleSilde] = useState(false)
    const [items, setItems] = useState([])
    const dispatch = useDispatch()
+   const { playAlbum } = usePlayback()
 
    useLayoutEffect(() => {
       setItems(listSong)
@@ -179,12 +180,7 @@ const QueuePanel = () => {
                      <div className="empty-queue">
                         <div className="content">Khám phá thêm các bài hát mới của D4T MP3</div>
                         <button
-                           onClick={async () => {
-                              dispatch(setReady(false))
-                              dispatch(setPlay(false))
-                              await dispatch(fetchPlayList("ZO68OC68"))
-                              dispatch(setPlay(true))
-                           }}
+                           onClick={() => playAlbum(TOP_CHART_PLAYLIST_ID)}
                            className="empty-queue-btn"
                         >
                            <span className="material-symbols-outlined">play_arrow</span>

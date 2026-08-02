@@ -7,20 +7,20 @@ import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import {
    pushSongHistoryPlayList,
-   setCurrentIndexSongShuffle,
-   setCurrentIndexSong,
    pushSongHistoryPlayListShuffle,
 } from "features/queue/queueSlice"
 import { setPlay, setReady } from "features/setting/settingSlice"
 import useLike from "hook/useLike"
 import { selectCurrentAlbum, selectCurrentEncodeId, selectCurrentIndex, selectPlaylistEncodeId } from "features/queue/queueSelectors"
 import { selectIsRandom, selectIsReady, selectPlaying } from "features/setting/settingSelectors"
+import { usePlayback } from "hook/usePlayback"
 
 // DragWrapper is react-beautiful-dnd's Draggable, injected by QueueDragList. It is
 // a prop rather than an import so this row — which the history tab renders without
 // any drag behaviour — does not pull the DnD library into main.js.
 const QueueItem = ({ data, index, items, isHistory, setToggleSilde, lastIndex, DragWrapper }) => {
    const dispatch = useDispatch()
+   const { playQueueIndex } = usePlayback()
    const playing = useSelector(selectPlaying)
    const isReady = useSelector(selectIsReady)
    const isRandom = useSelector(selectIsRandom)
@@ -173,17 +173,7 @@ const QueueItem = ({ data, index, items, isHistory, setToggleSilde, lastIndex, D
 
                            {!active && (
                               <div
-                                 onClick={() => {
-                                    dispatch(setReady(false))
-                                    if (!isRandom) {
-                                       dispatch(setCurrentIndexSong(index))
-                                    }
-                                    if (isRandom) {
-                                       dispatch(setCurrentIndexSongShuffle(index))
-                                    }
-
-                                    dispatch(setPlay(true))
-                                 }}
+                                 onClick={() => playQueueIndex(index, { shuffled: isRandom })}
                               >
                                  {<ActionPlay></ActionPlay>}
                               </div>

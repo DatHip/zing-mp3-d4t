@@ -1,10 +1,8 @@
-import React, { memo } from "react"
-import { useDispatch } from "react-redux"
+import React, { memo, useCallback } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { fetchPlayList } from "features/queue/queueSlice"
-import { setPlay, setReady } from "features/setting/settingSlice"
 import useLike from "hook/useLike"
+import { usePlayback } from "hook/usePlayback"
 
 const ArtistCardStyles = styled.div`
    .main-page_list-item_img {
@@ -91,9 +89,11 @@ const ArtistCardStyles = styled.div`
 
 const ArtistCard = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
    const navigate = useNavigate()
-   const dispatch = useDispatch()
+   const { playAlbum } = usePlayback()
 
    const { isLike, handleLike } = useLike(data, 3)
+
+   const handlePlay = useCallback(() => playAlbum(data.playlistId), [playAlbum, data.playlistId])
 
    return (
       <ArtistCardStyles className={`mvpage-item-arits  ${classGird}`}>
@@ -120,14 +120,7 @@ const ArtistCard = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
             )}
             {!isLinkToAll && (
                <button
-                  onClick={async () => {
-                     if (!data.playlistId) return
-
-                     dispatch(setReady(false))
-                     dispatch(setPlay(false))
-                     await dispatch(fetchPlayList(data.playlistId))
-                     dispatch(setPlay(true))
-                  }}
+                  onClick={handlePlay}
                   className="zm-btn is-mvpage button"
                   tabIndex="0"
                >
@@ -173,14 +166,7 @@ const ArtistCard = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
 
                      {isLike && (
                         <button
-                           onClick={async () => {
-                              if (!data.playlistId) return
-
-                              dispatch(setReady(false))
-                              dispatch(setPlay(false))
-                              await dispatch(fetchPlayList(data.playlistId))
-                              dispatch(setPlay(true))
-                           }}
+                           onClick={handlePlay}
                            className="zm-btn is-outlined mt-[12px] mb-[15px] !flex items-center justify-center  play-btn button"
                            tabIndex="0"
                         >

@@ -1,21 +1,14 @@
 import { useCallback } from "react"
-import { useDispatch } from "react-redux"
-import { setPlay, setReady } from "features/setting/settingSlice"
-import { fetchPlayList } from "features/queue/queueSlice"
 import { useNewMusicData } from "api/useNewMusicData"
+import { usePlayback } from "hook/usePlayback"
+import { NEW_RELEASE_PLAYLIST_ID } from "data/playlistIds"
 
-export const NEW_RELEASE_PLAYLIST_ID = "ZDB6EB9C"
 
 export function useNewMusicPage() {
    const { data, isLoading } = useNewMusicData()
-   const dispatch = useDispatch()
+   const { playAlbum } = usePlayback()
 
-   const handlePlayAll = useCallback(async () => {
-      dispatch(setReady(false))
-      dispatch(setPlay(false))
-      await dispatch(fetchPlayList(NEW_RELEASE_PLAYLIST_ID))
-      dispatch(setPlay(true))
-   }, [dispatch])
+   const handlePlayAll = useCallback(() => playAlbum(NEW_RELEASE_PLAYLIST_ID), [playAlbum])
 
    return {
       items: data?.items,
@@ -24,3 +17,5 @@ export function useNewMusicPage() {
       playlistId: NEW_RELEASE_PLAYLIST_ID,
    }
 }
+
+export { NEW_RELEASE_PLAYLIST_ID }

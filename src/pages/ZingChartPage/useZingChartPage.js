@@ -1,21 +1,14 @@
 import { useCallback, useMemo } from "react"
-import { useDispatch } from "react-redux"
-import { setPlay, setReady } from "features/setting/settingSlice"
-import { fetchPlayList } from "features/queue/queueSlice"
 import { useZingChartData } from "api/useZingChartData"
+import { usePlayback } from "hook/usePlayback"
+import { TOP_CHART_PLAYLIST_ID } from "data/playlistIds"
 
-export const TOP_CHART_PLAYLIST_ID = "ZO68OC68"
 
 export function useZingChartPage() {
    const { data, isLoading } = useZingChartData()
-   const dispatch = useDispatch()
+   const { playAlbum } = usePlayback()
 
-   const handlePlayAll = useCallback(async () => {
-      dispatch(setReady(false))
-      dispatch(setPlay(false))
-      await dispatch(fetchPlayList(TOP_CHART_PLAYLIST_ID))
-      dispatch(setPlay(true))
-   }, [dispatch])
+   const handlePlayAll = useCallback(() => playAlbum(TOP_CHART_PLAYLIST_ID), [playAlbum])
 
    const ranks = useMemo(() => {
       const items = data?.RTChart?.items || []
@@ -24,3 +17,5 @@ export function useZingChartPage() {
 
    return { data, isLoading, handlePlayAll, ranks }
 }
+
+export { TOP_CHART_PLAYLIST_ID }

@@ -1,13 +1,10 @@
-import React, { memo } from "react"
+import React, { memo, useCallback } from "react"
 import styled from "styled-components"
 import SongRow from "components/song/SongRow"
 import usePortal from "react-cool-portal"
 import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
-import { setPlay, setReady } from "features/setting/settingSlice"
-import { fetchPlayList } from "features/queue/queueSlice"
-import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import useLike from "hook/useLike"
+import { usePlayback } from "hook/usePlayback"
 import { selectPlaylistEncodeId, selectQueueLoading } from "features/queue/queueSelectors"
 import { selectPlaying } from "features/setting/settingSelectors"
 
@@ -115,7 +112,7 @@ const PortalStyle = styled.div`
 `
 
 const ArtistInfoTop = memo(({ data }) => {
-   const dispatch = useDispatch()
+   const { playAlbum, resume, pause } = usePlayback()
    const playlistEncodeId = useSelector(selectPlaylistEncodeId)
    const loading = useSelector(selectQueueLoading)
    const playing = useSelector(selectPlaying)
@@ -123,6 +120,14 @@ const ArtistInfoTop = memo(({ data }) => {
    let active = playlistEncodeId === data?.playlistId
 
    const { isLike, handleLike } = useLike(data, 3)
+
+   /** One button: resume/pause when this artist's list is loaded, load it otherwise. */
+   const handlePlayToggle = useCallback(() => {
+      if (active) return playing ? pause() : resume()
+      return playAlbum(data?.playlistId, {
+         logAs: data?.textType === "Playlist" ? data : undefined,
+      })
+   }, [active, playing, pause, resume, playAlbum, data])
 
    const { Portal, show, hide } = usePortal({ defaultShow: false })
 
@@ -191,24 +196,7 @@ const ArtistInfoTop = memo(({ data }) => {
                </div>
                <div className="actions mt-[20px] mb-[15px] inline-flex gap-[10px] items-center justify-start">
                   <button
-                     onClick={async () => {
-                        if (active) {
-                           if (!playing) {
-                              dispatch(setPlay(true))
-                           } else {
-                              dispatch(setPlay(false))
-                           }
-                        }
-                        if (!active) {
-                           dispatch(setReady(false))
-                           dispatch(setPlay(false))
-                           await dispatch(fetchPlayList(data?.playlistId))
-                           dispatch(setPlay(true))
-                           if (data?.textType === "Playlist") {
-                              dispatch(pushPlayListsLogged(data))
-                           }
-                        }
-                     }}
+                     onClick={handlePlayToggle}
                      className=" zm-btn mar-r-10 is-outlined active is-medium is-upper button"
                      tabIndex="0"
                   >

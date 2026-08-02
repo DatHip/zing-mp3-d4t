@@ -1,17 +1,15 @@
 import React, { memo, useEffect, useRef, useCallback } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import formatDateDDMMYY from "utils/formatDateDDMMYY"
-import { setPlay, setReady } from "features/setting/settingSlice"
-import { fetchPlayList } from "features/queue/queueSlice"
 import ActionIcon from "components/ui/ActionIcon"
-import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import useLike from "hook/useLike"
+import { usePlayback } from "hook/usePlayback"
 import { selectPlaylistEncodeId, selectQueueLoading } from "features/queue/queueSelectors"
 import { selectPlaying } from "features/setting/settingSelectors"
 
 const AlbumPageInfo = memo(({ datas }) => {
-   const dispatch = useDispatch()
+   const { playAlbum, resume, pause } = usePlayback()
    const playing = useSelector(selectPlaying)
    const playlistEncodeId = useSelector(selectPlaylistEncodeId)
    const loading = useSelector(selectQueueLoading)
@@ -31,16 +29,12 @@ const AlbumPageInfo = memo(({ datas }) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [playing])
 
-   const onClickBtn = useCallback(async () => {
-      dispatch(setPlay(false))
-      dispatch(setReady(false))
-      await dispatch(fetchPlayList(datas?.encodeId))
-      if (datas.textType === "Playlist") {
-         dispatch(pushPlayListsLogged(datas))
-      }
-      dispatch(setPlay(true))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
+   // The old version listed no dependencies at all, so it captured the album
+   // from the first render and kept playing that one after navigating.
+   const onClickBtn = useCallback(
+      () => playAlbum(datas?.encodeId, { logAs: datas?.textType === "Playlist" ? datas : undefined }),
+      [playAlbum, datas]
+   )
 
    const { isLike, handleLike } = useLike(datas, 1)
 
@@ -63,12 +57,12 @@ const AlbumPageInfo = memo(({ datas }) => {
                         {activeAlbum && (
                            <>
                               {!playing && (
-                                 <span onClick={() => dispatch(setPlay(true))}>
+                                 <span onClick={resume}>
                                     <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                                  </span>
                               )}
                               {playing && (
-                                 <span onClick={() => dispatch(setPlay(false))}>
+                                 <span onClick={pause}>
                                     <ActionIcon></ActionIcon>
                                  </span>
                               )}
@@ -112,9 +106,7 @@ const AlbumPageInfo = memo(({ datas }) => {
                   <>
                      {!playing && (
                         <button
-                           onClick={() => {
-                              dispatch(setPlay(true))
-                           }}
+                           onClick={resume}
                            className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
                            tabIndex={0}
                         >
@@ -124,9 +116,7 @@ const AlbumPageInfo = memo(({ datas }) => {
                      )}
                      {playing && (
                         <button
-                           onClick={() => {
-                              dispatch(setPlay(false))
-                           }}
+                           onClick={pause}
                            className="zm-btn btn-play-all is-outlined active is-medium is-upper button transition-all"
                            tabIndex={0}
                         >

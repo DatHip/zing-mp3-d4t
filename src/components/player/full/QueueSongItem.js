@@ -2,15 +2,16 @@ import React, { memo } from "react"
 import { useDispatch } from "react-redux"
 
 import { useSelector } from "react-redux"
-import { setCurrentIndexSong, setCurrentIndexSongShuffle } from "features/queue/queueSlice"
-import { setPlay, setReady } from "features/setting/settingSlice"
+import { setPlay } from "features/setting/settingSlice"
 import ActionIcon from "components/ui/ActionIcon"
 import LoadingIcon from "components/ui/LoadingIcon"
 import { selectCurrentEncodeId } from "features/queue/queueSelectors"
 import { selectIsRandom, selectIsReady, selectPlaying } from "features/setting/settingSelectors"
+import { usePlayback } from "hook/usePlayback"
 
 const QueueSongItem = memo(({ data, index }) => {
    const dispatch = useDispatch()
+   const { playQueueIndex } = usePlayback()
 
    const currentEncodeId = useSelector(selectCurrentEncodeId)
    const playing = useSelector(selectPlaying)
@@ -51,17 +52,7 @@ const QueueSongItem = memo(({ data, index }) => {
                   )}
                   {!active && (
                      <span
-                        onClick={() => {
-                           dispatch(setReady(false))
-                           if (!isRandom) {
-                              dispatch(setCurrentIndexSong(index))
-                           }
-                           if (isRandom) {
-                              dispatch(setCurrentIndexSongShuffle(index))
-                           }
-
-                           dispatch(setPlay(true))
-                        }}
+                        onClick={() => playQueueIndex(index, { shuffled: isRandom })}
                      >
                         <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                      </span>

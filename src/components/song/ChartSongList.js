@@ -1,6 +1,7 @@
 import React, { memo } from "react"
 import { useState } from "react"
 import ChartSongRow from "components/song/ChartSongRow"
+import { TOP_CHART_PLAYLIST_ID } from "data/playlistIds"
 
 const ChartSongList = memo(({ data }) => {
    const [numRender, setNumRender] = useState(10)
@@ -16,7 +17,7 @@ const ChartSongList = memo(({ data }) => {
                   return (
                      <ChartSongRow
                         indexNotVip={index}
-                        idAlbum={"ZO68OC68"}
+                        idAlbum={TOP_CHART_PLAYLIST_ID}
                         item={e}
                         index={index}
                         key={e.encodeId}

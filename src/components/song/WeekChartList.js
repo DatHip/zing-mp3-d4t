@@ -1,14 +1,12 @@
 import React, { memo } from "react"
-import { useDispatch } from "react-redux"
-import { fetchPlayList } from "features/queue/queueSlice"
-import { setPlay, setReady } from "features/setting/settingSlice"
 import ChartSongRow from "components/song/ChartSongRow"
+import { usePlayback } from "hook/usePlayback"
 
 const WeekChartList = memo(({ data }) => {
    const vn = data?.vn
    const us = data?.us
    const korea = data?.korea
-   const dispatch = useDispatch()
+   const { playAlbum } = usePlayback()
 
    return (
       <div className="main_topchart-week ">
@@ -19,12 +17,7 @@ const WeekChartList = memo(({ data }) => {
                   <div className="week-chart-box-title">
                      <p>Việt Nam</p>
                      <span
-                        onClick={async () => {
-                           dispatch(setReady(false))
-                           dispatch(setPlay(false))
-                           await dispatch(fetchPlayList(vn.playlistId))
-                           dispatch(setPlay(true))
-                        }}
+                        onClick={() => playAlbum(vn.playlistId)}
                         id="btn-play_vn-week"
                         className="material-icons-round"
                      >
@@ -57,12 +50,7 @@ const WeekChartList = memo(({ data }) => {
                   <div className="week-chart-box-title">
                      <p>US-UK</p>
                      <span
-                        onClick={async () => {
-                           dispatch(setReady(false))
-                           dispatch(setPlay(false))
-                           await dispatch(fetchPlayList(us.playlistId))
-                           dispatch(setPlay(true))
-                        }}
+                        onClick={() => playAlbum(us.playlistId)}
                         id="btn-play_us-week"
                         className="material-icons-round"
                      >
@@ -97,12 +85,7 @@ const WeekChartList = memo(({ data }) => {
                   <div className="week-chart-box-title">
                      <p>Korea</p>
                      <span
-                        onClick={async () => {
-                           dispatch(setReady(false))
-                           dispatch(setPlay(false))
-                           await dispatch(fetchPlayList(korea.playlistId))
-                           dispatch(setPlay(true))
-                        }}
+                        onClick={() => playAlbum(korea.playlistId)}
                         className="material-icons-round"
                      >
                         {" "}

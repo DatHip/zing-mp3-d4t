@@ -40,7 +40,10 @@ const ArtistAll = () => {
             </Section>
             {dataSelector2 &&
                dataSelector2.map((e, idx) => {
-                  const sectionKey = e.sectionId || `${e.sectionType}-${idx}`
+                  // sectionId is not unique: an artist page can carry two
+                  // sections both tagged "aPlaylist", which made React drop one
+                  // of them. Always suffix with the position.
+                  const sectionKey = `${e.sectionId || e.sectionType}-${idx}`
 
                   if (e.sectionType === "video") {
                      if (!e.items) return null

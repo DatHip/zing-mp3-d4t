@@ -11,7 +11,17 @@ export const queryClient = new QueryClient({
    defaultOptions: {
       queries: {
          refetchOnWindowFocus: false,
-         retry: 3,
+         /**
+          * Retry transient failures only. A 4xx means the request itself is
+          * wrong — repeating it cannot help, and hammering a dead endpoint
+          * three times is what trips the backend's circuit breaker, turning a
+          * single 404 into a 503 for every later caller of that key.
+          */
+         retry: (failureCount, error) => {
+            const status = error?.response?.status
+            if (status >= 400 && status < 500) return false
+            return failureCount < 3
+         },
       },
    },
 })

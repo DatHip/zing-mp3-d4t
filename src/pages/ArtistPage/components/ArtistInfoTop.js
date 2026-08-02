@@ -115,7 +115,10 @@ const ArtistInfoTop = memo(({ data }) => {
                      </span>
                   </button>
                </div>
-               <SongRow item={data?.topAlbum} isArtist></SongRow>
+               {/* Zing no longer returns topAlbum on /artist. Without the guard
+                   this renders an empty card: a "Mới Nhất" label over a blank
+                   thumbnail and two empty headings. */}
+               {data?.topAlbum && <SongRow item={data.topAlbum} isArtist />}
             </div>
          </div>
          <div className="col l-5 m-5 c-12 ">

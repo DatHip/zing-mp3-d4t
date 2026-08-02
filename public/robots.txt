@@ -8,7 +8,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /auth
-Disallow: /mymusic/
-Disallow: /history/
+Disallow: /mymusic
+Disallow: /history
 
 Sitemap: https://zing-mp3-d4t.vercel.app/sitemap.xml

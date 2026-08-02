@@ -26,7 +26,9 @@ export const config = {
    ],
 }
 
-const API_BASE = (process.env.REACT_APP_API_URL || "http://localhost:5000/api").replace(/\/+$/, "")
+// Same fallback as src/config.js — must stay in sync, or crawlers would resolve
+// meta against a different API than the app itself uses.
+const API_BASE = (process.env.REACT_APP_API_URL || "https://api-zingmp3.vercel.app/api").replace(/\/+$/, "")
 
 const UPSTREAM_TIMEOUT_MS = 2500
 
@@ -233,7 +235,10 @@ export default async function middleware(request) {
       headers: {
          "content-type": "text/html; charset=utf-8",
          // Let the CDN keep the rendered shell so repeat crawls skip the
-         // upstream round trip entirely.
+         // upstream round trip entirely. Vary is required, not decorative: this
+         // body is only produced for crawler user agents, so a cache keyed on
+         // URL alone would eventually hand crawler HTML to a human visitor.
+         vary: "user-agent",
          "cache-control": "public, s-maxage=600, stale-while-revalidate=3600",
          "x-prerender": "edge-meta",
       },

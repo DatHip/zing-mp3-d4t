@@ -6,9 +6,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Primary meta. Absolute URLs default to the canonical production domain;
-       the edge middleware rewrites them to the real request origin at runtime,
-       so preview deployments and custom domains stay correct. -->
+  <!-- Primary meta for the shell. These absolute URLs are the canonical
+       production domain and stay as written: the edge middleware only rewrites
+       <head> on its matcher routes (/album, /nghe-si, /video-clip, /hub/detail,
+       /tim-kiem, /newfeed), which does not include "/". -->
   <title>D4T MP3 | Nghe nhạc chất lượng cao trên desktop, mobile và TV</title>
   <meta name="description"
     content="Nghe nhạc trực tuyến miễn phí: Zing Chart, Top 100, MV, radio và playlist theo chủ đề. Web app nghe nhạc viết bằng React 18 bởi Tiến Đạt." />

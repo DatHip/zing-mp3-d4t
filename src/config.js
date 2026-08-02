@@ -1,7 +1,17 @@
 // Fallback is the deployed API, not localhost: a production build with the env
 // var unset would otherwise ship "http://localhost:5000" and be blocked as
 // mixed content on HTTPS, breaking every request with no visible error.
-const apiBaseUrl = process.env.REACT_APP_API_URL || "https://api-zingmp3.vercel.app/api"
+// Trailing slashes are stripped because every endpoint below interpolates
+// `${apiBaseUrl}/path`: a base ending in "/" produces "//path", which Vercel
+// answers with a 308 to the normalized path instead of serving the request.
+const apiBaseUrl = (process.env.REACT_APP_API_URL || "https://api-zingmp3.vercel.app/api").replace(/\/+$/, "")
+
+if (process.env.NODE_ENV !== "production" && !apiBaseUrl.endsWith("/api")) {
+   console.warn(
+      `[config] REACT_APP_API_URL is "${apiBaseUrl}" — the backend serves its routes under /api, ` +
+         `so this is probably missing that suffix. Every request will 404.`
+   )
+}
 
 export const zingApi = {
    //  getMovieDetails: (movieId) => `${apiBaseUrl}/${movieId}?api_ey=${apiKey}`,

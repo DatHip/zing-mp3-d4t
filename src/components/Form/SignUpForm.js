@@ -7,7 +7,8 @@ import { setDoc, doc, serverTimestamp } from "firebase/firestore"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux"
-import { auth, database } from "../../firebase/firebase-config"
+import { auth } from "lib/firebase/auth"
+import { database } from "lib/firebase/firestore"
 import { setUser } from "../../features/User/userFeatures"
 
 const schema = yup.object({

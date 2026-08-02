@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { doc, getDoc } from "firebase/firestore"
-import { database } from "../../firebase/firebase-config"
+import { database } from "lib/firebase/firestore"
 
 const TABS = [
    { path: "/mymusic/", label: "TỔNG QUAN" },

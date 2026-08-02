@@ -1,6 +1,4 @@
 import { initializeApp } from "firebase/app"
-import { getFirestore } from "firebase/firestore"
-import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,14 +12,11 @@ const firebaseConfig = {
 // Guard: if env vars are missing (e.g. Vercel deploy without env set),
 // don't blow up the whole React tree — degrade to a no-op auth/db so the
 // app still renders (login/like features become inert, but user can browse).
-let database = null
-let auth = null
+let firebaseApp = null
 
 if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId) {
    try {
-      const app = initializeApp(firebaseConfig)
-      database = getFirestore(app)
-      auth = getAuth(app)
+      firebaseApp = initializeApp(firebaseConfig)
    } catch (err) {
       console.error("[firebase] initialize failed:", err?.message || err)
    }
@@ -31,4 +26,6 @@ if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId) {
    )
 }
 
-export { database, auth }
+// Auth and Firestore live in sibling modules (lib/firebase/auth, lib/firebase/firestore)
+// so that importing one does not drag the other's SDK into the bundle.
+export { firebaseApp }

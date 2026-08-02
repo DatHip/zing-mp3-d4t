@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { toast } from "react-toastify"
 import { arrayRemove, arrayUnion, doc, updateDoc, getDoc } from "firebase/firestore"
-import { database } from "../firebase/firebase-config"
+import { database } from "lib/firebase/firestore"
 import { useSelector } from "react-redux"
 import { useMemo } from "react"
 

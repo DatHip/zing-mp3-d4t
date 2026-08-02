@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from "react-redux"
 import ImageUpload from "components/Form/ImageUpload"
 import PlayListSelector from "components/Selection/PlayListSelector"
 import { updateProfile } from "firebase/auth"
-import { auth, database } from "../../../firebase/firebase-config"
 import styled from "styled-components"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage"
 import { setImgUrl, updateUser } from "features/User/userFeatures"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { updatePassword } from "firebase/auth"
+import { database } from "lib/firebase/firestore"
+import { auth } from "lib/firebase/auth"
 
 const UpdateProfileStyled = styled.div`
    max-width: 500px;

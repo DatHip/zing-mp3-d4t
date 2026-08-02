@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 import HeaderRight from "../components/Navbar/HeaderRight"
-import ItemLogin from "../components/Navbar/ItemLogin"
+import ItemLogin from "components/Navbar/ItemLoginLazy"
 import NavForm from "../components/Navbar/NavForm"
 import NavLinkArow from "../components/Navbar/NavLinkArow"
 

@@ -3,10 +3,8 @@ import BottomPlay from "./layout/Bottom/BottomPlay"
 import Header from "./layout/Header"
 import Siderleft from "./layout/Siderleft"
 import RouterPage from "./router/RouterPage"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, useStore } from "react-redux"
 import { setPlaying } from "./features/SettingPlay/settingPlay"
-import { onAuthStateChanged } from "firebase/auth"
-import { auth } from "./firebase/firebase-config"
 import { setUser } from "./features/User/userFeatures"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
@@ -18,26 +16,40 @@ function App() {
    const themeDataStyle = useSelector((state) => state.themeToggle.dataStyle)
 
    const currentEncodeId = useSelector((state) => state.queueNowPlay.currentEncodeId)
-   const activeUser = useSelector((state) => state.users.activeUser)
 
    const dispatch = useDispatch()
+   const store = useStore()
 
-   useLayoutEffect(() => {
-      if (!auth) return
-      const unsub = onAuthStateChanged(auth, (user) => {
-         if (!activeUser && user) {
-            dispatch(
-               setUser({
-                  displayName: user.displayName,
-                  photoURL: user.photoURL,
-                  email: user.email,
-                  uid: user.uid,
-               })
-            )
+   // The Auth SDK is ~450KB of source and nothing above the fold needs it, so it
+   // is pulled in after mount instead of shipping inside main.js. activeUser is
+   // read off the store inside the callback so this subscribes exactly once.
+   useEffect(() => {
+      let unsub = null
+      let cancelled = false
+
+      Promise.all([import("lib/firebase/auth"), import("firebase/auth")]).then(
+         ([{ auth }, { onAuthStateChanged }]) => {
+            if (cancelled || !auth) return
+            unsub = onAuthStateChanged(auth, (user) => {
+               if (!store.getState().users.activeUser && user) {
+                  dispatch(
+                     setUser({
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        email: user.email,
+                        uid: user.uid,
+                     })
+                  )
+               }
+            })
          }
-      })
-      return () => unsub()
-   }, [dispatch, activeUser])
+      )
+
+      return () => {
+         cancelled = true
+         if (unsub) unsub()
+      }
+   }, [dispatch, store])
 
    useEffect(() => {
       const keyboardShortcuts = (e) => {

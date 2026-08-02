@@ -1,14 +1,11 @@
-import React, { memo } from "react"
+import React, { memo, useCallback } from "react"
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
 import LoadingSkeleton from "components/ui/LoadingSkeleton"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchPlayList } from "features/queue/queueSlice"
-import { setReady } from "features/setting/settingSlice"
+import { useSelector } from "react-redux"
 import ActionIcon from "components/ui/ActionIcon"
-import { setPlay } from "features/setting/settingSlice"
-import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import useLike from "hook/useLike"
+import { usePlayback } from "hook/usePlayback"
 import { selectPlaylistEncodeId } from "features/queue/queueSelectors"
 import { selectPlaying } from "features/setting/settingSelectors"
 
@@ -73,22 +70,32 @@ const AlbumCard = memo(
       item = {},
    }) => {
       const { title, encodeId, artists, sortDescription, thumbnailM } = item
-      const dispatch = useDispatch()
       const navigate = useNavigate()
       const playlistEncodeId = useSelector(selectPlaylistEncodeId)
       const playing = useSelector(selectPlaying)
       let active = playlistEncodeId === encodeId
 
       const { isLike, handleLike } = useLike(item, 1)
+      const { playAlbum, resume, pause } = usePlayback()
+
+      const handleOpenAlbum = useCallback(
+         (event) => {
+            if (event.target.className.includes("recently_list-item_hover")) {
+               navigate(`/album/${encodeId}`)
+            }
+         },
+         [navigate, encodeId]
+      )
+
+      const handlePlay = useCallback(() => {
+         navigate(`/album/${encodeId}`)
+         return playAlbum(encodeId, { logAs: item.textType === "Playlist" ? item : undefined })
+      }, [navigate, encodeId, playAlbum, item])
 
       return (
          <StyleDiv className={` ${active ? "active" : ""} ${class1}`} title={sortDescription}>
             <div
-               onClick={(e) => {
-                  if (e.target.className.includes("recently_list-item_hover")) {
-                     navigate(`/album/${encodeId}`)
-                  }
-               }}
+               onClick={handleOpenAlbum}
                className={`${class2}want_list-item-link cursor-pointer main-page_list-item main_page-hover`}
             >
                <div className="want_list-item-link main-page_list-item_img">
@@ -108,33 +115,20 @@ const AlbumCard = memo(
                                  {!playing && (
                                     <span
                                        className="playlist"
-                                       onClick={(e) => {
-                                          dispatch(setPlay(true))
-                                       }}
+                                       onClick={resume}
                                     >
                                        <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                                     </span>
                                  )}
                                  {playing && (
-                                    <span onClick={() => dispatch(setPlay(false))}>
+                                    <span onClick={pause}>
                                        <ActionIcon></ActionIcon>
                                     </span>
                                  )}
                               </>
                            )}
                            {!active && (
-                              <span
-                                 onClick={async () => {
-                                    navigate(`/album/${encodeId}`)
-                                    dispatch(setReady(false))
-                                    dispatch(setPlay(false))
-                                    await dispatch(fetchPlayList(encodeId))
-                                    dispatch(setPlay(true))
-                                    if (item.textType === "Playlist") {
-                                       dispatch(pushPlayListsLogged(item))
-                                    }
-                                 }}
-                              >
+                              <span onClick={handlePlay}>
                                  <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                               </span>
                            )}

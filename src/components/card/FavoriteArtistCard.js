@@ -1,34 +1,40 @@
-import React, { memo } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React, { memo, useCallback } from "react"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
-import { fetchPlayList } from "features/queue/queueSlice"
-import { setPlay, setReady } from "features/setting/settingSlice"
+import { usePlayback } from "hook/usePlayback"
 import ActionIcon from "components/ui/ActionIcon"
 import { selectPlaylistEncodeId } from "features/queue/queueSelectors"
 import { selectPlaying } from "features/setting/settingSelectors"
 
 const FavoriteArtistCard = memo(({ item, clasName, isHub, isCenter }) => {
    const { encodeId, thumbnailM, song, artistsNames, title } = item
-   const dispatch = useDispatch()
    const navigate = useNavigate()
+   const { playAlbum, resume, pause } = usePlayback()
    const playlistEncodeId = useSelector(selectPlaylistEncodeId)
    const playing = useSelector(selectPlaying)
 
    let active = playlistEncodeId === encodeId
 
+   const handleOpen = useCallback(
+      (event) => {
+         if (isHub) return navigate(`/hub/detail/${encodeId}`)
+         if (event.target.className.includes("recently_list-item_hover")) {
+            navigate(`/album/${encodeId}`)
+         }
+      },
+      [isHub, navigate, encodeId]
+   )
+
+   const handlePlay = useCallback(() => {
+      navigate(`/album/${encodeId}`)
+      return playAlbum(encodeId)
+   }, [navigate, encodeId, playAlbum])
+
    return (
       <>
          <div className={`favorite_list-item ${active ? "active" : ""} ${isHub ? "is-hub" : ""} ${clasName}`}>
             <div
-               onClick={(e) => {
-                  if (isHub) {
-                     navigate(`/hub/detail/${encodeId}`)
-                  }
-
-                  if (e.target.className.includes("recently_list-item_hover")) {
-                     navigate(`/album/${encodeId}`)
-                  }
-               }}
+               onClick={handleOpen}
                className="main-page_list-item main_page-hover cursor-pointer"
             >
                <div className="main-page_list-item_img">
@@ -41,32 +47,19 @@ const FavoriteArtistCard = memo(({ item, clasName, isHub, isCenter }) => {
                            {active && (
                               <>
                                  {!playing && (
-                                    <span
-                                       className="playlist"
-                                       onClick={(e) => {
-                                          dispatch(setPlay(true))
-                                       }}
-                                    >
+                                    <span className="playlist" onClick={resume}>
                                        <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                                     </span>
                                  )}
                                  {playing && (
-                                    <span onClick={() => dispatch(setPlay(false))}>
+                                    <span onClick={pause}>
                                        <ActionIcon></ActionIcon>
                                     </span>
                                  )}
                               </>
                            )}
                            {!active && (
-                              <span
-                                 onClick={async () => {
-                                    navigate(`/album/${encodeId}`)
-                                    dispatch(setReady(false))
-                                    dispatch(setPlay(false))
-                                    await dispatch(fetchPlayList(encodeId))
-                                    dispatch(setPlay(true))
-                                 }}
-                              >
+                              <span onClick={handlePlay}>
                                  <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                               </span>
                            )}

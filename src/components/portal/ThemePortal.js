@@ -292,7 +292,7 @@ const ThemePortal = (props) => {
       }
    `
 
-   const { modalOpen, handleClose } = props
+   const { handleClose } = props
 
    const handleClickBackdrop = (e) => {
       if (e.target.id === "modal" || e.target.id === "theme-overlay") {

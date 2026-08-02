@@ -61,7 +61,7 @@ const FollowItems = memo(({ data }) => {
 
    const [llike, setLike] = useState(false)
    const [care, setCare] = useState(false)
-   const { like, publisher, shortDescription, createdTime, title, content, commend } = data
+   const { like, publisher, createdTime, title, content, commend } = data
 
    let imgL
    if (content.type === "album") {

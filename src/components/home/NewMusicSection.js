@@ -10,9 +10,7 @@ import Section from "components/ui/Section"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { setPlay, setReady } from "features/setting/settingSlice"
 import ActionIcon from "components/ui/ActionIcon"
-import { playSongNotAlbum } from "features/queue/queueSlice"
 import LoadingIcon from "components/ui/LoadingIcon"
 import { logError } from "utils/logger"
 import { selectCurrentEncodeId } from "features/queue/queueSelectors"
@@ -23,7 +21,7 @@ const matchNewMusic = (s) => s?.sectionId === "hNewrelease" || /^nhạc mới$/i
 const NewMusicSection = memo(() => {
    const { section, isLoading } = useHomeSection(matchNewMusic)
    const datas = section?.items
-   const dispatch = useDispatch()
+   const { playSong, resume, pause } = usePlayback()
    const navigate = useNavigate()
 
    const currentEncodeId = useSelector(selectCurrentEncodeId)
@@ -105,12 +103,12 @@ const NewMusicSection = memo(() => {
                                                 {isReady && (
                                                    <>
                                                       {!playing && (
-                                                         <span onClick={() => dispatch(setPlay(true))}>
+                                                         <span onClick={resume}>
                                                             <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                                                          </span>
                                                       )}
                                                       {playing && (
-                                                         <span onClick={() => dispatch(setPlay(false))}>
+                                                         <span onClick={pause}>
                                                             <ActionIcon></ActionIcon>
                                                          </span>
                                                       )}
@@ -121,17 +119,7 @@ const NewMusicSection = memo(() => {
                                              </>
                                           )}
                                           {!active && (
-                                             <span
-                                                onClick={() => {
-                                                   const hi = async () => {
-                                                      dispatch(setReady(false))
-                                                      dispatch(setPlay(false))
-                                                      await dispatch(playSongNotAlbum(e))
-                                                      dispatch(setPlay(true))
-                                                   }
-                                                   hi()
-                                                }}
-                                             >
+                                             <span onClick={() => playSong(e)}>
                                                 <ion-icon class="icon_play-btn" name="play-circle-outline"></ion-icon>
                                              </span>
                                           )}

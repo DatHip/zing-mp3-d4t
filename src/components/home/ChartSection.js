@@ -7,7 +7,7 @@ import { setPlay, setRandomSongs, setReady } from "features/setting/settingSlice
 import { fetchPlayList, setCurrentIndexSong } from "features/queue/queueSlice"
 import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import { toast } from "react-toastify"
-import { selectCurrentAlbum, selectCurrentEncodeId } from "features/queue/queueSelectors"
+import { selectCurrentAlbum } from "features/queue/queueSelectors"
 import { selectIsRandom } from "features/setting/settingSelectors"
 
 const ChartCard = React.lazy(() => import("components/card/ChartCard"))
@@ -18,7 +18,6 @@ const ChartSection = memo(() => {
 
    const dispatch = useDispatch()
 
-   const currentEncodeId = useSelector(selectCurrentEncodeId)
 
    const infoCurrenAlbum = useSelector(selectCurrentAlbum)
 
@@ -91,7 +90,6 @@ const ChartSection = memo(() => {
                            }
 
                            const img = e.thumbnail?.slice(e.thumbnail?.lastIndexOf("/"))
-                           let active = currentEncodeId === e?.encodeId
 
                            const fetchSongs = async (e) => {
                               // check active album && not vip

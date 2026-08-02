@@ -1,130 +1,44 @@
-import React, { memo, useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
-import { toast } from "react-toastify"
+import React, { memo } from "react"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import fancyTimeFormat from "utils/fancyTimeFormat"
 import ActionPlay from "components/ui/ActionPlay"
-import LoadingIcon from "components/ui/LoadingIcon"
 import ActionIcon from "components/ui/ActionIcon"
-import { setPlay, setRandomSongs, setReady } from "features/setting/settingSlice"
-import {
-   fetchPlayList,
-   playSongNotAlbum,
-   setCurrentIndexSong,
-   setCurrentIndexSongShuffle,
-} from "features/queue/queueSlice"
-import { pushPlayListsLogged } from "features/logged/loggedSlice"
-import { useCallback } from "react"
-import useLike from "hook/useLike"
-import { selectCurrentAlbum, selectCurrentEncodeId, selectListSongShuffle, selectPlaylistEncodeId } from "features/queue/queueSelectors"
-import { selectIsRandom, selectIsReady, selectPlaying } from "features/setting/settingSelectors"
+import LoadingIcon from "components/ui/LoadingIcon"
+import ArtistLinks from "./ArtistLinks"
+import { useChartSongRow } from "./useChartSongRow"
+
+/** Arrow and count showing how far the track moved since the last chart. */
+const RankDelta = ({ rakingStatus }) => {
+   if (rakingStatus === 0) return <span className="material-icons-outlined line">minimize</span>
+   if (rakingStatus > 0) return <span className="material-icons-outlined up">arrow_drop_up</span>
+   if (rakingStatus < 0) return <span className="material-icons-outlined down"> arrow_drop_down </span>
+   return null
+}
 
 const ChartSongRow = memo(
-   ({ isNotList, indexNotVip, idAlbum, item, index, isChildren = false, isNoneRank, onFavourite, notAlbum }) => {
-      const dispatch = useDispatch()
-      const [toggleBtn, setToggleBtn] = useState(false)
-      const { isLike, handleLike } = useLike(item, 2)
-
-      const currentEncodeId = useSelector(selectCurrentEncodeId)
-      const playlistEncodeId = useSelector(selectPlaylistEncodeId)
-      const listSongShuffle = useSelector(selectListSongShuffle)
-      const infoCurrenAlbum = useSelector(selectCurrentAlbum)
-
-      const playing = useSelector(selectPlaying)
-      const isReady = useSelector(selectIsReady)
-      const isRandom = useSelector(selectIsRandom)
-
-      const getRankStatus = useCallback((startus) => {
-         if (startus === 0) {
-            return <span className="material-icons-outlined line">minimize</span>
-         } else if (startus > 0) {
-            return <span className="material-icons-outlined up">arrow_drop_up</span>
-         } else if (startus < 0) {
-            return <span className="material-icons-outlined down"> arrow_drop_down </span>
-         }
-      }, [])
-
-      let active = currentEncodeId === item?.encodeId
-      let activeAlbum = idAlbum === playlistEncodeId
-
-      const fetchSongs = async (e) => {
-         // check active album && not vip
-         if (item?.streamingStatus === 2) {
-            return toast("Dành Cho Tài Khoản VIP", {
-               type: "info",
-            })
-         }
-
-         if (notAlbum) {
-            dispatch(setReady(false))
-            dispatch(setPlay(false))
-            await dispatch(playSongNotAlbum(item))
-            dispatch(setPlay(true))
-            return
-         }
-
-         if (activeAlbum) {
-            if (!isRandom) {
-               dispatch(setReady(false))
-               dispatch(setCurrentIndexSong(indexNotVip))
-               dispatch(setPlay(true))
-            }
-
-            if (isRandom) {
-               dispatch(setPlay(false))
-               dispatch(setReady(false))
-               const indexSheffle = listSongShuffle.find((e) => e.encodeId === item?.encodeId)
-               const indexOff = listSongShuffle.indexOf(indexSheffle)
-               if (indexOff !== -1) {
-                  dispatch(setCurrentIndexSongShuffle(indexOff))
-               }
-               dispatch(setPlay(true))
-            }
-         }
-         if (!activeAlbum) {
-            if (!isRandom) {
-               const hi = async () => {
-                  setToggleBtn(true)
-                  dispatch(setReady(false))
-                  dispatch(setPlay(false))
-                  await dispatch(fetchPlayList(idAlbum))
-                  await dispatch(setCurrentIndexSong(indexNotVip))
-                  await dispatch(setPlay(true))
-                  await dispatch(pushPlayListsLogged(infoCurrenAlbum))
-               }
-               hi()
-            }
-
-            if (isRandom) {
-               const hi = async () => {
-                  setToggleBtn(true)
-                  dispatch(setReady(false))
-                  dispatch(setPlay(false))
-                  await dispatch(fetchPlayList(idAlbum))
-                  await dispatch(setCurrentIndexSong(indexNotVip))
-                  await dispatch(setPlay(true))
-                  await dispatch(pushPlayListsLogged(infoCurrenAlbum))
-                  await dispatch(setRandomSongs())
-                  await dispatch(setRandomSongs())
-               }
-               hi()
-            }
-         }
-      }
+   ({ isNotList, indexNotVip, idAlbum, item, index, isChildren = false, isNoneRank, notAlbum }) => {
+      const { isLike, handleLike, handlePlay, resume, pause, isActiveSong, playing, isReady } =
+         useChartSongRow({
+            item,
+            idAlbum,
+            indexNotVip,
+            // A row rendered outside a track list always plays on its own.
+            notAlbum: notAlbum || isNotList,
+         })
 
       return (
-         <div
-            className={`zing-chart_item main_page-hover
-       ${active ? "active" : ""}`}
-         >
+         <div className={`zing-chart_item main_page-hover ${isActiveSong ? "active" : ""}`}>
             <div className="zing-chart_item-left">
                {!isNoneRank && (
                   <div className="zing-chart_item-oder">
                      <span className="zing-chart-top">{index + 1}</span>
                      <div className="zing-chart-rank">
-                        <div className="zing-chart-rank-status">{getRankStatus(item?.rakingStatus)}</div>
-                        <div className="zing-chart-rank-num">{item?.rakingStatus === 0 ? "" : Math.abs(item?.rakingStatus)}</div>
+                        <div className="zing-chart-rank-status">
+                           <RankDelta rakingStatus={item?.rakingStatus} />
+                        </div>
+                        <div className="zing-chart-rank-num">
+                           {item?.rakingStatus === 0 ? "" : Math.abs(item?.rakingStatus)}
+                        </div>
                      </div>
                   </div>
                )}
@@ -137,102 +51,48 @@ const ChartSongRow = memo(
                         </div>
                         <div className="recently_list-item_hover">
                            <div className="recently_btn-hover recently_btn-hover-play">
-                              {active && (
-                                 <>
-                                    {isReady && (
-                                       <>
-                                          {!playing && (
-                                             <span onClick={() => dispatch(setPlay(true))}>
-                                                <ActionPlay></ActionPlay>
-                                             </span>
-                                          )}
-                                          {playing && (
-                                             <span onClick={() => dispatch(setPlay(false))}>
-                                                <ActionIcon></ActionIcon>
-                                             </span>
-                                          )}
-                                       </>
-                                    )}
-
-                                    {!isReady && <LoadingIcon notLoading></LoadingIcon>}
-                                 </>
-                              )}
-
-                              {!active && isNotList && (
-                                 <span
-                                    onClick={() => {
-                                       const hi = async () => {
-                                          setToggleBtn(true)
-                                          dispatch(setReady(false))
-                                          dispatch(setPlay(false))
-                                          await dispatch(playSongNotAlbum(item))
-                                          dispatch(setPlay(true))
-                                       }
-                                       hi()
-                                    }}
-                                 >
-                                    {!toggleBtn ? <ActionPlay></ActionPlay> : !isReady && <LoadingIcon notLoading></LoadingIcon>}
+                              {isActiveSong && !isReady && <LoadingIcon notLoading />}
+                              {isActiveSong && isReady && (
+                                 <span onClick={playing ? pause : resume}>
+                                    {playing ? <ActionIcon /> : <ActionPlay />}
                                  </span>
                               )}
-
-                              {!active && !isNotList && (
-                                 <span onClick={fetchSongs}>
-                                    {!toggleBtn ? <ActionPlay></ActionPlay> : !isReady && <LoadingIcon notLoading></LoadingIcon>}
+                              {!isActiveSong && (
+                                 <span onClick={handlePlay}>
+                                    <ActionPlay />
                                  </span>
                               )}
                            </div>
                         </div>
                      </div>
                   </div>
+
                   <div className="zing-chart_item-text">
                      <div
-                        className={`zing-chart_item-name ${
-                           item?.streamingStatus === 1 ? "" : item?.streamingStatus === 2 ? "is-vip" : ""
-                        }`}
+                        className={`zing-chart_item-name ${item?.streamingStatus === 2 ? "is-vip" : ""}`}
                      >
                         {item?.title} <div className="is-vip_img"></div>
                      </div>
                      <div className="zing-chart_item-artist">
-                        {item?.artists &&
-                           item?.artists?.slice(0, 3)?.map((e, index) => {
-                              let prara = ", "
-
-                              if (index === 2) {
-                                 prara = "..."
-                              }
-
-                              if (item?.artists.length === 1) {
-                                 prara = ""
-                              }
-                              if (item?.artists.length === 2 && index === 1) {
-                                 prara = ""
-                              }
-                              if (item?.artists.length === 3 && index === 2) {
-                                 prara = ""
-                              }
-
-                              return (
-                                 <span key={index}>
-                                    <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
-                                    {prara}
-                                 </span>
-                              )
-                           })}
+                        <ArtistLinks artists={item?.artists} />
                      </div>
                   </div>
                </div>
             </div>
-            {isChildren ? (
-               ""
-            ) : (
+
+            {!isChildren && (
                <div className="zing-chart_item-center">
                   <p className="thesong_name">{item?.album?.title || item?.title}</p>
                </div>
             )}
+
             <div className="zing-chart_item-right gap-3">
                <div onClick={handleLike} className="player_queue-btn player_btn zm-btn">
                   <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
-                  <span className="playing_title-hover"> {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện </span>
+                  <span className="playing_title-hover">
+                     {" "}
+                     {isLike ? " Xóa khỏi " : "Thêm vào"} thư viện{" "}
+                  </span>
                </div>
 
                <p className="thesong_time">{fancyTimeFormat(item?.duration)}</p>

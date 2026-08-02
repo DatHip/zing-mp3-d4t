@@ -1,302 +1,53 @@
 import React, { memo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import getReleaseCountdown from "utils/getReleaseCountdown";
+import { SongRowStyles } from "./SongRow.styles";
 import formatMinutes from "utils/formatMinutes";
 import formatDateDDMMYY from "utils/formatDateDDMMYY";
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import ActionPlay from "components/ui/ActionPlay";
 import ActionIcon from "components/ui/ActionIcon";
 import LoadingIcon from "components/ui/LoadingIcon";
-import { setPlay, setReady } from "features/setting/settingSlice";
-import {
-  fetchPlayList,
-  playSongNotAlbum,
-} from "features/queue/queueSlice";
-import { pushPlayListsLogged } from "features/logged/loggedSlice";
-import useLike from "hook/useLike";
-import { selectCurrentEncodeId, selectPlaylistEncodeId } from "features/queue/queueSelectors"
-import { selectIsReady, selectPlaying } from "features/setting/settingSelectors"
-
-const NewReleaseItemStyle = styled.div`
-   &.active {
-      background: var(--alpha-bg);
-      transition: 0.2s;
-      .player_queue-item-right {
-         display: flex !important;
-      }
-      .player_queue-img-hover {
-         visibility: visible !important;
-      }
-   }
-   &.active-album {
-      background: var(--alpha-bg);
-      transition: 0.2s;
-      .player_queue-item-right {
-         display: flex !important;
-      }
-      .player_queue-img-hover {
-         visibility: visible !important;
-      }
-   }
-
-   &.is-artist {
-      &:hover {
-         background: unset;
-         transition: unset;
-      }
-   }
-   .media-content {
-      p {
-         font-size: 12px;
-         font-weight: 500;
-         line-height: 1.9;
-         color: var(--text-item-hover);
-      }
-      h3 {
-         text-transform: none;
-         font-size: 14px;
-         font-weight: 500;
-         line-height: 1.57;
-         margin-bottom: 2px;
-      }
-      h4 {
-         font-size: 12px;
-         white-space: nowrap;
-         text-overflow: ellipsis;
-         overflow: hidden;
-         max-width: 100%;
-         line-height: normal;
-      }
-   }
-
-   &.is-disk {
-      &:hover {
-         .disk {
-            transform: rotate(90deg);
-         }
-         .player_queue-left {
-            transform: translateX(-10px);
-         }
-      }
-      .player_queue-left {
-         min-width: 87px;
-         height: 87px;
-         margin-left: 1rem;
-         margin-right: 2.6rem;
-         .player_queue-img-hover {
-            min-width: 87px;
-            height: 87px;
-         }
-      }
-
-      .disk {
-         width: 87px;
-         height: 87px;
-         transition: transform 0.3s linear;
-         background-color: transparent;
-         transform: rotate(0);
-         z-index: -1;
-         position: absolute;
-         top: 0;
-         left: 20px;
-         right: 0;
-         bottom: 0;
-      }
-   }
-
-   .player_queue-left {
-      min-width: 6rem;
-      height: 6rem;
-      transition: transform 0.3s linear;
-      box-shadow: unset;
-      .player_queue-img-hover {
-         min-width: 6rem;
-         height: 6rem;
-      }
-   }
-   .player_queue-name,
-   .player_queue-music,
-   .player_queue-time {
-      display: -webkit-box;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      height: auto;
-      overflow: hidden;
-   }
-
-   .player_queue-name {
-      margin-top: 3px;
-
-      a:hover {
-         text-decoration: underline !important;
-         color: var(--link-text-hover);
-      }
-
-      &:hover {
-         text-decoration: unset !important;
-      }
-   }
-   .player_queue-time {
-      font-size: 12px;
-      line-height: 18px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      margin-top: 3px;
-   }
-   .media-content {
-      span {
-         font-size: 10px;
-         font-weight: 500;
-         line-height: 1.9;
-         color: var(--text-item-hover);
-      }
-      h3 {
-         text-transform: none;
-         font-size: 14px;
-         font-weight: 500;
-         line-height: 1.57;
-      }
-      h4 {
-         white-space: nowrap;
-         text-overflow: ellipsis;
-         overflow: hidden;
-         max-width: 100%;
-         line-height: normal;
-      }
-   }
-`;
+import ArtistLinks from "./ArtistLinks";
+import { useSongRow } from "./useSongRow";
 
 const SongRow = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const {
+    isLike,
+    handleLike,
+    handlePlay,
+    handleCoverClick,
+    resume,
+    pause,
+    isActiveSong,
+    isActiveAlbum,
+    playing,
+    isReady,
+    thumbnail,
+    timeRelease,
+  } = useSongRow({ item, isRadio, isDisk, isArtist });
 
-  let { isLike, handleLike } = useLike(item, isDisk ? 1 : 2);
-
-  const img = item?.thumbnailM?.slice(item?.thumbnailM.lastIndexOf("/"));
-  const timeRelease = getReleaseCountdown(item?.releaseDate);
-
-  const currentEncodeId = useSelector(selectCurrentEncodeId);
-  const playlistEncodeId = useSelector(selectPlaylistEncodeId);
-
-  const playing = useSelector(selectPlaying);
-  const isReady = useSelector(selectIsReady);
-  let active = item?.encodeId === currentEncodeId;
-  let activeAlbum = playlistEncodeId === item?.encodeId;
+  const isActive = isActiveSong || isActiveAlbum;
 
   return (
-    <NewReleaseItemStyle
-      className={`player_queue-item ${activeAlbum ? "active-album" : ""} ${
-        active ? "active" : ""
+    <SongRowStyles
+      className={`player_queue-item ${isActiveAlbum ? "active-album" : ""} ${
+        isActiveSong ? "active" : ""
       } ${isArtist ? "is-artist" : ""}  ${isDisk ? "is-disk" : ""}`}
     >
       <div className="player_queue-item-left">
         <div className="relative z-[1]">
           <div className="player_queue-left">
-            {!isArtist && (
-              <LazyLoadImage
-                visibleByDefault={item?.thumbnailM === img}
-                className="player_queue-img"
-                src={item?.thumbnailM}
-                alt=""
-              />
-            )}
-
-            {isArtist && (
-              <LazyLoadImage
-                className="player_queue-img"
-                src={item?.thumbnailM}
-                alt=""
-              />
-            )}
-            <div
-              onClick={(e) => {
-                if (!isDisk) return;
-
-                if (e.target.className.includes("player_queue-img-hover")) {
-                  navigate(`/album/${item?.encodeId}`);
-                }
-              }}
-              className="player_queue-img-hover"
-            >
-              {!active && !activeAlbum && (
-                <span
-                  onClick={() => {
-                    if (item?.streamingStatus === 2) {
-                      return toast("Dành Cho Tài Khoản VIP", {
-                        type: "info",
-                      });
-                    }
-
-                    if (isRadio) {
-                      return toast(
-                        "Radio đang phát triển , vui lòng thông cảm !",
-                        {
-                          type: "info",
-                        }
-                      );
-                    }
-
-                    if (isArtist) {
-                      const handele = async () => {
-                        dispatch(setReady(false));
-                        dispatch(setPlay(false));
-                        await dispatch(fetchPlayList(item?.encodeId));
-                        dispatch(setPlay(true));
-                      };
-                      handele();
-                    }
-
-                    if (!isDisk) {
-                      const hi = async () => {
-                        dispatch(setReady(false));
-                        dispatch(setPlay(false));
-                        await dispatch(playSongNotAlbum(item));
-                        dispatch(setPlay(true));
-                      };
-                      hi();
-                    }
-
-                    if (isDisk) {
-                      const handele = async () => {
-                        navigate(`/album/${item?.encodeId}`);
-                        dispatch(setReady(false));
-                        dispatch(setPlay(false));
-                        await dispatch(fetchPlayList(item?.encodeId));
-                        dispatch(setPlay(true));
-                        if (item.textType === "Playlist") {
-                          dispatch(pushPlayListsLogged(item));
-                        }
-                      };
-                      handele();
-                    }
-                  }}
-                >
+            <LazyLoadImage className="player_queue-img" src={thumbnail} alt="" />
+            <div onClick={handleCoverClick} className="player_queue-img-hover">
+              {!isActive && (
+                <span onClick={handlePlay}>
                   <i className="icon action-play ic-play" />
                 </span>
               )}
-              {(active || activeAlbum) && (
-                <>
-                  {isReady && (
-                    <>
-                      {!playing && (
-                        <span onClick={() => dispatch(setPlay(true))}>
-                          <ActionPlay></ActionPlay>
-                        </span>
-                      )}
-                      {playing && (
-                        <span onClick={() => dispatch(setPlay(false))}>
-                          <ActionIcon></ActionIcon>
-                        </span>
-                      )}
-                    </>
-                  )}
-
-                  {!isReady && <LoadingIcon notLoading></LoadingIcon>}
-                </>
+              {isActive && !isReady && <LoadingIcon notLoading />}
+              {isActive && isReady && (
+                <span onClick={playing ? pause : resume}>
+                  {playing ? <ActionIcon /> : <ActionPlay />}
+                </span>
               )}
             </div>
           </div>
@@ -310,13 +61,10 @@ const SongRow = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
             </figure>
           )}
         </div>
+
         <div
           className={`player_queue-music-info ${
-            item?.streamingStatus === 1
-              ? ""
-              : item?.streamingStatus === 2
-              ? "is-vip"
-              : ""
+            item?.streamingStatus === 2 ? "is-vip" : ""
           }`}
         >
           {!isArtist && (
@@ -328,45 +76,22 @@ const SongRow = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
           {!isRadio && !isArtist && (
             <>
               <div className="player_queue-name">
-                {item?.artists &&
-                  item?.artists?.slice(0, 3)?.map((e, index) => {
-                    let prara = ", ";
-
-                    if (index === 2) {
-                      prara = "...";
-                    }
-
-                    if (item?.artists?.length === 1) {
-                      prara = "";
-                    }
-                    if (item?.artists?.length === 2 && index === 1) {
-                      prara = "";
-                    }
-                    if (item?.artists?.length === 3 && index === 2) {
-                      prara = "";
-                    }
-                    return (
-                      <span key={index}>
-                        <Link to={`/nghe-si/${e.alias}/`}>{e.name}</Link>
-                        {prara}
-                      </span>
-                    );
-                  })}
+                <ArtistLinks artists={item?.artists} />
               </div>
               <div className="player_queue-time">{timeRelease} trước</div>
             </>
           )}
+
           {isRadio && (
             <>
-              <div className="player_queue-name">
-                {item?.album?.title || ""}
-              </div>
+              <div className="player_queue-name">{item?.album?.title || ""}</div>
               <div className="player_queue-time">
                 {formatDateDDMMYY(item?.releaseDate)} •{" "}
                 {formatMinutes(item?.duration)} phút
               </div>
             </>
           )}
+
           {isArtist && (
             <div className="media-content">
               <p>Mới Nhất</p>
@@ -376,12 +101,10 @@ const SongRow = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
           )}
         </div>
       </div>
+
       {!isRadio && !isArtist && (
         <div className="player_queue-item-right">
-          <div
-            onClick={handleLike}
-            className="player_queue-btn player_btn zm-btn"
-          >
+          <div onClick={handleLike} className="player_queue-btn player_btn zm-btn">
             <i className={`icon  ${isLike ? "ic-like-full" : "ic-like"} `}></i>
             <span className="playing_title-hover">
               {" "}
@@ -394,7 +117,7 @@ const SongRow = ({ isRadio, isDisk, classDisk, item, isArtist }) => {
           </div>
         </div>
       )}
-    </NewReleaseItemStyle>
+    </SongRowStyles>
   );
 };
 

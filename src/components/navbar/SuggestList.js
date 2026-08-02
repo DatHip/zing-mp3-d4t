@@ -69,7 +69,7 @@ const SuggestListStyles = styled.ul`
 `
 
 const SuggestList = ({ setOpen, setValue, value, refinput }) => {
-   const { entities, loading, entitiesNew, names } = useSelector(selectSearch)
+   const { entities, loading, entitiesNew } = useSelector(selectSearch)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 

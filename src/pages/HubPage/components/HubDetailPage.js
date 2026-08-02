@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { useParams } from "react-router"
 import styled from "styled-components"
 import LoadingSvg from "components/ui/LoadingSvg"
@@ -7,9 +7,7 @@ import AlbumCard from "components/card/AlbumCard"
 import SongRow from "components/song/SongRow"
 import MvCard from "components/card/MvCard"
 import ArtistCard from "components/card/ArtistCard"
-import { useCallback } from "react"
 import { useHubDetailData } from "api/useHubDetailData"
-import { useLayoutEffect } from "react"
 
 const HubDetailPageStyles = styled.div`
    .cover {

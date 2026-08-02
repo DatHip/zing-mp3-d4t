@@ -1,9 +1,20 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
-import { arrayRemove, arrayUnion, doc, updateDoc, getDoc } from "firebase/firestore"
-import { database } from "lib/firebase/firestore"
 import { useSelector } from "react-redux"
-import { useMemo } from "react"
+
+// Firestore drags in google-closure-library — together ~1.7MB of source. Only a
+// signed-in user can read or write likes, so the SDK is fetched on demand rather
+// than riding along in main.js for every visitor.
+const loadFirestore = () =>
+   Promise.all([import("firebase/firestore"), import("lib/firebase/firestore")]).then(
+      ([sdk, { database }]) => (database ? { sdk, database } : null)
+   )
+
+const FAVOURITE_FIELD = {
+   1: "favouritePlaylist",
+   2: "favouriteSongs",
+   3: "favouriteArtist",
+}
 
 const useLikeHook = (item, type) => {
    const { id, activeUser } = useSelector((state) => state.users)
@@ -11,111 +22,72 @@ const useLikeHook = (item, type) => {
    const [isLike, setLike] = useState(false)
    const [docs, setDocs] = useState([])
 
-   useMemo(() => {
-      if (activeUser) {
-         const colRef = doc(database, "users", id)
+   useEffect(() => {
+      if (!activeUser) return
+      let cancelled = false
 
-         getDoc(colRef).then(async (doc) => {
-            if (!doc) return
-            let likeSelector
+      loadFirestore().then((firestore) => {
+         if (cancelled || !firestore) return
+         const { sdk, database } = firestore
 
-            if (type === 1) {
-               likeSelector = doc.data().favouritePlaylist.find((e) => e?.encodeId === item?.encodeId)
-            }
-            if (type === 2) {
-               likeSelector = doc.data().favouriteSongs.find((e) => e?.encodeId === item?.encodeId)
-            }
-            if (type === 3) {
-               likeSelector = doc.data().favouriteArtist.find((e) => e?.id === item?.id)
-            }
-            setDocs(doc.data())
-            let like = await likeSelector
-            if (like) {
-               setLike(() => true)
-            } else {
-               setLike(() => false)
-            }
+         return sdk.getDoc(sdk.doc(database, "users", id)).then((snapshot) => {
+            if (cancelled || !snapshot) return
+            const data = snapshot.data()
+            if (!data) return
+
+            const liked =
+               type === 3
+                  ? data.favouriteArtist.find((e) => e?.id === item?.id)
+                  : data[FAVOURITE_FIELD[type]].find((e) => e?.encodeId === item?.encodeId)
+
+            setDocs(data)
+            setLike(!!liked)
          })
+      })
+
+      return () => {
+         cancelled = true
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [item])
+   }, [item, activeUser, id, type])
 
-   const handleLike = () => {
+   const handleLike = async () => {
       if (!activeUser) {
          return toast("Bạn cần phải đăng nhập", {
             type: "info",
          })
       }
 
-      if (activeUser) {
-         // add
-         if (!isLike) {
-            const updateLike = async () => {
-               const colRef = doc(database, "users", id)
+      const firestore = await loadFirestore()
+      if (!firestore) return
+      const { sdk, database } = firestore
+      const colRef = sdk.doc(database, "users", id)
+      const field = FAVOURITE_FIELD[type]
 
-               if (type === 1) {
-                  updateDoc(colRef, {
-                     favouritePlaylist: arrayUnion(item),
-                  })
-               }
-               if (type === 2) {
-                  updateDoc(colRef, {
-                     favouriteSongs: arrayUnion(item),
-                  })
-               }
-               if (type === 3) {
-                  updateDoc(colRef, {
-                     favouriteArtist: arrayUnion(item),
-                  })
-               }
-
-               try {
-                  toast("Thêm vào thư viện thành công", { type: "success" })
-                  setLike(true)
-               } catch (error) {
-                  console.log(error)
-                  toast("Lỗi thêm vào thư viện thành công", { type: "error" })
-               }
-            }
-            updateLike()
+      // add
+      if (!isLike) {
+         try {
+            sdk.updateDoc(colRef, { [field]: sdk.arrayUnion(item) })
+            toast("Thêm vào thư viện thành công", { type: "success" })
+            setLike(true)
+         } catch (error) {
+            console.log(error)
+            toast("Lỗi thêm vào thư viện thành công", { type: "error" })
          }
-         //  remove
-         if (isLike) {
-            const updateLike = async () => {
-               setLike(true)
+         return
+      }
 
-               const colRef = doc(database, "users", id)
+      //  remove
+      setLike(true)
+      const removed = type === 3 ? docs.favouriteArtist.find((e) => e.id === item.id) : item
 
-               if (type === 1) {
-                  updateDoc(colRef, {
-                     favouritePlaylist: arrayRemove(item),
-                  })
-               }
-               if (type === 2) {
-                  updateDoc(colRef, {
-                     favouriteSongs: arrayRemove(item),
-                  })
-               }
-
-               if (type === 3) {
-                  const docArtis = docs.favouriteArtist.find((e) => {
-                     return e.id === item.id
-                  })
-                  updateDoc(colRef, {
-                     favouriteArtist: arrayRemove(docArtis),
-                  })
-               }
-
-               try {
-                  toast("Xóa khỏi thư viện thành công", { type: "info" })
-                  setLike(false)
-               } catch (error) {
-                  console.log(error)
-                  toast("Lỗi xóa khỏi thư viện", { type: "error" })
-               }
-            }
-            updateLike()
-         }
+      try {
+         sdk.updateDoc(colRef, { [field]: sdk.arrayRemove(removed) })
+         toast("Xóa khỏi thư viện thành công", { type: "info" })
+         setLike(false)
+      } catch (error) {
+         console.log(error)
+         toast("Lỗi xóa khỏi thư viện", { type: "error" })
       }
    }
 

@@ -6,7 +6,7 @@ import { tmdAPI } from "config"
 import { useParams } from "react-router-dom"
 import LoadingSvg from "components/loading/LoadingSvg"
 import Masonry from "@mui/lab/Masonry"
-import useWindowSize from "hook/useResizeHook"
+import useMediaQuery from "hook/useMediaQuery"
 
 const NewFeedPageChildren = () => {
    const { nation, id } = useParams()
@@ -15,14 +15,9 @@ const NewFeedPageChildren = () => {
    const [loading, setLoading] = useState(false)
    const numer = useRef(1)
 
-   let col = 3
-   const { width } = useWindowSize()
-   if (width <= 1400) {
-      col = 2
-   }
-   if (width <= 600) {
-      col = 1
-   }
+   const isTablet = useMediaQuery("(max-width: 1400px)")
+   const isMobile = useMediaQuery("(max-width: 600px)")
+   const col = isMobile ? 1 : isTablet ? 2 : 3
 
    const fetchData = useCallback(async () => {
       const data = await axios.get(tmdAPI.getNewFeed(id, numer.current))

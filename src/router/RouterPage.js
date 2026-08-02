@@ -119,15 +119,21 @@ const RouterPage = () => {
    const mainPageRef = useRef()
 
    useEffect(() => {
-      const handleScroll = (e) => {
-         if (mainPageRef.current.scrollTop > 30) {
-            document.documentElement.classList.add("is-scroll")
-         } else {
-            document.documentElement.classList.remove("is-scroll")
-         }
+      const node = mainPageRef.current
+      if (!node) return
+
+      // Passive: this handler never calls preventDefault, so telling the browser
+      // up front keeps scrolling off the main thread's critical path.
+      let isScrolled = false
+      const handleScroll = () => {
+         const scrolled = node.scrollTop > 30
+         if (scrolled === isScrolled) return
+         isScrolled = scrolled
+         document.documentElement.classList.toggle("is-scroll", scrolled)
       }
 
-      mainPageRef.current.addEventListener("scroll", handleScroll)
+      node.addEventListener("scroll", handleScroll, { passive: true })
+      return () => node.removeEventListener("scroll", handleScroll)
    }, [])
 
    const location = useLocation()

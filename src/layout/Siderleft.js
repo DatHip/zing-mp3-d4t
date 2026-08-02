@@ -1,11 +1,11 @@
 import React, { memo } from "react"
 import { useSelector } from "react-redux"
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom"
-import useWindowSize from "../hook/useResizeHook"
+import useMediaQuery from "hook/useMediaQuery"
 import useToggle from "../hook/useToggleHook"
 
 const Siderleft = () => {
-   const { width } = useWindowSize()
+   const isNarrow = useMediaQuery("(max-width: 1225px)")
    const navigate = useNavigate()
    const { pathname } = useLocation()
 
@@ -17,7 +17,7 @@ const Siderleft = () => {
    return (
       <aside
          className={`sider-navbar ${
-            width <= 1225 && !isToggle ? "navbar-left-actice" : width <= 1225 && isToggle && "navbar-exanded-active"
+            isNarrow && !isToggle ? "navbar-left-actice" : isNarrow && isToggle && "navbar-exanded-active"
          } `}
       >
          <div className="sider">

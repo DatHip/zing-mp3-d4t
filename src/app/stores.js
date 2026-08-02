@@ -1,22 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit"
-import formSearch from "../features/formSearch/formSearch"
-import logged from "../features/Logged/loggedFeatures"
-import Lyrics from "../features/Lyrics/Lyrics"
-import setTextBtn from "../features/MvState/MvStateFeatures"
-import toggleOpenMain from "../features/openMainFull/openMainFullFeatures"
-import queueNowPlay from "../features/QueueFeatures/QueueFeatures"
-import currentTimes from "../features/QueueFeatures/SetTimeCurrent"
-import themeToggle from "../features/setTheme/themeSetFeatures"
-import setting from "../features/SettingPlay/settingPlay"
-import setOpenMainMv from "../features/ToggleMainMv/toggleMainMv"
-import toggleRight from "../features/toggleRight/toggleRight"
-import users from "../features/User/userFeatures"
+import formSearch from "features/search/searchSlice"
+import logged from "features/logged/loggedSlice"
+import Lyrics from "features/lyrics/lyricsSlice"
+import setTextBtn from "features/mvState/mvStateSlice"
+import toggleOpenMain from "features/fullPlayer/fullPlayerSlice"
+import queueNowPlay from "features/queue/queueSlice"
+import currentTimes from "features/queue/currentTimeSlice"
+import themeToggle from "features/theme/themeSlice"
+import setting from "features/setting/settingSlice"
+import setOpenMainMv from "features/mvToggle/mvToggleSlice"
+import toggleRight from "features/queuePanel/queuePanelSlice"
+import users from "features/user/userSlice"
+import { createPersistMiddleware, flushPersistOnUnload } from "./persistMiddleware"
 
 export const store = configureStore({
    reducer: {
-      formsearch: formSearch,
-      themetoggle: themeToggle,
-      toggleright: toggleRight,
+      formSearch: formSearch,
+      themeToggle: themeToggle,
+      toggleRight: toggleRight,
       setTextBtn: setTextBtn,
       setOpenMainMv: setOpenMainMv,
       toggleOpenMain: toggleOpenMain,
@@ -27,4 +28,7 @@ export const store = configureStore({
       currentTimes: currentTimes,
       users: users,
    },
+   middleware: (getDefault) => getDefault().concat(createPersistMiddleware()),
 })
+
+flushPersistOnUnload(store)

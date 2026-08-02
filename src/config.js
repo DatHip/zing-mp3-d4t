@@ -1,57 +1,73 @@
-const tmdbEndpoint = "https://api-zingmp3.vercel.app/api"
+// Fallback is the deployed API, not localhost: a production build with the env
+// var unset would otherwise ship "http://localhost:5000" and be blocked as
+// mixed content on HTTPS, breaking every request with no visible error.
+// Trailing slashes are stripped because every endpoint below interpolates
+// `${apiBaseUrl}/path`: a base ending in "/" produces "//path", which Vercel
+// answers with a 308 to the normalized path instead of serving the request.
+const apiBaseUrl = (process.env.REACT_APP_API_URL || "https://api-zingmp3.vercel.app/api").replace(/\/+$/, "")
 
-export const tmdAPI = {
-   //  getMovieDetails: (movieId) => `${tmdbEndpoint}/${movieId}?api_ey=${apiKey}`,
-   getHomePage: () => `${tmdbEndpoint}/home`,
+if (process.env.NODE_ENV !== "production" && !apiBaseUrl.endsWith("/api")) {
+   console.warn(
+      `[config] REACT_APP_API_URL is "${apiBaseUrl}" — the backend serves its routes under /api, ` +
+         `so this is probably missing that suffix. Every request will 404.`
+   )
+}
+
+export const zingApi = {
+   //  getMovieDetails: (movieId) => `${apiBaseUrl}/${movieId}?api_ey=${apiKey}`,
+   getHomePage: () => `${apiBaseUrl}/home`,
 
    // get Zing Chart :
-   getTopChart: () => `${tmdbEndpoint}/homechart`,
+   getTopChart: () => `${apiBaseUrl}/homechart`,
 
    // get RadioPage :
-   getRadioPage: () => `${tmdbEndpoint}/radio`,
+   getRadioPage: () => `${apiBaseUrl}/radio`,
 
    // get New Feed :
-   getNewFeed: (id, page) => `${tmdbEndpoint}/newfeeds?id=${id}&page=${page}`,
+   getNewFeed: (id, page) => `${apiBaseUrl}/newfeeds?id=${id}&page=${page}`,
 
    // get Mới Phát Hành :
-   getNewSong: () => `${tmdbEndpoint}/newreleasechart`,
+   getNewSong: () => `${apiBaseUrl}/newreleasechart`,
 
    // get Thể Loại :
-   getHubHome: () => `${tmdbEndpoint}/hubhome`,
+   getHubHome: () => `${apiBaseUrl}/hubhome`,
    // get Hub Detail:
-   getHubDetail: (id) => `${tmdbEndpoint}/hubdetails/${id}`,
+   getHubDetail: (id) => `${apiBaseUrl}/hubdetails/${id}`,
 
    // get Top100Page :
-   getTop100Page: () => `${tmdbEndpoint}/top100`,
+   getTop100Page: () => `${apiBaseUrl}/top100`,
 
    // get List Mv :
-   getListMv: (id, page) => `${tmdbEndpoint}/listmv?id=${id}&page=${page}&count=19`,
+   getListMv: (id, page) => `${apiBaseUrl}/listmv?id=${id}&page=${page}&count=19`,
 
    // get Category Mv :
-   getCategoryMv: (id) => `${tmdbEndpoint}/categorymv/${id}`,
+   getCategoryMv: (id) => `${apiBaseUrl}/categorymv/${id}`,
 
    // get Mv:
-   getVideoMv: (id) => `${tmdbEndpoint}/mv/${id}`,
+   getVideoMv: (id) => `${apiBaseUrl}/mv/${id}`,
 
    // get getArtistPage:
-   getArtistPage: (id) => `${tmdbEndpoint}/artist/${id}`,
+   getArtistPage: (id) => `${apiBaseUrl}/artist/${id}`,
 
    // get getAlbumPage :
-   getAlbumPage: (id) => `${tmdbEndpoint}/playlist/${id}`,
+   getAlbumPage: (id) => `${apiBaseUrl}/playlist/${id}`,
 
-   getSuggestedAlbum: (id) => `${tmdbEndpoint}/suggestedplaylists/${id}`,
+   getSuggestedAlbum: (id) => `${apiBaseUrl}/suggestedplaylists/${id}`,
 
    //  get từ khóa hot  :
-   getHotKeyApi: () => `${tmdbEndpoint}/recommendkeyword`,
+   getHotKeyApi: () => `${apiBaseUrl}/recommendkeyword`,
 
    // lấy key gợi ý :
-   getHotSuggestionApi: (keyword) => `${tmdbEndpoint}/suggestionkeyword?keyword=${keyword}`,
+   getHotSuggestionApi: (keyword) => `${apiBaseUrl}/suggestionkeyword?keyword=${keyword}`,
 
-   getSearchByType: (keyword, type) => `${tmdbEndpoint}/searchtype?keyword=${keyword}&type=${type}`,
+   getSearchByType: (keyword, type) => `${apiBaseUrl}/searchtype?keyword=${keyword}&type=${type}`,
 
    //  bắt đầu search :
-   getSearchAllKeyApi: (keyword) => `${tmdbEndpoint}/searchall?keyword=${keyword}`,
+   getSearchAllKeyApi: (keyword) => `${apiBaseUrl}/searchall?keyword=${keyword}`,
 
    // Lyrics :
-   getLyrics: (id) => `${tmdbEndpoint}/songlyrics/${id}`,
+   getLyrics: (id) => `${apiBaseUrl}/songlyrics/${id}`,
+
+   // Song streaming URLs (128kbps free, 320kbps VIP)
+   getSongStream: (id) => `${apiBaseUrl}/song/${id}`,
 }

@@ -1,117 +1,117 @@
 import React, { memo, useEffect, useRef } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
-import Loading from "../components/loading/Loadng"
+import Loading from "components/ui/Loading"
 
 const MyInfoPage = React.lazy(
-   () => import('../components/MyMusicPage/MyInfoPage'),
+   () => import('pages/MyMusicPage/components/MyInfoPage'),
  )
 const HistorySong = React.lazy(
-   () => import('../components/HistoryPage/HistorySong'),
+   () => import('pages/HistoryPage/components/HistorySong'),
  )
 const HistoryVideo = React.lazy(
-   () => import('../components/HistoryPage/HistoryVideo'),
+   () => import('pages/HistoryPage/components/HistoryVideo'),
  )
-const HistroryPlayList = React.lazy(
-   () => import('../components/HistoryPage/HistroryPlayList'),
+const HistoryPlayList = React.lazy(
+   () => import('pages/HistoryPage/components/HistoryPlayList'),
  )
 const SearchPagePlaylist = React.lazy(
-   () => import('../components/SearchPage/SearchPagePlaylist'),
+   () => import('pages/SearchPage/components/SearchPagePlaylist'),
  )
 const SearchPageSong = React.lazy(
-   () => import('../components/SearchPage/SearchPageSong'),
+   () => import('pages/SearchPage/components/SearchPageSong'),
  )
 const SearchPageMv = React.lazy(
-   () => import('../components/SearchPage/SearchPageMv'),
+   () => import('pages/SearchPage/components/SearchPageMv'),
  )
 const SearchPageArtist = React.lazy(
-   () => import('../components/SearchPage/SearchPageArtist'),
+   () => import('pages/SearchPage/components/SearchPageArtist'),
  )
 const SearchPageAll = React.lazy(
-   () => import('../components/SearchPage/SearchPageAll'),
+   () => import('pages/SearchPage/components/SearchPageAll'),
  )
 const HubDetailPage = React.lazy(
-   () => import('../components/HubPage/HubDetailPage'),
+   () => import('pages/HubPage/components/HubDetailPage'),
  )
 const ArtistSingle = React.lazy(
-   () => import('../components/ArtistPage/ArtistSingle'),
+   () => import('pages/ArtistPage/components/ArtistSingle'),
  )
 const ArtistMv = React.lazy(
-   () => import('../components/ArtistPage/ArtistMv'),
+   () => import('pages/ArtistPage/components/ArtistMv'),
  )
 const ArtistAlbum = React.lazy(
-   () => import('../components/ArtistPage/ArtistAlbum'),
+   () => import('pages/ArtistPage/components/ArtistAlbum'),
  )
 const ArtistSong = React.lazy(
-   () => import('../components/ArtistPage/ArtistSong'),
+   () => import('pages/ArtistPage/components/ArtistSong'),
  )
-const ArtistALl = React.lazy(
-   () => import('../components/ArtistPage/ArtistALl'),
+const ArtistAll = React.lazy(
+   () => import('pages/ArtistPage/components/ArtistAll'),
  )
-const MyMusicArtis = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicArtis'),
+const MyMusicArtist = React.lazy(
+   () => import('pages/MyMusicPage/components/MyMusicArtist'),
  )
 const MyMusicPlayList = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicPlayList'),
+   () => import('pages/MyMusicPage/components/MyMusicPlayList'),
  )
 const MyMusicSong = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicSong'),
+   () => import('pages/MyMusicPage/components/MyMusicSong'),
  )
 const MyMusicAll = React.lazy(
-   () => import('../components/MyMusicPage/MyMusicAll'),
+   () => import('pages/MyMusicPage/components/MyMusicAll'),
  )
-const NewFeedPageChidlen = React.lazy(
-   () => import('../components/Followpage/NewFeedPageChidlen'),
+const NewFeedPageChildren = React.lazy(
+   () => import('pages/NewFeedPage/components/NewFeedPageChildren'),
  )
 const MvPageList = React.lazy(
-   () => import('../components/MVpage/MvPageList'),
+   () => import('pages/MvPage/components/MvPageList'),
  )
 const AuthenticationPage = React.lazy(
-   () => import('../pages/AuthenticationPage'),
+   () => import('pages/AuthenticationPage'),
  )
 const NewMusicPage = React.lazy(
-   () => import('../pages/NewMusicPage'),
+   () => import('pages/NewMusicPage'),
  )
 const VideoPopUp = React.lazy(
-   () => import('../pages/VideoPopUp'),
+   () => import('pages/VideoPopUp'),
  )
 const HistoryPage = React.lazy(
-   () => import('../pages/HistoryPage'),
+   () => import('pages/HistoryPage'),
  )
 const ZingChartPage = React.lazy(
-   () => import('../pages/ZingChartPage'),
+   () => import('pages/ZingChartPage'),
  )
 const Top100Page = React.lazy(
-   () => import('../pages/Top100Page'),
+   () => import('pages/Top100Page'),
  )
 const SearchPage = React.lazy(
-   () => import('../pages/SearchPage'),
+   () => import('pages/SearchPage'),
  )
 const RadioPage = React.lazy(
-   () => import('../pages/RadioPage'),
+   () => import('pages/RadioPage'),
  )
 const NotFound = React.lazy(
-   () => import('../pages/NotFound'),
+   () => import('pages/NotFound'),
  )
 const NewFeedPage = React.lazy(
-   () => import('../pages/NewFeedPage'),
+   () => import('pages/NewFeedPage'),
  )
 const MyMusicPage = React.lazy(
-   () => import('../pages/MyMusicPage'),
+   () => import('pages/MyMusicPage'),
  )
 const MvPage = React.lazy(
-   () => import('../pages/MvPage'),
+   () => import('pages/MvPage'),
  )
 const HubPage = React.lazy(
-   () => import('../pages/HubPage'),
+   () => import('pages/HubPage'),
  )
 const HomePage = React.lazy(
-   () => import('../pages/HomePage'),
+   () => import('pages/HomePage'),
  )
 const AlbumPage = React.lazy(
-   () => import('../pages/AlbumPage'),
+   () => import('pages/AlbumPage'),
  )
 const ArtistPage = React.lazy(
-   () => import('../pages/ArtistPage'),
+   () => import('pages/ArtistPage'),
  )
 
 
@@ -119,15 +119,21 @@ const RouterPage = () => {
    const mainPageRef = useRef()
 
    useEffect(() => {
-      const handleScroll = (e) => {
-         if (mainPageRef.current.scrollTop > 30) {
-            document.documentElement.classList.add("is-scroll")
-         } else {
-            document.documentElement.classList.remove("is-scroll")
-         }
+      const node = mainPageRef.current
+      if (!node) return
+
+      // Passive: this handler never calls preventDefault, so telling the browser
+      // up front keeps scrolling off the main thread's critical path.
+      let isScrolled = false
+      const handleScroll = () => {
+         const scrolled = node.scrollTop > 30
+         if (scrolled === isScrolled) return
+         isScrolled = scrolled
+         document.documentElement.classList.toggle("is-scroll", scrolled)
       }
 
-      mainPageRef.current.addEventListener("scroll", handleScroll)
+      node.addEventListener("scroll", handleScroll, { passive: true })
+      return () => node.removeEventListener("scroll", handleScroll)
    }, [])
 
    const location = useLocation()
@@ -143,7 +149,7 @@ const RouterPage = () => {
                   <Route index element={<MyMusicAll></MyMusicAll>}></Route>
                   <Route path="song" element={<MyMusicSong></MyMusicSong>}></Route>
                   <Route path="playlist" element={<MyMusicPlayList></MyMusicPlayList>}></Route>
-                  <Route path="nghe-si" element={<MyMusicArtis></MyMusicArtis>}></Route>
+                  <Route path="nghe-si" element={<MyMusicArtist></MyMusicArtist>}></Route>
                   <Route path="info" element={<MyInfoPage></MyInfoPage>}></Route>
                </Route>
                {/*  */}
@@ -153,7 +159,7 @@ const RouterPage = () => {
                <Route path="/radio" element={<RadioPage></RadioPage>}></Route>
                <Route path="newfeed/:nation" element={<NewFeedPage></NewFeedPage>}>
                   {/*  */}
-                  <Route path=":id" element={<NewFeedPageChidlen></NewFeedPageChidlen>}></Route>
+                  <Route path=":id" element={<NewFeedPageChildren></NewFeedPageChildren>}></Route>
                </Route>
                {/*  */}
                <Route path="/moi-phat-hanh" element={<NewMusicPage></NewMusicPage>}></Route>
@@ -174,14 +180,14 @@ const RouterPage = () => {
                </Route>
                {/*  */}
                <Route path="/nghe-si/:name" element={<ArtistPage></ArtistPage>}>
-                  <Route index element={<ArtistALl></ArtistALl>}></Route>
+                  <Route index element={<ArtistAll></ArtistAll>}></Route>
                   <Route path="song" element={<ArtistSong></ArtistSong>}></Route>
                   <Route path="album" element={<ArtistAlbum></ArtistAlbum>}></Route>
                   <Route path="mv" element={<ArtistMv></ArtistMv>}></Route>
                   <Route path="single" element={<ArtistSingle></ArtistSingle>}></Route>
                </Route>
                <Route path="/history/" element={<HistoryPage></HistoryPage>}>
-                  <Route index path="playlist" element={<HistroryPlayList></HistroryPlayList>}></Route>
+                  <Route index path="playlist" element={<HistoryPlayList></HistoryPlayList>}></Route>
                   <Route path="song" element={<HistorySong></HistorySong>}></Route>
                   <Route path="video" element={<HistoryVideo></HistoryVideo>}></Route>
                </Route>

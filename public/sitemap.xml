@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static routes only. Song/album/artist pages mirror zingmp3.vn content, so they
+  are deliberately left out and marked noindex by the edge middleware — listing
+  duplicate content here would only dilute the crawl budget for the pages that
+  can actually rank.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>https://zing-mp3-d4t.vercel.app/</loc>
+      <changefreq>daily</changefreq>
+      <priority>1.0</priority>
+   </url>
+   <url>
+      <loc>https://zing-mp3-d4t.vercel.app/zing-chart</loc>
+      <changefreq>daily</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://zing-mp3-d4t.vercel.app/top100</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://zing-mp3-d4t.vercel.app/moi-phat-hanh</loc>
+      <changefreq>daily</changefreq>
+      <priority>0.7</priority>
+   </url>
+   <url>
+      <loc>https://zing-mp3-d4t.vercel.app/radio</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+   <url>
+      <loc>https://zing-mp3-d4t.vercel.app/mv</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+   <url>
+      <loc>https://zing-mp3-d4t.vercel.app/hub</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+</urlset>

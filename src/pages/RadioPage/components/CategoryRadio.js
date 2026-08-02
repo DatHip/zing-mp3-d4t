@@ -1,0 +1,45 @@
+import React, { memo } from "react"
+import AlbumCard from "components/card/AlbumCard"
+import Section from "components/ui/Section"
+
+const CategoryRadio = ({ data }) => {
+   return (
+      <Section title={data?.title} all={false}>
+         {data?.items?.length > 0 &&
+            data?.items.slice(0, 5).map((e, index) => {
+               let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
+
+               return (
+                  <AlbumCard
+                     hiddenTitle
+                     isHiddenButton={true}
+                     isSwiper={true}
+                     key={e.encodeId || e.id}
+                     artis={false}
+                     desc={false}
+                     class1={classGird}
+                     item={e}
+                  ></AlbumCard>
+               )
+            })}
+         {!data &&
+            Array(5)
+               .fill(0)
+               .map((e, index) => {
+                  let classGird = index === 4 ? "col l-2-4 m-0 c-5" : "col l-2-4 m-3 c-5"
+
+                  return (
+                     <AlbumCard.Loading
+                        key={index}
+                        artis={false}
+                        desc={false}
+                        class1={classGird}
+                        item={e}
+                     ></AlbumCard.Loading>
+                  )
+               })}
+      </Section>
+   )
+}
+
+export default memo(CategoryRadio)

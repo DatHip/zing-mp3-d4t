@@ -1,42 +1,57 @@
 import React, { memo, useEffect, useLayoutEffect } from "react"
-import BottomPlay from "./layout/Bottom/BottomPlay"
-import Header from "./layout/Header"
-import Siderleft from "./layout/Siderleft"
-import RouterPage from "./router/RouterPage"
-import { useSelector } from "react-redux"
+import PlayerBar from "layout/PlayerBar"
+import Header from "layout/Header"
+import Sidebar from "layout/Sidebar"
+import RouterPage from "router/RouterPage"
+import { useSelector, useDispatch, useStore } from "react-redux"
+import { setPlaying } from "features/setting/settingSlice"
+import { setUser } from "features/user/userSlice"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { useDispatch } from "react-redux"
-import { setPlaying } from "./features/SettingPlay/settingPlay"
-import { onAuthStateChanged } from "firebase/auth"
-import { auth } from "./firebase/firebase-config"
-import { setUser } from "./features/User/userFeatures"
+import { selectCurrentEncodeId } from "features/queue/queueSelectors"
+import { selectBgImg, selectBgPlaying, selectDataStyle, selectDataTheme } from "features/theme/themeSelectors"
 
 function App() {
-   const theme = useSelector((state) => state.themetoggle)
-   const queueNowPlaySelector = useSelector((state) => state.queueNowPlay)
-   const loggedSelector = useSelector((state) => state.logged)
-   const settingSelector = useSelector((state) => state.setting)
-   const lyricsSelector = useSelector((state) => state.lyrics)
-   const timeSelector = useSelector((state) => state.currentTimes)
-   const usersSelcetor = useSelector((state) => state.users)
+   const themeDataTheme = useSelector(selectDataTheme)
+   const themeBgImg = useSelector(selectBgImg)
+   const themeBgPlaying = useSelector(selectBgPlaying)
+   const themeDataStyle = useSelector(selectDataStyle)
+
+   const currentEncodeId = useSelector(selectCurrentEncodeId)
 
    const dispatch = useDispatch()
+   const store = useStore()
 
-   useLayoutEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-         if (!usersSelcetor.activeUser && user) {
-            dispatch(
-               setUser({
-                  displayName: user.displayName,
-                  photoURL: user.photoURL,
-                  email: user.email,
-                  uid: user.uid,
-               })
-            )
+   // The Auth SDK is ~450KB of source and nothing above the fold needs it, so it
+   // is pulled in after mount instead of shipping inside main.js. activeUser is
+   // read off the store inside the callback so this subscribes exactly once.
+   useEffect(() => {
+      let unsub = null
+      let cancelled = false
+
+      Promise.all([import("lib/firebase/auth"), import("firebase/auth")]).then(
+         ([{ auth }, { onAuthStateChanged }]) => {
+            if (cancelled || !auth) return
+            unsub = onAuthStateChanged(auth, (user) => {
+               if (!store.getState().users.activeUser && user) {
+                  dispatch(
+                     setUser({
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        email: user.email,
+                        uid: user.uid,
+                     })
+                  )
+               }
+            })
          }
-      })
-   }, [])
+      )
+
+      return () => {
+         cancelled = true
+         if (unsub) unsub()
+      }
+   }, [dispatch, store])
 
    useEffect(() => {
       const keyboardShortcuts = (e) => {
@@ -74,66 +89,41 @@ function App() {
       document.addEventListener("keydown", keyboardShortcuts)
 
       return () => document.removeEventListener("keydown", keyboardShortcuts)
-   }, [])
+   }, [dispatch])
 
    useLayoutEffect(() => {
-      document.documentElement.setAttribute("data-theme", theme.dataTheme)
-      if (theme.bgImg) {
+      document.documentElement.setAttribute("data-theme", themeDataTheme)
+      if (themeBgImg) {
          document.documentElement.classList.add("theme-bg-image")
       } else {
          document.documentElement.classList.remove("theme-bg-image")
       }
 
-      if (theme.bgPlaying) {
+      if (themeBgPlaying) {
          document.documentElement.classList.add("zma")
       } else {
          document.documentElement.classList.remove("zma")
       }
 
-      if (theme.dataStyle) {
-         const param = theme.dataStyle.map((e) => {
+      if (themeDataStyle) {
+         const param = themeDataStyle.map((e) => {
             return e
          })
          document.documentElement.setAttribute("style", param.join(" ; "))
       } else {
          document.documentElement.removeAttribute("style")
       }
-   }, [])
-
-   // set localStorage
-   useLayoutEffect(() => {
-      const queueNowPlay = JSON.parse(localStorage.getItem("queue_nowplay"))
-      const logged = JSON.parse(localStorage.getItem("d4tmp3_logged"))
-      const setting = JSON.parse(localStorage.getItem("d4tmp3_setting"))
-      const lyrics = JSON.parse(localStorage.getItem("d4tmp3_lyrics"))
-      const time = JSON.parse(localStorage.getItem("d4tmp3_timeCurrent"))
-
-      if (!queueNowPlay) {
-         localStorage.setItem("queue_nowplay", JSON.stringify(queueNowPlaySelector))
-      }
-      if (!logged) {
-         localStorage.setItem("d4tmp3_logged", JSON.stringify(loggedSelector))
-      }
-      if (!setting) {
-         localStorage.setItem("d4tmp3_setting", JSON.stringify(settingSelector))
-      }
-      if (!lyrics) {
-         localStorage.setItem("d4tmp3_lyrics", JSON.stringify(lyricsSelector))
-      }
-      if (!time) {
-         localStorage.setItem("d4tmp3_timeCurrent", JSON.stringify(timeSelector))
-      }
-   }, [])
+   }, [themeDataTheme, themeBgImg, themeBgPlaying, themeDataStyle])
 
    return (
       <>
          <div
-            className={`main ${queueNowPlaySelector.currentEncodeId ? "" : "hide-bottom"}`}
-            style={theme.bgImg ? { backgroundImage: `url('${theme.bgImg}')` } : {}}
+            className={`main ${currentEncodeId ? "" : "hide-bottom"}`}
+            style={themeBgImg ? { backgroundImage: `url('${themeBgImg}')` } : {}}
          >
             <Header></Header>
-            <Siderleft></Siderleft>
-            <BottomPlay></BottomPlay>
+            <Sidebar></Sidebar>
+            <PlayerBar></PlayerBar>
             <RouterPage></RouterPage>
             <ToastContainer
                position="top-center"

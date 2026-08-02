@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
  * Both song rows carried their own copy of this, each building the separator
  * through a chain of four reassignments of the same variable.
  *
- * @param {{ artists?: Array<{ alias: string, name: string }> }} props
+ * @param {{ artists?: import("types").Artist[] }} props
  */
 const ArtistLinks = ({ artists = [] }) => {
    const shown = artists.slice(0, 3)

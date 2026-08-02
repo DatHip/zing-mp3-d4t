@@ -6,8 +6,8 @@ import { useHomePageData } from "api/homeQueries"
  *
  * Prefer sectionType or sectionId (immutable) over title (Zing rewords titles).
  *
- * @param {(section: object) => boolean} matcher
- * @returns {{ section: object|null, isLoading: boolean }}
+ * @param {(section: import("types").HomeSection) => boolean} matcher
+ * @returns {{ section: import("types").HomeSection|null, isLoading: boolean }}
  */
 export function useHomeSection(matcher) {
    const { data, status } = useHomePageData()

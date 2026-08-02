@@ -15,7 +15,7 @@ import getReleaseCountdown from "utils/getReleaseCountdown"
  * click handler that told them apart used to be a sixty-line arrow function
  * nested three levels deep in the JSX.
  *
- * @param {{ item: object, isRadio?: boolean, isDisk?: boolean, isArtist?: boolean }} params
+ * @param {{ item: import("types").Song, isRadio?: boolean, isDisk?: boolean, isArtist?: boolean }} params
  */
 export function useSongRow({ item, isRadio, isDisk, isArtist }) {
    const navigate = useNavigate()

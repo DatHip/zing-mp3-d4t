@@ -11,6 +11,9 @@ import {
 import { pushPlayListsLogged } from "features/logged/loggedSlice"
 import { setPlay, setRandomSongs, setReady } from "features/setting/settingSlice"
 
+/** @typedef {import("types").Song} Song */
+/** @typedef {import("types").Album} Album */
+
 /**
  * Starting playback, in one place.
  *
@@ -28,6 +31,8 @@ export function usePlayback() {
     * Zing marks VIP-only tracks with streamingStatus 2. They have no playable
     * URL for a free account, so refuse them at the entry point rather than
     * letting the player fail silently.
+    *
+    * @type {(song: Song) => boolean}
     */
    const rejectIfVip = useCallback((song) => {
       if (song?.streamingStatus === 2) {
@@ -45,7 +50,10 @@ export function usePlayback() {
       return false
    }, [])
 
-   /** Replace the queue with one song and play it. */
+   /**
+    * Replace the queue with one song and play it.
+    * @type {(song: Song) => Promise<void>}
+    */
    const playSong = useCallback(
       async (song) => {
          if (rejectIfVip(song)) return
@@ -57,7 +65,10 @@ export function usePlayback() {
       [dispatch, rejectIfVip]
    )
 
-   /** Same, for payloads that carry `id` rather than `encodeId`. */
+   /**
+    * Same, for payloads that carry `id` rather than `encodeId`.
+    * @type {(song: Song) => Promise<void>}
+    */
    const playSongById = useCallback(
       async (song) => {
          if (rejectIfVip(song)) return

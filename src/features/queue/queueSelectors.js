@@ -1,5 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit"
 
+/** @typedef {import("types").Song} Song */
+/** @typedef {import("types").QueueState} QueueState */
+
 /**
  * Read access to the playback queue.
  *
@@ -7,6 +10,8 @@ import { createSelector } from "@reduxjs/toolkit"
  * `state.queueNowPlay.*` directly: the slice still carries field names from
  * the app's first draft (`infoCurrenAlbum`, `infoSongCurrent`) and those can
  * only be renamed once this file is the sole place that knows about them.
+ *
+ * @type {(state: { queueNowPlay: QueueState }) => QueueState}
  */
 const root = (state) => state.queueNowPlay
 
@@ -26,6 +31,8 @@ export const selectQueueLoading = (state) => root(state).loading
 /**
  * The list the player is actually walking through, which depends on shuffle.
  * Callers used to pick between the two lists inline and drift apart over time.
+ *
+ * @type {(state: object) => Song[]}
  */
 export const selectActiveQueue = createSelector(
    [selectListSong, selectListSongShuffle, (state) => state.setting.isRandom],

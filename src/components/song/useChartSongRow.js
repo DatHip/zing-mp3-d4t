@@ -18,7 +18,7 @@ import useLike from "hook/useLike"
  *   - its album is already loaded, so only the queue pointer moves
  *   - its album is not loaded, so the album is fetched first
  *
- * @param {{ item: object, idAlbum?: string, indexNotVip?: number, notAlbum?: boolean }} params
+ * @param {{ item: import("types").Song, idAlbum?: string, indexNotVip?: number, notAlbum?: boolean }} params
  */
 export function useChartSongRow({ item, idAlbum, indexNotVip, notAlbum }) {
    const { isLike, handleLike } = useLike(item, 2)

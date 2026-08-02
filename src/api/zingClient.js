@@ -16,8 +16,10 @@ const get = async (url) => {
 }
 
 export const fetchHomePage = () => get(zingApi.getHomePage())
+/** @type {(id: string) => Promise<import("types").Album>} */
 export const fetchAlbum = (id) => get(zingApi.getAlbumPage(id))
 export const fetchSuggestedAlbum = (id) => get(zingApi.getSuggestedAlbum(id))
+/** @type {(alias: string) => Promise<import("types").Artist & { sections?: object[] }>} */
 export const fetchArtist = (name) => get(zingApi.getArtistPage(name))
 export const fetchLyrics = (id) => get(zingApi.getLyrics(id))
 export const fetchTopChart = () => get(zingApi.getTopChart())

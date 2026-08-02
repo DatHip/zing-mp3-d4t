@@ -28,7 +28,7 @@ const queueAfterCurrent = (list, song, currentIndex) => {
 /**
  * Behaviour for one row of the queue panel.
  *
- * @param {{ data: object, index: number, items: object[], setToggleSilde?: Function }} params
+ * @param {{ data: import("types").Song, index: number, items: import("types").Song[], setToggleSilde?: Function }} params
  */
 export function useQueueItem({ data, index, items, setToggleSilde }) {
    const dispatch = useDispatch()

@@ -1,63 +1,64 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios"
-import { zingApi } from "config"
+import { fetchAlbum } from "api/zingClient"
+import { queryKeys } from "api/queryKeys"
+import { queryClient } from "lib/queryClient"
+
+const EMPTY_QUEUE = {
+   currentEncodeId: "",
+   playlistEncodeId: null,
+   listSong: [],
+   listSongShuffle: [],
+   infoCurrenAlbum: {},
+   currentIndexSong: 0,
+   infoSongCurrent: {},
+   infoSongNext: {},
+   duration: 0,
+   currentTime: 0,
+   infoCurrentMv: {},
+   loading: false,
+}
 
 const initialState = (() => {
    try {
-      return (
-         JSON.parse(localStorage.getItem("queue_nowplay")) || {
-            currentEncodeId: "",
-            playlistEncodeId: null,
-            listSong: [],
-            listSongShuffle: [],
-            infoCurrenAlbum: {},
-            currentIndexSong: 0,
-            infoSongCurrent: {},
-            infoSongNext: {},
-            duration: 0,
-            currentTime: 0,
-            infoCurrentMv: {},
-            loading: false,
-         }
-      )
+      return JSON.parse(localStorage.getItem("queue_nowplay")) || EMPTY_QUEUE
    } catch {
-      return {
-         currentEncodeId: "",
-         playlistEncodeId: null,
-         listSong: [],
-         listSongShuffle: [],
-         infoCurrenAlbum: {},
-         currentIndexSong: 0,
-         infoSongCurrent: {},
-         infoSongNext: {},
-         duration: 0,
-         currentTime: 0,
-         infoCurrentMv: {},
-         loading: false,
-      }
+      return EMPTY_QUEUE
    }
 })()
 
-const fetchPlayList = createAsyncThunk("queueNowPlay/fetchPlayList", async (id) => {
-   const res = await axios.get(zingApi.getAlbumPage(id))
-   return res.data.data
-})
+/**
+ * Load an album into the queue.
+ *
+ * Goes through the React Query cache rather than issuing its own request: the
+ * album page has usually already fetched this exact album, and pressing play
+ * on it should not pay for a second round trip.
+ */
+const fetchPlayList = createAsyncThunk("queueNowPlay/fetchPlayList", (id) =>
+   queryClient.fetchQuery(queryKeys.album(id), () => fetchAlbum(id), {
+      staleTime: 5 * 60 * 1000,
+   })
+)
+
+/** Replace the queue with a single song, dropping any album context. */
+const startSingleSong = (state, song, encodeId) => {
+   state.infoCurrenAlbum = []
+   state.listSong = [song]
+   state.listSongShuffle = []
+   state.currentTime = 0
+   state.currentIndexSong = 0
+   state.playlistEncodeId = null
+   state.infoSongCurrent = song
+   state.infoSongNext = {}
+   state.currentEncodeId = encodeId
+   state.duration = song.duration
+}
 
 export const queueNowPlay = createSlice({
    name: "queueNowPlay",
    initialState,
    reducers: {
       playSongNotAlbum: (state, action) => {
-         state.infoCurrenAlbum = []
-         state.listSong = [action.payload]
-         state.currentTime = 0
-         state.currentIndexSong = 0
-         state.playlistEncodeId = null
-         state.infoSongCurrent = state.listSong[state.currentIndexSong]
-         state.infoSongNext = {}
-         state.currentEncodeId = action.payload.encodeId
-         state.duration = action.payload.duration
-         state.listSongShuffle = []
+         startSingleSong(state, action.payload, action.payload.encodeId)
       },
       removeList: (state) => {
          state.currentEncodeId = ""
@@ -73,17 +74,10 @@ export const queueNowPlay = createSlice({
          state.infoCurrentMv = {}
          state.loading = false
       },
+      // Same as playSongNotAlbum, for payloads that carry `id` instead of
+      // `encodeId` — the search and MV endpoints disagree on the field name.
       playSongNotAlbumById: (state, action) => {
-         state.infoCurrenAlbum = []
-         state.listSong = [action.payload]
-         state.currentTime = 0
-         state.currentIndexSong = 0
-         state.playlistEncodeId = null
-         state.infoSongCurrent = state.listSong[state.currentIndexSong]
-         state.infoSongNext = {}
-         state.currentEncodeId = action.payload.id
-         state.duration = action.payload.duration
-         state.listSongShuffle = []
+         startSingleSong(state, action.payload, action.payload.id)
       },
 
       pushSongHistoryPlayList: (state, action) => {

@@ -1,14 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { zingApi } from "config"
+import { fetchTop100 } from "api/zingClient"
+import { queryKeys } from "api/queryKeys"
 
 export function useTop100Data() {
-   return useQuery(
-      ["top100"],
-      async () => {
-         const { data } = await axios.get(zingApi.getTop100Page())
-         return data.data
-      },
-      { staleTime: 15 * 60 * 1000, keepPreviousData: true }
-   )
+   return useQuery(queryKeys.top100(), fetchTop100, {
+      staleTime: 15 * 60 * 1000,
+      keepPreviousData: true,
+   })
 }

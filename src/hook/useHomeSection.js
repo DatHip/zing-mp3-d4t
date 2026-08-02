@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { useGetHomePage } from "api/getHomePage"
+import { useHomePageData } from "api/homeQueries"
 
 /**
  * Locate a section in the /home response using a stable matcher.
@@ -10,9 +10,9 @@ import { useGetHomePage } from "api/getHomePage"
  * @returns {{ section: object|null, isLoading: boolean }}
  */
 export function useHomeSection(matcher) {
-   const { data, status } = useGetHomePage()
+   const { data, status } = useHomePageData()
    const section = useMemo(() => {
-      const items = data?.data?.items
+      const items = data?.items
       if (!Array.isArray(items)) return null
       return items.find(matcher) || null
       // eslint-disable-next-line react-hooks/exhaustive-deps

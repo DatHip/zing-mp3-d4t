@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import axios from "axios"
-import { zingApi } from "config"
+import { fetchLyrics } from "api/zingClient"
+import { queryKeys } from "api/queryKeys"
+import { queryClient } from "lib/queryClient"
 
 let initialState = JSON.parse(localStorage.getItem("d4tmp3_lyrics")) || {
    defaultIBGUrls: [],
@@ -12,10 +13,11 @@ let initialState = JSON.parse(localStorage.getItem("d4tmp3_lyrics")) || {
    word1: 1,
 }
 
-const fetchDataLyrics = createAsyncThunk("lyrics/fetchDataLyrics", async (id) => {
-   const res = await axios.get(zingApi.getLyrics(id))
-   return res.data.data
-})
+const fetchDataLyrics = createAsyncThunk("lyrics/fetchDataLyrics", (id) =>
+   queryClient.fetchQuery(queryKeys.lyrics(id), () => fetchLyrics(id), {
+      staleTime: 30 * 60 * 1000,
+   })
+)
 
 // Persisted by app/persistMiddleware.js — see the note in SettingPlay/settingPlay.js.
 export const lyrics = createSlice({

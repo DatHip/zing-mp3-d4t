@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import axios from "axios"
-import getHotKey from "api/getHotKey"
-import { zingApi } from "config"
+import { fetchHotKey as fetchHotKeyApi, fetchSuggestKeyword } from "api/zingClient"
 
 const initialState = {
    entities: "",
@@ -10,14 +8,11 @@ const initialState = {
    names: "",
 }
 
-const fetchHotKey = createAsyncThunk("formSearch/fetchHotKey", async () => {
-   const response = await getHotKey()
-   return response.data
-})
+const fetchHotKey = createAsyncThunk("formSearch/fetchHotKey", fetchHotKeyApi)
 
-const fetchDataSearch = createAsyncThunk("formSearch/fetchDataSearch ", async (name) => {
-   const response = await axios.get(zingApi.getHotSuggestionApi(name))
-   return response.data.data.items
+const fetchDataSearch = createAsyncThunk("formSearch/fetchDataSearch", async (name) => {
+   const data = await fetchSuggestKeyword(name)
+   return data.items
 })
 
 const formSearch = createSlice({

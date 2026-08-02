@@ -11,14 +11,14 @@ import {
    Legend,
    Tooltip,
 } from "chart.js"
-import { useGetHomePage } from "api/getHomePage"
+import { useHomePageData } from "api/homeQueries"
 
 ChartJS.register(CategoryScale, LineController, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const ChartCard = memo(({ id }) => {
    const [datas, setData] = useState(null)
-   const { data, status } = useGetHomePage()
-   const dataSelector = data?.data.items.find((e) => e.sectionType === "RTChart")
+   const { data, status } = useHomePageData()
+   const dataSelector = data?.items?.find((e) => e.sectionType === "RTChart")
 
    useEffect(() => {
       if (data) {

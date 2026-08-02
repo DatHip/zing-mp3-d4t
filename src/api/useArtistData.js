@@ -1,14 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { zingApi } from "config"
+import { fetchArtist } from "api/zingClient"
+import { queryKeys } from "api/queryKeys"
 
 export function useArtistData(name) {
-   return useQuery(
-      ["artist", name],
-      async () => {
-         const { data } = await axios.get(zingApi.getArtistPage(name))
-         return data.data
-      },
-      { enabled: !!name, staleTime: 30 * 60 * 1000, keepPreviousData: true }
-   )
+   return useQuery(queryKeys.artist(name), () => fetchArtist(name), {
+      enabled: !!name,
+      staleTime: 30 * 60 * 1000,
+      keepPreviousData: true,
+   })
 }

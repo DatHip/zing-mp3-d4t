@@ -668,7 +668,10 @@ a:hover {
 .zm-btn.is-outlined.active {
   background-color: var(--purple-primary);
   border-color: var(--purple-primary);
-  color: var(--white);
+  // --on-accent is derived from the theme's accent at runtime; white is only
+  // legible on the darker half of the palette. Falls back to the old value if
+  // the variable has not been written yet.
+  color: var(--on-accent, var(--white));
 }
 
 .zm-btn.is-medium {

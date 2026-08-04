@@ -41,10 +41,21 @@ const PlayerActions = () => {
 
    return (
       <div className="player_controls-right">
-         <Link to={`/video-clip/${idMv}`} className={`player_btn playing_mv ${linkMv ? "" : "disabled"}`}>
-            <i className="icon ic-mv"></i>
-            <div className="playing_title-hover">Xem MV</div>
-         </Link>
+         {/* Without an MV there is no id to link to, and the old markup still
+             rendered an anchor pointing at "/video-clip/undefined" — a real
+             navigation to a dead route if anyone tabbed to it. The disabled
+             state is a plain span so it is neither focusable nor a link. */}
+         {linkMv ? (
+            <Link to={`/video-clip/${idMv}`} className="player_btn playing_mv" aria-label="Xem MV">
+               <i className="icon ic-mv"></i>
+               <div className="playing_title-hover">Xem MV</div>
+            </Link>
+         ) : (
+            <span className="player_btn playing_mv disabled" aria-hidden="true">
+               <i className="icon ic-mv"></i>
+               <div className="playing_title-hover">Xem MV</div>
+            </span>
+         )}
          <div
             onClick={() => {
                dispatch(setOpenMain())
@@ -83,6 +94,7 @@ const PlayerActions = () => {
                   className="transition-all"
                   id="inputVolume"
                   type="range"
+                  aria-label="Âm lượng"
                   min={0}
                   max={100}
                   value={volume * 100}

@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { selectCurrentEncodeId } from "features/queue/queueSelectors"
 import { selectBgImg, selectBgPlaying, selectDataStyle, selectDataTheme } from "features/theme/themeSelectors"
+import { onAccentDeclaration } from "utils/accentForeground"
 
 function App() {
    const themeDataTheme = useSelector(selectDataTheme)
@@ -109,6 +110,10 @@ function App() {
          const param = themeDataStyle.map((e) => {
             return e
          })
+         // Themes only ship the accent fill, not a foreground that stays legible
+         // on it, so the readable one is derived here and exposed as --on-accent.
+         const onAccent = onAccentDeclaration(themeDataStyle)
+         if (onAccent) param.push(onAccent)
          document.documentElement.setAttribute("style", param.join(" ; "))
       } else {
          document.documentElement.removeAttribute("style")

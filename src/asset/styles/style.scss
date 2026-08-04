@@ -1066,7 +1066,12 @@
   padding: 0 1rem 2rem 1rem;
     height: calc(100vh - 71px - 90px);
     overflow-y: auto;
-  & li:first-child {
+  // Was `li:first-child`. The queue rows moved from <li> to <div> so the <li>
+  // could become react-beautiful-dnd's wrapper, and matching on the row class
+  // keeps both tabs rendering exactly as before: in the queue tab every row is
+  // the first child of its own draggable <li>, in the history tab only the
+  // first row is the first child of the list.
+  & .player_queue-item:first-child {
     .playing_title-hover {
       display: none !important;
     }

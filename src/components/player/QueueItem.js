@@ -75,14 +75,19 @@ const QueueItem = ({ data, index, items, isHistory, setToggleSilde, lastIndex, D
    return (
       <DragWrapper key={data.encodeId || data.id} draggableId={data.encodeId || data.id} index={index}>
          {(provided, snapshot) => (
-            <div draggable ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-               <li
+            // The drag wrapper has to be the <li>: react-beautiful-dnd owns this
+            // element, and a <ul> whose direct children are <div>s is an invalid
+            // list, which screen readers announce as an empty list. The row
+            // itself drops to a <div> so the footer can still live inside the
+            // same draggable.
+            <li draggable ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
+               <div
                   className={`player_queue-item ${row.isPlayed ? "is-pre" : ""} ${
                      snapshot.isDragging ? "active-dragg" : ""
                   } ${row.isActive ? "player_queue-active" : ""} `}
                >
                   <QueueRowBody {...row} data={data} onPlay={row.handlePlayFromQueue} />
-               </li>
+               </div>
 
                {showsPlaylistFooter && !snapshot.isDragging && (
                   <div className="next-songs">
@@ -98,7 +103,7 @@ const QueueItem = ({ data, index, items, isHistory, setToggleSilde, lastIndex, D
                      </h3>
                   </div>
                )}
-            </div>
+            </li>
          )}
       </DragWrapper>
    )

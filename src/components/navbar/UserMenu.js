@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react"
 import "tippy.js/animations/perspective-extreme.css"
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import styled from "styled-components"
 import { useLocation, useNavigate } from "react-router"
 import { signOut } from "firebase/auth"
@@ -11,6 +11,7 @@ import { logOut } from "features/user/userSlice"
 import { useSelector } from "react-redux"
 import { logError } from "utils/logger"
 import { selectIsLoggedIn, selectUserImgUrl } from "features/user/userSelectors"
+import menuTriggerProps from "utils/menuTriggerProps"
 
 const LoginPortalStyyles = styled.div`
    background-color: var(--primary-bg);
@@ -145,6 +146,7 @@ const LoginPortal = ({ setOpen }) => {
 const UserMenu = ({ isTitle = true, width = 38, height = 38 }) => {
    const [open, setOpen] = useState(false)
    const imgUrl = useSelector(selectUserImgUrl)
+   const toggle = useCallback(() => setOpen((value) => !value), [])
 
    return (
       <Tippy
@@ -156,8 +158,12 @@ const UserMenu = ({ isTitle = true, width = 38, height = 38 }) => {
          arrow={false}
          offset={[0, 10]}
          placement={"bottom-end"}
+         aria={{ expanded: false }}
       >
-         <div onClick={() => setOpen((value) => !value)} className="setting_item setting_item-user">
+         <div
+            className="setting_item setting_item-user"
+            {...menuTriggerProps({ expanded: open, onToggle: toggle, label: "Tài khoản" })}
+         >
             <div className={`w-[${width}px] h-[${height}px] setting_item-user-img  overflow-hidden rounded-full`}>
                <figure>
                   <img

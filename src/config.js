@@ -1,16 +1,16 @@
 // Fallback is the deployed API, not localhost: a production build with the env
 // var unset would otherwise ship "http://localhost:5000" and be blocked as
 // mixed content on HTTPS, breaking every request with no visible error.
-// Trailing slashes are stripped because every endpoint below interpolates
-// `${apiBaseUrl}/path`: a base ending in "/" produces "//path", which Vercel
-// answers with a 308 to the normalized path instead of serving the request.
-const apiBaseUrl = (process.env.REACT_APP_API_URL || "https://api-zingmp3.vercel.app/api").replace(/\/+$/, "")
+// Normalized two ways, because every endpoint below interpolates
+// `${apiBaseUrl}/path`: trailing slashes would produce "//path" (Vercel answers
+// with a 308 instead of serving it), and a base missing the /api suffix the
+// backend mounts its router under would hit the server root, which replies with
+// its health payload instead of data.
+const rawBaseUrl = (process.env.REACT_APP_API_URL || "https://api-zingmp3.vercel.app/api").replace(/\/+$/, "")
+const apiBaseUrl = rawBaseUrl.endsWith("/api") ? rawBaseUrl : `${rawBaseUrl}/api`
 
-if (process.env.NODE_ENV !== "production" && !apiBaseUrl.endsWith("/api")) {
-   console.warn(
-      `[config] REACT_APP_API_URL is "${apiBaseUrl}" — the backend serves its routes under /api, ` +
-         `so this is probably missing that suffix. Every request will 404.`
-   )
+if (apiBaseUrl !== rawBaseUrl) {
+   console.warn(`[config] REACT_APP_API_URL is "${rawBaseUrl}", missing the /api suffix — using "${apiBaseUrl}".`)
 }
 
 export const zingApi = {

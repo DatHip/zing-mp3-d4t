@@ -33,130 +33,151 @@ const Sidebar = () => {
          </div>
          <div className="sider_menu sider_menu-c">
             <ul className="sider_menu-list">
-               <div
-                  onClick={() => {
-                     if (!activeUser) {
-                        // eslint-disable-next-line no-restricted-globals
-                        if (confirm("Bạn cần đăng nhập") === true) {
-                           navigate("/auth")
+               {/* Every entry is wrapped in <li>: a <ul> whose direct children are
+                   <a>/<div> is an invalid list, so assistive tech does not
+                   announce the nav as a list or report how many items it has. */}
+               <li>
+                  <div
+                     onClick={() => {
+                        if (!activeUser) {
+                           // eslint-disable-next-line no-restricted-globals
+                           if (confirm("Bạn cần đăng nhập") === true) {
+                              navigate("/auth")
+                           } else {
+                              return
+                           }
                         } else {
-                           return
+                           navigate("/mymusic/")
                         }
-                     } else {
-                        navigate("/mymusic/")
-                     }
-                  }}
-                  to="/mymusic/"
-                  title="Cá nhân"
-                  className={`sider_menu-item sider_menu-item-acitve ${pathMyMusic > 0 ? "sider_active" : ""} `}
-               >
-                  <div>
-                     <i className="icon  ic-24-LibraryTab"></i>
-                     <span className="sider_menu-item-title">Cá Nhân</span>
+                     }}
+                     to="/mymusic/"
+                     title="Cá nhân"
+                     className={`sider_menu-item sider_menu-item-acitve ${pathMyMusic > 0 ? "sider_active" : ""} `}
+                  >
+                     <div>
+                        <i className="icon  ic-24-LibraryTab"></i>
+                        <span className="sider_menu-item-title">Cá Nhân</span>
+                     </div>
                   </div>
-               </div>
+               </li>
 
-               <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="Khám phá"
-               >
-                  <div>
-                     <i className="icon  ic-24-HomeTab"></i>
-                     <span className="sider_menu-item-title">Khám Phá</span>
-                  </div>
-               </NavLink>
-               <NavLink
-                  to="/zing-chart"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="#topchart"
-               >
-                  <div className="cursor-pointer">
-                     <i className="icon  ic-24-ChartTab"></i>
-                     <span className="sider_menu-item-title"> Top Chart</span>
-                  </div>
-               </NavLink>
-               <NavLink
-                  to="/radio"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="Radio"
-               >
-                  <div className="cursor-pointer">
-                     <i className="icon  ic-24-RadioTab"></i>
-                     <span className="sider_menu-item-title">Radio</span>
-                  </div>
-               </NavLink>
-               <NavLink
-                  to="/newfeed/Viet-Nam/IWZ9Z08I"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="Theo Dõi"
-               >
-                  <div className="cursor-pointer">
-                     <i className="icon  ic-24-FeedTab"></i>
-                     <span className="sider_menu-item-title">Theo Dõi</span>
-                  </div>
-               </NavLink>
+               <li>
+                  <NavLink
+                     to="/"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="Khám phá"
+                  >
+                     <div>
+                        <i className="icon  ic-24-HomeTab"></i>
+                        <span className="sider_menu-item-title">Khám Phá</span>
+                     </div>
+                  </NavLink>
+               </li>
+               <li>
+                  <NavLink
+                     to="/zing-chart"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="#topchart"
+                  >
+                     <div className="cursor-pointer">
+                        <i className="icon  ic-24-ChartTab"></i>
+                        <span className="sider_menu-item-title"> Top Chart</span>
+                     </div>
+                  </NavLink>
+               </li>
+               <li>
+                  <NavLink
+                     to="/radio"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="Radio"
+                  >
+                     <div className="cursor-pointer">
+                        <i className="icon  ic-24-RadioTab"></i>
+                        <span className="sider_menu-item-title">Radio</span>
+                     </div>
+                  </NavLink>
+               </li>
+               <li>
+                  <NavLink
+                     to="/newfeed/Viet-Nam/IWZ9Z08I"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="Theo Dõi"
+                  >
+                     <div className="cursor-pointer">
+                        <i className="icon  ic-24-FeedTab"></i>
+                        <span className="sider_menu-item-title">Theo Dõi</span>
+                     </div>
+                  </NavLink>
+               </li>
             </ul>
          </div>
          <div className="sider_divide" />
          <div className="sider_menu sider_menu-bottom">
             <ul className="sider_menu-list">
-               <NavLink
-                  to="moi-phat-hanh"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="Nhạc mới"
-               >
-                  <div className="cursor-pointer">
-                     <i className="icon  ic-24-NewReleaseTab"></i>
-                     <span className="sider_menu-item-title">Nhạc Mới</span>
-                  </div>
-               </NavLink>
-               <NavLink
-                  to="hub"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="Thể Loại"
-               >
-                  <div className="cursor-pointer">
-                     <i className="icon  ic-24-GenreTab"></i>
-                     <span className="sider_menu-item-title">Thể Loại</span>
-                  </div>
-               </NavLink>
-               <NavLink
-                  to="top100"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="#Top100"
-               >
-                  <div className="cursor-pointer">
-                     <i className="icon  ic-24-Top100Tab"></i>
-                     <span className="sider_menu-item-title">Top 100</span>
-                  </div>
-               </NavLink>
-               <NavLink
-                  to="mv/IWZ9Z08I"
-                  className={({ isActive }) =>
-                     isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
-                  }
-                  title="MV"
-               >
-                  <div className="cursor-pointer">
-                     <i className="icon  ic-24-MVTab"></i>
-                     <span className="sider_menu-item-title">MV</span>
-                  </div>
-               </NavLink>
+               <li>
+                  <NavLink
+                     to="moi-phat-hanh"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="Nhạc mới"
+                  >
+                     <div className="cursor-pointer">
+                        <i className="icon  ic-24-NewReleaseTab"></i>
+                        <span className="sider_menu-item-title">Nhạc Mới</span>
+                     </div>
+                  </NavLink>
+               </li>
+               <li>
+                  <NavLink
+                     to="hub"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="Thể Loại"
+                  >
+                     <div className="cursor-pointer">
+                        <i className="icon  ic-24-GenreTab"></i>
+                        <span className="sider_menu-item-title">Thể Loại</span>
+                     </div>
+                  </NavLink>
+               </li>
+               <li>
+                  <NavLink
+                     to="top100"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="#Top100"
+                  >
+                     <div className="cursor-pointer">
+                        <i className="icon  ic-24-Top100Tab"></i>
+                        <span className="sider_menu-item-title">Top 100</span>
+                     </div>
+                  </NavLink>
+               </li>
+               <li>
+                  <NavLink
+                     to="mv/IWZ9Z08I"
+                     className={({ isActive }) =>
+                        isActive ? "sider_menu-item sider_menu-item-acitve sider_active" : "sider_menu-item sider_menu-item-acitve "
+                     }
+                     title="MV"
+                  >
+                     <div className="cursor-pointer">
+                        <i className="icon  ic-24-MVTab"></i>
+                        <span className="sider_menu-item-title">MV</span>
+                     </div>
+                  </NavLink>
+               </li>
             </ul>
          </div>
          {!activeUser && (

@@ -123,6 +123,7 @@ const ArtistCard = memo(({ classGird, data, noneFooter, isLinkToAll }) => {
                   onClick={handlePlay}
                   className="zm-btn is-mvpage button"
                   tabIndex="0"
+                  aria-label={data?.name ? `Phát ngẫu nhiên nhạc của ${data.name}` : "Phát ngẫu nhiên"}
                >
                   <i className="icon ic-shuffle"></i>
                </button>

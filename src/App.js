@@ -6,7 +6,7 @@ import RouterPage from "router/RouterPage"
 import { useSelector, useDispatch, useStore } from "react-redux"
 import { setPlaying } from "features/setting/settingSlice"
 import { setUser } from "features/user/userSlice"
-import { ToastContainer } from "react-toastify"
+import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { selectCurrentEncodeId } from "features/queue/queueSelectors"
 import { selectBgImg, selectBgPlaying, selectDataStyle, selectDataTheme } from "features/theme/themeSelectors"
@@ -53,6 +53,23 @@ function App() {
          if (unsub) unsub()
       }
    }, [dispatch, store])
+
+   // Zing chỉ cấp stream cho IP trong nước, mà backend đang chạy ở nước ngoài,
+   // nên một số bài không phát được. Báo một lần mỗi phiên, đủ lâu để đọc rồi
+   // tự tắt — gỡ khối này khi backend chuyển sang VPS Việt Nam.
+   useEffect(() => {
+      if (sessionStorage.getItem("region-notice-shown")) return
+
+      const timer = setTimeout(() => {
+         sessionStorage.setItem("region-notice-shown", "1")
+         toast(
+            "Máy chủ đang đặt ngoài Việt Nam nên Zing chặn IP — một số bài có thể không phát được. Sẽ khắc phục khi chuyển sang VPS trong nước.",
+            { type: "info", autoClose: 8000 }
+         )
+      }, 1500)
+
+      return () => clearTimeout(timer)
+   }, [])
 
    useEffect(() => {
       const keyboardShortcuts = (e) => {

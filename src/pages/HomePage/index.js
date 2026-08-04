@@ -1,5 +1,4 @@
 import React, { memo } from "react"
-import HeroSlider from "components/home/HeroSlider"
 import HistorySection from "components/home/HistorySection"
 import WantToHearSection from "components/home/WantToHearSection"
 import NewReleaseSection from "components/home/NewReleaseSection"
@@ -19,8 +18,6 @@ const HomePage = () => {
 
    return (
       <div>
-         {/* Thanh Slider */}
-         <HeroSlider />
          {/* Icon Mobile */}
          <SectionIconButton />
          {/* History */}

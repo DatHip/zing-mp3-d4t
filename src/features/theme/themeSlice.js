@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { onAccentDeclaration } from "utils/accentForeground"
 
 let initialState = JSON.parse(localStorage.getItem("data-theme")) || {
    name: "Zing Music Awards",
@@ -42,6 +43,10 @@ export const themeToggle = createSlice({
             const alo = action.payload.dataStyle.map((e) => {
                return e
             })
+            // Kept in sync with App's layout effect so the accent foreground is
+            // never missing for the frame between this write and that re-render.
+            const onAccent = onAccentDeclaration(action.payload.dataStyle)
+            if (onAccent) alo.push(onAccent)
             document.documentElement.setAttribute("style", alo.join(" ; "))
          } else {
             document.documentElement.removeAttribute("style")

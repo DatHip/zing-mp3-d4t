@@ -7,7 +7,7 @@ import fancyTimeFormat from "utils/fancyTimeFormat"
 import { setCurrentTime } from "features/queue/queueSlice"
 import { setPlay, setReady } from "features/setting/settingSlice"
 import { pushSongsLogged } from "features/logged/loggedSlice"
-import { getStreamUrl } from "api/getStreamSong"
+import { getStreamUrl, STREAM_FAIL } from "api/getStreamSong"
 import { useQueueControls } from "hook/useQueueControls"
 
 import PlayerProgress from "components/player/PlayerProgress"
@@ -105,10 +105,19 @@ function usePlayerController() {
       dispatch(setReady(false))
       setStreamUrl("")
       hasRestoredTime.current = false
-      getStreamUrl(currentEncodeId).then((url) => {
+      getStreamUrl(currentEncodeId).then(({ url, reason }) => {
          if (cancelled) return
          if (!url) {
-            toast("Không lấy được stream bài này — chuyển bài tiếp theo", { type: "error" })
+            // A region block is not a bug and not a broken track: Zing licenses
+            // per country and the backend runs outside Vietnam. Saying so stops
+            // users reporting perfectly good songs as broken.
+            const isRegion = reason === STREAM_FAIL.REGION
+            toast(
+               isRegion
+                  ? "Bài này bị giới hạn theo quốc gia — chuyển bài tiếp theo"
+                  : "Không lấy được stream bài này — chuyển bài tiếp theo",
+               { type: isRegion ? "info" : "error" }
+            )
             skipToNext()
             return
          }

@@ -1,10 +1,11 @@
 import Tippy from "@tippyjs/react"
-import React, { memo } from "react"
+import React, { memo, useCallback } from "react"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import { removeList } from "features/queue/queueSlice"
 import { setPlay } from "features/setting/settingSlice"
+import menuTriggerProps from "utils/menuTriggerProps"
 
 const LoginPortalStyyles = styled.div`
    background-color: var(--primary-bg);
@@ -82,6 +83,7 @@ const LoginPortal = ({ setOpen }) => {
 }
 const ClearQueueButton = memo(() => {
    const [open, setOpen] = useState(false)
+   const toggle = useCallback(() => setOpen((value) => !value), [])
    return (
       <Tippy
          animation={"perspective-extreme"}
@@ -92,8 +94,12 @@ const ClearQueueButton = memo(() => {
          arrow={false}
          offset={[0, 10]}
          placement={"bottom-end"}
+         aria={{ expanded: false }}
       >
-         <div onClick={() => setOpen((value) => !value)} className="player_btn queue_more">
+         <div
+            className="player_btn queue_more"
+            {...menuTriggerProps({ expanded: open, onToggle: toggle, label: "Tuỳ chọn danh sách phát" })}
+         >
             <span className="material-icons-outlined"> more_horiz </span>
             <div className="playing_title-hover">Khác</div>
          </div>

@@ -74,7 +74,7 @@ const SuggestList = ({ setOpen, setValue, value, refinput }) => {
    const navigate = useNavigate()
 
    return (
-      <SuggestListStyles className="suggest__list">
+      <SuggestListStyles id="search-suggestions" className="suggest__list">
          <div className="suggest__list--content">
             {loading && (
                <div>

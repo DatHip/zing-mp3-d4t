@@ -139,7 +139,10 @@ const RouterPage = () => {
    const location = useLocation()
 
    return (
-      <div ref={mainPageRef} id="scrollableDiv" className="main-page">
+      // <main> rather than <div>: the page had a header and an aside but no main
+      // landmark, so "skip to content" in a screen reader had nothing to target.
+      // All styling hangs off the class and id, which are unchanged.
+      <main ref={mainPageRef} id="scrollableDiv" className="main-page">
          <div className="container">
             <Routes location={location} key={location.pathname}>
                <Route element={<Loading></Loading>}>
@@ -199,7 +202,7 @@ const RouterPage = () => {
 
             </Routes>
          </div>
-      </div>
+      </main>
    )
 }
 

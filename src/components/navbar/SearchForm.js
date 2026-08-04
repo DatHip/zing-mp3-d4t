@@ -55,9 +55,14 @@ const SearchForm = () => {
             offset={[0, 0]}
             placement={"bottom-start"}
             maxWidth={"auto"}
+            // The wrapper below holds a button and an input, so it cannot take a
+            // button role — and aria-expanded is invalid on a plain div. The
+            // combobox state belongs on the input, which is what a screen reader
+            // actually lands on.
+            aria={{ expanded: false }}
          >
             <div className="form-level">
-               <button type="submit" className="header_btn-search">
+               <button type="submit" className="header_btn-search" aria-label="Tìm kiếm">
                   <i className="icon ic-search"></i>
                </button>
                <input
@@ -68,6 +73,14 @@ const SearchForm = () => {
                   onFocus={handleFocus}
                   className="header_search"
                   placeholder="Tìm kiếm bài hát, nghệ sĩ, lời bài hát..."
+                  aria-label="Tìm kiếm bài hát, nghệ sĩ, lời bài hát"
+                  role="combobox"
+                  aria-expanded={open}
+                  // Tippy only mounts the suggestion list while open. A dangling
+                  // aria-controls is tolerated precisely because aria-expanded is
+                  // false in that state, which is the pairing the spec expects.
+                  aria-controls="search-suggestions"
+                  aria-autocomplete="list"
                />
                {refinput?.current?.value?.length > 2 && open && (
                   <button
@@ -77,6 +90,7 @@ const SearchForm = () => {
                      }}
                      type="button"
                      className="header_btn-remove "
+                     aria-label="Xoá từ khoá"
                   >
                      <i className="icon ic-close"></i>
                   </button>

@@ -173,7 +173,10 @@ const QueuePanel = () => {
                )}
 
                {!currentEncodeId && (
-                  <ul className="player_queue-listmusic">
+                  // Not a <ul>: there are no rows here, and a list whose children
+                  // are <div>s is invalid markup that screen readers announce as
+                  // an empty list. The class carries all the styling.
+                  <div className="player_queue-listmusic">
                      <div className="empty">
                         <div className="empty-img" />
                      </div>
@@ -187,7 +190,7 @@ const QueuePanel = () => {
                            <span>Phát nhạc mới phát hành</span>
                         </button>
                      </div>
-                  </ul>
+                  </div>
                )}
             </div>
          </div>
